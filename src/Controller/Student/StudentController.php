@@ -49,7 +49,7 @@ class StudentController extends AbstractController
            // upload resume temporary
             $uploadedFile = $form['resume']['file']->getData();
             if($uploadedFile) {
-                $newFilename = $uploaderHelper->uploadFile($uploadedFile, $student->getResume()->getUrl());
+                $newFilename = $uploaderHelper->uploadPrivateFile($uploadedFile, $student->getResume()->getUrl());
 
                 $resume = new Resume;
                 $resume->setUrl($newFilename);
