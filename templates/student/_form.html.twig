@@ -17,7 +17,7 @@
         <div class="col-sm-3">
         <div class="col-sm-3">
             {% if form.vars.data.resume.url|default %}
-                <img class="show-article-img" src="{{ uploaded_asset(form.vars.data.resume.url)|imagine_filter('squared_thumbnail_x_small') }}" alt=""/>
+                <img class="show-article-img" src="{{ form.vars.data.resume.url|imagine_filter('squared_thumbnail_x_small') }}" alt=""/>
             {% endif %}
         </div>
     </div>
