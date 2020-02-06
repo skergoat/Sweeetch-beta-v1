@@ -69,11 +69,11 @@ class Student
      */
     private $profile;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Resume", inversedBy="student", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $resume;
+    // /**
+    //  * @ORM\OneToOne(targetEntity="App\Entity\Resume", inversedBy="student", cascade={"persist", "remove"})
+    //  * @ORM\JoinColumn(nullable=false)
+    //  */
+    // private $resume;
 
 
 

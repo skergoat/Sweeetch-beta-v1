@@ -47,14 +47,14 @@ class StudentController extends AbstractController
             $student = $form->getData();
 
             // upload resume temporary
-            $uploadedFile = $form['resume']['file']->getData();
-            if($uploadedFile) {
-                $newFilename = $uploaderHelper->uploadFile($uploadedFile, $student->getResume()->getUrl());
+            // $uploadedFile = $form['resume']['file']->getData();
+            // if($uploadedFile) {
+            //     $newFilename = $uploaderHelper->uploadFile($uploadedFile, $student->getResume()->getUrl());
 
-                $resume = new Resume;
-                $resume->setUrl($newFilename);
-                $student->setResume($resume);
-            }
+            //     $resume = new Resume;
+            //     $resume->setUrl($newFilename);
+            //     $student->setResume($resume);
+            // }
             
             // set roles 
             $user = $student->getUser();
@@ -108,15 +108,14 @@ class StudentController extends AbstractController
             $student = $form->getData();
 
             // upload resume temporary
-            $uploadedFile = $form['resume']['file']->getData();
-            if($uploadedFile) {
-                $newFilename = $uploaderHelper->uploadFile($uploadedFile, $student->getResume()->getUrl());
+            // $uploadedFile = $form['resume']['file']->getData();
+            // if($uploadedFile) {
+            //     $newFilename = $uploaderHelper->uploadFile($uploadedFile, $student->getResume()->getUrl());
 
-                // $resume = new Resume;
-                $resume = $form->getData()->getResume();
-                $resume->setUrl($newFilename);
-                $student->setResume($resume);
-            }
+            //     $resume = $form->getData()->getResume();
+            //     $resume->setUrl($newFilename);
+            //     $student->setResume($resume);
+            // }
 
             $user = $form->getData()->getUser();
             $user->setPassword($passwordEncoder->encodePassword(
