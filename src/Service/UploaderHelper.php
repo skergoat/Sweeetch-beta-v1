@@ -15,20 +15,25 @@ class UploaderHelper
 {
     private $uploadsPath;
     private $filesystem;
+    private $publicAssetBaseUrl; // 
 
     const STUDENT_IMAGE = 'student_image';
 
-    public function __construct(FilesystemInterface $publicUploadsFilesystem, RequestStackContext $requestStackContext, LoggerInterface $logger)
+    public function __construct(FilesystemInterface $publicUploadsFilesystem, RequestStackContext $requestStackContext, LoggerInterface $logger, string $uploadedAssetsBaseUrl)
     {
         $this->filesystem = $publicUploadsFilesystem;
         $this->requestStackContext = $requestStackContext;
         $this->logger = $logger;
+        $this->publicAssetBaseUrl = $uploadedAssetsBaseUrl; //
     }
 
     public function getPublicPath(string $path): string
     {
+        // return $this->requestStackContext
+        //     ->getBasePath().'/uploads/'.$path;
+
         return $this->requestStackContext
-            ->getBasePath().'/uploads/'.$path;
+            ->getBasePath().$this->publicAssetBaseUrl.'/'.$path;
     }
 
     public function uploadFile(UploadedFile $uploadedFile, ?string $existingFilename): string
