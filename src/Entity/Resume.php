@@ -27,10 +27,10 @@ class Resume
      */
     private $description;
 
-    // /**
-    //  * @ORM\OneToOne(targetEntity="App\Entity\Student", mappedBy="resume", cascade={"persist", "remove"})
-    //  */
-    // private $student;
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Student", mappedBy="resume", cascade={"persist", "remove"})
+     */
+    private $student;
 
     public function getId(): ?int
     {

@@ -30,7 +30,7 @@ class StudentType extends AbstractType
             ->add('disabled', RadioType::class, [
                 'required' => false
             ])
-            // ->add('resume', ResumeType::class)
+            ->add('resume', ResumeType::class)
         ;   
     }
 

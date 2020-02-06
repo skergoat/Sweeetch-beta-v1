@@ -69,12 +69,22 @@ class Student
      */
     private $profile;
 
-    // /**
-    //  * @ORM\OneToOne(targetEntity="App\Entity\Resume", inversedBy="student", cascade={"persist", "remove"})
-    //  * @ORM\JoinColumn(nullable=false)
-    //  */
-    // private $resume;
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\StudentReferences", mappedBy="student", orphanRemoval=true)
+     */
+    private $studentReferences;
 
+      /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Resume", inversedBy="student", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $resume;
+
+    
+    public function __construct()
+    {
+        $this->studentReferences = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -213,5 +223,38 @@ class Student
 
         return $this;
     }
+
+    /**
+     * @return Collection|StudentReferences[]
+     */
+    public function getStudentReferences(): Collection
+    {
+        return $this->studentReferences;
+    }
+
+    public function addStudentReference(StudentReferences $studentReference): self
+    {
+        if (!$this->studentReferences->contains($studentReference)) {
+            $this->studentReferences[] = $studentReference;
+            $studentReference->setStudent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStudentReference(StudentReferences $studentReference): self
+    {
+        if ($this->studentReferences->contains($studentReference)) {
+            $this->studentReferences->removeElement($studentReference);
+            // set the owning side to null (unless already changed)
+            if ($studentReference->getStudent() === $this) {
+                $studentReference->setStudent(null);
+            }
+        }
+
+        return $this;
+    }
+
+   
 
 }
