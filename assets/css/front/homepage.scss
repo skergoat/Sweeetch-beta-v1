@@ -1,0 +1,34 @@
+@import '~bootstrap';
+@import '~font-awesome';
+
+@import './helpers/colors';
+@import './helpers/font-family';
+
+@import './layout/colors';
+@import './layout/general';
+@import './layout/topbar';
+
+@import './layout/navigation';
+@import './layout/footer';
+
+@import './homepage/header';
+@import './homepage/intro-section';
+@import './homepage/section-header';
+@import './homepage/about-us-section';
+@import './homepage/service-section';
+@import './homepage/why-us';
+@import './homepage/section-appel';
+@import './homepage/portfolio';
+@import './homepage/temoins';
+@import './homepage/team';
+@import './homepage/customer';
+@import './homepage/pricing';
+@import './homepage/questions';
+
+@import '../components/form';
+
+@import './homepage/media-queries';
+  
+
+  
+  

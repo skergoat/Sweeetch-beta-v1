@@ -1,0 +1,5 @@
+{{ form_start(form) }}
+    {{ form_row(form.email, {'attr' : { class: 'form-control' }} ) }}
+    {{ form_row(form.password, {'attr' : { class: 'form-control' }} ) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

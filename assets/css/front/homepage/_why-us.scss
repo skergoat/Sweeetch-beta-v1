@@ -1,0 +1,48 @@
+#why-us {
+    padding: 60px 0;
+  }
+  
+  #why-us .why-us-content .features {
+    margin: 0 0 15px 0;
+    padding: 0;
+    transition: 0.3s ease-in-out;
+  }
+  
+  #why-us .why-us-content .features i {
+    font-size: 36px;
+    float: left;
+  }
+  
+  #why-us .why-us-content .features h4 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-left: 56px;
+    color: $h4;
+    margin-bottom: 5px;
+  }
+  
+  #why-us .why-us-content .features p {
+    font-size: 16px;
+    margin-left: 56px;
+    color: #555186;
+  }
+  
+  #why-us .counters {
+    padding-top: 40px;
+  }
+  
+  #why-us .counters span {
+    font-family: $montserrat;
+    font-weight: bold;
+    font-size: 48px;
+    display: block;
+    color: #555186;
+  }
+  
+  #why-us .counters p {
+    padding: 0;
+    margin: 0 0 20px 0;
+    font-family: $montserrat;
+    font-size: 14px;
+    color: #8a87b6;
+  }
