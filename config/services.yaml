@@ -6,7 +6,6 @@
 parameters:
 
     uploads_dir_name: 'uploads'
-    # uploads_base_url: '/%uploads_dir_name%'
     uploads_base_url: '%env(SITE_BASE_URL)%/%uploads_dir_name%'
 
 services:

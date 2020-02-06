@@ -23,14 +23,21 @@ class Resume
     private $url;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $description;
-
-    /**
      * @ORM\OneToOne(targetEntity="App\Entity\Student", mappedBy="resume", cascade={"persist", "remove"})
      */
     private $student;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $originalFilename;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $mimeType;
+
+   
 
     public function getId(): ?int
     {
@@ -45,18 +52,6 @@ class Resume
     public function setUrl(string $url): self
     {
         $this->url = $url;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
 
         return $this;
     }
@@ -77,4 +72,30 @@ class Resume
 
         return $this;
     }
+
+    public function getOriginalFilename(): ?string
+    {
+        return $this->originalFilename;
+    }
+
+    public function setOriginalFilename(string $originalFilename): self
+    {
+        $this->originalFilename = $originalFilename;
+
+        return $this;
+    }
+
+    public function getMimeType(): ?string
+    {
+        return $this->mimeType;
+    }
+
+    public function setMimeType(string $mimeType): self
+    {
+        $this->mimeType = $mimeType;
+
+        return $this;
+    }
+
+    
 }
