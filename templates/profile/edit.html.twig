@@ -1,0 +1,11 @@
+{% extends 'base-student.html.twig' %}
+
+{% block title %} {{ parent() }} - profile {% endblock %}
+
+{% block body %}
+
+    <h1>Edit Profile</h1>
+
+    {{ include('profile/_form.html.twig', {'button_label': 'Update'}) }}
+   
+{% endblock %}

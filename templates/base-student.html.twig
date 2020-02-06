@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Sweeetch{% endblock %}</title>
+
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="@">
+
+        <!-- Favicons -->
+        <link href="{{ asset('build/favicon.png') }}" rel="icon">
+        <link href="{{ asset('build/apple-touch-icon.png') }}" rel="apple-touch-icon">
+
+        {% block stylesheets %}
+        
+            <!-- Google Fonts -->
+            <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,500,600,700,700i|Montserrat:300,400,500,600,700" rel="stylesheet">
+      
+            <!-- bootstrap and custom styles -->    
+            {{ encore_entry_link_tags('student') }}
+ 
+        {% endblock %}
+
+    </head>
+    <body>
+        <!-- back nav temporary -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="/">Sweeetch - student</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    {% if student.id is defined %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('student_show', {'id' : student.id }) }}">Dashboard</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('student_edit', {'id' : student.id }) }}">Mes Infos</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('profile_edit', {'id': student.profile.id }) }}">Edit Profile</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('student_show', {'id' : profile.student.id }) }}">Dashboard</a>
+                    </li> 
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('student_edit', {'id' : profile.student.id }) }}">Mes Infos</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('profile_edit', {'id': profile.id }) }}">Edit Profile</a>
+                    </li>
+                    {% endif %}
+                    
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('student_index') }}">Liste</a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/logout">Deconnexion</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+
+        <!-- content block -->
+        <div class="container">{% block body %}{% endblock %}</div>
+
+        <!-- scripts -->
+        {% block javascripts %}
+            {{ encore_entry_script_tags('student') }}
+        {% endblock %}
+
+    </body>
+</html>

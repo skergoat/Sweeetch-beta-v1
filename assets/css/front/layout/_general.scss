@@ -1,0 +1,131 @@
+@import '../helpers/colors';
+
+.docs-pdf{
+    width: 80%;
+  }
+  .sauteur{
+    margin-top: 90px;
+    margin-bottom: 80px;
+  }
+  
+  .img-pdf{
+    display: flex;
+   justify-content: center;
+    width: 60px;
+    height: 60px;
+    margin: auto;
+    padding: auto;
+  }
+  
+
+body {
+    background: #fff;
+    color: #444;
+    font-family:$opensans;
+  }
+  
+  a {
+    color: $introInfo;
+    transition: 0.5s;
+  }
+  
+  a:hover,
+  a:active,
+  a:focus {
+    color: $linkActive;
+    outline: none;
+    text-decoration: none;
+  }
+  
+  p {
+    padding: 0;
+    margin: 0 0 30px 0;
+  }
+  
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: $montserrat;
+    font-weight: 400;
+    margin: 0 0 20px 0;
+    padding: 0;
+    text-align: center;
+  }
+  
+  /* Back to top button */
+  
+  .back-to-top {
+    position: fixed;
+    display: none;
+    background: $introInfo;
+    color: #fff;
+    width: 44px;
+    height: 44px;
+    text-align: center;
+    line-height: 1;
+    font-size: 16px;
+    border-radius: 50%;
+    right: 15px;
+    bottom: 15px;
+    transition: background 0.5s;
+    z-index: 11;
+  }
+  
+  .back-to-top i {
+    padding-top: 12px;
+    color: #fff;
+  }
+  
+  /* Prelaoder */
+  
+  #preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    overflow: hidden;
+    background: #fff;
+  }
+  
+  #preloader:before {
+    content: "";
+    position: fixed;
+    top: calc(50% - 30px);
+    left: calc(50% - 30px);
+    border: 6px solid #f2f2f2;
+    border-top: 6px solid $introInfo;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    -webkit-animation: animate-preloader 1s linear infinite;
+    animation: animate-preloader 1s linear infinite;
+  }
+  
+  @-webkit-keyframes animate-preloader {
+    0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+  
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes animate-preloader {
+    0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+  
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }

@@ -1,0 +1,25 @@
+#topbar {
+    padding: 0 0 10px 0;
+    font-size: 14px;
+    transition: all 0.5s;
+  }
+  
+  #topbar .social-links {
+    text-align: right;
+  }
+  
+  #topbar .social-links a {
+    color: $footer2;
+    padding: 4px 12px;
+    display: inline-block;
+    line-height: 1px;
+  }
+  
+  #topbar .social-links a:hover {
+    color: $introInfo;
+  }
+  
+  #topbar .social-links a:first-child {
+    border-left: 0;
+  }
+  
