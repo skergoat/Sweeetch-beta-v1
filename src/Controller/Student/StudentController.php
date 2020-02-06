@@ -53,6 +53,8 @@ class StudentController extends AbstractController
 
                 $resume = new Resume;
                 $resume->setUrl($newFilename);
+                $resume->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $newFilename);
+                $resume->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');
                 $student->setResume($resume);
             }
             
@@ -114,6 +116,8 @@ class StudentController extends AbstractController
 
                 $resume = $form->getData()->getResume();
                 $resume->setUrl($newFilename);
+                $resume->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $newFilename);
+                $resume->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');
                 $student->setResume($resume);
             }
 
