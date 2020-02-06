@@ -84,7 +84,8 @@ class StudentFixtures extends Fixture
             
             $resume = new Resume;
             $resume->setUrl('https://picsum.photos/536/354');
-            $resume->setDescription('my resume');
+            $resume->setOriginalFilename('https://picsum.photos/536/354');
+            $resume->setMimeType('pdf');
 
             $student->setUser($user);
             $student->setProfile($profile);

@@ -49,10 +49,12 @@ class StudentController extends AbstractController
            // upload resume temporary
             $uploadedFile = $form['resume']['file']->getData();
             if($uploadedFile) {
-                $newFilename = $uploaderHelper->uploadFile($uploadedFile, $student->getResume()->getUrl());
+                $newFilename = $uploaderHelper->uploadPrivateFile($uploadedFile, $student->getResume()->getUrl());
 
                 $resume = new Resume;
                 $resume->setUrl($newFilename);
+                $resume->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $newFilename);
+                $resume->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');
                 $student->setResume($resume);
             }
             
@@ -114,6 +116,8 @@ class StudentController extends AbstractController
 
                 $resume = $form->getData()->getResume();
                 $resume->setUrl($newFilename);
+                $resume->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $newFilename);
+                $resume->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');
                 $student->setResume($resume);
             }
 
