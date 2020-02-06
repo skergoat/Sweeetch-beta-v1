@@ -82,13 +82,13 @@ class StudentFixtures extends Fixture
                 $manager->persist($education1);
                 $manager->persist($education2);
             
-            // $resume = new Resume;
-            // $resume->setUrl('https://picsum.photos/536/354');
-            // $resume->setDescription('my resume');
+            $resume = new Resume;
+            $resume->setUrl('https://picsum.photos/536/354');
+            $resume->setDescription('my resume');
 
             $student->setUser($user);
             $student->setProfile($profile);
-            // $student->setResume($resume);
+            $student->setResume($resume);
 
             $manager->persist($user);
             $manager->persist($student);

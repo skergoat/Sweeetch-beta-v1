@@ -11,7 +11,7 @@
     {{ form_row(form.user.password.second, {'attr' : { class: 'form-control' }} ) }} #}
     {{ form_row(form.driving_license, {'attr' : { class: 'form-control' }} ) }}
     {{ form_row(form.disabled, {'attr' : { class: 'form-control' }} ) }}
-    {# <div class="row">
+    <div class="row">
         <div class="col-sm-9">
              {{ form_row(form.resume.file, {'attr' : { class: 'form-control' }} ) }}
         <div class="col-sm-3">
@@ -22,7 +22,7 @@
             </a>
             {% endif %}
         </div>
-    </div> #}
+    </div>
     <div class="row" style="margin-bottom:100px;">
         <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
     </div>
