@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use App\Entity\IdCard;
 use App\Entity\Resume;
 use App\Entity\Profile;
 use App\Entity\Student;
@@ -87,9 +88,15 @@ class StudentFixtures extends Fixture
             $resume->setOriginalFilename('https://picsum.photos/536/354');
             $resume->setMimeType('pdf');
 
+            $IdCard = new IdCard;
+            $IdCard->setFileName('https://picsum.photos/536/354');
+            $IdCard->setOriginalFilename('https://picsum.photos/536/354');
+            $IdCard->setMimeType('pdf');
+
             $student->setUser($user);
             $student->setProfile($profile);
             $student->setResume($resume);
+            $student->setIdCard($IdCard);
 
             $manager->persist($user);
             $manager->persist($student);
