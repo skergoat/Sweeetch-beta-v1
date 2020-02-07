@@ -70,6 +70,12 @@ class UploaderHelper
         return $newFilename;
     }
 
+    // delete file when delete entity 
+    public function deleteFile($fileName)
+    {
+        $this->privateFilesystem->delete($fileName);
+    }
+
     private function uploads(UploadedFile $uploadedFile, string $directory, bool $isPublic)
     {
         if ($uploadedFile instanceof UploadedFile) {
