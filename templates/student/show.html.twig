@@ -109,17 +109,37 @@
         <tbody>
             <tr>
                 <td><strong>Mon CV</strong></td>
+                <td><strong>Ma Carte d'identite</strong></td>
+                <td><strong>Ma Carte d'etudiant</strong></td>
             </tr>
             <tr>
                 <td>
                     
                     <span>
-                        <a href="{{ path('student_download_document', { id: student.resume.id }) }}"><span class="fa fa-download">{{ student.resume.originalFilename }}</span></a>
+                        <a href="{{ path('student_download_resume', { id: student.resume.id }) }}"><span class="fa fa-download">{{ student.resume.originalFilename }}</span></a>
                     </span>
-                    <!-- temporary -->
+                    {# <!-- temporary -->
                     <a href="{{ uploaded_asset(student.resume.fileName) }}" target="_blank">
                         <img class="show-article-img" src="{{ student.resume.fileName|imagine_filter('squared_thumbnail_small') }}" alt=""/>
-                    </a>
+                    </a> #}
+                </td>
+                <td>   
+                    <span>
+                        <a href="{{ path('student_download_idcard', { id: student.idCard.id }) }}"><span class="fa fa-download">{{ student.idCard.originalFilename }}</span></a>
+                    </span>
+                    {# <!-- temporary -->
+                    <a href="{{ uploaded_asset(student.resume.fileName) }}" target="_blank">
+                        <img class="show-article-img" src="{{ student.resume.fileName|imagine_filter('squared_thumbnail_small') }}" alt=""/>
+                    </a> #}
+                </td>
+                <td>   
+                    <span>
+                        <a href="{{ path('student_download_studentcard', { id: student.studentCard.id }) }}"><span class="fa fa-download">{{ student.studentCard.originalFilename }}</span></a>
+                    </span>
+                    {# <!-- temporary -->
+                    <a href="{{ uploaded_asset(student.resume.fileName) }}" target="_blank">
+                        <img class="show-article-img" src="{{ student.resume.fileName|imagine_filter('squared_thumbnail_small') }}" alt=""/>
+                    </a> #}
                 </td>
             </tr>
         </tbody>
