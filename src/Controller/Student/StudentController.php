@@ -73,19 +73,30 @@ class StudentController extends AbstractController
 
             $student = $form->getData();
 
-           // upload resume temporary
-            $uploadedFile = $form['resume']['file']->getData();
-             
-            if($uploadedFile) {
-                $newFilename = $uploaderHelper->uploadPrivateFile($uploadedFile, $student->getResume()->getFilename());
+            // get uploaded files name 
+            $keys = array_keys($request->files->get('student'));
+          
+            foreach($keys as $key) {
 
-                $resume = new Resume;
-                $resume->setFileName($newFilename);
-                $resume->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $newFilename);
-                $resume->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');
-                $student->setResume($resume);
+                $uploadedFile = $form[$key]['file']->getData();
+
+                $entity = $form['resume']->getName();
+                $get = 'get' . ucfirst($entity); 
+                $set = 'set' . ucfirst($entity);
+                $class = "App\Entity\\" . ucfirst($entity);
+             
+                if($uploadedFile) {
+                    $newFilename = $uploaderHelper->uploadPrivateFile($uploadedFile, $student->$get()->getFilename());
+
+                    $document = new $class;
+                    $document->setFileName($newFilename);
+                    $document->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $newFilename);
+                    $document->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');
+                    $student->$set($document);
+                }
+
             }
-            
+
             // set roles 
             $user = $student->getUser();
             $user->setRoles(['ROLE_STUDENT']);
