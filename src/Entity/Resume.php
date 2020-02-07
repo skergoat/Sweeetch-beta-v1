@@ -20,7 +20,7 @@ class Resume
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $url;
+    private $fileName;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Student", mappedBy="resume", cascade={"persist", "remove"})
@@ -44,17 +44,17 @@ class Resume
         return $this->id;
     }
 
-    public function getUrl(): ?string
+    public function getFileName(): ?string
     {   
         // public 
         // return UploaderHelper::STUDENT_IMAGE.'/'.$this->url;
         // private 
-        return UploaderHelper::STUDENT_DOCUMENT.'/'.$this->url;
+        return UploaderHelper::STUDENT_DOCUMENT.'/'.$this->fileName;
     }
 
-    public function setUrl(string $url): self
+    public function setFileName(string $fileName): self
     {
-        $this->url = $url;
+        $this->fileName = $fileName;
 
         return $this;
     }
