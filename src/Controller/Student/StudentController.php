@@ -105,7 +105,6 @@ class StudentController extends AbstractController
     }
 
 
-    
     /**
      * @Route("/new", name="student_new", methods={"GET","POST"})
      */
@@ -142,8 +141,8 @@ class StudentController extends AbstractController
                 
                 $student->$set($document);
                
-            }                 
-
+            }  
+            
             // set roles 
             $user = $student->getUser();
             $user->setRoles(['ROLE_STUDENT']);
