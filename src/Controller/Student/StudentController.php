@@ -237,7 +237,9 @@ class StudentController extends AbstractController
             {
                 $get = 'get' . $entity;
                 $fileName = $student->$get()->getFileName();
-                $uploaderHelper->deleteFile($fileName);
+                if($fileName) {
+                    $uploaderHelper->deleteFile($fileName);
+                } 
             }
 
             $entityManager = $this->getDoctrine()->getManager();
