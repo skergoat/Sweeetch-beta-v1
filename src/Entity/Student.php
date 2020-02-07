@@ -75,11 +75,6 @@ class Student
      */
     private $resume;
 
-    
-    public function __construct()
-    {
-        $this->studentReferences = new ArrayCollection();
-    }
 
 
     public function getId(): ?int
