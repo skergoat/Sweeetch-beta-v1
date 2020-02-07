@@ -17,9 +17,9 @@
              {# {{ form_row(form.resume.file2, {'attr' : { class: 'form-control' }} ) }} #}
         <div class="col-sm-3">
         <div class="col-sm-3">
-            {% if form.vars.data.resume.url|default %}
-            <a href="{{ uploaded_asset(form.vars.data.resume.url) }}" target="_blank">
-                <img class="show-article-img" src="{{ form.vars.data.resume.url|imagine_filter('squared_thumbnail_x_small') }}" alt=""/>
+            {% if form.vars.data.resume.fileName|default %}
+            <a href="{{ uploaded_asset(form.vars.data.resume.fileName) }}" target="_blank">
+                <img class="show-article-img" src="{{ form.vars.data.resume.fileName|imagine_filter('squared_thumbnail_x_small') }}" alt=""/>
             </a>
             {% endif %}
         </div>
