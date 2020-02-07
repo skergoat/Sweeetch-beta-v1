@@ -13,6 +13,8 @@ use App\Repository\StudentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\HeaderUtils;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -34,6 +36,31 @@ class StudentController extends AbstractController
     }
 
     /**
+     * @Route("/student/{id}/download", name="student_download_document", methods={"GET"})
+     */
+    public function downloadDocuments(Resume $resume, UploaderHelper $uploaderHelper)
+    {
+        // $resume = $reference->getArticle();
+        // $this->denyAccessUnlessGranted('STUDENT', $article);
+
+        $response = new StreamedResponse(function() use ($resume, $uploaderHelper) {
+            $outputStream = fopen('php://output', 'wb');
+            $fileStream = $uploaderHelper->readStream($resume->getUrl(), false);
+
+            stream_copy_to_stream($fileStream, $outputStream);
+        });
+
+        // $disposition = HeaderUtils::makeDisposition(
+        //     HeaderUtils::DISPOSITION_ATTACHMENT,
+        //     $resume->getOriginalFilename()
+        // );
+
+        $response->headers->set('Content-Type', $resume->getMimeType());
+        // $response->headers->set('Content-Disposition', $disposition);
+        return $response;
+    }
+
+    /**
      * @Route("/new", name="student_new", methods={"GET","POST"})
      */
     public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder, UploaderHelper $uploaderHelper): Response
@@ -48,6 +75,7 @@ class StudentController extends AbstractController
 
            // upload resume temporary
             $uploadedFile = $form['resume']['file']->getData();
+             
             if($uploadedFile) {
                 $newFilename = $uploaderHelper->uploadPrivateFile($uploadedFile, $student->getResume()->getUrl());
 
