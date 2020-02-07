@@ -10,6 +10,7 @@ use App\Entity\Student;
 use App\Entity\Language;
 use App\Entity\Education;
 use App\Entity\StudentCard;
+use App\Entity\ProofHabitation;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -99,11 +100,17 @@ class StudentFixtures extends Fixture
             $studentCard->setOriginalFilename('https://picsum.photos/536/354');
             $studentCard->setMimeType('pdf');
 
+            $proofHabitation = new ProofHabitation;
+            $proofHabitation->setFileName('https://picsum.photos/536/354');
+            $proofHabitation->setOriginalFilename('https://picsum.photos/536/354');
+            $proofHabitation->setMimeType('pdf');
+
             $student->setUser($user);
             $student->setProfile($profile);
             $student->setResume($resume);
             $student->setIdCard($IdCard);
             $student->setStudentCard($studentCard);
+            $student->setProofHabitation($proofHabitation);
 
             $manager->persist($user);
             $manager->persist($student);
