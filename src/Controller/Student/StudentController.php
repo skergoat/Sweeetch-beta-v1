@@ -8,6 +8,7 @@ use App\Entity\Profile;
 use App\Entity\Student;
 use App\Form\StudentType;
 use App\Entity\StudentCard;
+use App\Entity\ProofHabitation;
 use App\Service\UploaderHelper;
 use Gedmo\Sluggable\Util\Urlizer;
 use App\Repository\UserRepository;
@@ -89,6 +90,16 @@ class StudentController extends AbstractController
     public function downloadStudentCard(StudentCard $studentcard, UploaderHelper $uploaderHelper)
     {
         $response = $this->downloadDocuments($studentcard, $uploaderHelper); 
+
+        return $response;
+    }
+
+     /**
+     * @Route("/proofhabitation/{id}/download", name="student_download_proofhabitation", methods={"GET"})
+     */
+    public function downloadProofHabitation(ProofHabitation $proofHabitation, UploaderHelper $uploaderHelper)
+    {
+        $response = $this->downloadDocuments($proofHabitation, $uploaderHelper); 
 
         return $response;
     }

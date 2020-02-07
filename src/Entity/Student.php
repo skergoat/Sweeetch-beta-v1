@@ -87,6 +87,12 @@ class Student
      */
     private $studentCard;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\ProofHabitation", inversedBy="student", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $proofHabitation;
+
 
 
     public function getId(): ?int
@@ -255,5 +261,16 @@ class Student
         return $this;
     }
 
+    public function getProofHabitation(): ?ProofHabitation
+    {
+        return $this->proofHabitation;
+    }
+
+    public function setProofHabitation(ProofHabitation $proofHabitation): self
+    {
+        $this->proofHabitation = $proofHabitation;
+
+        return $this;
+    }
 
 }

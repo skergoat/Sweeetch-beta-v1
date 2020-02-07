@@ -6,6 +6,7 @@ use App\Form\UserType;
 use App\Entity\Student;
 use App\Form\IdCardType;
 use App\Form\ResumeType;
+use App\Form\ProofHabitationType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -34,6 +35,7 @@ class StudentType extends AbstractType
             ->add('resume', ResumeType::class)
             ->add('idCard', IdCardType::class)
             ->add('studentCard', StudentCardType::class)
+            ->add('proofHabitation', ProofHabitationType::class)
         ;   
     }
 
