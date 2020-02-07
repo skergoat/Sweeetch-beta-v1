@@ -80,22 +80,23 @@ class StudentController extends AbstractController
 
                 $uploadedFile = $form[$key]['file']->getData();
 
-                $entity = $form['resume']->getName();
+                $entity = $form[$key]->getName();
                 $get = 'get' . ucfirst($entity); 
                 $set = 'set' . ucfirst($entity);
                 $class = "App\Entity\\" . ucfirst($entity);
-             
-                if($uploadedFile) {
-                    $newFilename = $uploaderHelper->uploadPrivateFile($uploadedFile, $student->$get()->getFilename());
 
+                if($uploadedFile) {
+                    $newFilename = $uploaderHelper->uploadPrivateFile($uploadedFile, $student->$get()->getFileName());
+                    
                     $document = new $class;
                     $document->setFileName($newFilename);
                     $document->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $newFilename);
-                    $document->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');
-                    $student->$set($document);
-                }
-
-            }
+                    $document->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');                    
+                } 
+                
+                $student->$set($document);
+               
+            }                 
 
             // set roles 
             $user = $student->getUser();
