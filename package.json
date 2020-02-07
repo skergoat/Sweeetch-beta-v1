@@ -3,7 +3,6 @@
         "@symfony/webpack-encore": "^0.28.2",
         "bootstrap": "^4.4.1",
         "core-js": "^3.0.0",
-        "font-awesome": "^4.7.0",
         "jquery": "^3.4.1",
         "node-sass": "^4.13.1",
         "popper.js": "^1.16.1",
@@ -20,6 +19,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
-        "animate.css": "^3.7.2"
+        "animate.css": "^3.7.2",
+        "font-awesome": "^4.7.0"
     }
 }

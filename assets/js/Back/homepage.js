@@ -24,3 +24,4 @@ import $ from 'jquery';
 
 // bootstrap 
 import 'bootstrap';
+// import 'font-awesome';

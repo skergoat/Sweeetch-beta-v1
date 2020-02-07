@@ -14,7 +14,6 @@
         <thead>
             <tr>
                 <th>Email</th>
-                <th>Name</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -22,10 +21,10 @@
         {% for user in user %}
             <tr>
                 <td>{{ user.email }}</td>
-                <td>{{ user.student.name }}</td>
                 <td class="actions">
-                    <a href="{{ path('student_show', {'id': user.student.id}) }}">show</a>
+                    <a href="{{ path('student_show', {'id': user.student.id}) }}" ><i class="fa fa-eye"></i></a>
                     {{ include('back/_confirm_form.html.twig') }}
+                    <a href="" style="color:red;"><i class="fa fa-ban" title="signaler un probleme" style="color:red;font-size:20px;"></i></a>
                 </td>
             </tr>
         {% else %}

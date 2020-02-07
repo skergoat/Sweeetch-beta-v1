@@ -70,12 +70,6 @@ class UploaderHelper
         return $newFilename;
     }
 
-    // delete file when delete entity 
-    public function deleteFile($fileName)
-    {
-        $this->privateFilesystem->delete($fileName);
-    }
-
     private function uploads(UploadedFile $uploadedFile, string $directory, bool $isPublic)
     {
         if ($uploadedFile instanceof UploadedFile) {
@@ -103,6 +97,18 @@ class UploaderHelper
         }
 
         return $newFilename;
+    }
+
+    // delete file when delete entity 
+    public function deleteFile($fileName)
+    {
+       try {      
+            $result = $this->privateFilesystem->delete($fileName);
+
+        } catch (FileNotFoundException $e) {
+            // throw new \Exception('pas possible');
+            $this->logger->alert(sprintf('Old uploaded file "%s" was missing when trying to delete', $fileName));
+        }
     }
 
     /**

@@ -63,18 +63,6 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/confirm/{id}", name="user_confirm", methods={"POST"})
-     */
-    public function confirm(User $user, UserRepository $userRepository): Response
-    {         
-        $user->setRoles(['ROLE_SUPER_STUDENT']); 
-        
-        $this->getDoctrine()->getManager()->flush();
-
-        return $this->redirectToRoute('admin');
-    }
-
-    /**
      * @Route("/{id}", name="user_show", methods={"GET"})
      */
     public function show(User $user): Response
