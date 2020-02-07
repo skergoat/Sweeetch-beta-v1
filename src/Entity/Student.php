@@ -81,6 +81,12 @@ class Student
      */
     private $idCard;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\StudentCard", inversedBy="student", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $studentCard;
+
 
 
     public function getId(): ?int
@@ -233,6 +239,18 @@ class Student
         if ($idCard->getStudent() !== $this) {
             $idCard->setStudent($this);
         }
+
+        return $this;
+    }
+
+    public function getStudentCard(): ?StudentCard
+    {
+        return $this->studentCard;
+    }
+
+    public function setStudentCard(?StudentCard $studentCard): self
+    {
+        $this->studentCard = $studentCard;
 
         return $this;
     }

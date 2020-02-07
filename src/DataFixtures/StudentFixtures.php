@@ -9,6 +9,7 @@ use App\Entity\Profile;
 use App\Entity\Student;
 use App\Entity\Language;
 use App\Entity\Education;
+use App\Entity\StudentCard;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -93,10 +94,16 @@ class StudentFixtures extends Fixture
             $IdCard->setOriginalFilename('https://picsum.photos/536/354');
             $IdCard->setMimeType('pdf');
 
+            $studentCard = new StudentCard;
+            $studentCard->setFileName('https://picsum.photos/536/354');
+            $studentCard->setOriginalFilename('https://picsum.photos/536/354');
+            $studentCard->setMimeType('pdf');
+
             $student->setUser($user);
             $student->setProfile($profile);
             $student->setResume($resume);
             $student->setIdCard($IdCard);
+            $student->setStudentCard($studentCard);
 
             $manager->persist($user);
             $manager->persist($student);

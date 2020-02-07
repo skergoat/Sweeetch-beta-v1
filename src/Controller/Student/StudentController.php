@@ -2,13 +2,16 @@
 
 namespace App\Controller\Student;
 
+use App\Entity\IdCard;
 use App\Entity\Resume;
 use App\Entity\Profile;
 use App\Entity\Student;
 use App\Form\StudentType;
+use App\Entity\StudentCard;
 use App\Service\UploaderHelper;
 use Gedmo\Sluggable\Util\Urlizer;
 use App\Repository\UserRepository;
+use App\Repository\ResumeRepository;
 use App\Repository\StudentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,10 +38,9 @@ class StudentController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/student/{id}/download", name="student_download_document", methods={"GET"})
-     */
-    public function downloadDocuments(Resume $resume, UploaderHelper $uploaderHelper)
+    
+
+    public function downloadDocuments($resume, UploaderHelper $uploaderHelper) 
     {
         // $resume = $reference->getArticle();
         // $this->denyAccessUnlessGranted('STUDENT', $article);
@@ -58,8 +60,41 @@ class StudentController extends AbstractController
         $response->headers->set('Content-Type', $resume->getMimeType());
         // $response->headers->set('Content-Disposition', $disposition);
         return $response;
+        
     }
 
+    /**
+     * @Route("/resume/{id}/download", name="student_download_resume", methods={"GET"})
+     */
+    public function downloadResume(Resume $resume, UploaderHelper $uploaderHelper)
+    {
+        $response = $this->downloadDocuments($resume, $uploaderHelper); 
+        
+        return $response;
+    }
+
+    /**
+     * @Route("/idcard/{id}/download", name="student_download_idcard", methods={"GET"})
+     */
+    public function downloadIdCard(IdCard $idcard, UploaderHelper $uploaderHelper)
+    {
+        $response = $this->downloadDocuments($idcard, $uploaderHelper); 
+
+        return $response;
+    }
+
+     /**
+     * @Route("/studentcard/{id}/download", name="student_download_studentcard", methods={"GET"})
+     */
+    public function downloadStudentCard(StudentCard $studentcard, UploaderHelper $uploaderHelper)
+    {
+        $response = $this->downloadDocuments($studentcard, $uploaderHelper); 
+
+        return $response;
+    }
+
+
+    
     /**
      * @Route("/new", name="student_new", methods={"GET","POST"})
      */
