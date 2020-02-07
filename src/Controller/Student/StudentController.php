@@ -28,6 +28,9 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class StudentController extends AbstractController
 {
+
+    private $entities = ['Resume', 'IdCard', 'StudentCard', 'ProofHabitation'];
+
     /**
      * @Route("/", name="student_index", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
@@ -38,8 +41,6 @@ class StudentController extends AbstractController
             'students' => $studentRepository->findAll(),
         ]);
     }
-
-    
 
     public function downloadDocuments($resume, UploaderHelper $uploaderHelper) 
     {
@@ -227,14 +228,23 @@ class StudentController extends AbstractController
      * @Route("/{id}", name="student_delete", methods={"DELETE"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function delete(Request $request, Student $student): Response
+    public function delete(Request $request, Student $student, UploaderHelper $uploaderHelper): Response
     {
         if ($this->isCsrfTokenValid('delete'.$student->getId(), $request->request->get('_token'))) {
+
+            // delete private files when delete entity
+            foreach($this->entities as $entity)
+            {
+                $get = 'get' . $entity;
+                $fileName = $student->$get()->getFileName();
+                $uploaderHelper->deleteFile($fileName);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($student);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('student_index');
+        return $this->redirectToRoute('app_login');
     }
 }

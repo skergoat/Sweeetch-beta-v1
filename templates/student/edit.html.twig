@@ -5,7 +5,8 @@
 {% block body %}
     <h1>Mes Informations</h1>
 
+    {{ include('student/_delete_form.html.twig') }}
+
     {{ include('student/_form.html.twig', {'button_label': 'Update'}) }}
 
-    {{ include('student/_delete_form.html.twig') }}
 {% endblock %}
