@@ -45,7 +45,7 @@ class StudentController extends AbstractController
 
         $response = new StreamedResponse(function() use ($resume, $uploaderHelper) {
             $outputStream = fopen('php://output', 'wb');
-            $fileStream = $uploaderHelper->readStream($resume->getUrl(), false);
+            $fileStream = $uploaderHelper->readStream($resume->getFileName(), false);
 
             stream_copy_to_stream($fileStream, $outputStream);
         });
@@ -77,10 +77,10 @@ class StudentController extends AbstractController
             $uploadedFile = $form['resume']['file']->getData();
              
             if($uploadedFile) {
-                $newFilename = $uploaderHelper->uploadPrivateFile($uploadedFile, $student->getResume()->getUrl());
+                $newFilename = $uploaderHelper->uploadPrivateFile($uploadedFile, $student->getResume()->getFilename());
 
                 $resume = new Resume;
-                $resume->setUrl($newFilename);
+                $resume->setFileName($newFilename);
                 $resume->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $newFilename);
                 $resume->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');
                 $student->setResume($resume);
@@ -140,10 +140,10 @@ class StudentController extends AbstractController
             // upload resume temporary
             $uploadedFile = $form['resume']['file']->getData();
             if($uploadedFile) {
-                $newFilename = $uploaderHelper->uploadPrivateFile($uploadedFile, $student->getResume()->getUrl());
+                $newFilename = $uploaderHelper->uploadPrivateFile($uploadedFile, $student->getResume()->getFilename());
 
                 $resume = $form->getData()->getResume();
-                $resume->setUrl($newFilename);
+                $resume->setFilename($newFilename);
                 $resume->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $newFilename);
                 $resume->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');
                 $student->setResume($resume);

@@ -83,7 +83,7 @@ class StudentFixtures extends Fixture
                 $manager->persist($education2);
             
             $resume = new Resume;
-            $resume->setUrl('https://picsum.photos/536/354');
+            $resume->setFileName('https://picsum.photos/536/354');
             $resume->setOriginalFilename('https://picsum.photos/536/354');
             $resume->setMimeType('pdf');
 
