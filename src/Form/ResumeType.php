@@ -43,6 +43,11 @@ class ResumeType extends AbstractType
                 'mapped' => false,
                 'constraints' => $imageConstraints
             ]);
+
+            // ->add('file2', FileType::class, [
+            //     'mapped' => false,
+            //     'constraints' => $imageConstraints
+            // ]);
             // ->add('description')
             // ->add('student')
 

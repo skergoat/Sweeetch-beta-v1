@@ -45,8 +45,11 @@ class Resume
     }
 
     public function getUrl(): ?string
-    {
-        return UploaderHelper::STUDENT_IMAGE.'/'.$this->url;
+    {   
+        // public 
+        // return UploaderHelper::STUDENT_IMAGE.'/'.$this->url;
+        // private 
+        return UploaderHelper::STUDENT_DOCUMENT.'/'.$this->url;
     }
 
     public function setUrl(string $url): self
