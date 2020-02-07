@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Form\UserType;
 use App\Entity\Student;
+use App\Form\IdCardType;
 use App\Form\ResumeType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -31,6 +32,7 @@ class StudentType extends AbstractType
                 'required' => false
             ])
             ->add('resume', ResumeType::class)
+            ->add('idCard', IdCardType::class)
         ;   
     }
 
