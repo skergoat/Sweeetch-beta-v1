@@ -75,6 +75,12 @@ class Student
      */
     private $resume;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\IdCard", inversedBy="student", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $idCard;
+
 
 
     public function getId(): ?int
@@ -210,6 +216,23 @@ class Student
     public function setResume(Resume $resume): self
     {
         $this->resume = $resume;
+
+        return $this;
+    }
+
+    public function getIdCard(): ?IdCard
+    {
+        return $this->idCard;
+    }
+
+    public function setIdCard(IdCard $idCard): self
+    {
+        $this->idCard = $idCard;
+
+        // set the owning side of the relation if necessary
+        if ($idCard->getStudent() !== $this) {
+            $idCard->setStudent($this);
+        }
 
         return $this;
     }
