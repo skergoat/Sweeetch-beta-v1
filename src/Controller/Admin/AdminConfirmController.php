@@ -25,19 +25,6 @@ class AdminConfirmController extends AbstractController
         return $this->redirectToRoute('admin');
     }
 
-    //  /**
-    //  * @Route("admin/revert/{id}", name="revert_confirm", methods={"POST"})
-    //  * @IsGranted("ROLE_ADMIN")
-    //  */
-    // public function revertConfirm(User $user, UserRepository $userRepository): Response
-    // {         
-    //     $user->setRoles(['ROLE_STUDENT']); 
-        
-    //     $this->getDoctrine()->getManager()->flush();
-
-    //     return $this->redirectToRoute('admin');
-    // }
-
     /**
      * @Route("/sendwarning/{id}", name="sendwarning", methods={"POST"})
      */
