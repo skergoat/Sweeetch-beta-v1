@@ -18,7 +18,7 @@ class AdminController extends AbstractController
     {
         $user = $userRepository->findByRole('ROLE_STUDENT');
         
-        return $this->render('admin/index.html.twig', [
+        return $this->render('back/index.html.twig', [
             'user' => $user
         ]);
     }
