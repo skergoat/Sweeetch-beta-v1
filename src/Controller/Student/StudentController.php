@@ -141,7 +141,6 @@ class StudentController extends AbstractController
                 } 
                 
                 $student->$set($document);
-               
             }  
             
             // set roles 
