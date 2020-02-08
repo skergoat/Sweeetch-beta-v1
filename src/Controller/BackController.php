@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller;
 
 use App\Repository\UserRepository;
 use Symfony\Component\Routing\Annotation\Route;
@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
-class AdminController extends AbstractController
+class BackController extends AbstractController
 {
     /**
      * @Route("/admin", name="admin")

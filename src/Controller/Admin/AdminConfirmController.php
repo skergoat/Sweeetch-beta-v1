@@ -3,11 +3,14 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
+use Symfony\Component\Mime\Email;
 use App\Repository\UserRepository;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminConfirmController extends AbstractController
@@ -28,7 +31,7 @@ class AdminConfirmController extends AbstractController
     /**
      * @Route("/sendwarning/{id}", name="sendwarning", methods={"POST"})
      */
-    public function sendmail(User $user, Request $request)
+    public function sendmail(MailerInterface $mailer, User $user, Request $request)
     {
         if($user->getRoles() == ['ROLE_SUPER_STUDENT']) {
             $user->setRoles(['ROLE_STUDENT']); 
@@ -38,38 +41,41 @@ class AdminConfirmController extends AbstractController
         $parameters = $request->request->all();
        
         $email = $parameters['email'];
-
-        $message = 'Bonjour, <br/><br/> Il semblerait que les documents suivants ne soient pas valides : <ul>';
+        $array = [];
 
         if(isset($parameters['resume']) && $parameters['resume'] != NULL) {
-            $message .= '<li><strong>CV</strong></li>';
+            $array[] = 'CV';
         }
 
         if(isset($parameters['idCard']) && $parameters['idCard'] != NULL) {
-            $message .= '<li><strong>Carte d\'identite</strong></li>';
+            $array[] ='cart d\'identite';
         }
 
         if(isset($parameters['studentCard']) && $parameters['studentCard'] != NULL) {
-            $message .= '<li><strong>Carte d\'etudiant</strong></li>';
+            $array[] = 'carte d\'etudiant';
         }
 
-        if(isset($parameters['proofHabitation']) && $parameters['proofHabitation'] != NULL) {
-            $message .= '<li><strong>Justificatif de domicile</strong></li>';
+        if( isset($parameters['proofHabitation']) && $parameters['proofHabitation'] != NULL) {
+            $array[] = 'justificatif de domicile';
         }
 
-        $message .= 
-        ' 
-            </ul>
-            <p>Pour benficier de toutes les fonctionnalites de votre comptes, il est tres important que vous mettiez ces documents a jours.</p>
-            <p> Cordialement,</p> 
-            <p><strong>L\'equipe de Sweetch</strong></p>
-        ';
+        $parameters['message'] != '' ? $message = $parameters['message'] : $message = '';
+       
+        // $mail = (new Email())
+        $mail = (new TemplatedEmail())
+            ->from('alienmailcarrier@example.com')
+            ->to($email)
+            ->subject('Welcome to the Space Bar!')
+            ->htmlTemplate('email/warning.html.twig')
+            ->context([
+                'message' => $message,
+                'array' => $array
+            ]); 
+            // ->html($message);
+        
+        $mailer->send($mail);
 
-        if($message != '') {
-            $message .= '<br/><h4>Note personnelle :</h4> <p>' . $parameters['message'] . '</p>';
-        }
-
-        return new Response($email . '<br><br>' . $message);
+        return $this->redirectToRoute('admin');
         
     }
 
