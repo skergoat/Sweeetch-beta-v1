@@ -3,12 +3,13 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
+use App\Service\Mailer;
 use Symfony\Component\Mime\Email;
 use App\Repository\UserRepository;
 use Symfony\Component\Mime\Address;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Mailer\MailerInterface;
+// use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -32,7 +33,7 @@ class AdminConfirmController extends AbstractController
     /**
      * @Route("/sendwarning/{id}", name="sendwarning", methods={"POST"})
      */
-    public function sendmail(MailerInterface $mailer, User $user, Request $request)
+    public function sendmail(Mailer $mailer, User $user, Request $request)
     {
         if($user->getRoles() == ['ROLE_SUPER_STUDENT']) {
             $user->setRoles(['ROLE_STUDENT']); 
@@ -61,20 +62,22 @@ class AdminConfirmController extends AbstractController
         }
 
         $parameters['message'] != '' ? $message = $parameters['message'] : $message = '';
+
+        $mailer->sendWarningMessage($user, $email, $array, $message);
        
-        // $mail = (new Email())
-        $mail = (new TemplatedEmail())
-            ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
-            ->to(new Address($email, $user->getStudent()->getName()))
-            ->subject('Problems with docs')
-            ->htmlTemplate('email/warning.html.twig')
-            ->context([
-                'message' => $message,
-                'array' => $array
-            ]); 
-            // ->html($message);
+        // // $mail = (new Email())
+        // $mail = (new TemplatedEmail())
+        //     ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
+        //     ->to(new Address($email, $user->getStudent()->getName()))
+        //     ->subject('Problems with docs')
+        //     ->htmlTemplate('email/warning.html.twig')
+        //     ->context([
+        //         'message' => $message,
+        //         'array' => $array
+        //     ]); 
+        //     // ->html($message);
         
-        $mailer->send($mail);
+        // $mailer->send($mail);
 
         return $this->redirectToRoute('admin');
         

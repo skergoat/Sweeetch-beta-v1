@@ -1,3 +1,5 @@
+{% apply inline_css(source('@styles/_email.scss')) %}
+
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
@@ -8,6 +10,9 @@
     <title>{{ email.subject }}</title> <!-- The title tag shows in email notifications, like Android 4.4. -->
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <style>
+        {# p { color:green;} #}
+    </style>
 </head>
     <body>
 
@@ -32,5 +37,9 @@
             <p>{{ message }}</p>
         {% endif %}
 
+        <img src="{{ email.image('@images/team-4.jpg') }}" />
+
     </body>
 </html>
+
+{% endapply %}
