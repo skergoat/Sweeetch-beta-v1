@@ -1,4 +1,0 @@
-<form method="post" action="{{ path('admin_confirm', {'id': user.id}) }}" onsubmit="return confirm('Are you sure you want to confirm this user ?');">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.student.id) }}">
-    <button style="color:green;background:white;border:0px;"><i style="color:green;font-size:20px;" class="fa fa-check" title="confirmer"></i></button>
-</form>

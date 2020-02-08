@@ -8,7 +8,6 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Email</th>
                 <th>actions</th>
             </tr>
@@ -16,16 +15,19 @@
         <tbody>
         {% for student in students %}
             <tr>
-                <td>{{ student.id }}</td>
-                <td>{{ student.user.email }}</td>
+                <td class="email-{{ student.user.id }}">{{ student.user.email }}</td>
                 <td class="actions">
-                    <div style="margin-right:20px;">
+                    <div style="margin-right:20px;" class="actions">
                         <a href="{{ path('student_show', {'id': student.id}) }}">show</a>
                         <a href="{{ path('student_edit', {'id': student.id}) }}">edit</a>
-                        {% if student.user.roles == 'ROLE_STUDENT' %}
-                            {{ include('back/_confirm_form.html.twig') }}
+                        {% if student.user.roles == ['ROLE_STUDENT'] %}
+                            <form method="post" action="{{ path('admin_confirm', {'id': student.user.id}) }}" onsubmit="return confirm('Are you sure you want to confirm this user ?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ student.user.id) }}">
+                                <button style="color:purple;background:white;border:0px;">confirm</button>
+                            </form>
+                            <a href="" style="color:red;"><i class="fa fa-ban warning" title="signaler un probleme" style="color:red;font-size:20px;" data-url="{{ student.user.id }}"></i></a>
                         {% else %}
-                            <a href="">Pobleme</a>
+                            <a href="" style="color:red;"><i class="fa fa-ban warning" title="signaler un probleme" style="color:red;font-size:20px;" data-url="{{ student.user.id }}"></i></a>
                         {% endif %}
                     </div>
                     {{ include('student/_delete_form.html.twig') }}
@@ -38,5 +40,8 @@
         {% endfor %}
         </tbody>
     </table>
+
+    {{ include('back/_warning_form.html.twig') }}
+
 
 {% endblock %}
