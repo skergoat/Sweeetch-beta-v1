@@ -1,0 +1,33 @@
+ <div id="form-show" class="warningform hidden jumbotron">
+        <div class="warningform__form">
+            <h4 style="text-align:center;">Signaler un Probleme</h4>
+            <form method="post" action="" class="form" id="warning-form" style="width:500px;margin:auto;">
+
+                <label> Email</label>
+                <input type="text" class="form-control"  style="margin-bottom:20px;" id="email" name="email">
+
+                <h5 style="text-align:center;">Cochez les problemes : </h5>
+                <div class="warningform__check__checkbox" style="display:flex;justify-content:center;">
+                    <div class="warningform__check__checkbox--container">
+                        <label><input type="checkbox" class="form-control check-documents" name="resume" style="margin-right:30px;"> CV</label>
+                    </div>
+                    <div class="warningform__check__checkbox--container">
+                        <label> <input type="checkbox" class="form-control check-documents" name="idCard">Carte d'identite</label>
+                    </div>
+                </div>
+                <div class="warningform__check__checkbox" style="display:flex;justify-content:center;margin-bottom:30px;" >
+                    <div class="warningform__check__checkbox--container">
+                        <label><input type="checkbox" class="form-control check-documents" name="studentCard" style="margin-right:30px;"> Carte d'etudiant</label>
+                    </div>
+                    <div class="warningform__check__checkbox--container">
+                        <label><input type="checkbox" class="form-control check-documents" name="proofHabitation">  Justificatif de domicile</label>
+                    </div>
+                </div>
+                
+                <label> Message (facultatif)</label>
+                <textarea class="form-control" id="message" rows="5" name="message"></textarea>
+
+                <button class="btn btn-primary" type="submit">Envoyer</button>
+            </form>
+        </div>
+    </div>
