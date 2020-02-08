@@ -55,4 +55,32 @@ bash-3.2$ bin/console doctrine:fixtures:load
    [33m>[39m [32mloading App\DataFixtures\UserFixture[39m
 bash-3.2$ git branch -d test-2
 Deleted branch test-2 (was aa4bda6).
-bash-3.2$ git branch te
+bash-3.2$ git branch test-2
+bash-3.2$ git checkout master 
+error: Your local changes to the following files would be overwritten by checkout:
+	cache:clear
+	src/Controller/Admin/AdminController.php
+Please commit your changes or stash them before you switch branches.
+Aborting
+bash-3.2$ git status 
+On branch test
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	[31mmodified:   cache:clear[m
+	[31mmodified:   src/Controller/Admin/AdminController.php[m
+
+no changes added to commit (use "git add" and/or "git commit -a")
+bash-3.2$ git merge test
+Already up to date.
+bash-3.2$ git ech[K[K[Kcheckout master 
+error: Your local changes to the following files would be overwritten by checkout:
+	cache:clear
+	src/Controller/Admin/AdminController.php
+Please commit your changes or stash them before you switch branches.
+Aborting
+bash-3.2$ git be[K[Ka[Kcommit -am ''c'h'e'c'k'o'u't'
+[test 02b6b0f] checkout
+ 2 files changed, 36 insertions(+), 2 deletions(-)
+bash-3.2$ git 
