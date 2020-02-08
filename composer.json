@@ -7,6 +7,7 @@
         "ext-iconv": "*",
         "doctrine/annotations": "^1.8",
         "gedmo/doctrine-extensions": "^2.4",
+        "league/html-to-markdown": "^4.9",
         "liip/imagine-bundle": "^2.3",
         "oneup/flysystem-bundle": "^3.4",
         "sensio/framework-extra-bundle": "^5.5",
@@ -24,7 +25,8 @@
         "symfony/twig-pack": "^1.0",
         "symfony/validator": "5.0.*",
         "symfony/webpack-encore-bundle": "^1.7",
-        "symfony/yaml": "5.0.*"
+        "symfony/yaml": "5.0.*",
+        "twig/cssinliner-extra": "^3.0"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.3",
