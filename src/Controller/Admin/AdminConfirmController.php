@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\User;
 use Symfony\Component\Mime\Email;
 use App\Repository\UserRepository;
+use Symfony\Component\Mime\Address;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
@@ -63,9 +64,9 @@ class AdminConfirmController extends AbstractController
        
         // $mail = (new Email())
         $mail = (new TemplatedEmail())
-            ->from('alienmailcarrier@example.com')
-            ->to($email)
-            ->subject('Welcome to the Space Bar!')
+            ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
+            ->to(new Address($email, $user->getStudent()->getName()))
+            ->subject('Problems with docs')
             ->htmlTemplate('email/warning.html.twig')
             ->context([
                 'message' => $message,
