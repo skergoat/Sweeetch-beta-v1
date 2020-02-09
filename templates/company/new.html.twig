@@ -3,9 +3,19 @@
 {% block title %} {{ parent() }} - students {% endblock %}
 
 {% block body %}
-    <h1>Create new Company</h1>
 
-    {{ include('company/_form.html.twig') }}
+    <div class="container">
 
-    <a href="{{ path('company_index') }}">back to list</a>
+        <nav class="main-nav d-none d-lg-block" style="display:flex !important;margin-bottom:50px;">
+            <ul>
+                <li class="active"><a href="/">Acceuil</a></li>
+                <li><a href="/login">CONNEXION</a></li> 
+            </ul>
+        </nav><!-- .main-nav -->
+
+        <h1>Create new Company</h1>
+
+        {{ include('company/_form.html.twig') }}
+
+    </div>
 {% endblock %}
