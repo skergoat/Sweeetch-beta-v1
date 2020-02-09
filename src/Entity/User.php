@@ -38,6 +38,11 @@ class User implements UserInterface
      */
     private $student;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Company", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $company;
+
 
     public function getId(): ?int
     {
@@ -133,5 +138,23 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function getCompany(): ?Company
+    {
+        return $this->company;
+    }
+
+    public function setCompany(Company $company): self
+    {
+        $this->company = $company;
+
+        // set the owning side of the relation if necessary
+        if ($company->getUser() !== $this) {
+            $company->setUser($this);
+        }
+
+        return $this;
+    }
+   
 
 }
