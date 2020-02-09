@@ -33,11 +33,19 @@ class AdminConfirmController extends AbstractController
     /**
      * @Route("/sendwarning/{id}", name="sendwarning", methods={"POST"})
      */
-    public function sendmail(Mailer $mailer, User $user, Request $request)
+    public function sendWarning(Mailer $mailer, User $user, Request $request)
     {
         if($user->getRoles() == ['ROLE_SUPER_STUDENT']) {
             $user->setRoles(['ROLE_STUDENT']); 
             $this->getDoctrine()->getManager()->flush();
+        }
+
+        if($user->getStudent() != null)
+        {
+            $name = $user->getStudent()->getName();
+        }
+        else {
+            $name = $user->getCompany()->getFirstname();
         }
 
         $parameters = $request->request->all();
@@ -67,7 +75,7 @@ class AdminConfirmController extends AbstractController
 
         $parameters['message'] != '' ? $message = $parameters['message'] : $message = '';
 
-        $mailer->sendWarningMessage($user, $email, $array, $message);
+        $mailer->sendWarningMessage($name, $email, $array, $message);
 
         return $this->redirectToRoute('admin');
         

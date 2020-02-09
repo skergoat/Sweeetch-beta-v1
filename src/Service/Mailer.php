@@ -16,12 +16,11 @@ class Mailer
         $this->mailer = $mailer;
     }
 
-    public function sendWarningMessage($user, $email, $array, $message)
+    public function sendWarningMessage($name, $email, $array, $message)
     {
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
-            // ->to(new Address($email, $user->getStudent()->getName()))
-            ->to(new Address($email))
+            ->to(new Address($email, $name))
             ->subject('Problems with docs')
             ->htmlTemplate('email/warning.html.twig')
             ->context([

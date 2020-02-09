@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -61,6 +63,16 @@ class Company
      * @ORM\Column(type="string", length=255)
      */
     private $companyName;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Offers", mappedBy="company")
+     */
+    private $offers;
+
+    public function __construct()
+    {
+        $this->offers = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -171,6 +183,37 @@ class Company
     public function setCompanyName(string $companyName): self
     {
         $this->companyName = $companyName;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Offers[]
+     */
+    public function getOffers(): Collection
+    {
+        return $this->offers;
+    }
+
+    public function addOffer(Offers $offer): self
+    {
+        if (!$this->offers->contains($offer)) {
+            $this->offers[] = $offer;
+            $offer->setCompany($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOffer(Offers $offer): self
+    {
+        if ($this->offers->contains($offer)) {
+            $this->offers->removeElement($offer);
+            // set the owning side to null (unless already changed)
+            if ($offer->getCompany() === $this) {
+                $offer->setCompany(null);
+            }
+        }
 
         return $this;
     }
