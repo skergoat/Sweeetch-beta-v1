@@ -60,7 +60,7 @@ class Company
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $CompanyName;
+    private $companyName;
 
     public function getId(): ?int
     {
@@ -165,12 +165,12 @@ class Company
 
     public function getCompanyName(): ?string
     {
-        return $this->CompanyName;
+        return $this->companyName;
     }
 
-    public function setCompanyName(string $CompanyName): self
+    public function setCompanyName(string $companyName): self
     {
-        $this->CompanyName = $CompanyName;
+        $this->companyName = $companyName;
 
         return $this;
     }
