@@ -57,6 +57,11 @@ class Company
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $CompanyName;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -154,6 +159,18 @@ class Company
     public function setUser(User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getCompanyName(): ?string
+    {
+        return $this->CompanyName;
+    }
+
+    public function setCompanyName(string $CompanyName): self
+    {
+        $this->CompanyName = $CompanyName;
 
         return $this;
     }

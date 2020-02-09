@@ -20,6 +20,7 @@ class CompanyFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $ca = new Company;
+        $ca->setCompanyName('Web Dev & Co.');
         $ca->setFirstname('Stephane');
         $ca->setLastname('Kergoat');
         $ca->setAddress('1 rue du chemin vert');

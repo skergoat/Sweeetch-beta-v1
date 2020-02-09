@@ -8,7 +8,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>Company Name</th>
                 <th>Firstname</th>
                 <th>Lastname</th>
                 <th>Address</th>
@@ -22,7 +22,7 @@
         <tbody>
         {% for company in companies %}
             <tr>
-                <td>{{ company.id }}</td>
+                <td>{{ company.companyName }}</td>
                 <td>{{ company.firstname }}</td>
                 <td>{{ company.lastname }}</td>
                 <td>{{ company.address }}</td>
