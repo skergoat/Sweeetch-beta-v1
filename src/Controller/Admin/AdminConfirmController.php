@@ -61,23 +61,13 @@ class AdminConfirmController extends AbstractController
             $array[] = 'justificatif de domicile';
         }
 
+        if( isset($parameters['siret']) && $parameters['siret'] != NULL) {
+            $array[] = 'numero de siret';
+        }
+
         $parameters['message'] != '' ? $message = $parameters['message'] : $message = '';
 
         $mailer->sendWarningMessage($user, $email, $array, $message);
-       
-        // // $mail = (new Email())
-        // $mail = (new TemplatedEmail())
-        //     ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
-        //     ->to(new Address($email, $user->getStudent()->getName()))
-        //     ->subject('Problems with docs')
-        //     ->htmlTemplate('email/warning.html.twig')
-        //     ->context([
-        //         'message' => $message,
-        //         'array' => $array
-        //     ]); 
-        //     // ->html($message);
-        
-        // $mailer->send($mail);
 
         return $this->redirectToRoute('admin');
         

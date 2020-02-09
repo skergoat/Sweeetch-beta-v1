@@ -20,7 +20,8 @@ class Mailer
     {
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
-            ->to(new Address($email, $user->getStudent()->getName()))
+            // ->to(new Address($email, $user->getStudent()->getName()))
+            ->to(new Address($email))
             ->subject('Problems with docs')
             ->htmlTemplate('email/warning.html.twig')
             ->context([
