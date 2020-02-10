@@ -20,9 +20,11 @@
                     {% if is_granted('ROLE_ADMIN') %}
                     <li><a href="/admin">ADMIN</a></li>
                     {% elseif  is_granted('ROLE_STUDENT') %}
-                    <li><a href="{{ path('company_show', {'id': app.user.student.id}) }}">MON ENTREPRISE</a></li>
+                    <li><a href="{{ path('student_show', {'id': app.user.student.id}) }}">MON PROFILE</a></li>
                     {% endif %}
                     <li><a href="/logout">DECONNEXION</a></li>
+                    {% else %}
+                    <li><a href="/login">CONNEXION</a></li>
                 {% endif %}
             </ul>
         </nav><!-- .main-nav -->
