@@ -93,6 +93,11 @@ class Student
      */
     private $proofHabitation;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Apply", mappedBy="student")
+     */
+    private $applies;
+
     // /**
     //  * @ORM\ManyToMany(targetEntity="App\Entity\Offers", mappedBy="student")
     //  */
@@ -101,6 +106,7 @@ class Student
     public function __construct()
     {
         $this->offers = new ArrayCollection();
+        $this->applies = new ArrayCollection();
     }
 
 
@@ -279,6 +285,37 @@ class Student
     public function setProofHabitation(ProofHabitation $proofHabitation): self
     {
         $this->proofHabitation = $proofHabitation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Apply[]
+     */
+    public function getApplies(): Collection
+    {
+        return $this->applies;
+    }
+
+    public function addApply(Apply $apply): self
+    {
+        if (!$this->applies->contains($apply)) {
+            $this->applies[] = $apply;
+            $apply->setStudent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApply(Apply $apply): self
+    {
+        if ($this->applies->contains($apply)) {
+            $this->applies->removeElement($apply);
+            // set the owning side to null (unless already changed)
+            if ($apply->getStudent() === $this) {
+                $apply->setStudent(null);
+            }
+        }
 
         return $this;
     }
