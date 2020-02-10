@@ -13,36 +13,36 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class ApplyController extends AbstractController
 {
-    /**
-     * @Route("/offers/{id}/student/{student_id}", name="apply", methods={"POST"})
-     * @ParamConverter("student", options={"id" = "student_id"})
-     */
-    public function apply(Offers $offers, Student $student)
-    {
-        $offers->addStudent($student);
-        $manager = $this->getDoctrine()->getManager()->flush();
+    // /**
+    //  * @Route("/offers/{id}/student/{student_id}", name="apply", methods={"POST"})
+    //  * @ParamConverter("student", options={"id" = "student_id"})
+    //  */
+    // public function apply(Offers $offers, Student $student)
+    // {
+    //     $offers->addStudent($student);
+    //     $manager = $this->getDoctrine()->getManager()->flush();
   
-        return $this->render('offers/show.html.twig', [
-            'controller_name' => 'ApplyController',
-            'offers' => $offers
-        ]);
-    }
+    //     return $this->render('offers/show.html.twig', [
+    //         'controller_name' => 'ApplyController',
+    //         'offers' => $offers
+    //     ]);
+    // }
 
-    /**
-     * @Route("/studentapply/{id}", name="student_apply", methods={"GET"})
-     */
-    public function studentApply(StudentRepository $repository, Student $student)
-    {
-        $repository->find($student->getId());
+    // /**
+    //  * @Route("/studentapply/{id}", name="student_apply", methods={"GET"})
+    //  */
+    // public function studentApply(StudentRepository $repository, Student $student)
+    // {
+    //     $repository->find($student->getId());
 
-        $offers = $student->getOffers();
+    //     $offers = $student->getOffers();
 
-        return $this->render('apply/index_student.html.twig', [
-            'controller_name' => 'ApplyController',
-            'offers' => $offers,
-            'student' => $student
-        ]);
-    }
+    //     return $this->render('apply/index_student.html.twig', [
+    //         'controller_name' => 'ApplyController',
+    //         'offers' => $offers,
+    //         'student' => $student
+    //     ]);
+    // }
 
     
     

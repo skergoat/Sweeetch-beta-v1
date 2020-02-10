@@ -9,7 +9,6 @@
 
     <h1> Liste des Postulations</h1>
 
-    {% for offer in offers %}
     <table class="table">
         <thead>
             <tr>
@@ -17,33 +16,30 @@
                 <th>Title</th>
                 <th>Location</th>
                 <th>Domain</th>
-                <th>DateStart</th>
-                <th>DateEnd</th>
-                <th>Description</th>
+                <th>State</th>
                 <th>actions</th>
             </tr>
         </thead>
-        <tbody>
         {% for offer in offers %}
+        <tbody>
             <tr>
                 <td>{{ offer.id }}</td>
                 <td>{{ offer.title }}</td>
                 <td>{{ offer.location }}</td>
                 <td>{{ offer.domain }}</td>
-                <td>{{ offer.dateStart ? offer.dateStart|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ offer.dateEnd ? offer.dateEnd|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ offer.description }}</td>
                 <td>
                     <a href="{{ path('offers_show', {'id': offer.id}) }}">show</a>
                 </td>
             </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    {% endfor %}
+       
+    {% else %}
+    <tr>
+        <td colspan="8">no records found</td>
+    </tr>
+{% endfor %}
+</tbody>
+</table>
+    
 
 {% endblock %}
