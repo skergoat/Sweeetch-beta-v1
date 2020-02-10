@@ -93,10 +93,10 @@ class Student
      */
     private $proofHabitation;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Offers", mappedBy="student")
-     */
-    private $offers;
+    // /**
+    //  * @ORM\ManyToMany(targetEntity="App\Entity\Offers", mappedBy="student")
+    //  */
+    // private $offers;
 
     public function __construct()
     {
@@ -283,32 +283,32 @@ class Student
         return $this;
     }
 
-    /**
-     * @return Collection|Offers[]
-     */
-    public function getOffers(): Collection
-    {
-        return $this->offers;
-    }
+    // /**
+    //  * @return Collection|Offers[]
+    //  */
+    // public function getOffers(): Collection
+    // {
+    //     return $this->offers;
+    // }
 
-    public function addOffer(Offers $offer): self
-    {
-        if (!$this->offers->contains($offer)) {
-            $this->offers[] = $offer;
-            $offer->addStudent($this);
-        }
+    // public function addOffer(Offers $offer): self
+    // {
+    //     if (!$this->offers->contains($offer)) {
+    //         $this->offers[] = $offer;
+    //         $offer->addStudent($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeOffer(Offers $offer): self
-    {
-        if ($this->offers->contains($offer)) {
-            $this->offers->removeElement($offer);
-            $offer->removeStudent($this);
-        }
+    // public function removeOffer(Offers $offer): self
+    // {
+    //     if ($this->offers->contains($offer)) {
+    //         $this->offers->removeElement($offer);
+    //         $offer->removeStudent($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
 }

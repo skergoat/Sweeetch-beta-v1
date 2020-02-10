@@ -62,10 +62,10 @@
 
             {% if is_granted('ROLE_SUPER_STUDENT') %}
 
-            <form method="post" action="{{ path('apply', { id:offers.id, student_id: app.user.student.id }) }}">
+            {# <form method="post" action="{{ path('apply', { id:offers.id, student_id: app.user.student.id }) }}">
                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ offers.id) }}">
                 <button class="btn btn-success">Postuler</button>
-            </form>
+            </form> #}
             
             {% elseif is_granted('ROLE_STUDENT') %}
             <br><br>

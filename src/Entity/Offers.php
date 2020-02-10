@@ -53,10 +53,10 @@ class Offers
      */
     private $company;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Student", inversedBy="offers")
-     */
-    private $student;
+    // /**
+    //  * @ORM\ManyToMany(targetEntity="App\Entity\Student", inversedBy="offers")
+    //  */
+    // private $student;
 
     public function __construct()
     {
@@ -152,29 +152,29 @@ class Offers
         return $this;
     }
 
-    /**
-     * @return Collection|Student[]
-     */
-    public function getStudent(): Collection
-    {
-        return $this->student;
-    }
+    // /**
+    //  * @return Collection|Student[]
+    //  */
+    // public function getStudent(): Collection
+    // {
+    //     return $this->student;
+    // }
 
-    public function addStudent(Student $student): self
-    {
-        if (!$this->student->contains($student)) {
-            $this->student[] = $student;
-        }
+    // public function addStudent(Student $student): self
+    // {
+    //     if (!$this->student->contains($student)) {
+    //         $this->student[] = $student;
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeStudent(Student $student): self
-    {
-        if ($this->student->contains($student)) {
-            $this->student->removeElement($student);
-        }
+    // public function removeStudent(Student $student): self
+    // {
+    //     if ($this->student->contains($student)) {
+    //         $this->student->removeElement($student);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 }
