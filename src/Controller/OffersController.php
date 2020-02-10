@@ -23,6 +23,7 @@ class OffersController extends AbstractController
     {
         return $this->render('offers/index.html.twig', [
             'offers' => $offersRepository->findAll(),
+            
         ]);
     }
 
@@ -31,31 +32,38 @@ class OffersController extends AbstractController
      */
     public function indexByCompany(Company $company, OffersRepository $offersRepository): Response
     {
-        return $this->render('offers/index.html.twig', [
+        return $this->render('offers/index_company.html.twig', [
             'offers' => $offersRepository->findBy(['company' => $company->getId()]),
+            'company' => $company
         ]);
     }
 
     /**
-     * @Route("/new", name="offers_new", methods={"GET","POST"})
+     * @Route("/new/{id}", name="offers_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Company $company): Response
     {
         $offer = new Offers();
         $form = $this->createForm(OffersType::class, $offer);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $offer = $form->getData();
+
+            $offer->setCompany($company);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($offer);
             $entityManager->flush();
 
-            return $this->redirectToRoute('offers_index');
+            return $this->redirectToRoute('offers_company_index', ['id' => $company->getId()]);
         }
 
         return $this->render('offers/new.html.twig', [
-            'offer' => $offer,
+            'offers' => $offer,
             'form' => $form->createView(),
+            'company' => $company
         ]);
     }
 
@@ -65,7 +73,7 @@ class OffersController extends AbstractController
     public function show(Offers $offer): Response
     {
         return $this->render('offers/show.html.twig', [
-            'offer' => $offer,
+            'offers' => $offer,
         ]);
     }
 
@@ -84,7 +92,7 @@ class OffersController extends AbstractController
         }
 
         return $this->render('offers/edit.html.twig', [
-            'offer' => $offer,
+            'offers' => $offer,
             'form' => $form->createView(),
         ]);
     }
