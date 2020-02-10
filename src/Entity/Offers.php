@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -50,6 +52,16 @@ class Offers
      * @ORM\ManyToOne(targetEntity="App\Entity\Company", inversedBy="offers")
      */
     private $company;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Student", inversedBy="offers")
+     */
+    private $student;
+
+    public function __construct()
+    {
+        $this->student = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -136,6 +148,32 @@ class Offers
     public function setCompany(?Company $company): self
     {
         $this->company = $company;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Student[]
+     */
+    public function getStudent(): Collection
+    {
+        return $this->student;
+    }
+
+    public function addStudent(Student $student): self
+    {
+        if (!$this->student->contains($student)) {
+            $this->student[] = $student;
+        }
+
+        return $this;
+    }
+
+    public function removeStudent(Student $student): self
+    {
+        if ($this->student->contains($student)) {
+            $this->student->removeElement($student);
+        }
 
         return $this;
     }
