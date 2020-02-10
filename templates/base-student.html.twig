@@ -43,6 +43,9 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="{{ path('profile_edit', {'id': student.profile.id }) }}">Edit Profile</a>
                     </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('offers_index') }}">Emplois</a>
+                    </li>
                     {% else %}
                     <li class="nav-item active">
                         <a class="nav-link" href="{{ path('student_show', {'id' : profile.student.id }) }}">Dashboard</a>

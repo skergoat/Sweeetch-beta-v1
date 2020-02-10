@@ -1,45 +1,69 @@
-<!DOCTYPE html>
+{% extends 'base-front.html.twig' %}
 
-<title>Offers index</title>
+{% block title %} {{ parent() }} - offers {% endblock %}
 
 {% block body %}
-    <h1>Offers index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Location</th>
-                <th>Domain</th>
-                <th>DateStart</th>
-                <th>DateEnd</th>
-                <th>Description</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for offer in offers %}
-            <tr>
-                <td>{{ offer.id }}</td>
-                <td>{{ offer.title }}</td>
-                <td>{{ offer.location }}</td>
-                <td>{{ offer.domain }}</td>
-                <td>{{ offer.dateStart ? offer.dateStart|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ offer.dateEnd ? offer.dateEnd|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ offer.description }}</td>
-                <td>
-                    <a href="{{ path('offers_show', {'id': offer.id}) }}">show</a>
-                    <a href="{{ path('offers_edit', {'id': offer.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="container">
 
-    <a href="{{ path('offers_new') }}">Create new</a>
+        <nav class="main-nav d-none d-lg-block" style="display:flex !important;margin-bottom:50px;">
+            <ul>
+                <li class="active"><a href="/">ACCUEIL</a></li>
+                <li class="drop-down"><a>S'INSCRIRE</a>
+                  <ul>
+                      <li><a href="/student/new">Etudiant</a></li>
+                      <li><a href="/company/new">Professionel</a></li>
+                      <li><a href="#">Ecole</a></li>
+                  </ul>
+                </li> 
+                {% if is_granted('ROLE_USER') %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <li><a href="/admin">ADMIN</a></li>
+                    {% elseif  is_granted('ROLE_STUDENT') %}
+                    <li><a href="{{ path('company_show', {'id': app.user.student.id}) }}">MON ENTREPRISE</a></li>
+                    {% endif %}
+                    <li><a href="/logout">DECONNEXION</a></li>
+                {% endif %}
+            </ul>
+        </nav><!-- .main-nav -->
+
+        <h1>Offers index</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Location</th>
+                    <th>Domain</th>
+                    <th>DateStart</th>
+                    <th>DateEnd</th>
+                    <th>Description</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for offer in offers %}
+                <tr>
+                    <td>{{ offer.id }}</td>
+                    <td>{{ offer.title }}</td>
+                    <td>{{ offer.location }}</td>
+                    <td>{{ offer.domain }}</td>
+                    <td>{{ offer.dateStart ? offer.dateStart|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ offer.dateEnd ? offer.dateEnd|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ offer.description }}</td>
+                    <td>
+                        <a href="{{ path('offers_show', {'id': offer.id}) }}">show</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="8">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    
+    </div>
+
 {% endblock %}
