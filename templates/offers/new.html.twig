@@ -3,9 +3,10 @@
 {% block title %} {{ parent() }} - students {% endblock %}
 
 {% block body %}
+<a href="{{ path('offers_company_index', {id:company.id}) }}" class="btn btn-secondary">back to list</a>
+
     <h1>Create new Offers</h1>
 
     {{ include('offers/_form.html.twig') }}
 
-    <a href="{{ path('offers_index') }}">back to list</a>
 {% endblock %}

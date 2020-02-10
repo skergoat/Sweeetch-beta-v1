@@ -9,38 +9,37 @@
         <tbody>
             <tr>
                 <th>Id</th>
-                <td>{{ offer.id }}</td>
+                <td>{{ offers.id }}</td>
             </tr>
             <tr>
                 <th>Title</th>
-                <td>{{ offer.title }}</td>
+                <td>{{ offers.title }}</td>
             </tr>
             <tr>
                 <th>Location</th>
-                <td>{{ offer.location }}</td>
+                <td>{{ offers.location }}</td>
             </tr>
             <tr>
                 <th>Domain</th>
-                <td>{{ offer.domain }}</td>
+                <td>{{ offers.domain }}</td>
             </tr>
             <tr>
                 <th>DateStart</th>
-                <td>{{ offer.dateStart ? offer.dateStart|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ offers.dateStart ? offers.dateStart|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
                 <th>DateEnd</th>
-                <td>{{ offer.dateEnd ? offer.dateEnd|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ offers.dateEnd ? offers.dateEnd|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
                 <th>Description</th>
-                <td>{{ offer.description }}</td>
+                <td>{{ offers.description }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('offers_index') }}">back to list</a>
+    <a href="{{ path('offers_company_index', {id:offers.company.id}) }}" class="btn btn-secondary">back to list</a>
 
-    <a href="{{ path('offers_edit', {'id': offer.id}) }}">edit</a>
+    <a href="{{ path('offers_edit', {'id': offers.id}) }}" class="btn btn-light">edit</a>
 
-    {{ include('offers/_delete_form.html.twig') }}
 {% endblock %}
