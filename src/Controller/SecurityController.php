@@ -36,6 +36,10 @@ class SecurityController extends AbstractController
                 $id = $user->getStudent()->getId(); 
                 return new RedirectResponse($this->urlGenerator->generate('student_show', ['id' => $id])); 
             }
+            else if($this->security->isGranted('ROLE_COMPANY')) {
+                $id = $user->getCompany()->getId(); 
+                return new RedirectResponse($this->urlGenerator->generate('company_show', ['id' => $id])); 
+            }
         }
        
         // get the login error if there is one
