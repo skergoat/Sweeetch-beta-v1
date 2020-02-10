@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Company;
 
 use App\Entity\Offers;
 use App\Entity\Company;
@@ -9,6 +9,7 @@ use App\Repository\OffersRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -29,6 +30,7 @@ class OffersController extends AbstractController
 
     /**
      * @Route("/company/{id}", name="offers_company_index", methods={"GET"})
+     * @IsGranted("ROLE_COMPANY")
      */
     public function indexByCompany(Company $company, OffersRepository $offersRepository): Response
     {
@@ -40,6 +42,7 @@ class OffersController extends AbstractController
 
     /**
      * @Route("/new/{id}", name="offers_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_COMPANY")
      */
     public function new(Request $request, Company $company): Response
     {
@@ -79,6 +82,7 @@ class OffersController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="offers_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_COMPANY")
      */
     public function edit(Request $request, Offers $offer): Response
     {
@@ -99,6 +103,7 @@ class OffersController extends AbstractController
 
     /**
      * @Route("/{id}", name="offers_delete", methods={"DELETE"})
+     * @IsGranted("ROLE_COMPANY")
      */
     public function delete(Request $request, Offers $offer): Response
     {
