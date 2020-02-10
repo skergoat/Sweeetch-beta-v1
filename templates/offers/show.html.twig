@@ -1,0 +1,46 @@
+{% extends 'base-company.html.twig' %}
+
+{% block title %} {{ parent() }} - students {% endblock %}
+
+{% block body %}
+    <h1>Offers</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ offer.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ offer.title }}</td>
+            </tr>
+            <tr>
+                <th>Location</th>
+                <td>{{ offer.location }}</td>
+            </tr>
+            <tr>
+                <th>Domain</th>
+                <td>{{ offer.domain }}</td>
+            </tr>
+            <tr>
+                <th>DateStart</th>
+                <td>{{ offer.dateStart ? offer.dateStart|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateEnd</th>
+                <td>{{ offer.dateEnd ? offer.dateEnd|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ offer.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('offers_index') }}">back to list</a>
+
+    <a href="{{ path('offers_edit', {'id': offer.id}) }}">edit</a>
+
+    {{ include('offers/_delete_form.html.twig') }}
+{% endblock %}

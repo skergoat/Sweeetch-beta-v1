@@ -32,13 +32,30 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
+                <ul class="navbar-nav mr-auto"> 
+                    
+                    {% if offer is defined %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('company_show', {'id' : offer.company.id }) }}">Dashboard</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('company_edit', {'id' : offer.company.id }) }}">Mes Infos</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('offers_company_index', {id:offer.company.id}) }}">Emplois</a>
+                    </li>
+                    {% else %}
                     <li class="nav-item active">
                         <a class="nav-link" href="{{ path('company_show', {'id' : company.id }) }}">Dashboard</a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="{{ path('company_edit', {'id' : company.id }) }}">Mes Infos</a>
                     </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('offers_company_index', {id:company.id}) }}">Emplois</a>
+                    </li>
+                    {% endif %}
+
                     <li class="nav-item active">
                         <a class="nav-link" href="/logout">Deconnexion</a>
                     </li>
