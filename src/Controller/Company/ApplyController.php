@@ -10,6 +10,7 @@ use App\Repository\OffersRepository;
 use App\Repository\StudentRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
@@ -18,6 +19,7 @@ class ApplyController extends AbstractController
     /**
      * @Route("/offers/{id}/student/{student_id}", name="apply", methods={"POST"})
      * @ParamConverter("student", options={"id" = "student_id"})
+     * @IsGranted({"ROLE_SUPER_STUDENT"})
      */
     public function apply(ApplyRepository $repository, Offers $offers, Student $student)
     {
@@ -37,6 +39,18 @@ class ApplyController extends AbstractController
         return $this->render('offers/show.html.twig', [
             'controller_name' => 'ApplyController',
             'offers' => $offers
+        ]);
+    }
+
+    /**
+     * @Route("/studentapply/{id}", name="student_apply", methods={"GET"})
+     * @IsGranted("ROLE_SUPER_STUDENT")
+     */
+    public function studentApplies(StudentRepository $repository, Student $student)
+    {
+        return $this->render('apply/index_student.html.twig', [
+            'controller_name' => 'ApplyController',
+            'student' => $student
         ]);
     }
 

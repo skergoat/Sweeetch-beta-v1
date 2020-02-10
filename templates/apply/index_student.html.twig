@@ -20,16 +20,26 @@
                 <th>actions</th>
             </tr>
         </thead>
-        {% for offer in offers %}
+        {% for applies in student.applies %}
         <tbody>
             <tr>
-                <td>{{ offer.id }}</td>
-                <td>{{ offer.title }}</td>
-                <td>{{ offer.location }}</td>
-                <td>{{ offer.domain }}</td>
-                <td>{{ offer.description }}</td>
+                <td>{{ applies.offers.id }}</td>
+                <td>{{ applies.offers.title }}</td>
+                <td>{{ applies.offers.location }}</td>
+                <td>{{ applies.offers.domain }}</td>
+                <td> 
+                    {% if applies.confirmed is null %}
+                        {% if applies.hired is null %}
+                        applied
+                        {% else %}
+                        hired
+                        {% endif %}
+                    {% else %}
+                    confirmed
+                    {% endif %}
+                </td>
                 <td>
-                    <a href="{{ path('offers_show', {'id': offer.id}) }}">show</a>
+                    <a href="{{ path('offers_show', {'id': applies.offers.id}) }}">show</a>
                 </td>
             </tr>
        
