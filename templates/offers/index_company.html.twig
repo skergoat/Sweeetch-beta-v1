@@ -14,7 +14,7 @@
                 <th>Domain</th>
                 <th>DateStart</th>
                 <th>DateEnd</th>
-                <th>Description</th>
+                <th>State</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -27,7 +27,14 @@
                 <td>{{ offer.domain }}</td>
                 <td>{{ offer.dateStart ? offer.dateStart|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ offer.dateEnd ? offer.dateEnd|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ offer.description }}</td>
+                <td>
+                    {% if offer.applies[0] is defined %}
+                        {% if offer.applies[0].offers.id is not null %}
+                        {#} {{ offer.applies[0].offers.id }} #}
+                        apply
+                        {% endif %}
+                    {% endif %}
+                </td>
                 <td>
                     <a href="{{ path('offers_preview', {'id': offer.id}) }}">show</a>
                     <a href="{{ path('offers_edit', {'id': offer.id}) }}">edit</a>

@@ -5,7 +5,9 @@ namespace App\Controller\Company;
 use App\Entity\Offers;
 use App\Entity\Company;
 use App\Form\OffersType;
+use App\Repository\ApplyRepository;
 use App\Repository\OffersRepository;
+use App\Repository\StudentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,7 +26,6 @@ class OffersController extends AbstractController
     {
         return $this->render('offers/index.html.twig', [
             'offers' => $offersRepository->findAll(),
-            
         ]);
     }
 
@@ -32,11 +33,11 @@ class OffersController extends AbstractController
      * @Route("/company/{id}", name="offers_company_index", methods={"GET"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
-    public function indexByCompany(Company $company, OffersRepository $offersRepository): Response
-    {
+    public function indexByCompany(Company $company, OffersRepository $offersRepository, ApplyRepository $applyRepository): Response
+    {       
         return $this->render('offers/index_company.html.twig', [
             'offers' => $offersRepository->findBy(['company' => $company->getId()]),
-            'company' => $company
+            'company' => $company,
         ]);
     }
 
@@ -84,10 +85,13 @@ class OffersController extends AbstractController
      * @Route("/preview/{id}", name="offers_preview", methods={"GET"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
-    public function showPreview(Offers $offer): Response
-    {
+    public function showPreview(StudentRepository $studentRepository, Offers $offer): Response
+    {   
+        $applies = $offer->getApplies();
+       
         return $this->render('offers/show_preview.html.twig', [
             'offers' => $offer,
+            'applies' => $applies
         ]);
     }
 

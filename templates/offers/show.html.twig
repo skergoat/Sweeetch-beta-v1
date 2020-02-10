@@ -16,6 +16,7 @@
                       <li><a href="#">Ecole</a></li>
                   </ul>
                 </li> 
+                <li><a href="/offers/">Emplois</a></li>
                 {% if is_granted('ROLE_USER') %}
                     {% if is_granted('ROLE_ADMIN') %}
                     <li><a href="/admin">ADMIN</a></li>
@@ -60,14 +61,16 @@
 
             <a href="{{ path('offers_index') }}" class="btn btn-primary">Back to List</a>
 
-            {% if is_granted('ROLE_SUPER_STUDENT') %}
-            <form method="post" action="{{ path('apply', { id:offers.id, student_id: app.user.student.id }) }}">
-                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ offers.id) }}">
-                <button class="btn btn-success">Postuler</button>
-            </form> 
-            {% elseif is_granted('ROLE_STUDENT') %}
-            <br><br>
-            <p style="color:red;">Votre compte doit etre valide pour pouvoir postuler</p>
+            {% if app.user.student.id is defined %}
+                {% if is_granted('ROLE_SUPER_STUDENT') %}
+                <form method="post" action="{{ path('apply', { id:offers.id, student_id: app.user.student.id }) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ offers.id) }}">
+                    <button class="btn btn-success">Postuler</button>
+                </form> 
+                {% elseif is_granted('ROLE_STUDENT') %}
+                <br><br>
+                <p style="color:red;">Votre compte doit etre valide pour pouvoir postuler</p>
+                {% endif %}
             {% endif %}
         </div>
     
