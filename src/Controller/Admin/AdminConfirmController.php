@@ -22,9 +22,15 @@ class AdminConfirmController extends AbstractController
      * @IsGranted("ROLE_ADMIN")
      */
     public function confirm(User $user, UserRepository $userRepository): Response
-    {         
-        $user->setRoles(['ROLE_SUPER_STUDENT']); 
-        
+    {     
+        if($user->getStudent() != null)
+        {
+            $user->setRoles(['ROLE_SUPER_STUDENT']); 
+        }
+        else {
+            $user->setRoles(['ROLE_SUPER_COMPANY']); 
+        }
+                
         $this->getDoctrine()->getManager()->flush();
 
         return $this->redirectToRoute('admin');

@@ -30,7 +30,7 @@ class OffersController extends AbstractController
 
     /**
      * @Route("/company/{id}", name="offers_company_index", methods={"GET"})
-     * @IsGranted("ROLE_COMPANY")
+     * @IsGranted("ROLE_SUPER_COMPANY")
      */
     public function indexByCompany(Company $company, OffersRepository $offersRepository): Response
     {
@@ -42,7 +42,7 @@ class OffersController extends AbstractController
 
     /**
      * @Route("/new/{id}", name="offers_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_COMPANY")
+     * @IsGranted("ROLE_SUPER_COMPANY")
      */
     public function new(Request $request, Company $company): Response
     {
@@ -82,6 +82,7 @@ class OffersController extends AbstractController
 
     /**
      * @Route("/preview/{id}", name="offers_preview", methods={"GET"})
+     * @IsGranted("ROLE_SUPER_COMPANY")
      */
     public function showPreview(Offers $offer): Response
     {
@@ -92,7 +93,7 @@ class OffersController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="offers_edit", methods={"GET","POST"})
-     * @IsGranted("ROLE_COMPANY")
+     * @IsGranted("ROLE_SUPER_COMPANY")
      */
     public function edit(Request $request, Offers $offer): Response
     {
@@ -113,7 +114,7 @@ class OffersController extends AbstractController
 
     /**
      * @Route("/{id}", name="offers_delete", methods={"DELETE"})
-     * @IsGranted("ROLE_COMPANY")
+     * @IsGranted("ROLE_SUPER_COMPANY")
      */
     public function delete(Request $request, Offers $offer): Response
     {
