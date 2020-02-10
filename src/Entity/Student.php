@@ -93,6 +93,16 @@ class Student
      */
     private $proofHabitation;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Offers", mappedBy="student")
+     */
+    private $offers;
+
+    public function __construct()
+    {
+        $this->offers = new ArrayCollection();
+    }
+
 
 
     public function getId(): ?int
@@ -269,6 +279,34 @@ class Student
     public function setProofHabitation(ProofHabitation $proofHabitation): self
     {
         $this->proofHabitation = $proofHabitation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Offers[]
+     */
+    public function getOffers(): Collection
+    {
+        return $this->offers;
+    }
+
+    public function addOffer(Offers $offer): self
+    {
+        if (!$this->offers->contains($offer)) {
+            $this->offers[] = $offer;
+            $offer->addStudent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOffer(Offers $offer): self
+    {
+        if ($this->offers->contains($offer)) {
+            $this->offers->removeElement($offer);
+            $offer->removeStudent($this);
+        }
 
         return $this;
     }
