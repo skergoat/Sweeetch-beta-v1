@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Company;
 
 use App\Entity\Company;
 use App\Form\CompanyType;
