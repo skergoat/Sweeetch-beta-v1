@@ -47,6 +47,7 @@
           <li><a href="#team">Équipe</a></li>
 
           <li><a href="#footer">Contact</a>
+          <li><a href="/offers/">Emplois</a></li>
               {# <ul>
                   <li><a href="cgu.html">Conditions Générales D'utilisation</a></li>
                   <li><a href="cgdc.html">Politique de confidentialité</a></li>
@@ -60,8 +61,8 @@
               <li><a href="{{ path('student_show', {'id': app.user.student.id}) }}">MON PROFILE</a></li>
             {% elseif  is_granted('ROLE_COMPANY') %}
               <li><a href="{{ path('company_show', {'id': app.user.company.id}) }}">MON ENTREPRISE</a></li>
-            {% endif %}
             <li><a href="/logout">DECONNEXION</a></li>
+            {% endif %}
           {% else %}
             <li class="drop-down"><a>S'INSCRIRE</a>
               <ul>

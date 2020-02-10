@@ -81,6 +81,16 @@ class OffersController extends AbstractController
     }
 
     /**
+     * @Route("/preview/{id}", name="offers_preview", methods={"GET"})
+     */
+    public function showPreview(Offers $offer): Response
+    {
+        return $this->render('offers/show_preview.html.twig', [
+            'offers' => $offer,
+        ]);
+    }
+
+    /**
      * @Route("/{id}/edit", name="offers_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_COMPANY")
      */
