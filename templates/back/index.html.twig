@@ -22,8 +22,7 @@
             <tr>
                 <td class="email-{{ student.id }}">{{ student.email }}</td>
                 <td class="actions">
-                    <a href="{{ path('student_show', {'id': student.student.id}) }}" ><i class="fa fa-eye"></i></a>  
-                     
+                    <a href="{{ path('student_show', {'id': student.student.id}) }}" ><i class="fa fa-eye"></i></a>    
                     <form method="post" action="{{ path('admin_confirm', {'id': student.id}) }}" onsubmit="return confirm('Are you sure you want to confirm this user ?');">
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ student.student.id) }}">
                         <button style="color:pruple;background:white;border:0px;"><i class="fa fa-question-circle"></i></button>
@@ -56,12 +55,11 @@
             <tr>
                 <td class="email-{{ companies.id }}">{{ companies.email }}</td>
                 <td class="actions">
-                    <a href="{{ path('company_show', {'id': companies.company.id}) }}" ><i class="fa fa-eye"></i></a>  
-                     
-                    {# <form method="post" action="{{ path('admin_confirm', {'id': companies.id}) }}" onsubmit="return confirm('Are you sure you want to confirm this user ?');">
-                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ companies.student.id) }}">
+                    <a href="{{ path('company_show', {'id': companies.company.id}) }}" ><i class="fa fa-eye"></i></a>   
+                    <form method="post" action="{{ path('admin_confirm', {'id': companies.id}) }}" onsubmit="return confirm('Are you sure you want to confirm this user ?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ companies.company.id) }}">
                         <button style="color:pruple;background:white;border:0px;"><i class="fa fa-question-circle"></i></button>
-                    </form> #}
+                    </form>
                     <a href="" style="color:red;"><i class="fa fa-ban warning" title="signaler un probleme" style="color:red;font-size:20px;" data-url="{{ companies.id }}"></i></a>
                 </td>
             </tr>

@@ -26,7 +26,7 @@ class SecurityController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         $user = $this->security->getUser();
-
+        
         if ($user) {
 
             if($this->security->isGranted('ROLE_ADMIN')) {

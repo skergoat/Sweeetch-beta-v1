@@ -9,12 +9,6 @@
         <thead>
             <tr>
                 <th>Company Name</th>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>Address</th>
-                <th>ZipCode</th>
-                <th>City</th>
-                <th>TelNumber</th>
                 <th>Siret</th>
                 <th>actions</th>
             </tr>
@@ -23,17 +17,22 @@
         {% for company in companies %}
             <tr>
                 <td>{{ company.companyName }}</td>
-                <td>{{ company.firstname }}</td>
-                <td>{{ company.lastname }}</td>
-                <td>{{ company.address }}</td>
-                <td>{{ company.zipCode }}</td>
-                <td>{{ company.city }}</td>
-                <td>{{ company.telNumber }}</td>
                 <td>{{ company.siret }}</td>
-                <td>
-                    <a href="{{ path('company_show', {'id': company.id}) }}">show</a>
-                    <a href="{{ path('company_edit', {'id': company.id}) }}">edit</a>
-                </td>
+                <td class="btn-group">
+                    <div style="margin-right:20px;" class="actions">
+                        <a href="{{ path('company_show', {'id': company.id}) }}">show</a>
+                        <a href="{{ path('company_edit', {'id': company.id}) }}">edit</a>
+                        {% if company.user.roles == ['ROLE_COMPANY'] %}
+                            <form method="post" action="{{ path('admin_confirm', {'id': company.user.id}) }}" onsubmit="return confirm('Are you sure you want to confirm this user ?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ company.user.id) }}">
+                                <button style="color:purple;background:white;border:0px;">confirm</button>
+                            </form>
+                            <a href="" style="color:red;"><i class="fa fa-ban warning" title="signaler un probleme" style="color:red;font-size:20px;" data-url="{{ company.user.id }}"></i></a>
+                        {% else %}
+                            <a href="" style="color:red;"><i class="fa fa-ban warning" title="signaler un probleme" style="color:red;font-size:20px;" data-url="{{ company.user.id }}"></i></a>
+                        {% endif %}
+                    </div>
+                </td> 
             </tr>
         {% else %}
             <tr>
@@ -42,5 +41,7 @@
         {% endfor %}
         </tbody>
     </table>
+
+    {{ include('back/_warning_form.html.twig') }}
 
 {% endblock %}
