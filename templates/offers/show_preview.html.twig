@@ -38,6 +38,37 @@
         </tbody>
     </table>
 
+    {% if applies is defined %}
+
+    <h1>Appliants</h1>
+
+    {% for applies in applies %}
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Location</th>
+                <th>Action</th>
+            </tr>
+            <tr>
+                <td>{{ applies.student.id }}</td>
+                <td>{{ applies.student.name }}</td>
+                <td>{{ applies.student.lastname }}</td>
+                <td class='btn btn-group' style="color:white;">
+                    <a class="btn btn-success">Embaucher</a>
+                    <a class="btn btn-danger">Refuser</a>
+                </td>
+            </tr>
+            
+        </tbody>
+    </table>
+
+    {% endfor %}
+
+    {% endif %}
+
     <a href="{{ path('offers_company_index', {id:offers.company.id}) }}" class="btn btn-secondary">back to list</a>
 
     <a href="{{ path('offers_edit', {'id': offers.id}) }}" class="btn btn-light">edit</a>
