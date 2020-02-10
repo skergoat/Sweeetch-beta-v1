@@ -53,6 +53,11 @@ class Offers
      */
     private $company;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Apply", mappedBy="offers")
+     */
+    private $applies;
+
     // /**
     //  * @ORM\ManyToMany(targetEntity="App\Entity\Student", inversedBy="offers")
     //  */
@@ -61,6 +66,7 @@ class Offers
     public function __construct()
     {
         $this->student = new ArrayCollection();
+        $this->applies = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -148,6 +154,37 @@ class Offers
     public function setCompany(?Company $company): self
     {
         $this->company = $company;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Apply[]
+     */
+    public function getApplies(): Collection
+    {
+        return $this->applies;
+    }
+
+    public function addApply(Apply $apply): self
+    {
+        if (!$this->applies->contains($apply)) {
+            $this->applies[] = $apply;
+            $apply->setOffers($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApply(Apply $apply): self
+    {
+        if ($this->applies->contains($apply)) {
+            $this->applies->removeElement($apply);
+            // set the owning side to null (unless already changed)
+            if ($apply->getOffers() === $this) {
+                $apply->setOffers(null);
+            }
+        }
 
         return $this;
     }
