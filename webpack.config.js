@@ -31,6 +31,7 @@ Encore
     .addEntry('back', './assets/js/Back/homepage.js')
     .addEntry('student', './assets/js/Student/homepage.js')
     .addEntry('company', './assets/js/Company/homepage.js')
+    .addEntry('school', './assets/js/School/homepage.js')
 
     //.addEntry('page1', './assets/js/page1.js')
     //.addEntry('page2', './assets/js/page2.js')
