@@ -4,11 +4,15 @@ namespace App\Controller\Company;
 
 use App\Entity\Apply;
 use App\Entity\Offers;
+use App\Entity\Company;
 use App\Entity\Student;
 use App\Repository\ApplyRepository;
 use App\Service\Mailer\ApplyMailer;
 use App\Repository\OffersRepository;
+use App\Repository\CompanyRepository;
 use App\Repository\StudentRepository;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -128,5 +132,25 @@ class ApplyController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/{id}", name="apply_delete", methods={"DELETE"})
+     * @ParamConverter("apply", options={"id" = "id"})
+     */
+    public function delete(Request $request, Apply $apply, OffersRepository $offersRepository, CompanyRepository $companyRepository): Response
+    {
+        $companyId = $apply->getOffers()->getCompany()->getId();
+
+        // dd();
+        if ($this->isCsrfTokenValid('delete'.$apply->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($apply);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('offers_company_index', [
+            'id' => $companyId,
+        ]);
+    }
+    
     
 }
