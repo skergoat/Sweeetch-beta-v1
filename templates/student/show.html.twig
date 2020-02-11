@@ -109,13 +109,14 @@
         <tbody>
             <tr>
                 <td><strong>Mon CV</strong></td>
+                {% if is_granted("ROLE_STUDENT") %}
                 <td><strong>Ma Carte d'identite</strong></td>
                 <td><strong>Ma Carte d'etudiant</strong></td>
                 <td><strong>Justificatif de domicile</strong></td>
+                {% endif %}
             </tr>
             <tr>
                 <td>
-                    
                     <span>
                         <a href="{{ path('student_download_resume', { id: student.resume.id }) }}"><span class="fa fa-download">{{ student.resume.originalFilename }}</span></a>
                     </span>
@@ -124,6 +125,7 @@
                         <img class="show-article-img" src="{{ student.resume.fileName|imagine_filter('squared_thumbnail_small') }}" alt=""/>
                     </a> #}
                 </td>
+                {% if is_granted("ROLE_STUDENT") %}
                 <td>   
                     <span>
                         <a href="{{ path('student_download_idcard', { id: student.idCard.id }) }}"><span class="fa fa-download">{{ student.idCard.originalFilename }}</span></a>
@@ -151,6 +153,7 @@
                         <img class="show-article-img" src="{{ student.resume.fileName|imagine_filter('squared_thumbnail_small') }}" alt=""/>
                     </a> #}
                 </td>
+                {% endif %}
             </tr>
         </tbody>
     </table>

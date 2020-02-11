@@ -49,7 +49,7 @@
                         <a class="nav-link" href="/logout">Deconnexion</a>
                     </li>
 
-                    {% else %}
+                    {% elseif offers is defined %}
 
                     <li class="nav-item active">
                         <a class="nav-link" href="{{ path('company_show', {'id' : offers.company.id }) }}">Dashboard</a>
