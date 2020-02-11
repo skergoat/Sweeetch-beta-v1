@@ -21,6 +21,8 @@
             </tr>
         </thead>
         {% for applies in student.applies %}
+
+            {% if applies.refused is null %}
         <tbody>
             <tr>
                 <td>{{ applies.offers.id }}</td>
@@ -46,7 +48,7 @@
                     {% endif %}
                 </td>
             </tr>
-       
+        {% endif %}
     {% else %}
     <tr>
         <td colspan="8">no records found</td>

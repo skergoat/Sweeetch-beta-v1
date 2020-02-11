@@ -38,6 +38,11 @@ class Apply
      */
     private $confirmed;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $refused;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -87,6 +92,18 @@ class Apply
     public function setConfirmed(?bool $confirmed): self
     {
         $this->confirmed = $confirmed;
+
+        return $this;
+    }
+
+    public function getRefused(): ?bool
+    {
+        return $this->refused;
+    }
+
+    public function setRefused(?bool $refused): self
+    {
+        $this->refused = $refused;
 
         return $this;
     }

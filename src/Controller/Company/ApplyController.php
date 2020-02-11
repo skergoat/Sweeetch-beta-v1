@@ -28,22 +28,41 @@ class ApplyController extends AbstractController
      */
     public function apply(ApplyRepository $repository, Offers $offers, Student $student)
     {
+        $applies = $repository->checkIfRowExsists($offers, $student);
+
+        // if($applies->getRefused() == true) {
+        //     throw new \Exception('refused');
+        // }
+        if($applies) {  
+
+            $refused = $repository->checkIfrefusedExsists($offers, $student);
+            
+            if($refused) {
+                throw new \Exception('you have been refused');
+            }
+            else {
+                throw new \Exception('already applied');
+            }  
+        }
+
+        if($applies) {
+            throw new \Exception('you have been refiused');
+        }
+
         $company = $offers->getCompany();
         $company->getUser()->setRoles(['ROLE_SUPER_COMPANY', 'ROLE_VISITOR']);
         // dd($company);
-        $applies = $repository->checkIfRowExsists($offers, $student);
         
-        if($applies == false) {
-
-            $apply = new Apply; 
-            $apply->setOffers($offers);
-            $apply->setStudent($student);
+        // if($applies == false) {
+        $apply = new Apply; 
+        $apply->setOffers($offers);
+        $apply->setStudent($student);
+    
+        $manager = $this->getDoctrine()->getManager();
+        $manager->persist($apply);
+        $manager->flush();
+        // }
         
-            $manager = $this->getDoctrine()->getManager();
-            $manager->persist($apply);
-            $manager->flush();
-        }
-       
         return $this->render('offers/show.html.twig', [
             'offers' => $offers
         ]);
@@ -53,10 +72,22 @@ class ApplyController extends AbstractController
      * @Route("/studentapply/{id}", name="student_apply", methods={"GET"})
      * @IsGranted("ROLE_SUPER_STUDENT")
      */
-    public function studentApplies(StudentRepository $repository, Student $student)
+    public function indexByStudent(StudentRepository $repository, Student $student)
     {
         return $this->render('apply/index_student.html.twig', [
             'student' => $student
+        ]);
+    }
+
+    /**
+     * @Route("/company/{id}", name="offers_company_index", methods={"GET"})
+     * @IsGranted("ROLE_SUPER_COMPANY")
+     */
+    public function indexByCompany(Company $company, OffersRepository $offersRepository, ApplyRepository $applyRepository): Response
+    {       
+        return $this->render('offers/index_company.html.twig', [
+            'offers' => $offersRepository->findBy(['company' => $company->getId()]),
+            'company' => $company,
         ]);
     }
 
@@ -108,7 +139,7 @@ class ApplyController extends AbstractController
     }
 
     /**
-     * @Route("confirm/{id}/offers_id", name="confirm", methods={"POST"})
+     * @Route("confirm/{id}", name="confirm", methods={"POST"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
     public function confirm(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer)
@@ -131,8 +162,35 @@ class ApplyController extends AbstractController
         ]);
     }
 
+     /**
+     * @Route("/refuse/{id}", name="apply_refuse", methods={"POST"})
+     * @IsGranted("ROLE_SUPER_COMPANY")
+     */
+    public function refuse(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer)
+    {
+        $apply->setHired(null);
+        $apply->setConfirmed(null);
+        $apply->setRefused(true);
+
+        // set appliant roles 
+        $user = $apply->getStudent()->getUser();
+        $user->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_TO_APPLY']);
+
+         // get other applies
+         $student = $apply->getStudent();
+         $offers = $apply->getOffers();
+
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->render('offers/show_preview.html.twig', [
+            'offers' => $offers,
+            'applies' => $repository->getSingleConfirmedRow($offers, $student)
+        ]);
+    }
+
     /**
      * @Route("/delete/{id}", name="apply_delete", methods={"DELETE"})
+     * @IsGranted("ROLE_SUPER_COMPANY")
      * @ParamConverter("apply", options={"id" = "id"})
      */
     public function delete(Request $request, Apply $apply, OffersRepository $offersRepository, CompanyRepository $companyRepository, ApplyMailer $mailer): Response
