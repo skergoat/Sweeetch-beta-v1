@@ -66,23 +66,31 @@
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ offers.id) }}">
                         <button class="btn btn-success">Embaucher</button>
                     </form>
-                    <form method="post" action="{{ path('apply_delete', {'id': applies.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                    {# <form method="post" action="{{ path('apply_delete', {'id': applies.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
                         <input type="hidden" name="_method" value="DELETE">
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
                         <button class="btn btn-danger">Delete</button>
-                    </form>
+                    </form> #}
                     {% elseif applies.hired == true and applies.confirmed == false  %}
                     <form method="post" action="{{ path('confirm', { id:applies.id }) }}">
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ offers.id) }}">
                         <button class="btn btn-success">Confirmer</button>
                     </form>
+                    {# <form method="post" action="{{ path('apply_delete', {'id': applies.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
+                        <button class="btn btn-danger">Delete</button>
+                    </form> #}
+                    {% elseif applies.hired == false and applies.confirmed == true %}
+                    <a class="btn btn-success">Confirmed !</a>
+                    {% endif %}
+
+                    {% if applies.confirmed == false %}
                     <form method="post" action="{{ path('apply_delete', {'id': applies.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
                         <input type="hidden" name="_method" value="DELETE">
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
                         <button class="btn btn-danger">Delete</button>
                     </form>
-                    {% elseif applies.hired == false and applies.confirmed == true %}
-                    <a class="btn btn-success">Confirmed !</a>
                     {% endif %}
                 </td>
             </tr>
