@@ -237,8 +237,12 @@ class ApplyController extends AbstractController
        
         // delete apply 
         if ($this->isCsrfTokenValid('delete'.$apply->getId(), $request->request->get('_token'))) {
+
             $entityManager = $this->getDoctrine()->getManager();
+            // delete relation
             $entityManager->remove($apply);
+            // delete offer
+            $entityManager->remove($apply->getOffers());
             $entityManager->flush();
         }
 
