@@ -39,7 +39,11 @@
                     {% endif %}
                 </td>
                 <td>
+                    {% if applies.hired == false and applies.confirmed == false %}
                     <a href="{{ path('offers_show', {'id': applies.offers.id}) }}">show</a>
+                    {% elseif applies.hired == true or applies.confirmed == true %}
+                    <a href="{{ path('offers_show_hired', {'id': applies.offers.id, 'student_id' : student.id}) }}">show</a>
+                    {% endif %}
                 </td>
             </tr>
        

@@ -39,7 +39,7 @@ class StudentFixtures extends Fixture
 
             $user = new User; 
             $user->setEmail('student' . $i . '@gmail.com');
-            $user->setRoles(['ROLE_STUDENT']);
+            $user->setRoles(['ROLE_STUDENT', 'ROLE_NEW']);
             $user->setPassword($this->passwordEncoder->encodePassword(
                 $user,
                 'student'

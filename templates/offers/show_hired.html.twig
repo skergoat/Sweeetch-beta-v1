@@ -1,0 +1,85 @@
+{% extends 'base-student.html.twig' %} 
+
+{% block title %} {{ parent() }} - offers {% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        <h1>{{ offers.title }}</h1> <br><br>
+
+        {% if offers.applies[0].hired == true %}
+        <p style="font-size:25px;">State : <strong>Hired</Mstrong></p>
+        {% elseif offers.applies[0].confirmed == true %}
+        <p style="font-size:25px;">State : <strong>Confirmed</strong></p>
+        {% endif %}
+
+        <h2>Description</h2>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Location</th>
+                    <td>{{ offers.location }}</td>
+                </tr>
+                <tr>
+                    <th>Domain</th>
+                    <td>{{ offers.domain }}</td>
+                </tr>
+                <tr>
+                    <th>DateStart</th>
+                    <td>{{ offers.dateStart ? offers.dateStart|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>DateEnd</th>
+                    <td>{{ offers.dateEnd ? offers.dateEnd|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ offers.description }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Entreprise</h2>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ offers.company.id }}</td>
+                </tr>
+                <tr>
+                    <th>Firstname</th>
+                    <td>{{ offers.company.firstname }}</td>
+                </tr>
+                <tr>
+                    <th>Lastname</th>
+                    <td>{{ offers.company.lastname }}</td>
+                </tr>
+                <tr>
+                    <th>Address</th>
+                    <td>{{ offers.company.address }}</td>
+                </tr>
+                <tr>
+                    <th>ZipCode</th>
+                    <td>{{ offers.company.zipCode }}</td>
+                </tr>
+                <tr>
+                    <th>City</th>
+                    <td>{{ offers.company.city }}</td>
+                </tr>
+                <tr>
+                    <th>TelNumber</th>
+                    <td>{{ offers.company.telNumber }}</td>
+                </tr>
+                <tr>
+                    <th>Siret</th>
+                    <td>{{ offers.company.siret }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+{% endblock %}

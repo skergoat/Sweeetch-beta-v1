@@ -145,7 +145,7 @@ class StudentController extends AbstractController
             
             // set roles 
             $user = $student->getUser();
-            $user->setRoles(['ROLE_STUDENT']);
+            $user->setRoles(['ROLE_STUDENT', 'ROLE_NEW']);
             $user->setPassword($passwordEncoder->encodePassword(
                 $user,
                 $user->getPassword()

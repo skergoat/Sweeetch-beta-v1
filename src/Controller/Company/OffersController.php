@@ -4,6 +4,7 @@ namespace App\Controller\Company;
 
 use App\Entity\Offers;
 use App\Entity\Company;
+use App\Entity\Student;
 use App\Form\OffersType;
 use App\Repository\ApplyRepository;
 use App\Repository\OffersRepository;
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * @Route("/offers")
@@ -78,6 +80,19 @@ class OffersController extends AbstractController
     {
         return $this->render('offers/show.html.twig', [
             'offers' => $offer,
+        ]);
+    }
+
+     /**
+     * @Route("/hired/{id}/student/{student_id}", name="offers_show_hired", methods={"GET"})
+     * @IsGranted("ROLE_SUPER_STUDENT")
+     * @ParamConverter("student", options={"id" = "student_id"})
+     */
+    public function showHired(StudentRepository $studentRepository, Offers $offer, Student $student): Response
+    {   
+        return $this->render('offers/show_hired.html.twig', [
+            'offers' => $offer,
+            'student' => $student
         ]);
     }
 
