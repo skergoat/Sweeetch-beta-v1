@@ -9,6 +9,7 @@ use App\Form\OffersType;
 use App\Repository\ApplyRepository;
 use App\Repository\OffersRepository;
 use App\Repository\StudentRepository;
+use App\Controller\Company\ApplyController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -135,10 +136,20 @@ class OffersController extends AbstractController
      * @Route("/{id}", name="offers_delete", methods={"DELETE"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
-    public function delete(Request $request, Offers $offer): Response
+    public function delete(Request $request, Offers $offer, ApplyRepository $repository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$offer->getId(), $request->request->get('_token'))) {
+
             $entityManager = $this->getDoctrine()->getManager();
+
+            $applies = $repository->findBy(['offers' => $offer]);
+            
+            foreach($applies as $applies) 
+            {
+                $entityManager->remove($applies);
+            }
+
+            // delete offers 
             $entityManager->remove($offer);
             $entityManager->flush();
         }
