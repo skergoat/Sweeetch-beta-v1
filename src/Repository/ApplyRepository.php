@@ -28,23 +28,29 @@ class ApplyRepository extends ServiceEntityRepository
         ->getQuery()
         ->getOneOrNullResult();
     }
+  
+    // public function getOneApply($offers, $student)
+    // {
+    //     return $this->createQueryBuilder('u')
+    //         ->andWhere('u.offers = :offers AND u.student = :student')
+    //         ->setParameter('offers', $offers->getId())
+    //         ->setParameter('student', $student->getId())
+    //         ->getQuery()
+    //         ->getResult()
+    //     ;
+    // }
 
-    // /**
-    //  * @return Apply[] Returns an array of Apply objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getOtherApplies($student, $offers)
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.offers = :offers AND u.student != :student')
+            ->setParameter('offers', $offers)
+            ->setParameter('student', $student)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+  
 
     /*
     public function findOneBySomeField($value): ?Apply

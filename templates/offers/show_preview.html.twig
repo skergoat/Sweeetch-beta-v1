@@ -42,8 +42,6 @@
 
     <h1>Appliants</h1>
 
-    {% for applies in applies %}
-
     <table class="table">
         <tbody>
             <tr>
@@ -53,6 +51,9 @@
                 <th>Profile</th>
                 <th>Action</th>
             </tr>
+
+    {% for applies in applies %}
+            
             <tr>
                 <td>{{ applies.student.id }}</td>
                 <td>{{ applies.student.name }}</td>
@@ -60,15 +61,22 @@
                 {# <td><a href="{{ path('student_show_applied', { id:applies.student.id }) }}">show</a></td> #}
                 <td><a href="{{ path('student_show', { id:applies.student.id }) }}">show</a></td>
                 <td class='btn btn-group' style="color:white;">
-                    <a class="btn btn-success">Embaucher</a>
+                    <form method="post" action="{{ path('hire', { id:applies.id }) }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ offers.id) }}">
+                        <button class="btn btn-success">Embaucher</button>
+                    </form>
+                    {# <form method="post" action="{{ path('hire', { id:applies.offers.id, student_id: applies.student.id }) }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ offers.id) }}">
+                        <button class="btn btn-success">Embaucher</button>
+                    </form>  #}
                     <a class="btn btn-danger">Refuser</a>
                 </td>
             </tr>
-            
-        </tbody>
-    </table>
-
+        
     {% endfor %}
+
+    </tbody>
+</table>
 
     {% endif %}
 
