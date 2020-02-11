@@ -72,6 +72,12 @@
                         <a class="nav-link" href="{{ path('offers_index') }}">Emplois</a>
                     </li>
 
+                    {% elseif is_granted('ROLE_HIRED') %}
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="">Ecoles</a>
+                    </li>
+
                     {% endif %}
                     
                     <li class="nav-item active">
