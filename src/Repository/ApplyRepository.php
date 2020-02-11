@@ -19,6 +19,16 @@ class ApplyRepository extends ServiceEntityRepository
         parent::__construct($registry, Apply::class);
     }
 
+    // public function countNbOffers($offers)
+    // {
+    //     return $qb = $this->createQueryBuilder('u')
+    //     ->select('count(u.offers)')
+    //     ->andWhere('u.offers = :offers')
+    //     ->setParameter('offers', $offers->getId())
+    //     ->getQuery()
+    //     ->getSingleScalarResult();
+    // }
+
     public function checkIfRowExsists($offers, $student) {
 
         return (boolean)$this->createQueryBuilder('u')
