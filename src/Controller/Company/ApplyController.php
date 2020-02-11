@@ -49,8 +49,8 @@ class ApplyController extends AbstractController
             throw new \Exception('you have been refiused');
         }
 
-        $company = $offers->getCompany();
-        $company->getUser()->setRoles(['ROLE_SUPER_COMPANY', 'ROLE_VISITOR']);
+        // $company = $offers->getCompany();
+        // $company->getUser()->setRoles(['ROLE_SUPER_COMPANY', 'ROLE_VISITOR']);
         // dd($company);
         
         // if($applies == false) {
@@ -88,6 +88,32 @@ class ApplyController extends AbstractController
         return $this->render('offers/index_company.html.twig', [
             'offers' => $offersRepository->findBy(['company' => $company->getId()]),
             'company' => $company,
+        ]);
+    }
+
+    /**
+     * @Route("/hired/{id}/student/{student_id}", name="offers_show_hired", methods={"GET"})
+     * @IsGranted("ROLE_SUPER_STUDENT")
+     * @ParamConverter("student", options={"id" = "student_id"})
+     */
+    public function showHired(StudentRepository $studentRepository, Offers $offer, Student $student): Response
+    {   
+        return $this->render('offers/show_hired.html.twig', [
+            'offers' => $offer,
+            'student' => $student
+        ]);
+    }
+
+     /**
+     * @Route("/showapplied/{id}/company/{company_id}", name="show_applied_profile", methods={"GET"})
+     * @IsGranted("ROLE_SUPER_COMPANY")
+     * @ParamConverter("company", options={"id" = "company_id"})
+     */
+    public function showAppliedProfile(Student $student, Company $company): Response
+    {   
+        return $this->render('apply/show_applied.html.twig', [
+            'student' => $student,
+            'company' => $company
         ]);
     }
 
