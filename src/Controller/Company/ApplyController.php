@@ -94,8 +94,7 @@ class ApplyController extends AbstractController
                 $mailer->sendOthersMessage($email, $name, $offerTitle); 
 
                 // delete other applies 
-                $entityManager->remove($others);
-                
+                $entityManager->remove($others);   
             }
         }
 
@@ -133,14 +132,26 @@ class ApplyController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="apply_delete", methods={"DELETE"})
+     * @Route("/delete/{id}", name="apply_delete", methods={"DELETE"})
      * @ParamConverter("apply", options={"id" = "id"})
      */
-    public function delete(Request $request, Apply $apply, OffersRepository $offersRepository, CompanyRepository $companyRepository): Response
+    public function delete(Request $request, Apply $apply, OffersRepository $offersRepository, CompanyRepository $companyRepository, ApplyMailer $mailer): Response
     {
+        // get company to render company page 
         $companyId = $apply->getOffers()->getCompany()->getId();
 
-        // dd();
+        // set appliant roles 
+        $user = $apply->getStudent()->getUser();
+        $user->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_TO_APPLY']);
+
+        // send mail 
+        $email = $user->getEmail();
+        $name = $apply->getStudent()->getName();
+        $offerTitle = $apply->getOffers()->getTitle();
+
+        $mailer->sendDeleteMessage($email, $name, $offerTitle); 
+       
+        // delete apply 
         if ($this->isCsrfTokenValid('delete'.$apply->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($apply);
@@ -151,6 +162,4 @@ class ApplyController extends AbstractController
             'id' => $companyId,
         ]);
     }
-    
-    
 }
