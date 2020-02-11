@@ -71,6 +71,9 @@ class ApplyController extends AbstractController
         $student = $apply->getStudent();
         $offers = $apply->getOffers();
 
+        // prevent student from applying 
+        $student->getUser()->setRoles(['ROLE_SUPER_STUDENT']);
+
         $entityManager = $this->getDoctrine()->getManager();
  
         $others = $repository->getOtherApplies($student->getId(), $offers->getId());
