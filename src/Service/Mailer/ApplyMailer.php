@@ -29,4 +29,19 @@ class ApplyMailer
         
         $this->mailer->send($mail);
     }
+
+    public function sendDeleteMessage($email, $name, $title)
+    {
+        $mail = (new TemplatedEmail())
+            ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
+            ->to(new Address($email, $name))
+            ->subject('Problems with docs')
+            ->htmlTemplate('email/apply/delete.html.twig')
+            ->context([
+                'title' => $title,
+            ]); 
+        
+        $this->mailer->send($mail);
+    }
+
 }
