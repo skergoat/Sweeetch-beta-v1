@@ -28,6 +28,16 @@ class ApplyRepository extends ServiceEntityRepository
         ->getQuery()
         ->getOneOrNullResult();
     }
+
+    public function checkIfrefusedExsists($offers, $student) {
+        return (boolean)$this->createQueryBuilder('u')
+        ->andWhere('u.offers = :offers AND u.student = :student AND u.refused = :refused')
+        ->setParameter('offers', $offers->getId())
+        ->setParameter('student', $student->getId())
+        ->setParameter('refused', true)
+        ->getQuery()
+        ->getOneOrNullResult();
+    }
   
     public function getSingleHiredRow($offers, $student)
     {

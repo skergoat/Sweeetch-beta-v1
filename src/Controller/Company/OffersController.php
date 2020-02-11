@@ -31,17 +31,17 @@ class OffersController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/company/{id}", name="offers_company_index", methods={"GET"})
-     * @IsGranted("ROLE_SUPER_COMPANY")
-     */
-    public function indexByCompany(Company $company, OffersRepository $offersRepository, ApplyRepository $applyRepository): Response
-    {       
-        return $this->render('offers/index_company.html.twig', [
-            'offers' => $offersRepository->findBy(['company' => $company->getId()]),
-            'company' => $company,
-        ]);
-    }
+    // /**
+    //  * @Route("/company/{id}", name="offers_company_index", methods={"GET"})
+    //  * @IsGranted("ROLE_SUPER_COMPANY")
+    //  */
+    // public function indexByCompany(Company $company, OffersRepository $offersRepository, ApplyRepository $applyRepository): Response
+    // {       
+    //     return $this->render('offers/index_company.html.twig', [
+    //         'offers' => $offersRepository->findBy(['company' => $company->getId()]),
+    //         'company' => $company,
+    //     ]);
+    // }
 
     /**
      * @Route("/new/{id}", name="offers_new", methods={"GET","POST"})
