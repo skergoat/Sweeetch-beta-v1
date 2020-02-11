@@ -180,6 +180,8 @@ class ApplyController extends AbstractController
          $student = $apply->getStudent();
          $offers = $apply->getOffers();
 
+         $student->getUser()->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_HIRED']);
+
         $this->getDoctrine()->getManager()->flush();
 
         return $this->render('offers/show_preview.html.twig', [
