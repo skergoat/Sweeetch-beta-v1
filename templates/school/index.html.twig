@@ -1,0 +1,47 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %} {{ parent() }} - students {% endblock %}
+
+{% block body %}
+    <h1>School index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Address</th>
+                <th>ZipCode</th>
+                <th>City</th>
+                <th>TelNumber</th>
+                <th>Siret</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for school in schools %}
+            <tr>
+                <td>{{ school.id }}</td>
+                <td>{{ school.firstname }}</td>
+                <td>{{ school.lastname }}</td>
+                <td>{{ school.address }}</td>
+                <td>{{ school.zipCode }}</td>
+                <td>{{ school.city }}</td>
+                <td>{{ school.telNumber }}</td>
+                <td>{{ school.siret }}</td>
+                <td>
+                    <a href="{{ path('school_show', {'id': school.id}) }}">show</a>
+                    <a href="{{ path('school_edit', {'id': school.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('school_new') }}">Create new</a>
+{% endblock %}

@@ -1,4 +1,4 @@
-{% extends 'base-front.html.twig' %}
+{% extends 'base-school.html.twig' %}
 
 {% block title %} {{ parent() }} - students {% endblock %}
 
@@ -10,22 +10,21 @@
         <ul>
             <li class="active"><a href="/">Acceuil</a></li>
             <li class="drop-down"><a>S'INSCRIRE</a>
-              <ul>
-                  <li><a href="/student/new">Etudiant</a></li>
-                  <li><a href="/company/new">Professionel</a></li>
-                  <li><a href="#">Ecole</a></li>
-              </ul>
+            <ul>
+                <li><a href="/student/new">Etudiant</a></li>
+                <li><a href="/company/new">Professionel</a></li>
+                <li><a href="#">Ecole</a></li>
+            </ul>
             </li> 
             <li><a href="/login/">CONNEXION</a></li>
             <li><a href="/offers/">EMPLOIS</a></li>
         </ul>
     </nav><!-- .main-nav -->
 
-    <h1>Create new Student</h1>
+    <h1>Create new School</h1>
 
-    {{ include('student/_form.html.twig') }}
+    {{ include('school/_form.html.twig') }}
 
 </div>
-
+    
 {% endblock %}
-
