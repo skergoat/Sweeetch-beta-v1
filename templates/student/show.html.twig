@@ -44,6 +44,25 @@
             </tr>
         </tbody>
     </table>
+
+    {% if is_granted('ROLE_HIRED') %}
+
+    <h1>Mon Emploi</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Titre</th>
+                <td>{{ student.applies[0].offers.title }}</td>
+            </tr>
+            <tr>
+                <th>Entreprise</th>
+                <td>{{ student.applies[0].offers.company.companyName }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    {% endif %}
     
     <h1>Mon Profile</h1>
 
