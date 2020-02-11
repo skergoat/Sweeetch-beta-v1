@@ -80,7 +80,7 @@ class ApplyController extends AbstractController
     }
 
     /**
-     * @Route("/company/{id}", name="offers_company_index", methods={"GET"})
+     * @Route("index/company/{id}", name="offers_company_index", methods={"GET"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
     public function indexByCompany(Company $company, OffersRepository $offersRepository, ApplyRepository $applyRepository): Response
