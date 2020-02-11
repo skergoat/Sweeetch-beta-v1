@@ -30,9 +30,6 @@ class ApplyController extends AbstractController
     {
         $applies = $repository->checkIfRowExsists($offers, $student);
 
-        // if($applies->getRefused() == true) {
-        //     throw new \Exception('refused');
-        // }
         if($applies) {  
 
             $refused = $repository->checkIfrefusedExsists($offers, $student);
