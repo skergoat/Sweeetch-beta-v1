@@ -1,13 +1,13 @@
-{% extends 'base-student.html.twig' %}
+{% extends 'base-company.html.twig' %} 
 
-{% block title %} {{ parent() }} - students {% endblock %}
+{% block title %} {{ parent() }} - offers {% endblock %}
 
 {% block body %}
 
-    {% if is_granted('ROLE_ADMIN') and student.user.roles == 'ROLE_STUDENT' %}
-
-        {{ include('student/_confirm_form.html.twig') }}
-
+    {% if student.applies[0].hired == true %}
+    <p style="font-size:25px;">State : <strong>Hired</Mstrong></p>
+    {% elseif student.applies[0].confirmed == true %}
+    <p style="font-size:25px;">State : <strong>Confirmed</strong></p>
     {% endif %}
 
     <h1>Mes Infos</h1>
@@ -120,40 +120,10 @@
                     <span>
                         <a href="{{ path('student_download_resume', { id: student.resume.id }) }}"><span class="fa fa-download">{{ student.resume.originalFilename }}</span></a>
                     </span>
-                    {# <!-- temporary -->
-                    <a href="{{ uploaded_asset(student.resume.fileName) }}" target="_blank">
-                        <img class="show-article-img" src="{{ student.resume.fileName|imagine_filter('squared_thumbnail_small') }}" alt=""/>
-                    </a> #}
-                </td>
-                <td>   
-                    <span>
-                        <a href="{{ path('student_download_idcard', { id: student.idCard.id }) }}"><span class="fa fa-download">{{ student.idCard.originalFilename }}</span></a>
-                    </span>
-                    {# <!-- temporary -->
-                    <a href="{{ uploaded_asset(student.resume.fileName) }}" target="_blank">
-                        <img class="show-article-img" src="{{ student.resume.fileName|imagine_filter('squared_thumbnail_small') }}" alt=""/>
-                    </a> #}
-                </td>
-                <td>   
-                    <span>
-                        <a href="{{ path('student_download_studentcard', { id: student.studentCard.id }) }}"><span class="fa fa-download">{{ student.studentCard.originalFilename }}</span></a>
-                    </span>
-                    {# <!-- temporary -->
-                    <a href="{{ uploaded_asset(student.resume.fileName) }}" target="_blank">
-                        <img class="show-article-img" src="{{ student.resume.fileName|imagine_filter('squared_thumbnail_small') }}" alt=""/>
-                    </a> #}
-                </td>
-                <td>   
-                    <span>
-                        <a href="{{ path('student_download_proofhabitation', { id: student.proofHabitation.id }) }}"><span class="fa fa-download">{{ student.proofHabitation.originalFilename }}</span></a>
-                    </span>
-                    {# <!-- temporary -->
-                    <a href="{{ uploaded_asset(student.resume.fileName) }}" target="_blank">
-                        <img class="show-article-img" src="{{ student.resume.fileName|imagine_filter('squared_thumbnail_small') }}" alt=""/>
-                    </a> #}
                 </td>
             </tr>
         </tbody>
     </table>
 
 {% endblock %}
+
