@@ -18,11 +18,14 @@ class ApplyController extends AbstractController
 {
     /**
      * @Route("/offers/{id}/student/{student_id}", name="apply", methods={"POST"})
+     * @IsGranted("ROLE_SUPER_STUDENT")
      * @ParamConverter("student", options={"id" = "student_id"})
-     * @IsGranted({"ROLE_SUPER_STUDENT"})
      */
     public function apply(ApplyRepository $repository, Offers $offers, Student $student)
     {
+        $company = $offers->getCompany();
+        $company->getUser()->setRoles(['ROLE_SUPER_COMPANY', 'ROLE_VISITOR']);
+        // dd($company);
         $applies = $repository->checkIfRowExsists($offers, $student);
         
         if($applies == false) {
@@ -49,37 +52,12 @@ class ApplyController extends AbstractController
     public function studentApplies(StudentRepository $repository, Student $student)
     {
         return $this->render('apply/index_student.html.twig', [
-            'controller_name' => 'ApplyController',
             'student' => $student
         ]);
     }
 
-    // public function apply(Offers $offers, Student $student)
-    // {
-    //     $offers->addStudent($student);
-    //     $manager = $this->getDoctrine()->getManager()->flush();
-  
-    //     return $this->render('offers/show.html.twig', [
-    //         'controller_name' => 'ApplyController',
-    //         'offers' => $offers
-    //     ]);
-    // }
-
-    // /**
-    //  * @Route("/studentapply/{id}", name="student_apply", methods={"GET"})
-    //  */
-    // public function studentApply(StudentRepository $repository, Student $student)
-    // {
-    //     $repository->find($student->getId());
-
-    //     $offers = $student->getOffers();
-
-    //     return $this->render('apply/index_student.html.twig', [
-    //         'controller_name' => 'ApplyController',
-    //         'offers' => $offers,
-    //         'student' => $student
-    //     ]);
-    // }
+    
+    
 
     
     
