@@ -19,7 +19,7 @@ class ApplyController extends AbstractController
 {
     /**
      * @Route("/offers/{id}/student/{student_id}", name="apply", methods={"POST"})
-     * @IsGranted("ROLE_SUPER_STUDENT")
+     * @IsGranted("ROLE_TO_APPLY")
      * @ParamConverter("student", options={"id" = "student_id"})
      */
     public function apply(ApplyRepository $repository, Offers $offers, Student $student)
@@ -41,7 +41,6 @@ class ApplyController extends AbstractController
         }
        
         return $this->render('offers/show.html.twig', [
-            'controller_name' => 'ApplyController',
             'offers' => $offers
         ]);
     }
@@ -64,52 +63,67 @@ class ApplyController extends AbstractController
     public function hire(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer)
     {   
         // set apply state 
-        if($apply->getHired() == false && $apply->getConfirmed() == false) {
+        if($apply->getHired() == null && $apply->getConfirmed() == null) {
             $apply->setHired(true);
         }
 
         // get other applies
-        $student = $apply->getStudent()->getId();
-        $offers = $apply->getOffers()->getId();
+        $student = $apply->getStudent();
+        $offers = $apply->getOffers();
+
+        $entityManager = $this->getDoctrine()->getManager();
+ 
+        $others = $repository->getOtherApplies($student->getId(), $offers->getId());
+
+        if($others) {
+
+            foreach($others as $others) {
+
+                // send mail to other applies 
+                $offerTitle = $others->getOffers()->getTitle();
+                $name = $others->getStudent()->getName();
+                $email = $others->getStudent()->getUser()->getEmail();
         
-        $others = $repository->getOtherApplies($student, $offers);
+                $mailer->sendOthersMessage($email, $name, $offerTitle); 
 
-        foreach($others as $others) {
-
-            // send mail to other applies 
-            $offerTitle = $others->getOffers()->getTitle();
-            $name = $others->getStudent()->getName();
-            $email = $others->getStudent()->getUser()->getEmail();
-    
-            $mailer->sendOthersMessage($email, $name, $offerTitle); 
-
-            // delete other applies 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($others);
-            $entityManager->flush();
+                // delete other applies 
+                $entityManager->remove($others);
+                
+            }
         }
 
-        dd($offerTitle);
+        // save 
+        $entityManager->flush();
 
-
-        
-
-        
-
-       
-
-        // send notifications to others 
-        // delete others applies 
-       
-        return $this->render('offers/show.html.twig', [
-            'controller_name' => 'ApplyController',
-            'offers' => $offers
+        return $this->render('offers/show_preview.html.twig', [
+            'offers' => $offers,
+            'applies' => $repository->getSingleHiredRow($offers, $student)
         ]);
     }
 
-    
-    
+    /**
+     * @Route("confirm/{id}/offers_id", name="confirm", methods={"POST"})
+     * @IsGranted("ROLE_SUPER_COMPANY")
+     */
+    public function confirm(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer)
+    {
+        // set apply state 
+        if($apply->getHired() == true && $apply->getConfirmed() == null) {
+            $apply->setHired(null);
+            $apply->setConfirmed(true);
+        }
 
-    
+         // get other applies
+         $student = $apply->getStudent();
+         $offers = $apply->getOffers();
+
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->render('offers/show_preview.html.twig', [
+            'offers' => $offers,
+            'applies' => $repository->getSingleConfirmedRow($offers, $student)
+        ]);
+    }
+
     
 }

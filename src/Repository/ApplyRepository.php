@@ -29,16 +29,30 @@ class ApplyRepository extends ServiceEntityRepository
         ->getOneOrNullResult();
     }
   
-    // public function getOneApply($offers, $student)
-    // {
-    //     return $this->createQueryBuilder('u')
-    //         ->andWhere('u.offers = :offers AND u.student = :student')
-    //         ->setParameter('offers', $offers->getId())
-    //         ->setParameter('student', $student->getId())
-    //         ->getQuery()
-    //         ->getResult()
-    //     ;
-    // }
+    public function getSingleHiredRow($offers, $student)
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.offers = :offers AND u.student = :student AND u.hired = :hired')
+            ->setParameter('offers', $offers)
+            ->setParameter('student', $student)
+            ->setParameter('hired', true)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function getSingleConfirmedRow($offers, $student)
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.offers = :offers AND u.student = :student AND u.confirmed = :confirmed')
+            ->setParameter('offers', $offers)
+            ->setParameter('student', $student)
+            ->setParameter('confirmed', true)
+            // ->setParameter('confirmed', null)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     public function getOtherApplies($student, $offers)
     {
@@ -50,17 +64,5 @@ class ApplyRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-  
 
-    /*
-    public function findOneBySomeField($value): ?Apply
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
