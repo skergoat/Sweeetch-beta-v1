@@ -56,12 +56,8 @@ class Offers
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Apply", mappedBy="offers")
      */
-    private $applies;
-
-    // /**
-    //  * @ORM\ManyToMany(targetEntity="App\Entity\Student", inversedBy="offers")
-    //  */
-    // private $student;
+    private $applies; 
+    
 
     public function __construct()
     {

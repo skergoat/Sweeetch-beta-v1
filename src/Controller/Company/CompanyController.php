@@ -4,6 +4,8 @@ namespace App\Controller\Company;
 
 use App\Entity\Company;
 use App\Form\CompanyType;
+use App\Repository\ApplyRepository;
+use App\Service\Mailer\ApplyMailer;
 use App\Repository\CompanyRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -96,10 +98,43 @@ class CompanyController extends AbstractController
      * @Route("/{id}", name="company_delete", methods={"DELETE"})
      * @IsGranted("ROLE_COMPANY")
      */
-    public function delete(Request $request, Company $company): Response
+    public function delete(Request $request, Company $company, ApplyRepository $repository, ApplyMailer $mailer): Response
     {
         if ($this->isCsrfTokenValid('delete'.$company->getId(), $request->request->get('_token'))) {
+
             $entityManager = $this->getDoctrine()->getManager();
+
+            $offers = $company->getOffers();
+
+            // remove applies 
+            foreach($offers as $offers) {
+
+                $applies = $offers->getApplies();
+
+                foreach($applies as $applies) {
+
+                    $student = $applies->getStudent();
+
+                    // set roles 
+                    $student->getUser()->setRoles([
+                        "ROLE_SUPER_STUDENT",
+                        "ROLE_TO_APPLY"
+                    ]);
+
+                    // send mail 
+                    $email = $student->getUser()->getEmail();
+                    $name = $student->getName();
+                    $offerTitle = $offers->getTitle();
+                    // $offerTitle = $apply->getOffers()->getTitle();
+
+                    $mailer->sendDeleteCompanyMessage($email, $name, $offerTitle); 
+
+                    $entityManager->remove($applies); 
+                }
+                // remove offers 
+                $entityManager->remove($offers);
+            }
+
             $entityManager->remove($company);
             $entityManager->flush();
         }
