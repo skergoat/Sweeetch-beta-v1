@@ -98,10 +98,6 @@ class Student
      */
     private $applies;
 
-    // /**
-    //  * @ORM\ManyToMany(targetEntity="App\Entity\Offers", mappedBy="student")
-    //  */
-    // private $offers;
 
     public function __construct()
     {

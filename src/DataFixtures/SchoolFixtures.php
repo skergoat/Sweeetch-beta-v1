@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\Offers;
 use App\Entity\School;
 use App\Entity\Company;
+use App\Entity\Studies;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -39,27 +40,19 @@ class SchoolFixtures extends Fixture
             'school'
         ));
 
-            // $offer1 = new Offers;
-            // $offer1->setTitle('developpeur front-end'); 
-            // $offer1->setDomain('informatique');
-            // $offer1->setLocation('Paris'); 
-            // $offer1->setDateStart(new \DateTime('now')); 
-            // $offer1->setDateEnd(new \DateTime('now'));
-            // $offer1->setDescription('Un super bon job !'); 
+            $offer1 = new Studies;
+            $offer1->setTitle('developpeur web'); 
+            $offer1->setDescription('developpeur web'); 
+           
+            $offer2 = new Studies;
+            $offer2->setTitle('developpeur php'); 
+            $offer2->setDescription('developpeur web'); 
 
-            // $offer2 = new Offers;
-            // $offer2->setTitle('developpeur front-end'); 
-            // $offer2->setDomain('informatique');
-            // $offer2->setLocation('Paris'); 
-            // $offer2->setDateStart(new \DateTime('now')); 
-            // $offer2->setDateEnd(new \DateTime('now'));
-            // $offer2->setDescription('Un super bon job !'); 
+            $offer1->setSchool($ca);
+            $offer2->setSchool($ca);
 
-            // $offer1->setCompany($ca);
-            // $offer2->setCompany($ca);
-
-            // $manager->persist($offer1);
-            // $manager->persist($offer2);
+            $manager->persist($offer1);
+            $manager->persist($offer2);
 
         $ca->setUser($user);
 

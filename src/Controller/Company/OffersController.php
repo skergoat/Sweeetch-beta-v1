@@ -7,6 +7,7 @@ use App\Entity\Company;
 use App\Entity\Student;
 use App\Form\OffersType;
 use App\Repository\ApplyRepository;
+use App\Service\Mailer\ApplyMailer;
 use App\Repository\OffersRepository;
 use App\Repository\StudentRepository;
 use App\Controller\Company\ApplyController;
@@ -112,7 +113,7 @@ class OffersController extends AbstractController
      * @Route("/{id}", name="offers_delete", methods={"DELETE"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
-    public function delete(Request $request, Offers $offer, ApplyRepository $repository): Response
+    public function delete(Request $request, Offers $offer, ApplyRepository $repository, ApplyMailer $mailer): Response
     {
         if ($this->isCsrfTokenValid('delete'.$offer->getId(), $request->request->get('_token'))) {
 
@@ -122,6 +123,19 @@ class OffersController extends AbstractController
             
             foreach($applies as $applies) 
             {
+                $student = $applies->getStudent();
+
+                // set roles 
+                $student->getUser()->setRoles([
+                    "ROLE_SUPER_STUDENT",
+                    "ROLE_TO_APPLY"
+                ]);
+
+                // send mail 
+                $email = $student->getUser()->getEmail();
+                $name = $student->getName();
+                $mailer->sendDeleteCompanyMessage($email, $name, $offer->getTitle()); 
+               
                 $entityManager->remove($applies);
             }
 
