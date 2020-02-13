@@ -198,7 +198,7 @@ class ApplyController extends AbstractController
 
     /**
      * @Route("confirm/{id}", name="confirm", methods={"POST"})
-     * @IsGranted("ROLE_SUPER_COMPANY")
+     * @IsGranted("ROLE_SUPER_STUDENT")
      */
     public function confirm(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer)
     {
@@ -220,11 +220,13 @@ class ApplyController extends AbstractController
 
         $this->getDoctrine()->getManager()->flush();
 
-        return $this->render('offers/show_preview.html.twig', [
-            'offers' => $offers,
-            'applies' => $repository->getSingleConfirmedRow($offers, $student),
-            'finished' =>  $repository->findByOfferByFinished($offers)
-        ]);
+        return $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
+
+        // return $this->render('offers/show_preview.html.twig', [
+        //     'offers' => $offers,
+        //     'applies' => $repository->getSingleConfirmedRow($offers, $student),
+        //     'finished' =>  $repository->findByOfferByFinished($offers)
+        // ]);
     }
 
     //  /**
@@ -280,16 +282,16 @@ class ApplyController extends AbstractController
         $user = $apply->getStudent()->getUser();
         $user->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_TO_APPLY']);
 
-        // set com,pany roles - security 
-        $company = $apply->getOffers()->getCompany()->getUser();
-        $roles = $company->getRoles();
+        // // // set com,pany roles - security 
+        // $company = $apply->getOffers()->getCompany()->getUser();
+        // $roles = $company->getRoles();
 
-        if(in_array('ROLE_IS_REFUSED', $roles)) {
-            $company->setRoles(['ROLE_SUPER_COMPANY']);
-        }
-        else {
-            $company->setRoles(['ROLE_SUPER_COMPANY', 'ROLE_IS_REFUSED']);
-        }
+        // if(in_array('ROLE_IS_REFUSED', $roles)) {
+        //     $company->setRoles(['ROLE_SUPER_COMPANY']);
+        // }
+        // else {
+        //     $company->setRoles(['ROLE_SUPER_COMPANY', 'ROLE_IS_REFUSED']);
+        // }
 
          // get other applies
         $student = $apply->getStudent();
@@ -349,51 +351,51 @@ class ApplyController extends AbstractController
         return $this->redirectToRoute('offers_company_index', ['id' => $apply->getOffers()->getCompany()->getId()]);
     }
 
-    // /**
-    //  * @Route("/delete/{id}", name="apply_delete", methods={"DELETE"})
-    //  * @IsGranted("ROLE_SUPER_COMPANY")
-    //  * @ParamConverter("apply", options={"id" = "id"})
-    //  */
-    // public function delete(Request $request, Apply $apply, ApplyRepository $repository, OffersRepository $offersRepository, CompanyRepository $companyRepository, ApplyMailer $mailer): Response
-    // {
-    //     // get company to render company page 
-    //     $companyId = $apply->getOffers()->getCompany()->getId();
+    /**
+     * @Route("/delete/{id}", name="apply_delete", methods={"DELETE"})
+     * @IsGranted("ROLE_SUPER_STUDENT")
+     * @ParamConverter("apply", options={"id" = "id"})
+     */
+    public function delete(Request $request, Apply $apply, ApplyRepository $repository, OffersRepository $offersRepository, CompanyRepository $companyRepository, ApplyMailer $mailer): Response
+    {
+        // get company to render company page 
+        $companyId = $apply->getOffers()->getCompany()->getId();
 
-    //     // set appliant roles 
-    //     $user = $apply->getStudent()->getUser();
-    //     $user->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_TO_APPLY']);
+        // set appliant roles 
+        $user = $apply->getStudent()->getUser();
+        $user->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_TO_APPLY']);
 
-    //     $student = $apply->getStudent();
-    //     $offers = $apply->getOffers();
+        $student = $apply->getStudent();
+        $offers = $apply->getOffers();
 
-    //     // set other student offers to unavailable
-    //     $unavailables = $repository->setToUnavailables($offers, $student);
+        // set other student offers to unavailable
+        $unavailables = $repository->setToUnavailables($offers, $student);
 
-    //     foreach($unavailables as $unavailables) {
+        foreach($unavailables as $unavailables) {
 
-    //         if($unavailables->getUnavailable() == true) {
-    //             $unavailables->setUnavailable(false);
-    //         } 
-    //     }
+            if($unavailables->getUnavailable() == true) {
+                $unavailables->setUnavailable(false);
+            } 
+        }
 
-    //     // send mail 
-    //     $email = $user->getEmail();
-    //     $name = $apply->getStudent()->getName();
-    //     $offerTitle = $apply->getOffers()->getTitle();
+        // send mail 
+        // $email = $user->getEmail();
+        // $name = $apply->getStudent()->getName();
+        // $offerTitle = $apply->getOffers()->getTitle();
 
-    //     $mailer->sendDeleteMessage($email, $name, $offerTitle); 
+        // $mailer->sendDeleteMessage($email, $name, $offerTitle); 
        
-    //     // delete apply 
-    //     if ($this->isCsrfTokenValid('delete'.$apply->getId(), $request->request->get('_token'))) {
+        // delete apply 
+        if ($this->isCsrfTokenValid('delete'.$apply->getId(), $request->request->get('_token'))) {
 
-    //         $entityManager = $this->getDoctrine()->getManager();
-    //         // delete relation
-    //         $entityManager->remove($apply);
-    //         // delete offer
-    //         $entityManager->remove($apply->getOffers());
-    //         $entityManager->flush();
-    //     }
+            $entityManager = $this->getDoctrine()->getManager();
+            // delete relation
+            $entityManager->remove($apply);
+            // delete offer
+            // $entityManager->remove($apply->getOffers());
+            $entityManager->flush();
+        }
 
-    //     return $this->redirectToRoute('offers_company_index', ['id' => $companyId,]);
-    // }
+        return $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
+    }
 }
