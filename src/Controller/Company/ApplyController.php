@@ -83,11 +83,27 @@ class ApplyController extends AbstractController
      * @Route("index/company/{id}", name="offers_company_index", methods={"GET"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
-    public function indexByCompany(Company $company, OffersRepository $offersRepository, ApplyRepository $applyRepository): Response
+    public function indexByCompany(Company $company, OffersRepository $offersRepository): Response
     {       
         return $this->render('offers/index_company.html.twig', [
             'offers' => $offersRepository->findBy(['company' => $company->getId()]),
             'company' => $company,
+        ]);
+    }
+
+    /**
+     * @Route("/preview/{id}", name="offers_preview", methods={"GET"})
+     * @IsGranted("ROLE_SUPER_COMPANY")
+     */
+    public function showPreview(ApplyRepository $applyRepository, Offers $offer): Response
+    {   
+        $applies = $applyRepository->findByOffer($offer);
+        $finished = $applyRepository->findByOfferByFinished($offer);
+       
+        return $this->render('offers/show_preview.html.twig', [
+            'offers' => $offer,
+            'applies' => $applies,
+            'finished' => $finished
         ]);
     }
 
@@ -171,7 +187,8 @@ class ApplyController extends AbstractController
 
         return $this->render('offers/show_preview.html.twig', [
             'offers' => $offers,
-            'applies' => $repository->getSingleHiredRow($offers, $student)
+            'applies' => $repository->getSingleHiredRow($offers, $student),
+            'finished' =>  $repository->findByOfferByFinished($offers)
         ]);
     }
 
@@ -197,7 +214,8 @@ class ApplyController extends AbstractController
 
         return $this->render('offers/show_preview.html.twig', [
             'offers' => $offers,
-            'applies' => $repository->getSingleConfirmedRow($offers, $student)
+            'applies' => $repository->getSingleConfirmedRow($offers, $student),
+            'finished' =>  $repository->findByOfferByFinished($offers)
         ]);
     }
 

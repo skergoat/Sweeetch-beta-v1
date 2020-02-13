@@ -75,23 +75,6 @@ class OffersController extends AbstractController
     }
 
     /**
-     * @Route("/preview/{id}", name="offers_preview", methods={"GET"})
-     * @IsGranted("ROLE_SUPER_COMPANY")
-     */
-    public function showPreview(ApplyRepository $applyRepository, Offers $offer): Response
-    {   
-        // $applies = $offer->getApplies();
-        $applies = $applyRepository->findByOffer($offer);
-        $finished = $applyRepository->findByOfferByFinished($offer);
-       
-        return $this->render('offers/show_preview.html.twig', [
-            'offers' => $offer,
-            'applies' => $applies,
-            'finished' => $finished
-        ]);
-    }
-
-    /**
      * @Route("/{id}/edit", name="offers_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      */

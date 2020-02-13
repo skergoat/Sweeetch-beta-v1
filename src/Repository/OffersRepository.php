@@ -19,8 +19,6 @@ class OffersRepository extends ServiceEntityRepository
         parent::__construct($registry, Offers::class);
     }
 
-  
-
     /*
     public function findOneBySomeField($value): ?Offers
     {
