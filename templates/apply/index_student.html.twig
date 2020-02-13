@@ -46,10 +46,13 @@
                     {% elseif applies.hired == true or applies.confirmed == true %}
                     <a href="{{ path('offers_show_hired', {'id': applies.offers.id, 'student_id' : student.id}) }}" class="btn btn-success">show</a>
                     {% endif %}
-                    <form method="post" action="{{ path('apply_delete', {'id': applies.id, 'entity' : 'student' }) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-                        <input type="hidden" name="_method" value="DELETE">
+                    {# <form method="post" action="{{ path('apply_quit', {'id': applies.id }) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
-                        <button class="btn btn-danger">Delete</button>
+                        <button class="btn btn-danger">Quit</button>
+                    </form> #}
+                    <form method="post" action="{{ path('apply_refuse', {'id': applies.id, 'from' : 'student' }) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
+                        <button class="btn btn-danger">Refuse</button>
                     </form>
                 </td>
             </tr>
