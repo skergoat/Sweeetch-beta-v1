@@ -20,15 +20,15 @@
                 <th>actions</th>
             </tr>
         </thead>
-        {% for applies in student.applies %}
+        {% for applies in applies %}
 
-            {% if applies.refused == false %}
+            {# {% if applies.refused == false %} #}
         <tbody>
             <tr>
                 <td>{{ applies.offers.id }}</td>
                 <td>{{ applies.offers.title }}</td>
                 <td>{{ applies.offers.location }}</td>
-                <td>{{ applies.offers.domain }}</td>
+                <td>{{ applies.offers.domain }}</td> 
                 <td> 
                     {% if applies.confirmed == false %}
                         {% if applies.hired == false %}
@@ -50,13 +50,15 @@
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
                         <button class="btn btn-danger">Quit</button>
                     </form> #}
+                    {% if applies.confirmed == false %}
                     <form method="post" action="{{ path('apply_refuse', {'id': applies.id, 'from' : 'student' }) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
                         <button class="btn btn-danger">Refuse</button>
                     </form>
+                    {% endif %}
                 </td>
             </tr>
-        {% endif %}
+        {# {% endif %} #}
     {% else %}
     <tr>
         <td colspan="8">no records found</td>

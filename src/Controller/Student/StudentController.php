@@ -244,6 +244,7 @@ class StudentController extends AbstractController
 
             $entityManager = $this->getDoctrine()->getManager();
 
+            // delete applies 
             $check = $applyRepository->checkIfAppliesExsists($student);
            
             if($check){
@@ -251,7 +252,11 @@ class StudentController extends AbstractController
                 $applies = $applyRepository->findBy(['student' => $student]);
 
                 foreach($applies as $applies) {
-                    $entityManager->remove($applies);
+
+                    // ---> if finished : no delete / null else delete 
+                    // ---> if other id = null then delete 
+                    // $applies->setStudent(null);
+                    // $entityManager->remove($applies);
                 }
             }
 
