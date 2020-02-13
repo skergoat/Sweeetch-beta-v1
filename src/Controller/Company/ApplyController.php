@@ -68,10 +68,13 @@ class ApplyController extends AbstractController
      * @Route("/studentapply/{id}", name="student_apply", methods={"GET"})
      * @IsGranted("ROLE_SUPER_STUDENT")
      */
-    public function indexByStudent(StudentRepository $repository, Student $student)
-    {
+    public function indexByStudent(StudentRepository $repository, applyRepository $applyRepository, Student $student)
+    {   
+        $applies = $applyRepository->findByStudent($student);
+
         return $this->render('apply/index_student.html.twig', [
-            'student' => $student
+            'student' => $student,
+            'applies' => $applies
         ]);
     }
 
@@ -247,8 +250,8 @@ class ApplyController extends AbstractController
         $user->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_TO_APPLY']);
 
          // get other applies
-         $student = $apply->getStudent();
-         $offers = $apply->getOffers();
+        $student = $apply->getStudent();
+        $offers = $apply->getOffers();
 
            // set other student offers to available
         $unavailables = $repository->setToUnavailables($offers, $student);
@@ -260,13 +263,15 @@ class ApplyController extends AbstractController
             }      
         }
 
+        // dd($user->getRoles());
+
         $this->getDoctrine()->getManager()->flush();
 
         if($from == 'student') {
             $return = $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
         }
         else if($from == 'company') {
-            $return = $this->redirectToRoute('offers_company_index', ['id' => $companyId,]);
+            $return = $this->redirectToRoute('offers_company_index', ['id' => $apply->getOffers()->getCompany()->getId()]);
         }
 
         return $return;
