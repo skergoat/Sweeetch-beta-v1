@@ -40,12 +40,17 @@
                     confirmed
                     {% endif %}
                 </td>
-                <td>
+                <td class="btn-group">
                     {% if applies.hired == false and applies.confirmed == false %}
-                    <a href="{{ path('offers_show', {'id': applies.offers.id}) }}">show</a>
+                    <a href="{{ path('offers_show', {'id': applies.offers.id}) }}" class="btn btn-success">show</a>
                     {% elseif applies.hired == true or applies.confirmed == true %}
-                    <a href="{{ path('offers_show_hired', {'id': applies.offers.id, 'student_id' : student.id}) }}">show</a>
+                    <a href="{{ path('offers_show_hired', {'id': applies.offers.id, 'student_id' : student.id}) }}" class="btn btn-success">show</a>
                     {% endif %}
+                    <form method="post" action="{{ path('apply_delete', {'id': applies.id, 'entity' : 'student' }) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
                 </td>
             </tr>
         {% endif %}

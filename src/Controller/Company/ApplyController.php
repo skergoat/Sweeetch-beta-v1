@@ -230,16 +230,15 @@ class ApplyController extends AbstractController
         return $this->render('offers/show_preview.html.twig', [
             'offers' => $offers,
             'applies' => $repository->findByOffer($offers)
-            // 'applies' => $repository->getSingleConfirmedRow($offers, $student)
         ]);
     }
 
     /**
-     * @Route("/delete/{id}", name="apply_delete", methods={"DELETE"})
-     * @IsGranted("ROLE_SUPER_COMPANY")
+     * @Route("/delete/{id}/{entity}", name="apply_delete", methods={"DELETE"})
+     * @IsGranted("ROLE_RELATION")
      * @ParamConverter("apply", options={"id" = "id"})
      */
-    public function delete(Request $request, Apply $apply, ApplyRepository $repository, OffersRepository $offersRepository, CompanyRepository $companyRepository, ApplyMailer $mailer): Response
+    public function delete(Request $request, Apply $apply, ApplyRepository $repository, OffersRepository $offersRepository, CompanyRepository $companyRepository, ApplyMailer $mailer, $entity): Response
     {
         // get company to render company page 
         $companyId = $apply->getOffers()->getCompany()->getId();
@@ -279,8 +278,13 @@ class ApplyController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('offers_company_index', [
-            'id' => $companyId,
-        ]);
+        if($entity == 'student') {
+           $redirect = $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
+        }
+        else if($entity == 'company') {
+            $redirect = $this->redirectToRoute('offers_company_index', ['id' => $companyId,]);
+        }
+
+        return $redirect; 
     }
 }
