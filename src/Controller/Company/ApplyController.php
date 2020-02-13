@@ -120,7 +120,7 @@ class ApplyController extends AbstractController
     public function hire(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer)
     {   
         // set apply state 
-        if($apply->getHired() == null && $apply->getConfirmed() == null) {
+        if($apply->getHired() == false && $apply->getConfirmed() == false) {
             $apply->setHired(true);
         }
 
@@ -178,8 +178,8 @@ class ApplyController extends AbstractController
     public function confirm(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer)
     {
         // set apply state 
-        if($apply->getHired() == true && $apply->getConfirmed() == null) {
-            $apply->setHired(null);
+        if($apply->getHired() == true && $apply->getConfirmed() == false) {
+            $apply->setHired(false);
             $apply->setConfirmed(true);
         }
 
@@ -203,8 +203,8 @@ class ApplyController extends AbstractController
      */
     public function refuse(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer)
     {
-        $apply->setHired(null);
-        $apply->setConfirmed(null);
+        $apply->setHired(false);
+        $apply->setConfirmed(false);
         $apply->setRefused(true);
 
         // set appliant roles 
@@ -229,7 +229,8 @@ class ApplyController extends AbstractController
 
         return $this->render('offers/show_preview.html.twig', [
             'offers' => $offers,
-            'applies' => $repository->getSingleConfirmedRow($offers, $student)
+            'applies' => $repository->findByOffer($offers)
+            // 'applies' => $repository->getSingleConfirmedRow($offers, $student)
         ]);
     }
 
@@ -238,7 +239,7 @@ class ApplyController extends AbstractController
      * @IsGranted("ROLE_SUPER_COMPANY")
      * @ParamConverter("apply", options={"id" = "id"})
      */
-    public function delete(Request $request, Apply $apply, OffersRepository $offersRepository, CompanyRepository $companyRepository, ApplyMailer $mailer): Response
+    public function delete(Request $request, Apply $apply, ApplyRepository $repository, OffersRepository $offersRepository, CompanyRepository $companyRepository, ApplyMailer $mailer): Response
     {
         // get company to render company page 
         $companyId = $apply->getOffers()->getCompany()->getId();
