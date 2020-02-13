@@ -82,10 +82,12 @@ class OffersController extends AbstractController
     {   
         // $applies = $offer->getApplies();
         $applies = $applyRepository->findByOffer($offer);
+        $finished = $applyRepository->findByOfferByFinished($offer);
        
         return $this->render('offers/show_preview.html.twig', [
             'offers' => $offer,
-            'applies' => $applies
+            'applies' => $applies,
+            'finished' => $finished
         ]);
     }
 

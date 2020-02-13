@@ -21,10 +21,21 @@ class ApplyRepository extends ServiceEntityRepository
 
     public function findByOffer($offer) {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.offers = :offers AND u.refused = :refused AND u.unavailable = :unavailable')
+            ->andWhere('u.offers = :offers AND u.refused = :refused AND u.unavailable = :unavailable  AND u.finished = :finished')
             ->setParameter('offers', $offer)
             ->setParameter('refused', false)
             ->setParameter('unavailable', false)
+            ->setParameter('finished', false)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findByOfferByFinished($offer) {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.offers = :offers AND u.finished = :finished')
+            ->setParameter('offers', $offer)
+            ->setParameter('finished', true)
             ->getQuery()
             ->getResult()
         ;
@@ -32,10 +43,11 @@ class ApplyRepository extends ServiceEntityRepository
 
     public function findByStudent($student) {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.student = :student AND u.refused = :refused AND u.unavailable = :unavailable')
+            ->andWhere('u.student = :student AND u.refused = :refused AND u.unavailable = :unavailable AND u.finished = :finished')
             ->setParameter('student', $student)
             ->setParameter('refused', false)
             ->setParameter('unavailable', false)
+            ->setParameter('finished', false)
             ->getQuery()
             ->getResult()
         ;
