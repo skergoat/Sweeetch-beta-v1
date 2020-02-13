@@ -120,17 +120,7 @@ class CompanyController extends AbstractController
                         "ROLE_SUPER_STUDENT",
                         "ROLE_TO_APPLY"
                     ]);
-
-                     // set other student offers to unavailable
-                    // $unavailables = $repository->setToUnavailables($offers, $student);
-
-                    // foreach($unavailables as $unavailables) {
-
-                    //     if($unavailables->getUnavailable() == true) {
-                    //         $unavailables->setUnavailable(false);
-                    //     } 
-                    // }
-
+                    
                     // send mail 
                     $email = $student->getUser()->getEmail();
                     $name = $student->getName();
