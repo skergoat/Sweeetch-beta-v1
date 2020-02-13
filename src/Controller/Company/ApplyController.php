@@ -280,6 +280,17 @@ class ApplyController extends AbstractController
         $user = $apply->getStudent()->getUser();
         $user->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_TO_APPLY']);
 
+        // set com,pany roles - security 
+        $company = $apply->getOffers()->getCompany()->getUser();
+        $roles = $company->getRoles();
+
+        if(in_array('ROLE_IS_REFUSED', $roles)) {
+            $company->setRoles(['ROLE_SUPER_COMPANY']);
+        }
+        else {
+            $company->setRoles(['ROLE_SUPER_COMPANY', 'ROLE_IS_REFUSED']);
+        }
+
          // get other applies
         $student = $apply->getStudent();
         $offers = $apply->getOffers();
@@ -293,8 +304,6 @@ class ApplyController extends AbstractController
                 $unavailables->setUnavailable(false);
             }      
         }
-
-        // dd($user->getRoles());
 
         $this->getDoctrine()->getManager()->flush();
 
