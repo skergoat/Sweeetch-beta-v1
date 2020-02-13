@@ -51,6 +51,7 @@ class ApplyController extends AbstractController
         $apply->setConfirmed(false);
         $apply->setRefused(false);
         $apply->setUnavailable(false);
+        $apply->setFinished(false);
         $apply->setOffers($offers);
         $apply->setStudent($student);
     
@@ -253,7 +254,7 @@ class ApplyController extends AbstractController
         $student = $apply->getStudent();
         $offers = $apply->getOffers();
 
-           // set other student offers to available
+        // set other student offers to available
         $unavailables = $repository->setToUnavailables($offers, $student);
 
         foreach($unavailables as $unavailables) {
@@ -277,51 +278,83 @@ class ApplyController extends AbstractController
         return $return;
     }
 
-    /**
-     * @Route("/delete/{id}", name="apply_delete", methods={"DELETE"})
+     /**
+     * @Route("/finish/{id}", name="apply_finish", methods={"POST"})
      * @IsGranted("ROLE_SUPER_COMPANY")
-     * @ParamConverter("apply", options={"id" = "id"})
      */
-    public function delete(Request $request, Apply $apply, ApplyRepository $repository, OffersRepository $offersRepository, CompanyRepository $companyRepository, ApplyMailer $mailer): Response
+    public function finish(Apply $apply, ApplyRepository $applyRepository)
     {
-        // get company to render company page 
-        $companyId = $apply->getOffers()->getCompany()->getId();
+        $apply->setConfirmed(false);
+        $apply->setFinished(true);
 
         // set appliant roles 
         $user = $apply->getStudent()->getUser();
-        $user->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_TO_APPLY']);
+        $user->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_TO_APPLY']); 
 
+        // get other applies
         $student = $apply->getStudent();
         $offers = $apply->getOffers();
 
-        // set other student offers to unavailable
-        $unavailables = $repository->setToUnavailables($offers, $student);
+        // set other student offers to available
+        $unavailables = $applyRepository->setToUnavailables($offers, $student);
 
         foreach($unavailables as $unavailables) {
 
             if($unavailables->getUnavailable() == true) {
                 $unavailables->setUnavailable(false);
-            } 
+            }      
         }
 
-        // send mail 
-        $email = $user->getEmail();
-        $name = $apply->getStudent()->getName();
-        $offerTitle = $apply->getOffers()->getTitle();
+        $this->getDoctrine()->getManager()->flush();
 
-        $mailer->sendDeleteMessage($email, $name, $offerTitle); 
-       
-        // delete apply 
-        if ($this->isCsrfTokenValid('delete'.$apply->getId(), $request->request->get('_token'))) {
-
-            $entityManager = $this->getDoctrine()->getManager();
-            // delete relation
-            $entityManager->remove($apply);
-            // delete offer
-            $entityManager->remove($apply->getOffers());
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('offers_company_index', ['id' => $companyId,]);
+        return $this->redirectToRoute('offers_company_index', ['id' => $apply->getOffers()->getCompany()->getId()]);
     }
+
+    // /**
+    //  * @Route("/delete/{id}", name="apply_delete", methods={"DELETE"})
+    //  * @IsGranted("ROLE_SUPER_COMPANY")
+    //  * @ParamConverter("apply", options={"id" = "id"})
+    //  */
+    // public function delete(Request $request, Apply $apply, ApplyRepository $repository, OffersRepository $offersRepository, CompanyRepository $companyRepository, ApplyMailer $mailer): Response
+    // {
+    //     // get company to render company page 
+    //     $companyId = $apply->getOffers()->getCompany()->getId();
+
+    //     // set appliant roles 
+    //     $user = $apply->getStudent()->getUser();
+    //     $user->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_TO_APPLY']);
+
+    //     $student = $apply->getStudent();
+    //     $offers = $apply->getOffers();
+
+    //     // set other student offers to unavailable
+    //     $unavailables = $repository->setToUnavailables($offers, $student);
+
+    //     foreach($unavailables as $unavailables) {
+
+    //         if($unavailables->getUnavailable() == true) {
+    //             $unavailables->setUnavailable(false);
+    //         } 
+    //     }
+
+    //     // send mail 
+    //     $email = $user->getEmail();
+    //     $name = $apply->getStudent()->getName();
+    //     $offerTitle = $apply->getOffers()->getTitle();
+
+    //     $mailer->sendDeleteMessage($email, $name, $offerTitle); 
+       
+    //     // delete apply 
+    //     if ($this->isCsrfTokenValid('delete'.$apply->getId(), $request->request->get('_token'))) {
+
+    //         $entityManager = $this->getDoctrine()->getManager();
+    //         // delete relation
+    //         $entityManager->remove($apply);
+    //         // delete offer
+    //         $entityManager->remove($apply->getOffers());
+    //         $entityManager->flush();
+    //     }
+
+    //     return $this->redirectToRoute('offers_company_index', ['id' => $companyId,]);
+    // }
 }
