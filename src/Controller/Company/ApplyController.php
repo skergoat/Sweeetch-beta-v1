@@ -46,19 +46,18 @@ class ApplyController extends AbstractController
             throw new \Exception('you have been refiused');
         }
 
-        // $company = $offers->getCompany();
-        // $company->getUser()->setRoles(['ROLE_SUPER_COMPANY', 'ROLE_VISITOR']);
-        // dd($company);
-        
-        // if($applies == false) {
         $apply = new Apply; 
+        $apply->setHired(false);
+        $apply->setConfirmed(false);
+        $apply->setRefused(false);
+        $apply->setUnavailable(false);
         $apply->setOffers($offers);
         $apply->setStudent($student);
     
         $manager = $this->getDoctrine()->getManager();
         $manager->persist($apply);
         $manager->flush();
-        // }
+ 
         
         return $this->render('offers/show.html.twig', [
             'offers' => $offers
@@ -131,6 +130,17 @@ class ApplyController extends AbstractController
 
         // prevent student from applying 
         $student->getUser()->setRoles(['ROLE_SUPER_STUDENT']);
+
+        // set other student offers to unavailable
+        $unavailables = $repository->setToUnavailables($offers, $student);
+
+        foreach($unavailables as $unavailables) {
+
+            if($unavailables->getRefused() != true) {
+                $unavailables->setUnavailable(true);
+            }
+            
+        }
 
         $entityManager = $this->getDoctrine()->getManager();
  
@@ -205,6 +215,16 @@ class ApplyController extends AbstractController
          $student = $apply->getStudent();
          $offers = $apply->getOffers();
 
+           // set other student offers to available
+        $unavailables = $repository->setToUnavailables($offers, $student);
+
+        foreach($unavailables as $unavailables) {
+
+            if($unavailables->getUnavailable() == true) {
+                $unavailables->setUnavailable(false);
+            }      
+        }
+
         $this->getDoctrine()->getManager()->flush();
 
         return $this->render('offers/show_preview.html.twig', [
@@ -226,6 +246,19 @@ class ApplyController extends AbstractController
         // set appliant roles 
         $user = $apply->getStudent()->getUser();
         $user->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_TO_APPLY']);
+
+        $student = $apply->getStudent();
+        $offers = $apply->getOffers();
+
+        // set other student offers to unavailable
+        $unavailables = $repository->setToUnavailables($offers, $student);
+
+        foreach($unavailables as $unavailables) {
+
+            if($unavailables->getUnavailable() == true) {
+                $unavailables->setUnavailable(false);
+            } 
+        }
 
         // send mail 
         $email = $user->getEmail();

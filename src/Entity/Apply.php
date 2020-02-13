@@ -29,19 +29,25 @@ class Apply
     private $student;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean")
      */
     private $hired;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean")
      */
     private $confirmed;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean")
      */
     private $refused;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $unavailable;
+
 
     public function getId(): ?int
     {
@@ -104,6 +110,18 @@ class Apply
     public function setRefused(?bool $refused): self
     {
         $this->refused = $refused;
+
+        return $this;
+    }
+
+    public function getUnavailable(): ?bool
+    {
+        return $this->unavailable;
+    }
+
+    public function setUnavailable(bool $unavailable): self
+    {
+        $this->unavailable = $unavailable;
 
         return $this;
     }

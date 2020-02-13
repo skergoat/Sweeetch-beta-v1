@@ -30,7 +30,7 @@
                 <td>
                     {% if offer.applies[0] is defined %}
                         {% if offer.applies[0].offers.id is not null %}
-                            {% if offer.applies[0].hired is null and  offer.applies[0].confirmed is null %}
+                            {% if offer.applies[0].hired is null and offer.applies[0].confirmed is null %}
                                 apply
                             {% elseif offer.applies[0].hired == true and offer.applies[0].confirmed is null %}
                                 hired
