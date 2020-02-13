@@ -72,10 +72,12 @@ class ApplyController extends AbstractController
     public function indexByStudent(StudentRepository $repository, applyRepository $applyRepository, Student $student)
     {   
         $applies = $applyRepository->findByStudent($student);
+        $finished = $applyRepository->findByStudentByFinished($student);
 
         return $this->render('apply/index_student.html.twig', [
             'student' => $student,
-            'applies' => $applies
+            'applies' => $applies,
+            'finished' => $finished
         ]);
     }
 
@@ -142,6 +144,8 @@ class ApplyController extends AbstractController
         // set apply state 
         if($apply->getHired() == false && $apply->getConfirmed() == false) {
             $apply->setHired(true);
+            $apply->setConfirmed(false);
+            $apply->setRefused(false);
         }
 
         // get other applies
@@ -156,7 +160,7 @@ class ApplyController extends AbstractController
 
         foreach($unavailables as $unavailables) {
 
-            if($unavailables->getRefused() != true) {
+            if($unavailables->getRefused() != true && $unavailables->getFinished() != true) {
                 $unavailables->setUnavailable(true);
             }
             
@@ -199,9 +203,13 @@ class ApplyController extends AbstractController
     public function confirm(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer)
     {
         // set apply state 
-        if($apply->getHired() == true && $apply->getConfirmed() == false) {
+        if(    $apply->getHired() == true 
+            && $apply->getConfirmed() == false 
+            && $apply->getRefused() == false 
+        ) {
             $apply->setHired(false);
             $apply->setConfirmed(true);
+            $apply->setRefused(false);
         }
 
          // get other applies
@@ -260,6 +268,10 @@ class ApplyController extends AbstractController
      */
     public function refuse(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer, $from)
     {
+        if($apply->getRefused() == true) {
+            throw new \Exception('already refused');
+        }
+
         $apply->setHired(false);
         $apply->setConfirmed(false);
         $apply->setRefused(true);
