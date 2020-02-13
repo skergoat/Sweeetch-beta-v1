@@ -35,7 +35,7 @@ class ApplyController extends AbstractController
             $refused = $repository->checkIfrefusedExsists($offers, $student);
             
             if($refused) {
-                throw new \Exception('you have been refused');
+                throw new \Exception('already applied or refused');
             }
             else {
                 throw new \Exception('already applied');
@@ -197,11 +197,46 @@ class ApplyController extends AbstractController
         ]);
     }
 
+    //  /**
+    //  * @Route("/quit/{id}", name="apply_quit", methods={"POST"})
+    //  * @IsGranted("ROLE_SUPER_STUDENT")
+    //  */
+    // public function quit(ApplyRepository $repository, Apply $apply) 
+    // {
+    //     // $apply->setHired(false);
+    //     // $apply->setConfirmed(false);
+        
+    //     // set appliant roles 
+    //     $user = $apply->getStudent()->getUser();
+    //     $user->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_TO_APPLY']);
+
+    //      // get other applies
+    //      $student = $apply->getStudent();
+    //      $offers = $apply->getOffers();
+
+    //     // set other student offers to available
+    //     $unavailables = $repository->setToUnavailables($offers, $student);
+
+    //     foreach($unavailables as $unavailables) {
+
+    //         if($unavailables->getUnavailable() == true) {
+    //             $unavailables->setUnavailable(false);
+    //         }      
+    //     }
+
+    //     $manager = $this->getDoctrine()->getManager();
+    //     $manager->remove($apply);
+    //     $manager->flush();
+
+    //     return $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
+
+    // }
+
      /**
-     * @Route("/refuse/{id}", name="apply_refuse", methods={"POST"})
-     * @IsGranted("ROLE_SUPER_COMPANY")
+     * @Route("/refuse/{id}/{from}", name="apply_refuse", methods={"POST"})
+     * @IsGranted("ROLE_RELATION")
      */
-    public function refuse(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer)
+    public function refuse(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer, $from)
     {
         $apply->setHired(false);
         $apply->setConfirmed(false);
@@ -227,18 +262,22 @@ class ApplyController extends AbstractController
 
         $this->getDoctrine()->getManager()->flush();
 
-        return $this->render('offers/show_preview.html.twig', [
-            'offers' => $offers,
-            'applies' => $repository->findByOffer($offers)
-        ]);
+        if($from == 'student') {
+            $return = $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
+        }
+        else if($from == 'company') {
+            $return = $this->redirectToRoute('offers_company_index', ['id' => $companyId,]);
+        }
+
+        return $return;
     }
 
     /**
-     * @Route("/delete/{id}/{entity}", name="apply_delete", methods={"DELETE"})
-     * @IsGranted("ROLE_RELATION")
+     * @Route("/delete/{id}", name="apply_delete", methods={"DELETE"})
+     * @IsGranted("ROLE_SUPER_COMPANY")
      * @ParamConverter("apply", options={"id" = "id"})
      */
-    public function delete(Request $request, Apply $apply, ApplyRepository $repository, OffersRepository $offersRepository, CompanyRepository $companyRepository, ApplyMailer $mailer, $entity): Response
+    public function delete(Request $request, Apply $apply, ApplyRepository $repository, OffersRepository $offersRepository, CompanyRepository $companyRepository, ApplyMailer $mailer): Response
     {
         // get company to render company page 
         $companyId = $apply->getOffers()->getCompany()->getId();
@@ -278,13 +317,6 @@ class ApplyController extends AbstractController
             $entityManager->flush();
         }
 
-        if($entity == 'student') {
-           $redirect = $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
-        }
-        else if($entity == 'company') {
-            $redirect = $this->redirectToRoute('offers_company_index', ['id' => $companyId,]);
-        }
-
-        return $redirect; 
+        return $this->redirectToRoute('offers_company_index', ['id' => $companyId,]);
     }
 }
