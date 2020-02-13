@@ -6,7 +6,9 @@
 
     <br><br>
 
-    <h1>Offers index</h1>
+    <a href="{{ path('offers_new', {id:company.id}) }}" class="btn btn-success">Create new</a>
+
+    <br><br>
 
     <table class="table">
         <thead>
@@ -23,46 +25,70 @@
         </thead>
         <tbody>
 
+    <tr>
+        <h3>Missions</h3>
+    </tr>
+
     {% for offers in offers %}
 
-        {% if offers.applies[0].finished == false %}
-                <tr>
-                    <td>{{ offers.applies[0].offers.id }}</td>
-                    <td>{{ offers.applies[0].offers.title }}</td>
-                    <td>{{ offers.applies[0].offers.location }}</td>
-                    <td>{{ offers.applies[0].offers.domain }}</td>
-                    <td>{{ offers.applies[0].offers.dateStart ? offers.applies[0].offers.dateStart|date('Y-m-d H:i:s') : '' }}</td>
-                    <td>{{ offers.applies[0].offers.dateEnd ? offers.applies[0].offers.dateEnd|date('Y-m-d H:i:s') : '' }}</td>
-                    <td>    
-                    {% if offers.applies[0].confirmed == false %}
-                        {% if offers.applies[0].hired == false %}
-                        applied
-                        {% else %}
-                        hired
-                        {% endif %}
+        {% if offers.applies[0] is not defined %}
+     
+            <tr>
+                <td>{{ offers.id }}</td>
+                <td>{{ offers.title }}</td>
+                <td>{{ offers.location }}</td>
+                <td>{{ offers.domain }}</td>
+                <td>{{ offers.dateStart ? offers.dateStart|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ offers.dateEnd ? offers.dateEnd|date('Y-m-d H:i:s') : '' }}</td>
+                <td> open </td>
+                <td>
+                    <a href="{{ path('offers_preview', {'id': offers.id}) }}">show</a>
+                    <a href="{{ path('offers_edit', {'id': offers.id}) }}">edit</a>
+                </td> 
+            </tr>
+
+        {% endif %}
+
+        {% if offers.applies[0] is defined %}
+
+            {% if offers.applies[0].finished == false %}
+
+            <tr>
+                <td>{{ offers.applies[0].offers.id }}</td>
+                <td>{{ offers.applies[0].offers.title }}</td>
+                <td>{{ offers.applies[0].offers.location }}</td>
+                <td>{{ offers.applies[0].offers.domain }}</td>
+                <td>{{ offers.applies[0].offers.dateStart ? offers.applies[0].offers.dateStart|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ offers.applies[0].offers.dateEnd ? offers.applies[0].offers.dateEnd|date('Y-m-d H:i:s') : '' }}</td>
+                <td>    
+                {% if offers.applies[0].confirmed == false %}
+                    {% if offers.applies[0].hired == false %}
+                    applied
                     {% else %}
-                    confirmed
-                    {% endif %} 
-                    </td>
-                    <td>
-                        <a href="{{ path('offers_preview', {'id': offers.applies[0].offers.id}) }}">show</a>
-                        <a href="{{ path('offers_edit', {'id': offers.applies[0].offers.id}) }}">edit</a>
-                    </td> 
-                </tr>
+                    hired
+                    {% endif %}
+                {% else %}
+                confirmed
+                {% endif %} 
+                </td>
+                <td>
+                    <a href="{{ path('offers_preview', {'id': offers.applies[0].offers.id}) }}">show</a>
+                    <a href="{{ path('offers_edit', {'id': offers.applies[0].offers.id}) }}">edit</a>
+                </td> 
+            </tr>
             {% endif %}
+
+        {% endif %}
 
    {% endfor %}
 
     </tbody>
 </table>
 
-
-    <a href="{{ path('offers_new', {id:company.id}) }}" class="btn btn-success">Create new</a>
-
     <br><br>
     <br><br>
 
-    <h1>Finished</h1>
+    <h3>Finished</h3>
      
     <table class="table">
         <thead>
@@ -83,7 +109,7 @@
 
         {% for applies in offers.applies %}
 
-        {% if applies.finished == true %}
+            {% if applies.finished == true %}
         
                 <tr>
                     <td>{{ applies.offers.id }}</td>
