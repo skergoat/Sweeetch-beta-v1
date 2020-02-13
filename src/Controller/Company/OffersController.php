@@ -132,7 +132,7 @@ class OffersController extends AbstractController
                     "ROLE_TO_APPLY"
                 ]);
 
-                     // set other student offers to unavailable
+                // set other student offers to unavailable
                 $unavailables = $repository->setToUnavailables($offer, $student);
 
                 foreach($unavailables as $unavailables) {
