@@ -120,11 +120,7 @@ class CompanyController extends AbstractController
                         "ROLE_SUPER_STUDENT",
                         "ROLE_TO_APPLY"
                     ]);
-<<<<<<< HEAD
 
-=======
-                    
->>>>>>> test
                     // send mail 
                     $email = $student->getUser()->getEmail();
                     $name = $student->getName();
