@@ -18,13 +18,13 @@ class Apply
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Offers", inversedBy="applies")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $offers;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Student", inversedBy="applies")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $student;
 

@@ -30,6 +30,17 @@ class ApplyRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findByStudent($student) {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.student = :student AND u.refused = :refused AND u.unavailable = :unavailable')
+            ->setParameter('student', $student)
+            ->setParameter('refused', false)
+            ->setParameter('unavailable', false)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     public function setToUnavailables($offers, $student) {
         return $this->createQueryBuilder('u')
             ->andWhere('u.offers != :offers AND u.student = :student')
