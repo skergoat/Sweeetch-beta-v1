@@ -40,6 +40,15 @@ class ApplyRepository extends ServiceEntityRepository
         ;
     }
 
+    public function checkIfAppliesExsists($student) {
+
+        return (boolean)$this->createQueryBuilder('u')
+        ->andWhere('u.student = :student')
+        ->setParameter('student', $student->getId())
+        ->getQuery()
+        ->getResult();
+    }
+
     public function checkIfRowExsists($offers, $student) {
 
         return (boolean)$this->createQueryBuilder('u')

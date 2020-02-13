@@ -12,6 +12,7 @@ use App\Entity\ProofHabitation;
 use App\Service\UploaderHelper;
 use Gedmo\Sluggable\Util\Urlizer;
 use App\Repository\UserRepository;
+use App\Repository\ApplyRepository;
 use App\Repository\ResumeRepository;
 use App\Repository\StudentRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -227,7 +228,7 @@ class StudentController extends AbstractController
      * @Route("/{id}", name="student_delete", methods={"DELETE"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function delete(Request $request, Student $student, UploaderHelper $uploaderHelper): Response
+    public function delete(Request $request, Student $student, UploaderHelper $uploaderHelper, ApplyRepository $applyRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$student->getId(), $request->request->get('_token'))) {
 
@@ -242,6 +243,18 @@ class StudentController extends AbstractController
             }
 
             $entityManager = $this->getDoctrine()->getManager();
+
+            $check = $applyRepository->checkIfAppliesExsists($student);
+           
+            if($check){
+
+                $applies = $applyRepository->findBy(['student' => $student]);
+
+                foreach($applies as $applies) {
+                    $entityManager->remove($applies);
+                }
+            }
+
             $entityManager->remove($student);
             $entityManager->flush();
         }
