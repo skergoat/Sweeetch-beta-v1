@@ -7,7 +7,17 @@
 
 <div class="example-wrapper">
 
-    <h1> Liste des Postulations</h1>
+    <br><br>
+
+    {% if applies[0] is defined %}
+
+        {% if applies[0].hired == true or applies[0].confirmed == true %}
+        <h3> Current </h3>
+        {% else %}
+        <h3> Liste des Postulations</h3>
+        {% endif %}
+
+    {% endif %}
 
     <table class="table">
         <thead>
@@ -22,7 +32,6 @@
         </thead>
         {% for applies in applies %}
 
-            {# {% if applies.refused == false %} #}
         <tbody>
             <tr>
                 <td>{{ applies.offers.id }}</td>
@@ -58,7 +67,7 @@
                     {% endif %}
                 </td>
             </tr>
-        {# {% endif %} #}
+
     {% else %}
     <tr>
         <td colspan="8">no records found</td>
@@ -66,6 +75,45 @@
 {% endfor %}
 </tbody>
 </table>
+
+<br><br>
+
+<h3> Finished</h3>
     
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Location</th>
+            <th>Domain</th>
+            <th>State</th>
+            <th>actions</th>
+        </tr>
+    </thead>
+
+    {% for finished in finished %}
+
+    <tbody>
+        <tr>
+            <td>{{ finished.offers.id }}</td>
+            <td>{{ finished.offers.title }}</td>
+            <td>{{ finished.offers.location }}</td>
+            <td>{{ finished.offers.domain }}</td> 
+            <td> 
+                Finished
+            </td>
+            <td class="btn-group">
+                <a href="{{ path('offers_show_hired', {'id': finished.offers.id, 'student_id' : student.id}) }}" class="btn btn-success">show</a>
+            </td>
+        </tr>
+
+    {% else %}
+        <tr>
+            <td colspan="8">no records found</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
 
 {% endblock %}
