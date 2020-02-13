@@ -38,7 +38,7 @@
         </tbody>
     </table>
 
-    {% if applies is defined %}
+    {% if applies[0] is defined %}
 
         {% if applies[0].confirmed == false %}  
         <h1>Appliants</h1>
@@ -104,6 +104,33 @@
                 </td>
             </tr>
         
+    {% endfor %}
+
+    </tbody>
+</table>
+
+    {% endif %}
+
+{% if finished is not empty %}
+
+    <h1>Finished</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Location</th>
+                <th>Profile</th>
+            </tr>
+
+    {% for finished in finished %}     
+            <tr>
+                <td>{{ finished.student.id }}</td>
+                <td>{{ finished.student.name }}</td>
+                <td>{{ finished.student.lastname }}</td>
+                <td><a href="{{ path('show_applied_profile', { "id":finished.student.id, "company_id": offers.company.id }) }}">show</a></td>
+            </tr>
     {% endfor %}
 
     </tbody>
