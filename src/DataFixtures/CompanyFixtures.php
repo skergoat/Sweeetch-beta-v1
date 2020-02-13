@@ -21,7 +21,7 @@ class CompanyFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $ca = new Company;
-        $ca->setCompanyName('Web Dev & Co.');
+        $ca->setCompanyName('test');
         $ca->setFirstname('Stephane');
         $ca->setLastname('Kergoat');
         $ca->setAddress('1 rue du chemin vert');
@@ -31,11 +31,11 @@ class CompanyFixtures extends Fixture
         $ca->setSiret('1234567890');
 
         $user = new User; 
-        $user->setEmail('company@gmail.com');
+        $user->setEmail('test@gmail.com');
         $user->setRoles(['ROLE_COMPANY']);
         $user->setPassword($this->passwordEncoder->encodePassword(
             $user,
-            'company'
+            'test'
         ));
 
             $offer1 = new Offers;
