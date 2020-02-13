@@ -22,7 +22,7 @@
         </thead>
         {% for applies in student.applies %}
 
-            {% if applies.refused is null %}
+            {% if applies.refused == false %}
         <tbody>
             <tr>
                 <td>{{ applies.offers.id }}</td>
@@ -30,8 +30,8 @@
                 <td>{{ applies.offers.location }}</td>
                 <td>{{ applies.offers.domain }}</td>
                 <td> 
-                    {% if applies.confirmed is null %}
-                        {% if applies.hired is null %}
+                    {% if applies.confirmed == false %}
+                        {% if applies.hired == false %}
                         applied
                         {% else %}
                         hired

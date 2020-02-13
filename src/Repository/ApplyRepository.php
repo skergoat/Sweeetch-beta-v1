@@ -19,15 +19,26 @@ class ApplyRepository extends ServiceEntityRepository
         parent::__construct($registry, Apply::class);
     }
 
-    // public function countNbOffers($offers)
-    // {
-    //     return $qb = $this->createQueryBuilder('u')
-    //     ->select('count(u.offers)')
-    //     ->andWhere('u.offers = :offers')
-    //     ->setParameter('offers', $offers->getId())
-    //     ->getQuery()
-    //     ->getSingleScalarResult();
-    // }
+    public function findByOffer($offer) {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.offers = :offers AND u.refused = :refused AND u.unavailable = :unavailable')
+            ->setParameter('offers', $offer)
+            ->setParameter('refused', false)
+            ->setParameter('unavailable', false)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function setToUnavailables($offers, $student) {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.offers != :offers AND u.student = :student')
+            ->setParameter('offers', $offers)
+            ->setParameter('student', $student)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     public function checkIfRowExsists($offers, $student) {
 

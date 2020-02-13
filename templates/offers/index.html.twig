@@ -49,7 +49,7 @@
             <tbody>
             {% for offer in offers %}
                 <tr>
-                    {% if offer.applies[0] is not defined or offer.applies[0] is defined and offer.applies[0].hired is null and offer.applies[0].confirmed is null %}
+                    {% if offer.applies[0] is not defined or offer.applies[0] is defined and offer.applies[0].hired == false and offer.applies[0].confirmed == false %}
                     <td>{{ offer.id }}</td>
                     <td>{{ offer.title }}</td>
                     <td>{{ offer.location }}</td>
