@@ -40,7 +40,11 @@
 
     {% if applies is defined %}
 
-    <h1>Appliants</h1>
+        {% if applies[0].confirmed == false %}  
+        <h1>Appliants</h1>
+        {% else %}
+        <h1>Hired</h1>
+        {% endif %}
 
     <table class="table">
         <tbody>
@@ -76,13 +80,18 @@
                     </form>
 
                 {% elseif applies.hired == false and applies.confirmed == true %}
+
+                <form method="post" action="{{ path('apply_finish', {'id': applies.id }) }}" onsubmit="return confirm('Are you sure you want to finish this mission ?');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
+                    <button class="btn btn-warning">Finish</button>
+                </form>
                     
-                <a class="btn btn-success">Confirmed !</a>
-                <form method="post" action="{{ path('apply_delete', {'id': applies.id }) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                {# <a class="btn btn-success">Confirmed !</a> #}
+                {# <form method="post" action="{{ path('apply_delete', {'id': applies.id }) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
                     <input type="hidden" name="_method" value="DELETE">
                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
                     <button class="btn btn-danger">Delete</button>
-                </form>
+                </form> #}
 
                 {% endif %}
 

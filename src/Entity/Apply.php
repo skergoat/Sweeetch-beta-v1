@@ -48,6 +48,11 @@ class Apply
      */
     private $unavailable;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $finished;
+
 
     public function getId(): ?int
     {
@@ -122,6 +127,18 @@ class Apply
     public function setUnavailable(bool $unavailable): self
     {
         $this->unavailable = $unavailable;
+
+        return $this;
+    }
+
+    public function getFinished(): ?bool
+    {
+        return $this->finished;
+    }
+
+    public function setFinished(?bool $finished): self
+    {
+        $this->finished = $finished;
 
         return $this;
     }
