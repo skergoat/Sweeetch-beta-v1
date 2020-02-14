@@ -31,7 +31,7 @@
 
     {% for offers in offers %}
 
-        {% if offers.applies[0] is not defined %}
+        {% if offers.applies | length == 0 %}
      
             <tr>
                 <td>{{ offers.id }}</td>
@@ -49,7 +49,7 @@
 
         {% endif %}
 
-        {% if offers.applies[0] is defined %}
+        {% if offers.applies | length > 0 %}
 
             {% if offers.applies[0].finished == false %}
 
@@ -61,15 +61,15 @@
                 <td>{{ offers.applies[0].offers.dateStart ? offers.applies[0].offers.dateStart|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ offers.applies[0].offers.dateEnd ? offers.applies[0].offers.dateEnd|date('Y-m-d H:i:s') : '' }}</td>
                 <td>    
-                {% if offers.applies[0].confirmed == false %}
-                    {% if offers.applies[0].hired == false %}
-                        applied
+                    {% if offers.applies[0].confirmed == false %}
+                        {% if offers.applies[0].hired == false %}
+                            applies
+                        {% else %}
+                        En attente
+                        {% endif %}
                     {% else %}
-                    En attente
-                    {% endif %}
-                {% else %}
-                confirmed
-                {% endif %} 
+                    confirmed
+                    {% endif %} 
                 </td>
                 <td>
                     <a href="{{ path('offers_preview', {'id': offers.applies[0].offers.id}) }}">show</a>
