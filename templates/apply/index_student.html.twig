@@ -106,35 +106,35 @@
             <th>actions</th>
         </tr>
     </thead>
+        <tbody>
+    {% if finished is defined %}
 
-    {% for finished in finished %}
-
-    <tbody>
-        <tr>
-            <td>{{ finished.offers.id }}</td>
-            <td>{{ finished.offers.title }}</td>
-            <td>{{ finished.offers.location }}</td>
-            <td>{{ finished.offers.domain }}</td> 
-            <td> 
-                Finished
-            </td>
-            <td class="btn-group">
-                <a href="{{ path('offers_show_hired', {'id': finished.offers.id, 'student_id' : student.id}) }}" class="btn btn-success">show</a>
-            </td>
-        </tr>
-
+        {% for finished in finished %}
+            <tr>
+                <td>{{ finished.offers.id }}</td>
+                <td>{{ finished.offers.title }}</td>
+                <td>{{ finished.offers.location }}</td>
+                <td>{{ finished.offers.domain }}</td> 
+                <td> 
+                    Finished
+                </td>
+                <td class="btn-group">
+                    <a href="{{ path('offers_show_hired', {'id': finished.offers.id, 'student_id' : student.id}) }}" class="btn btn-success">show</a>
+                </td>
+            </tr>
+        {% endfor %}
+    
     {% else %}
-        <tr>
-            <td colspan="8">no records found</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+    {% endif %}
+        </tbody>
+    </table>
+ 
 {% else %}
 <br><br>
 <p style="color:red;">Votre compte doit etre valide pour pouvoir postuler</p>
-
 {% endif %}
 
 {% endblock %}
