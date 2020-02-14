@@ -26,7 +26,7 @@ class ApplyRenderController extends AbstractController
 {
      /**
      * @Route("/index/student/{id}", name="student_apply", methods={"GET"})
-     * @IsGranted("ROLE_SUPER_STUDENT")
+     * @IsGranted("ROLE_STUDENT")
      */
     public function indexByStudent(StudentRepository $repository, applyRepository $applyRepository, Student $student)
     {   
@@ -42,7 +42,7 @@ class ApplyRenderController extends AbstractController
 
     /**
      * @Route("/index/company/{id}", name="offers_company_index", methods={"GET"})
-     * @IsGranted("ROLE_SUPER_COMPANY")
+     * @IsGranted("ROLE_COMPANY")
      */
     public function indexByCompany(Company $company, OffersRepository $offersRepository): Response
     {       

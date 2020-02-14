@@ -28,6 +28,15 @@ class SchoolController extends AbstractController
     }
 
     /**
+     * @Route("/student", name="school_student_index", methods={"GET"})
+     * @IsGranted("ROLE_STUDENT")
+     */
+    public function indexByStudent(SchoolRepository $schoolRepository): Response
+    {
+        return $this->render('school/index_student.html.twig');
+    }
+
+    /**
      * @Route("/new", name="school_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response

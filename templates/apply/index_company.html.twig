@@ -4,6 +4,8 @@
 
 {% block body %}
 
+{% if is_granted('ROLE_SUPER_COMPANY') %}
+
     <br><br>
 
     <a href="{{ path('offers_new', {id:company.id}) }}" class="btn btn-success">Create new</a>
@@ -131,6 +133,12 @@
    {% endfor %}
 
     </tbody>
-</table>    
+</table>  
+
+{% else %}
+<br><br>
+<p style="color:red">Vous devez etre comfirmer pour creer des offres</p>
+
+{% endif %}
 
 {% endblock %}
