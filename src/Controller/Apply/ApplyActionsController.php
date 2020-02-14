@@ -313,7 +313,6 @@ class ApplyActionsController extends AbstractController
 
         // set appliant roles 
         $user = $apply->getStudent()->getUser();
-        // $user->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_TO_APPLY']);
         $user->setRoles(['ROLE_SUPER_STUDENT']); 
 
         $student = $apply->getStudent();
@@ -343,10 +342,27 @@ class ApplyActionsController extends AbstractController
             // delete relation
             $entityManager->remove($apply);
             // delete offer
-            // $entityManager->remove($apply->getOffers());
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
     }
+
+    /**
+     * @Route("/delete/empty/{id}/{from}", name="delete_empty", methods={"DELETE"})
+     * @IsGranted("ROLE_SUPER_STUDENT")
+     */
+    public function deleteEmpty(Request $request, Apply $apply, $from): Response
+    {   
+        $student = $apply->getStudent();
+
+        if ($this->isCsrfTokenValid('delete'.$apply->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($apply);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
+    }
+
 }
