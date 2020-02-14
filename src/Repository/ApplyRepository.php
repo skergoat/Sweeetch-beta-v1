@@ -19,18 +19,7 @@ class ApplyRepository extends ServiceEntityRepository
         parent::__construct($registry, Apply::class);
     }
 
-    // public function findNotFinished($offers)
-    // {
-    //     return $this->createQueryBuilder('u')
-    //         ->andWhere('u.offers = :offers AND u.finished = :finished')
-    //         ->setParameter('offers', $offers)
-    //         ->setParameter('finished', false)
-    //         ->getQuery()
-    //         ->getResult()
-    //     ;
-    // }
-
-    public function checkIfFinished($offers)
+    public function checkIfFinished($offers) // 
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.offers = :offers AND u.finished = :finished')
@@ -41,7 +30,7 @@ class ApplyRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findByOffer($offer) {
+    public function findByOffer($offer) {  // 
         return $this->createQueryBuilder('u')
             ->andWhere('u.offers = :offers AND u.refused = :refused AND u.unavailable = :unavailable  AND u.finished = :finished')
             ->setParameter('offers', $offer)
@@ -53,7 +42,7 @@ class ApplyRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findByOfferByFinished($offer) {
+    public function findByOfferByFinished($offer) { // 
         return $this->createQueryBuilder('u')
             ->andWhere('u.offers = :offers AND u.finished = :finished')
             ->setParameter('offers', $offer)
@@ -63,7 +52,7 @@ class ApplyRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findByStudentByFinished($student)
+    public function findByStudentByFinished($student) // 
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.student = :student AND u.finished = :finished')
@@ -74,7 +63,7 @@ class ApplyRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findByStudent($student) {
+    public function findByStudent($student) { // 
         return $this->createQueryBuilder('u')
             ->andWhere('u.student = :student AND u.refused = :refused AND u.unavailable = :unavailable AND u.finished = :finished')
             ->setParameter('student', $student)
@@ -86,7 +75,7 @@ class ApplyRepository extends ServiceEntityRepository
         ;
     }
 
-    public function setToUnavailables($offers, $student) {
+    public function setToUnavailables($offers, $student) { //
         return $this->createQueryBuilder('u')
             ->andWhere('u.offers != :offers AND u.student = :student')
             ->setParameter('offers', $offers)
@@ -96,16 +85,7 @@ class ApplyRepository extends ServiceEntityRepository
         ;
     }
 
-    public function checkIfAppliesExsists($student) {
-
-        return (boolean)$this->createQueryBuilder('u')
-        ->andWhere('u.student = :student')
-        ->setParameter('student', $student->getId())
-        ->getQuery()
-        ->getResult();
-    }
-
-    public function checkIfRowExsists($offers, $student) {
+    public function checkIfRowExsists($offers, $student) { // 
 
         return (boolean)$this->createQueryBuilder('u')
         ->andWhere('u.offers = :offers AND u.student = :student')
@@ -115,7 +95,7 @@ class ApplyRepository extends ServiceEntityRepository
         ->getOneOrNullResult();
     }
 
-    public function checkIfrefusedExsists($offers, $student) {
+    public function checkIfrefusedExsists($offers, $student) { //
         return (boolean)$this->createQueryBuilder('u')
         ->andWhere('u.offers = :offers AND u.student = :student AND u.refused = :refused')
         ->setParameter('offers', $offers->getId())
@@ -123,31 +103,6 @@ class ApplyRepository extends ServiceEntityRepository
         ->setParameter('refused', true)
         ->getQuery()
         ->getOneOrNullResult();
-    }
-  
-    public function getSingleHiredRow($offers, $student)
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.offers = :offers AND u.student = :student AND u.hired = :hired')
-            ->setParameter('offers', $offers)
-            ->setParameter('student', $student)
-            ->setParameter('hired', true)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-
-    public function getSingleConfirmedRow($offers, $student)
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.offers = :offers AND u.student = :student AND u.confirmed = :confirmed')
-            ->setParameter('offers', $offers)
-            ->setParameter('student', $student)
-            ->setParameter('confirmed', true)
-            // ->setParameter('confirmed', null)
-            ->getQuery()
-            ->getResult()
-        ;
     }
 
     public function getOtherApplies($student, $offers)
@@ -160,5 +115,50 @@ class ApplyRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+     // public function findNotFinished($offers)
+    // {
+    //     return $this->createQueryBuilder('u')
+    //         ->andWhere('u.offers = :offers AND u.finished = :finished')
+    //         ->setParameter('offers', $offers)
+    //         ->setParameter('finished', false)
+    //         ->getQuery()
+    //         ->getResult()
+    //     ;
+    // }
+
+    // public function checkIfAppliesExsists($student) {
+
+    //     return (boolean)$this->createQueryBuilder('u')
+    //     ->andWhere('u.student = :student')
+    //     ->setParameter('student', $student->getId())
+    //     ->getQuery()
+    //     ->getResult();
+    // }
+
+    // public function getSingleHiredRow($offers, $student)
+    // {
+    //     return $this->createQueryBuilder('u')
+    //         ->andWhere('u.offers = :offers AND u.student = :student AND u.hired = :hired')
+    //         ->setParameter('offers', $offers)
+    //         ->setParameter('student', $student)
+    //         ->setParameter('hired', true)
+    //         ->getQuery()
+    //         ->getResult()
+    //     ;
+    // }
+
+    // public function getSingleConfirmedRow($offers, $student)
+    // {
+    //     return $this->createQueryBuilder('u')
+    //         ->andWhere('u.offers = :offers AND u.student = :student AND u.confirmed = :confirmed')
+    //         ->setParameter('offers', $offers)
+    //         ->setParameter('student', $student)
+    //         ->setParameter('confirmed', true)
+    //         ->getQuery()
+    //         ->getResult()
+    //     ;
+    // }
+
 
 }
