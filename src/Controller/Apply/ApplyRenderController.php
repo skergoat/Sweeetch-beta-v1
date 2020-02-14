@@ -19,10 +19,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
+/**
+ * @Route("/apply")
+ */
 class ApplyRenderController extends AbstractController
 {
      /**
-     * @Route("/studentapply/{id}", name="student_apply", methods={"GET"})
+     * @Route("/index/student/{id}", name="student_apply", methods={"GET"})
      * @IsGranted("ROLE_SUPER_STUDENT")
      */
     public function indexByStudent(StudentRepository $repository, applyRepository $applyRepository, Student $student)
@@ -38,7 +41,7 @@ class ApplyRenderController extends AbstractController
     }
 
     /**
-     * @Route("index/company/{id}", name="offers_company_index", methods={"GET"})
+     * @Route("/index/company/{id}", name="offers_company_index", methods={"GET"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
     public function indexByCompany(Company $company, OffersRepository $offersRepository): Response
@@ -50,10 +53,10 @@ class ApplyRenderController extends AbstractController
     }
 
     /**
-     * @Route("/preview/{id}", name="offers_preview", methods={"GET"})
+     * @Route("/show/company/{id}", name="offers_preview", methods={"GET"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
-    public function showPreview(ApplyRepository $applyRepository, Offers $offer): Response
+    public function showByCompany(ApplyRepository $applyRepository, Offers $offer): Response
     {   
         $applies = $applyRepository->findByOffer($offer);
         $finished = $applyRepository->findByOfferByFinished($offer);
@@ -66,11 +69,11 @@ class ApplyRenderController extends AbstractController
     }
 
     /**
-     * @Route("/hired/{id}/student/{student_id}", name="offers_show_hired", methods={"GET"})
+     * @Route("/profile/{id}/student/{student_id}", name="offers_show_hired", methods={"GET"})
      * @IsGranted("ROLE_SUPER_STUDENT")
      * @ParamConverter("student", options={"id" = "student_id"})
      */
-    public function showHired(StudentRepository $studentRepository, Offers $offer, Student $student): Response
+    public function showOfferProfile(StudentRepository $studentRepository, Offers $offer, Student $student): Response
     {   
         return $this->render('apply/show_hired.html.twig', [
             'offers' => $offer,
@@ -79,15 +82,17 @@ class ApplyRenderController extends AbstractController
     }
 
      /**
-     * @Route("/showapplied/{id}/company/{company_id}", name="show_applied_profile", methods={"GET"})
+     * @Route("/profile/{id}/company/{company_id}", name="show_applied_profile", methods={"GET"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      * @ParamConverter("company", options={"id" = "company_id"})
      */
-    public function showAppliedProfile(Student $student, Company $company): Response
+    public function showStudentProfile(Student $student, Company $company): Response
     {   
         return $this->render('apply/show_applied.html.twig', [
             'student' => $student,
             'company' => $company
         ]);
     }
+
+
 }
