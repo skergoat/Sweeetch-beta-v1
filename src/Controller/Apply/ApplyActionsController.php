@@ -277,7 +277,7 @@ class ApplyActionsController extends AbstractController
         $name = $student->getName();
         $offerTitle = $offers->getTitle(); 
            
-        $mailer->sendDeleteMessage($email, $name, $offerTitle); 
+        $mailer->sendRefuseMessage($email, $name, $offerTitle); 
   
         // set other student offers to available
         $unavailables = $repository->setToUnavailables($offers, $student);
