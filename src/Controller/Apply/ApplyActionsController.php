@@ -26,12 +26,28 @@ class ApplyActionsController extends AbstractController
 {
     /**
      * @Route("/offers/{id}/student/{student_id}", name="apply", methods={"POST"})
-     * @IsGranted("ROLE_TO_APPLY")
+     * @IsGranted("ROLE_SUPER_STUDENT")
      * @ParamConverter("student", options={"id" = "student_id"})
      */
     public function apply(ApplyRepository $repository, Offers $offers, Student $student)
     {
         $applies = $repository->checkIfRowExsists($offers, $student);
+
+        if($applies) {  
+
+            $refused = $repository->checkIfrefusedExsists($offers, $student);
+            
+            if($refused) {
+                throw new \Exception('already applied or refused');
+            }
+            else {
+                throw new \Exception('already applied');
+            }  
+        }
+
+        if($applies) {
+            throw new \Exception('already applied or refused');
+        }
 
         $apply = new Apply; 
         $apply->setHired(false);
@@ -133,40 +149,38 @@ class ApplyActionsController extends AbstractController
         return $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
     }
 
-    //  /**
-    //  * @Route("/quit/{id}", name="apply_quit", methods={"POST"})
-    //  * @IsGranted("ROLE_SUPER_STUDENT")
-    //  */
-    // public function quit(ApplyRepository $repository, Apply $apply) 
-    // {
-    //     // $apply->setHired(false);
-    //     // $apply->setConfirmed(false);
-        
-    //     // set appliant roles 
-    //     $user = $apply->getStudent()->getUser();
-    //     $user->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_TO_APPLY']);
+     /**
+     * @Route("/finish/{id}", name="apply_finish", methods={"POST"})
+     * @IsGranted("ROLE_SUPER_COMPANY")
+     */
+    public function finish(Apply $apply, ApplyRepository $applyRepository)
+    {
+        $apply->setConfirmed(false);
+        $apply->setFinished(true);
 
-    //      // get other applies
-    //      $student = $apply->getStudent();
-    //      $offers = $apply->getOffers();
+        // set appliant roles 
+        $user = $apply->getStudent()->getUser();
+        // $user->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_TO_APPLY']); 
+        $user->setRoles(['ROLE_SUPER_STUDENT']); 
 
-    //     // set other student offers to available
-    //     $unavailables = $repository->setToUnavailables($offers, $student);
+        // get other applies
+        $student = $apply->getStudent();
+        $offers = $apply->getOffers();
 
-    //     foreach($unavailables as $unavailables) {
+        // set other student offers to available
+        $unavailables = $applyRepository->setToUnavailables($offers, $student);
 
-    //         if($unavailables->getUnavailable() == true) {
-    //             $unavailables->setUnavailable(false);
-    //         }      
-    //     }
+        foreach($unavailables as $unavailables) {
 
-    //     $manager = $this->getDoctrine()->getManager();
-    //     $manager->remove($apply);
-    //     $manager->flush();
+            if($unavailables->getUnavailable() == true) {
+                $unavailables->setUnavailable(false);
+            }      
+        }
 
-    //     return $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
+        $this->getDoctrine()->getManager()->flush();
 
-    // }
+        return $this->redirectToRoute('offers_company_index', ['id' => $apply->getOffers()->getCompany()->getId()]);
+    }
 
      /**
      * @Route("/refuse/{id}/{from}", name="apply_refuse", methods={"POST"})
@@ -184,7 +198,8 @@ class ApplyActionsController extends AbstractController
 
         // set appliant roles 
         $user = $apply->getStudent()->getUser();
-        $user->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_TO_APPLY']);
+        // $user->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_TO_APPLY']);
+        $user->setRoles(['ROLE_SUPER_STUDENT']); 
 
         // // // set com,pany roles - security 
         // $company = $apply->getOffers()->getCompany()->getUser();
@@ -223,38 +238,6 @@ class ApplyActionsController extends AbstractController
         return $return;
     }
 
-     /**
-     * @Route("/finish/{id}", name="apply_finish", methods={"POST"})
-     * @IsGranted("ROLE_SUPER_COMPANY")
-     */
-    public function finish(Apply $apply, ApplyRepository $applyRepository)
-    {
-        $apply->setConfirmed(false);
-        $apply->setFinished(true);
-
-        // set appliant roles 
-        $user = $apply->getStudent()->getUser();
-        $user->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_TO_APPLY']); 
-
-        // get other applies
-        $student = $apply->getStudent();
-        $offers = $apply->getOffers();
-
-        // set other student offers to available
-        $unavailables = $applyRepository->setToUnavailables($offers, $student);
-
-        foreach($unavailables as $unavailables) {
-
-            if($unavailables->getUnavailable() == true) {
-                $unavailables->setUnavailable(false);
-            }      
-        }
-
-        $this->getDoctrine()->getManager()->flush();
-
-        return $this->redirectToRoute('offers_company_index', ['id' => $apply->getOffers()->getCompany()->getId()]);
-    }
-
     /**
      * @Route("/delete/{id}", name="apply_delete", methods={"DELETE"})
      * @IsGranted("ROLE_SUPER_STUDENT")
@@ -267,7 +250,8 @@ class ApplyActionsController extends AbstractController
 
         // set appliant roles 
         $user = $apply->getStudent()->getUser();
-        $user->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_TO_APPLY']);
+        // $user->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_TO_APPLY']);
+        $user->setRoles(['ROLE_SUPER_STUDENT']); 
 
         $student = $apply->getStudent();
         $offers = $apply->getOffers();

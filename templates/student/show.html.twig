@@ -4,13 +4,44 @@
 
 {% block body %}
 
-    {% if is_granted('ROLE_ADMIN') and student.user.roles == 'ROLE_STUDENT' %}
+    <br><br>
 
-        {{ include('student/_confirm_form.html.twig') }}
+    <div style="display:flex;">
+        <div>
+        <h3>Etat du Compte :</h3>
+       {% if is_granted('ROLE_SUPER_STUDENT') %}  <p style="color:green;">valide</p> {% else %}  <p style="color:red;">en attente</p> {% endif %}
+        </div>
+       <div style="margin-left:50px;">
+            <h3>Mon Emploi</h3>
 
-    {% endif %}
+            {% if is_granted('ROLE_HIRED') %}
+        
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Titre</th>
+                        <td>{{ student.applies[0].offers.title }}</td>
+                    </tr>
+                    <tr>
+                        <th>Entreprise</th>
+                        <td>{{ student.applies[0].offers.company.companyName }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            {% else %}
+        
+            <p style="color:red;">Aucune mission en cours</p>
+            
+            <a class="btn btn-success" href="{{ path('offers_index') }}">Rechercher un emploi</a>
+        
+            {% endif %}
+        </div>
+    </div>
 
-    <h1>Mes Infos</h1>
+    <br><br>
+
+    <h3>Mes Infos</h3>
 
     <table class="table">
         <tbody>
@@ -45,26 +76,9 @@
         </tbody>
     </table>
 
-    {% if is_granted('ROLE_HIRED') %}
+    <br><br>
 
-    <h1>Mon Emploi</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Titre</th>
-                <td>{{ student.applies[0].offers.title }}</td>
-            </tr>
-            <tr>
-                <th>Entreprise</th>
-                <td>{{ student.applies[0].offers.company.companyName }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    {% endif %}
-    
-    <h1>Mon Profile</h1>
+    <h3>Mon Profile</h3>
 
     <table class="table">
         <tbody>
@@ -79,7 +93,7 @@
         </tbody>
     </table>
 
-    <h1>Langues</h1>
+    <h3>Langues</h3>
 
     <table class="table">
         <tbody>
@@ -97,7 +111,7 @@
         </tbody>
     </table>
 
-    <h1>Formation</h1>
+    <h3>Formation</h3>
 
     <table class="table">
         <tbody>
@@ -122,7 +136,10 @@
         </tbody>
     </table>
 
-    <h1>Mes Documents</h1>
+    <br><br>
+
+
+    <h3>Mes Documents</h3>
 
     <table class="table">
         <tbody>

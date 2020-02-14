@@ -1,0 +1,14 @@
+
+{% extends 'base-student.html.twig' %}
+
+{% block title %} {{ parent() }} - offers {% endblock %}
+
+{% block body %}
+
+    {% if is_granted('ROLE_HIRED') %}
+        List Schools
+    {% else %}
+        Vous devez etre embauche pour avoir acces aux ecoles 
+    {% endif %}
+
+{% endblock %}

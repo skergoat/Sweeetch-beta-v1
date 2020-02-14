@@ -5,6 +5,12 @@
 
 {% block body %}
 
+{% if is_granted('ROLE_SUPER_STUDENT') %}
+
+<br><br>
+
+<a class="btn btn-success" href="{{ path('offers_index') }}">Rechercher un emploi</a>
+
 <div class="example-wrapper">
 
     <br><br>
@@ -16,6 +22,9 @@
         {% else %}
         <h3> Liste des Postulations</h3>
         {% endif %}
+    {% else %}
+
+    <h3> Liste des Postulations</h3>
 
     {% endif %}
 
@@ -126,5 +135,11 @@
     {% endfor %}
     </tbody>
 </table>
+
+{% else %}
+<br><br>
+<p style="color:red;">Votre compte doit etre valide pour pouvoir postuler</p>
+
+{% endif %}
 
 {% endblock %}

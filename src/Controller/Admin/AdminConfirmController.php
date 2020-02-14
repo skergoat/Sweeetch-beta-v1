@@ -25,7 +25,7 @@ class AdminConfirmController extends AbstractController
     {     
         if($user->getStudent() != null)
         {
-            $user->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_TO_APPLY']); 
+            $user->setRoles(['ROLE_SUPER_STUDENT']); 
         }
         else {
             $user->setRoles(['ROLE_SUPER_COMPANY']); 

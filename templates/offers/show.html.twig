@@ -8,27 +8,7 @@
 
         <nav class="main-nav d-none d-lg-block" style="display:flex !important;margin-bottom:50px;">
             <ul>
-                <li class="active"><a href="/">ACCUEIL</a></li>
-                <li class="drop-down"><a>S'INSCRIRE</a>
-                  <ul>
-                      <li><a href="/student/new">Etudiant</a></li>
-                      <li><a href="/company/new">Professionel</a></li>
-                      <li><a href="#">Ecole</a></li>
-                  </ul>
-                </li> 
-                <li><a href="/offers/">Emplois</a></li>
-                {% if is_granted('ROLE_USER') %}
-                    {% if is_granted('ROLE_ADMIN') %}
-                    <li><a href="/admin">ADMIN</a></li>
-                    {% elseif  is_granted('ROLE_STUDENT') %}
-                    <li><a href="{{ path('student_show', {'id': app.user.student.id}) }}">MON PROFILE</a></li>
-                    {% elseif  is_granted('ROLE_COMPANY') %}
-                    <li><a href="{{ path('company_show', {'id': app.user.company.id}) }}">MON ENTREPRISE</a></li>
-                    {% endif %}
-                    <li><a href="/logout">DECONNEXION</a></li>
-                {% else %}
-                <li><a href="/login">CONNEXION</a></li>
-                {% endif %}
+                <li><a href="/offers/">Emplois</a></li>  
             </ul>
         </nav><!-- .main-nav -->
 
@@ -64,18 +44,11 @@
             <a href="{{ path('offers_index') }}" class="btn btn-primary">Back to List</a>
 
             {% if app.user.student.id is defined %}
-                {% if is_granted('ROLE_TO_APPLY') %}
-                    {% if offers.applies[0] is not defined %}
+                {% if is_granted('ROLE_SUPER_STUDENT') %}
                     <form method="post" action="{{ path('apply', { id:offers.id, student_id: app.user.student.id }) }}">
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ offers.id) }}">
                         <button class="btn btn-success">Postuler</button>
                     </form> 
-                    {% else %}
-                    <p style="color:red;">Vous avez deja postule</p>
-                    {% endif %}
-                {% elseif is_granted('ROLE_SUPER_STUDENT') %}
-                <br><br>
-                <p style="color:red;">Vous etes deja embauche !</p>
                 {% elseif is_granted('ROLE_STUDENT') %}
                 <br><br>
                 <p style="color:red;">Votre compte doit etre valide pour pouvoir postuler</p>
