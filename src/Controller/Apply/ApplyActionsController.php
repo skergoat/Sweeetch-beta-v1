@@ -55,6 +55,7 @@ class ApplyActionsController extends AbstractController
         $apply->setRefused(false);
         $apply->setUnavailable(false);
         $apply->setFinished(false);
+        $apply->setAgree(false);
         $apply->setOffers($offers);
         $apply->setStudent($student);
     
@@ -123,30 +124,59 @@ class ApplyActionsController extends AbstractController
     }
 
     /**
-     * @Route("/confirm/{id}", name="confirm", methods={"POST"})
+     * @Route("/agree/{id}", name="agree", methods={"POST"})
      * @IsGranted("ROLE_SUPER_STUDENT")
      */
-    public function confirm(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer)
+    public function agree(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer)
     {
         // set apply state 
         if(    $apply->getHired() == true 
             && $apply->getConfirmed() == false 
             && $apply->getRefused() == false 
+            && $apply->getAgree() == false
+        ) {
+            $apply->setHired(false);
+            $apply->setConfirmed(false);
+            $apply->setRefused(false);
+            $apply->setAgree(true);
+        }
+
+        // get other applies
+        $student = $apply->getStudent();
+        $offers = $apply->getOffers();
+
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
+    }
+
+    /**
+     * @Route("/confirm/{id}", name="confirm", methods={"POST"})
+     * @IsGranted("ROLE_SUPER_COMPANY")
+     */
+    public function confirm(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer)
+    {
+        // set apply state 
+        if(    $apply->getHired() == false 
+            && $apply->getConfirmed() == false 
+            && $apply->getRefused() == false 
+            &&  $apply->getAgree() == true 
         ) {
             $apply->setHired(false);
             $apply->setConfirmed(true);
             $apply->setRefused(false);
+            $apply->setAgree(false);
         }
 
          // get other applies
          $student = $apply->getStudent();
          $offers = $apply->getOffers();
 
-         $student->getUser()->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_HIRED']);
+        $student->getUser()->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_HIRED']);
 
         $this->getDoctrine()->getManager()->flush();
 
-        return $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
+        return $this->redirectToRoute('offers_preview', ['id' => $offers->getId()]);
     }
 
      /**
@@ -200,19 +230,8 @@ class ApplyActionsController extends AbstractController
         $user = $apply->getStudent()->getUser();
         // $user->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_TO_APPLY']);
         $user->setRoles(['ROLE_SUPER_STUDENT']); 
-
-        // // // set com,pany roles - security 
-        // $company = $apply->getOffers()->getCompany()->getUser();
-        // $roles = $company->getRoles();
-
-        // if(in_array('ROLE_IS_REFUSED', $roles)) {
-        //     $company->setRoles(['ROLE_SUPER_COMPANY']);
-        // }
-        // else {
-        //     $company->setRoles(['ROLE_SUPER_COMPANY', 'ROLE_IS_REFUSED']);
-        // }
-
-         // get other applies
+        
+        // get other applies
         $student = $apply->getStudent();
         $offers = $apply->getOffers();
 

@@ -53,6 +53,11 @@ class Apply
      */
     private $finished;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $agree;
+
 
     public function getId(): ?int
     {
@@ -139,6 +144,18 @@ class Apply
     public function setFinished(?bool $finished): self
     {
         $this->finished = $finished;
+
+        return $this;
+    }
+
+    public function getAgree(): ?bool
+    {
+        return $this->agree;
+    }
+
+    public function setAgree(bool $agree): self
+    {
+        $this->agree = $agree;
 
         return $this;
     }

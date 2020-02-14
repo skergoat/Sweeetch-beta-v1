@@ -19,7 +19,11 @@
         
             {% if applies[0].confirmed == false %} 
                 {% if applies[0].hired == false %} 
-                Vous avez des postulations <!-- l'entreprise doit confirmer le dossier ? -->
+                    {% if applies[0].agree == false %} 
+                    Vous avez des postulations 
+                    {% else %}
+                    Dossier en traitement
+                    {% endif %}
                 {% else %}
                 Vous devez Accepter
                 {% endif %}
