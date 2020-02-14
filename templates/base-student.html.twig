@@ -36,7 +36,7 @@
 
                     <!-- temporary -->
 
-                    {% if student.id is defined or profile is defined  %}
+                {% if student.id is defined or profile is defined  %}
 
                     {% if student.id is defined %}
                     
@@ -71,11 +71,17 @@
                     {% endif %}
 
                     <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('offers_index') }}">Emploi</a>
+                    </li>
+
+                    <li class="nav-item active">
                         <a class="nav-link" href="{{ path('school_student_index') }}">Ecoles</a>
                     </li>                    
                     <li class="nav-item active">
                         <a class="nav-link" href="/logout">Deconnexion</a>
                     </li>
+                
+                {% endif %}
 
                     {% if is_granted('ROLE_ADMIN') %}
 
@@ -88,8 +94,6 @@
 
                     {% endif %}
                      
-                    {% endif %}
-
 
                 </ul>
 

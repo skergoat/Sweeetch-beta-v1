@@ -8,34 +8,29 @@
 
     <div style="display:flex;">
         <div>
-        <h3>Etat du Compte :</h3>
-       {% if is_granted('ROLE_SUPER_STUDENT') %}  <p style="color:green;">valide</p> {% else %}  <p style="color:red;">en attente</p> {% endif %}
+            <h3>Etat du Compte :</h3>
+            {% if is_granted('ROLE_SUPER_STUDENT') %}  <p style="color:green;">valide</p> {% else %}  <p style="color:red;">en attente</p> {% endif %}
         </div>
-       <div style="margin-left:50px;">
-            <h3>Mon Emploi</h3>
-
-            {% if is_granted('ROLE_HIRED') %}
-        
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <th>Titre</th>
-                        <td>{{ student.applies[0].offers.title }}</td>
-                    </tr>
-                    <tr>
-                        <th>Entreprise</th>
-                        <td>{{ student.applies[0].offers.company.companyName }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        
-            {% else %}
-        
-            <p style="color:red;">Aucune mission en cours</p>
+        <div style="margin-left:50px;">
             
-            <a class="btn btn-success" href="{{ path('offers_index') }}">Rechercher un emploi</a>
+        <h3>Mon Emploi</h3>
+
+        {% if applies[0] is defined %}
         
+            {% if applies[0].confirmed == false %} 
+                {% if applies[0].hired == false %} 
+                Vous avez des postulations <!-- l'entreprise doit confirmer le dossier ? -->
+                {% else %}
+                Vous devez Accepter
+                {% endif %}
+            {% else %}
+            L'Entreprise a confirme votre embauche
             {% endif %}
+
+        {% else %}
+        <p style="color:red;">Aucune mission en cours</p>
+        {% endif %}
+
         </div>
     </div>
 
