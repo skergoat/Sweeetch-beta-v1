@@ -19,6 +19,28 @@ class ApplyRepository extends ServiceEntityRepository
         parent::__construct($registry, Apply::class);
     }
 
+    // public function findNotFinished($offers)
+    // {
+    //     return $this->createQueryBuilder('u')
+    //         ->andWhere('u.offers = :offers AND u.finished = :finished')
+    //         ->setParameter('offers', $offers)
+    //         ->setParameter('finished', false)
+    //         ->getQuery()
+    //         ->getResult()
+    //     ;
+    // }
+
+    public function checkIfFinished($offers)
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.offers = :offers AND u.finished = :finished')
+            ->setParameter('offers', $offers)
+            ->setParameter('finished', true)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     public function findByOffer($offer) {
         return $this->createQueryBuilder('u')
             ->andWhere('u.offers = :offers AND u.refused = :refused AND u.unavailable = :unavailable  AND u.finished = :finished')

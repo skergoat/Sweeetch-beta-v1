@@ -78,8 +78,14 @@ class OffersController extends AbstractController
      * @Route("/{id}/edit", name="offers_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
-    public function edit(Request $request, Offers $offer): Response
+    public function edit(Request $request, Offers $offer, ApplyRepository $repository): Response
     {
+        // $finished = $repository->checkIfFinished($offer);
+
+        // if($finished) {
+        //     throw new \Exception('already finished');
+        // }
+
         $form = $this->createForm(OffersType::class, $offer);
         $form->handleRequest($request);
 
@@ -103,6 +109,12 @@ class OffersController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$offer->getId(), $request->request->get('_token'))) {
 
+            // $finished = $repository->checkIfFinished($offer);
+
+            // if($finished) {
+            //     throw new \Exception('already finished');
+            // }
+
             $entityManager = $this->getDoctrine()->getManager();
 
             $applies = $repository->findBy(['offers' => $offer]);
@@ -113,8 +125,7 @@ class OffersController extends AbstractController
 
                 // set roles 
                 $student->getUser()->setRoles([
-                    "ROLE_SUPER_STUDENT",
-                    "ROLE_TO_APPLY"
+                    "ROLE_SUPER_STUDENT"
                 ]);
 
                 // set other student offers to unavailable
@@ -126,13 +137,19 @@ class OffersController extends AbstractController
                         $unavailables->setUnavailable(false);
                     } 
                 }
-
+                
                 // send mail 
                 $email = $student->getUser()->getEmail();
                 $name = $student->getName();
-                $mailer->sendDeleteCompanyMessage($email, $name, $offer->getTitle()); 
-               
-                $entityManager->remove($applies);
+                $mailer->sendDeleteMessage($email, $name, $offer->getTitle());
+                
+                // if($applies->getFinished() == false) {
+                    $entityManager->remove($applies);
+                // }
+                // else {
+                //     $applies->setOffers(NULL);
+                // }
+            
             }
 
             // delete offers 
