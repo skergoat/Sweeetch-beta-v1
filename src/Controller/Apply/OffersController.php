@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Company;
+namespace App\Controller\Apply;
 
 use App\Entity\Offers;
 use App\Entity\Company;

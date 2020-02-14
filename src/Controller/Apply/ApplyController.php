@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Company;
+namespace App\Controller\Apply;
 
 use App\Entity\Apply;
 use App\Entity\Offers;
@@ -87,7 +87,7 @@ class ApplyController extends AbstractController
      */
     public function indexByCompany(Company $company, OffersRepository $offersRepository): Response
     {       
-        return $this->render('offers/index_company.html.twig', [
+        return $this->render('apply/index_company.html.twig', [
             'offers' => $offersRepository->findBy(['company' => $company->getId()]),
             'company' => $company,
         ]);
@@ -102,7 +102,7 @@ class ApplyController extends AbstractController
         $applies = $applyRepository->findByOffer($offer);
         $finished = $applyRepository->findByOfferByFinished($offer);
        
-        return $this->render('offers/show_preview.html.twig', [
+        return $this->render('apply/show_preview.html.twig', [
             'offers' => $offer,
             'applies' => $applies,
             'finished' => $finished
@@ -116,7 +116,7 @@ class ApplyController extends AbstractController
      */
     public function showHired(StudentRepository $studentRepository, Offers $offer, Student $student): Response
     {   
-        return $this->render('offers/show_hired.html.twig', [
+        return $this->render('apply/show_hired.html.twig', [
             'offers' => $offer,
             'student' => $student
         ]);
@@ -189,11 +189,13 @@ class ApplyController extends AbstractController
         // save 
         $entityManager->flush();
 
-        return $this->render('offers/show_preview.html.twig', [
-            'offers' => $offers,
-            'applies' => $repository->getSingleHiredRow($offers, $student),
-            'finished' =>  $repository->findByOfferByFinished($offers)
-        ]);
+        return $this->redirectToRoute('offers_preview', ['id' => $offers->getId()]);
+
+        // return $this->render('apply/show_preview.html.twig', [
+        //     'offers' => $offers,
+        //     'applies' => $repository->getSingleHiredRow($offers, $student),
+        //     'finished' =>  $repository->findByOfferByFinished($offers)
+        // ]);
     }
 
     /**
