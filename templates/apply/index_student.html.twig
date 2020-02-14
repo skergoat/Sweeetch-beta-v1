@@ -107,9 +107,12 @@
         </tr>
     </thead>
         <tbody>
-    {% if finished is defined %}
+
+    {% if finished is not empty %}
 
         {% for finished in finished %}
+
+            {% if finished.offers.id is defined %}
             <tr>
                 <td>{{ finished.offers.id }}</td>
                 <td>{{ finished.offers.title }}</td>
@@ -122,13 +125,33 @@
                     <a href="{{ path('offers_show_hired', {'id': finished.offers.id, 'student_id' : student.id}) }}" class="btn btn-success">show</a>
                 </td>
             </tr>
+            {% else %}
+            <tr>
+                <td>
+                    <p style="color:red;">profile deleted by company</p>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    <form method="post" action="{{ path('delete_empty', {'id': finished.id, 'from':'student' }) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ finished.id) }}">
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endif %}
+
         {% endfor %}
-    
+        
     {% else %}
             <tr>
                 <td colspan="8">no records found</td>
-            </tr>
+            </tr>               
     {% endif %}
+
         </tbody>
     </table>
  

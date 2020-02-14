@@ -143,12 +143,12 @@ class OffersController extends AbstractController
                 $name = $student->getName();
                 $mailer->sendDeleteMessage($email, $name, $offer->getTitle());
                 
-                // if($applies->getFinished() == false) {
+                if($applies->getFinished() == false) {
                     $entityManager->remove($applies);
-                // }
-                // else {
-                //     $applies->setOffers(NULL);
-                // }
+                }
+                else {
+                    $applies->setOffers(NULL);
+                }
             
             }
 
