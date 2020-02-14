@@ -136,4 +136,18 @@ class ApplyMailer
         $this->mailer->send($mail);
     }
 
+    public function sendDeleteCompanyMessage($email, $name, $offerTitle)
+    {
+        $mail = (new TemplatedEmail())
+            ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
+            ->to(new Address($email, $name))
+            ->subject('Problems with docs')
+            ->htmlTemplate('email/apply/delete-company.html.twig')
+            ->context([
+                'title' => $offerTitle,
+            ]); 
+        
+        $this->mailer->send($mail);
+    }
+
 }

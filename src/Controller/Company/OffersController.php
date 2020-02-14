@@ -80,11 +80,11 @@ class OffersController extends AbstractController
      */
     public function edit(Request $request, Offers $offer, ApplyRepository $repository): Response
     {
-        // $finished = $repository->checkIfFinished($offer);
+        $finished = $repository->checkIfFinished($offer);
 
-        // if($finished) {
-        //     throw new \Exception('already finished');
-        // }
+        if($finished) {
+            throw new \Exception('already finished');
+        }
 
         $form = $this->createForm(OffersType::class, $offer);
         $form->handleRequest($request);
@@ -109,11 +109,11 @@ class OffersController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$offer->getId(), $request->request->get('_token'))) {
 
-            // $finished = $repository->checkIfFinished($offer);
+            $finished = $repository->checkIfFinished($offer);
 
-            // if($finished) {
-            //     throw new \Exception('already finished');
-            // }
+            if($finished) {
+                throw new \Exception('already finished');
+            }
 
             $entityManager = $this->getDoctrine()->getManager();
 
@@ -149,9 +149,8 @@ class OffersController extends AbstractController
                 else {
                     $applies->setOffers(NULL);
                 }
-            
             }
-
+            
             // delete offers 
             $entityManager->remove($offer);
             $entityManager->flush();
