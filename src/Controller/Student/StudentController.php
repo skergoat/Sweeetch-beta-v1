@@ -248,20 +248,23 @@ class StudentController extends AbstractController
 
             $entityManager = $this->getDoctrine()->getManager();
 
-            // delete applies 
-            $check = $applyRepository->checkIfAppliesExsists($student);
-           
-            if($check){
+            $applies = $student->getApplies();
+            
+            foreach($applies as $applies) {
 
-                $applies = $applyRepository->findBy(['student' => $student]);
+                // send mail 
+                // $email = $student->getUser()->getEmail();
+                // $name = $student->getName();
+                // $offerTitle = $offers->getTitle();
 
-                foreach($applies as $applies) {
+                // $mailer->sendDeleteCompanyMessage($email, $name, $offerTitle); 
 
-                    // ---> if finished : no delete / null else delete 
-                    // ---> if other id = null then delete 
-                    // $applies->setStudent(null);
-                    // $entityManager->remove($applies);
+                if($applies->getFinished() == false) {
+                    $entityManager->remove($applies);
                 }
+                else {
+                    $applies->setStudent(NULL);
+                } 
             }
 
             $entityManager->remove($student);

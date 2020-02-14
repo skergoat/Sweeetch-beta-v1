@@ -349,10 +349,10 @@ class ApplyActionsController extends AbstractController
     }
 
     /**
-     * @Route("/delete/empty/{id}/{from}", name="delete_empty", methods={"DELETE"})
+     * @Route("/delete/empty/student/{id}", name="delete_empty_studentSide", methods={"DELETE"})
      * @IsGranted("ROLE_SUPER_STUDENT")
      */
-    public function deleteEmpty(Request $request, Apply $apply, $from): Response
+    public function deleteEmptyStudentSide(Request $request, Apply $apply): Response
     {   
         $student = $apply->getStudent();
 
@@ -365,4 +365,29 @@ class ApplyActionsController extends AbstractController
         return $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
     }
 
+    /**
+     * @Route("/delete/empty/company/{id}", name="delete_empty_companySide", methods={"DELETE"})
+     * @IsGranted("ROLE_SUPER_COMPANY")
+     */
+    public function deleteEmptyCompanySide(Request $request, Offers $offer): Response 
+    {
+        $companyId = $offer->getCompany()->getId();
+
+        if ($this->isCsrfTokenValid('delete'.$offer->getId(), $request->request->get('_token'))) {
+
+            $entityManager = $this->getDoctrine()->getManager();
+
+            $applies = $offer->getApplies(); 
+
+            foreach($applies as $applies) 
+            {        
+                $entityManager->remove($applies);
+            }
+
+            $entityManager->remove($offer);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('offers_company_index', ['id' =>  $companyId]);
+        }
+    }
 }
