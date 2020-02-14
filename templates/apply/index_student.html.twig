@@ -135,7 +135,7 @@
                 <td></td>
                 <td></td>
                 <td>
-                    <form method="post" action="{{ path('delete_empty', {'id': finished.id, 'from':'student' }) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                    <form method="post" action="{{ path('delete_empty_studentSide', {'id': finished.id }) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
                         <input type="hidden" name="_method" value="DELETE">
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ finished.id) }}">
                         <button class="btn btn-danger">Delete</button>
