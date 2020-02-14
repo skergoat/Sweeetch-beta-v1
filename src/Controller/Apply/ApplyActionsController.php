@@ -19,7 +19,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
-class ApplyController extends AbstractController
+class ApplyActionsController extends AbstractController
 {
     /**
      * @Route("/offers/{id}/student/{student_id}", name="apply", methods={"POST"})
@@ -29,22 +29,6 @@ class ApplyController extends AbstractController
     public function apply(ApplyRepository $repository, Offers $offers, Student $student)
     {
         $applies = $repository->checkIfRowExsists($offers, $student);
-
-        if($applies) {  
-
-            $refused = $repository->checkIfrefusedExsists($offers, $student);
-            
-            if($refused) {
-                throw new \Exception('already applied or refused');
-            }
-            else {
-                throw new \Exception('already applied');
-            }  
-        }
-
-        if($applies) {
-            throw new \Exception('you have been refiused');
-        }
 
         $apply = new Apply; 
         $apply->setHired(false);
@@ -59,80 +43,7 @@ class ApplyController extends AbstractController
         $manager->persist($apply);
         $manager->flush();
  
-        
-        return $this->render('offers/show.html.twig', [
-            'offers' => $offers
-        ]);
-    }
-
-    /**
-     * @Route("/studentapply/{id}", name="student_apply", methods={"GET"})
-     * @IsGranted("ROLE_SUPER_STUDENT")
-     */
-    public function indexByStudent(StudentRepository $repository, applyRepository $applyRepository, Student $student)
-    {   
-        $applies = $applyRepository->findByStudent($student);
-        $finished = $applyRepository->findByStudentByFinished($student);
-
-        return $this->render('apply/index_student.html.twig', [
-            'student' => $student,
-            'applies' => $applies,
-            'finished' => $finished
-        ]);
-    }
-
-    /**
-     * @Route("index/company/{id}", name="offers_company_index", methods={"GET"})
-     * @IsGranted("ROLE_SUPER_COMPANY")
-     */
-    public function indexByCompany(Company $company, OffersRepository $offersRepository): Response
-    {       
-        return $this->render('apply/index_company.html.twig', [
-            'offers' => $offersRepository->findBy(['company' => $company->getId()]),
-            'company' => $company,
-        ]);
-    }
-
-    /**
-     * @Route("/preview/{id}", name="offers_preview", methods={"GET"})
-     * @IsGranted("ROLE_SUPER_COMPANY")
-     */
-    public function showPreview(ApplyRepository $applyRepository, Offers $offer): Response
-    {   
-        $applies = $applyRepository->findByOffer($offer);
-        $finished = $applyRepository->findByOfferByFinished($offer);
-       
-        return $this->render('apply/show_preview.html.twig', [
-            'offers' => $offer,
-            'applies' => $applies,
-            'finished' => $finished
-        ]);
-    }
-
-    /**
-     * @Route("/hired/{id}/student/{student_id}", name="offers_show_hired", methods={"GET"})
-     * @IsGranted("ROLE_SUPER_STUDENT")
-     * @ParamConverter("student", options={"id" = "student_id"})
-     */
-    public function showHired(StudentRepository $studentRepository, Offers $offer, Student $student): Response
-    {   
-        return $this->render('apply/show_hired.html.twig', [
-            'offers' => $offer,
-            'student' => $student
-        ]);
-    }
-
-     /**
-     * @Route("/showapplied/{id}/company/{company_id}", name="show_applied_profile", methods={"GET"})
-     * @IsGranted("ROLE_SUPER_COMPANY")
-     * @ParamConverter("company", options={"id" = "company_id"})
-     */
-    public function showAppliedProfile(Student $student, Company $company): Response
-    {   
-        return $this->render('apply/show_applied.html.twig', [
-            'student' => $student,
-            'company' => $company
-        ]);
+        return $this->redirectToRoute('offers_show', ['id' => $offers->getId()]);
     }
 
     /**
@@ -190,12 +101,6 @@ class ApplyController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('offers_preview', ['id' => $offers->getId()]);
-
-        // return $this->render('apply/show_preview.html.twig', [
-        //     'offers' => $offers,
-        //     'applies' => $repository->getSingleHiredRow($offers, $student),
-        //     'finished' =>  $repository->findByOfferByFinished($offers)
-        // ]);
     }
 
     /**
@@ -223,12 +128,6 @@ class ApplyController extends AbstractController
         $this->getDoctrine()->getManager()->flush();
 
         return $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
-
-        // return $this->render('offers/show_preview.html.twig', [
-        //     'offers' => $offers,
-        //     'applies' => $repository->getSingleConfirmedRow($offers, $student),
-        //     'finished' =>  $repository->findByOfferByFinished($offers)
-        // ]);
     }
 
     //  /**
@@ -268,7 +167,7 @@ class ApplyController extends AbstractController
 
      /**
      * @Route("/refuse/{id}/{from}", name="apply_refuse", methods={"POST"})
-     * @IsGranted("ROLE_RELATION")
+     * @IsGranted("ROLE_SUPER_COMPANY")
      */
     public function refuse(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer, $from)
     {

@@ -65,11 +65,13 @@
 
             {% if app.user.student.id is defined %}
                 {% if is_granted('ROLE_TO_APPLY') %}
-                    {% if offers.applies[0] is not defined or offers.applies[0] is defined and offers.applies[0].hired == false and offers.applies[0].confirmed == false %}
+                    {% if offers.applies[0] is not defined %}
                     <form method="post" action="{{ path('apply', { id:offers.id, student_id: app.user.student.id }) }}">
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ offers.id) }}">
                         <button class="btn btn-success">Postuler</button>
                     </form> 
+                    {% else %}
+                    <p style="color:red;">Vous avez deja postule</p>
                     {% endif %}
                 {% elseif is_granted('ROLE_SUPER_STUDENT') %}
                 <br><br>
