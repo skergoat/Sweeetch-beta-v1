@@ -176,10 +176,13 @@ class StudentController extends AbstractController
      * @Route("/{id}", name="student_show", methods={"GET"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function show(Student $student): Response
+    public function show(Student $student, applyRepository $applyRepository): Response
     {
+        $applies = $applyRepository->findByStudent($student);
+
         return $this->render('student/show.html.twig', [
             'student' => $student,
+            'applies' => $applies
         ]);
     }
 
