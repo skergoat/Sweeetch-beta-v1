@@ -29,7 +29,7 @@ class ApplyActionsController extends AbstractController
      * @IsGranted("ROLE_SUPER_STUDENT")
      * @ParamConverter("student", options={"id" = "student_id"})
      */
-    public function apply(ApplyRepository $repository, Offers $offers, Student $student)
+    public function apply(ApplyRepository $repository, Offers $offers, Student $student, ApplyMailer $mailer)
     {
         $applies = $repository->checkIfRowExsists($offers, $student);
 
@@ -48,6 +48,15 @@ class ApplyActionsController extends AbstractController
         if($applies) {
             throw new \Exception('already applied or refused');
         }
+
+        // send notification to company 
+        $email = $offers->getCompany()->getUser()->getEmail();
+        $name = $offers->getCompany()->getFirstname();
+        $offerTitle = $offers->getTitle();
+
+        // dd($offerTitle);
+
+        $mailer->sendApplyMessage($email, $name, $offerTitle);
 
         $apply = new Apply; 
         $apply->setHired(false);
@@ -93,9 +102,15 @@ class ApplyActionsController extends AbstractController
 
             if($unavailables->getRefused() != true && $unavailables->getFinished() != true) {
                 $unavailables->setUnavailable(true);
-            }
-            
+            }  
         }
+
+        // send notification to student 
+        $email = $apply->getStudent()->getUser()->getEmail();
+        $name = $apply->getStudent()->getName();
+        $offerTitle = $apply->getOffers()->getTitle(); 
+        
+        $mailer->sendHireMessage($email, $name, $offerTitle); 
 
         $entityManager = $this->getDoctrine()->getManager();
  
@@ -145,6 +160,13 @@ class ApplyActionsController extends AbstractController
         $student = $apply->getStudent();
         $offers = $apply->getOffers();
 
+        // send notification to student 
+        $email = $student->getUser()->getEmail();
+        $name = $student->getName();
+        $offerTitle = $offers->getTitle(); 
+        
+        $mailer->sendAgreeMessage($email, $name, $offerTitle); 
+
         $this->getDoctrine()->getManager()->flush();
 
         return $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
@@ -172,6 +194,13 @@ class ApplyActionsController extends AbstractController
          $student = $apply->getStudent();
          $offers = $apply->getOffers();
 
+         // send notification to student 
+         $email = $student->getUser()->getEmail();
+         $name = $student->getName();
+         $offerTitle = $offers->getTitle(); 
+         
+         $mailer->sendConfirmMessage($email, $name, $offerTitle); 
+
         $student->getUser()->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_HIRED']);
 
         $this->getDoctrine()->getManager()->flush();
@@ -183,7 +212,7 @@ class ApplyActionsController extends AbstractController
      * @Route("/finish/{id}", name="apply_finish", methods={"POST"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
-    public function finish(Apply $apply, ApplyRepository $applyRepository)
+    public function finish(Apply $apply, ApplyRepository $applyRepository, ApplyMailer $mailer)
     {
         $apply->setConfirmed(false);
         $apply->setFinished(true);
@@ -196,6 +225,14 @@ class ApplyActionsController extends AbstractController
         // get other applies
         $student = $apply->getStudent();
         $offers = $apply->getOffers();
+
+        // send notification to student 
+        $email = $student->getUser()->getEmail();
+        $name = $student->getName();
+        $offerTitle = $offers->getTitle(); 
+          
+        $mailer->sendFinishMessage($email, $name, $offerTitle); 
+ 
 
         // set other student offers to available
         $unavailables = $applyRepository->setToUnavailables($offers, $student);
@@ -235,6 +272,13 @@ class ApplyActionsController extends AbstractController
         $student = $apply->getStudent();
         $offers = $apply->getOffers();
 
+        // send notification to student 
+        $email = $student->getUser()->getEmail();
+        $name = $student->getName();
+        $offerTitle = $offers->getTitle(); 
+           
+        $mailer->sendDeleteMessage($email, $name, $offerTitle); 
+  
         // set other student offers to available
         $unavailables = $repository->setToUnavailables($offers, $student);
 
@@ -286,11 +330,11 @@ class ApplyActionsController extends AbstractController
         }
 
         // send mail 
-        // $email = $user->getEmail();
-        // $name = $apply->getStudent()->getName();
-        // $offerTitle = $apply->getOffers()->getTitle();
+        $email = $user->getEmail();
+        $name = $apply->getStudent()->getName();
+        $offerTitle = $apply->getOffers()->getTitle();
 
-        // $mailer->sendDeleteMessage($email, $name, $offerTitle); 
+        $mailer->sendDeleteMessage($email, $name, $offerTitle); 
        
         // delete apply 
         if ($this->isCsrfTokenValid('delete'.$apply->getId(), $request->request->get('_token'))) {
