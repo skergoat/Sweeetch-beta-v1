@@ -19,6 +19,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
+/**
+ * @Route("/apply")
+ */
 class ApplyActionsController extends AbstractController
 {
     /**
@@ -47,7 +50,7 @@ class ApplyActionsController extends AbstractController
     }
 
     /**
-     * @Route("hire/{id}", name="hire", methods={"POST"})
+     * @Route("/hire/{id}", name="hire", methods={"POST"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
     public function hire(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer)
@@ -104,7 +107,7 @@ class ApplyActionsController extends AbstractController
     }
 
     /**
-     * @Route("confirm/{id}", name="confirm", methods={"POST"})
+     * @Route("/confirm/{id}", name="confirm", methods={"POST"})
      * @IsGranted("ROLE_SUPER_STUDENT")
      */
     public function confirm(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer)
