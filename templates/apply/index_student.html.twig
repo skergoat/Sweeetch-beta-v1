@@ -65,6 +65,7 @@
                         <button class="btn btn-danger">Delete</button>
                     </form>
                     {% elseif applies.hired == true %}
+                    <a href="{{ path('offers_show_hired', {'id': applies.offers.id, 'student_id' : student.id}) }}" class="btn btn-secondary">show</a>
                     <form method="post" action="{{ path('agree', { id:applies.id }) }}">
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~  applies.offers.id) }}">
                         <button class="btn btn-success">Agree</button>
