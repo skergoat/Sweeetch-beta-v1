@@ -27,8 +27,13 @@ class AdminConfirmController extends AbstractController
         {
             $user->setRoles(['ROLE_SUPER_STUDENT']); 
         }
-        else {
+        else if($user->getCompany() != null) {
+
             $user->setRoles(['ROLE_SUPER_COMPANY']); 
+        }
+        else if($user->getSchool() != null)
+        {
+            $user->setRoles(['ROLE_SUPER_SCHOOL']); 
         }
                 
         $this->getDoctrine()->getManager()->flush();
@@ -46,12 +51,27 @@ class AdminConfirmController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
         }
 
+        else if($user->getRoles() == ['ROLE_SUPER_COMPANY']) {
+            $user->setRoles(['ROLE_COMPANY']); 
+            $this->getDoctrine()->getManager()->flush();
+        }
+
+        else if($user->getRoles() == ['ROLE_SUPER_SCHOOL']) {
+            $user->setRoles(['ROLE_SCHOOL']); 
+            $this->getDoctrine()->getManager()->flush();
+        }
+
         if($user->getStudent() != null)
         {
             $name = $user->getStudent()->getName();
         }
-        else {
+        else if($user->getCompany() != null) 
+        {
             $name = $user->getCompany()->getFirstname();
+        }
+        else if($user->getSchool() != null) 
+        {
+            $name = $user->getSchool()->getFirstname();
         }
 
         $parameters = $request->request->all();

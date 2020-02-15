@@ -3,9 +3,10 @@
 {% block title %} {{ parent() }} - students {% endblock %}
 
 {% block body %}
+<br><br>
     <h1>Edit School</h1>
-
     {{ include('school/_delete_form.html.twig') }}
+<br>
 
     {{ include('school/_form.html.twig', {'button_label': 'Update'}) }}
 
