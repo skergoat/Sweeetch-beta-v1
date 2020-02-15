@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\University;
 
 use App\Entity\School;
 use App\Form\SchoolType;
@@ -10,11 +10,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/school")
  */
-class SchoolController extends AbstractController
+class SchoolActionsController extends AbstractController
 {
     /**
      * @Route("/", name="school_index", methods={"GET"})
@@ -39,13 +40,25 @@ class SchoolController extends AbstractController
     /**
      * @Route("/new", name="school_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $school = new School();
         $form = $this->createForm(SchoolType::class, $school);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $school = $form->getData();
+
+             // set roles 
+             $user = $school->getUser();
+             // $user->setRoles(['ROLE_STUDENT', 'ROLE_NEW']);
+             $user->setRoles(['ROLE_SCHOOL']);
+             $user->setPassword($passwordEncoder->encodePassword(
+                 $user,
+                 $user->getPassword()
+            ));
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($school);
             $entityManager->flush();

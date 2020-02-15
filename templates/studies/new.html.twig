@@ -1,0 +1,11 @@
+{% extends 'base-school.html.twig' %}
+
+{% block title %} {{ parent() }} - students {% endblock %}
+
+{% block body %}
+<br>
+    <h1>Create new Studies</h1>
+
+    {{ include('studies/_form.html.twig') }}
+
+{% endblock %}

@@ -17,20 +17,20 @@ class Studies
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $title;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $Description;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\School", inversedBy="studies")
      * @ORM\JoinColumn(nullable=false)
      */
     private $school;
-
-    /**
-     * @ORM\Column(type="text")
-     */
-    private $description;
 
     public function getId(): ?int
     {
@@ -49,6 +49,18 @@ class Studies
         return $this;
     }
 
+    public function getDescription(): ?string
+    {
+        return $this->Description;
+    }
+
+    public function setDescription(?string $Description): self
+    {
+        $this->Description = $Description;
+
+        return $this;
+    }
+
     public function getSchool(): ?School
     {
         return $this->school;
@@ -57,18 +69,6 @@ class Studies
     public function setSchool(?School $school): self
     {
         $this->school = $school;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): self
-    {
-        $this->description = $description;
 
         return $this;
     }
