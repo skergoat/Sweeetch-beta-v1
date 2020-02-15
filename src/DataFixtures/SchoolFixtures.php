@@ -33,11 +33,11 @@ class SchoolFixtures extends Fixture
         $ca->setSiret('1234567890');
 
         $user = new User; 
-        $user->setEmail('school@gmail.com');
+        $user->setEmail('kergoane22@gmail.com');
         $user->setRoles(['ROLE_SCHOOL']);
         $user->setPassword($this->passwordEncoder->encodePassword(
             $user,
-            'school'
+            'ste'
         ));
 
             $offer1 = new Studies;
