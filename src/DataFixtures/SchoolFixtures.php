@@ -40,19 +40,19 @@ class SchoolFixtures extends Fixture
             'school'
         ));
 
-            $offer1 = new Studies;
-            $offer1->setTitle('developpeur web'); 
-            $offer1->setDescription('developpeur web'); 
+            // $offer1 = new Studies;
+            // $offer1->setTitle('developpeur web'); 
+            // $offer1->setDescription('developpeur web'); 
            
-            $offer2 = new Studies;
-            $offer2->setTitle('developpeur php'); 
-            $offer2->setDescription('developpeur web'); 
+            // $offer2 = new Studies;
+            // $offer2->setTitle('developpeur php'); 
+            // $offer2->setDescription('developpeur web'); 
 
-            $offer1->setSchool($ca);
-            $offer2->setSchool($ca);
+            // $offer1->setSchool($ca);
+            // $offer2->setSchool($ca);
 
-            $manager->persist($offer1);
-            $manager->persist($offer2);
+            // $manager->persist($offer1);
+            // $manager->persist($offer2);
 
         $ca->setUser($user);
 
