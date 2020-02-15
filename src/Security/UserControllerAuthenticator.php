@@ -96,15 +96,18 @@ class UserControllerAuthenticator extends AbstractFormLoginAuthenticator impleme
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-            return new RedirectResponse($targetPath);
-        }
+        // if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
+        //     return new RedirectResponse($targetPath);
+        // }
 
         $user = $this->security->getUser();
 
         if ($user) {
 
-            if($this->security->isGranted('ROLE_STUDENT')) {
+            if($this->security->isGranted('ROLE_ADMIN')) {
+                return new RedirectResponse($this->urlGenerator->generate('admin'));
+            }
+            else if($this->security->isGranted('ROLE_STUDENT')) {
                 $id = $user->getStudent()->getId(); 
                 return new RedirectResponse($this->urlGenerator->generate('student_show', ['id' => $id])); 
             }
@@ -112,12 +115,9 @@ class UserControllerAuthenticator extends AbstractFormLoginAuthenticator impleme
                 $id = $user->getCompany()->getId(); 
                 return new RedirectResponse($this->urlGenerator->generate('company_show', ['id' => $id])); 
             }
-            else if($this->security->isGranted('ROLE_SCHOOL')) {
+            if($this->security->isGranted('ROLE_SCHOOL')) {
                 $id = $user->getSchool()->getId(); 
                 return new RedirectResponse($this->urlGenerator->generate('school_show', ['id' => $id])); 
-            }
-            else if($this->security->isGranted('ROLE_ADMIN')) {
-                return new RedirectResponse($this->urlGenerator->generate('admin'));
             }
         }
     }
