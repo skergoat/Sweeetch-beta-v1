@@ -143,19 +143,7 @@ Please commit your changes or stash them before you switch branches.
 Aborting
 bash-3.2$ git merge save
 Already up to date.
-bash-3.2$   test -> test
-bash-3.2$ git branch 
-[?1h=  master[m[m
-* [32msave[m[m
-  test[m[m
-[K[?1l>bash-3.2$ git checkout master
-error: Your local changes to the following files would be overwritten by checkout:
-	cache:clear
-Please commit your changes or stash them before you switch branches.
-Aborting
-bash-3.2$ git merge save 
-Already up to date.
-bash-3.2$ git branch 
+bash-3.2$ git brn[Kanch
 [?1h=  master[m[m
 * [32msave[m[m
   test[m[m
@@ -164,7 +152,15 @@ error: Your local changes to the following files would be overwritten by checkou
 	cache:clear
 Please commit your changes or stash them before you switch branches.
 Aborting
-bash-3.2$ git commit -am 
+bash-3.2$ git commit -am 'sdds'
+[save ddb0299] sdds
+ 1 file changed, 55 insertions(+), 8 deletions(-)
+bash-3.2$ git c[Kchecklout [K[K[K[K[Kout master
+error: Your local changes to the following files would be overwritten by checkout:
+	cache:clear
+Please commit your changes or stash them before you switch branches.
+Aborting
+bash-3.2$ git commit =am [Kh-3.2$ git commit -am 
 error: switch `m' requires a value
 bash-3.2$ git commit -am 'sdsd'
 [save 79e009d] sdsd
@@ -188,4 +184,23 @@ bash-3.2$ git brnch [K[K[K[Kanch
 [K[?1l>bash-3.2$ git status 
 On branch save
 nothing to commit, working tree clean
-bash-3.2$ git chechkout [K[K[K[K[K[K[Kckout 
+bash-3.2$ git chechkout [K[K[K[K[K[K[Kckout master
+error: Your local changes to the following files would be overwritten by checkout:
+	cache:clear
+Please commit your changes or stash them before you switch branches.
+Aborting
+bash-3.2$ git merge save
+Already up to date.
+bash-3.2$ git brn[Kanch
+[?1h=  master[m[m
+* [32msave[m[m
+  test[m[m
+[K[?1l>bash-3.2$ git checkout master 
+error: Your local changes to the following files would be overwritten by checkout:
+	cache:clear
+Please commit your changes or stash them before you switch branches.
+Aborting
+bash-3.2$ git commit -am 'sdds'
+[save ddb0299] sdds
+ 1 file changed, 55 insertions(+), 8 deletions(-)
+bash-3.2$ git c[Kchecklout [K[K[K[K[Ko
