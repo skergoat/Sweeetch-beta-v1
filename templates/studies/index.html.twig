@@ -1,0 +1,38 @@
+{% extends 'base-school.html.twig' %}
+
+{% block title %} {{ parent() }} - students {% endblock %}
+
+{% block body %}
+<br>
+    <h1>Studies index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for study in studies %}
+            <tr>
+                <td>{{ study.id }}</td>
+                <td>{{ study.title }}</td>
+                <td>{{ study.Description }}</td>
+                <td>
+                    <a href="{{ path('school_studies_show', {'id': study.id, school_id: study.school.id }) }}">show</a>
+                    <a href="{{ path('studies_edit', {'id': study.id, school_id: study.school.id }) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('studies_new', {school: school.id}) }}" class="btn btn-success">Create new</a>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base-school.html.twig' %}
+
+{% block title %} {{ parent() }} - students {% endblock %}
+
+{% block body %}
+<br>
+<a href="{{ path('school_studies_index', {'id' : school.id}) }}" class="btn btn-secondary">back to list</a>
+<br><br>
+    <h1>Studies</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ study.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ study.title }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ study.Description }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+{% endblock %}
