@@ -3,6 +3,8 @@
 {% block title %} {{ parent() }} - students {% endblock %}
 
 {% block body %}
+
+{% if is_granted('ROLE_SUPER_SCHOOL') %}
 <br>
     <h1>Studies index</h1>
 <br>
@@ -35,4 +37,10 @@
     </table>
 
     <a href="{{ path('studies_new', {school: school.id}) }}" class="btn btn-success">Create new</a>
+
+{% else %}
+    <br><br>
+    <div style="color:red;">Votre compte doit etre comfirme pour vous permettre de poster des annonces</div>
+{% endif %}
+
 {% endblock %}
