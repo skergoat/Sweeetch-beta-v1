@@ -36,9 +36,7 @@
 
                     <!-- temporary -->
 
-                {% if student.id is defined or profile is defined  %}
-
-                    {% if student.id is defined %}
+                {% if student.id is defined  %} <!-- provisoire -->
                     
                     <li class="nav-item active">
                         <a class="nav-link" href="{{ path('student_show', {'id' : student.id }) }}">Dashboard</a>
@@ -47,33 +45,14 @@
                         <a class="nav-link" href="{{ path('student_edit', {'id' : student.id }) }}">Mes Infos</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="{{ path('profile_edit', {'id': student.profile.id }) }}">Edit Profile</a>
+                        <a class="nav-link" href="{{ path('profile_edit', {'id': student.profile.id, 'student_id':student.id }) }}">Edit Profile</a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="{{ path('student_apply', { id:student.id }) }}">Apply</a>
                     </li>
-
-                    {% else %}
-
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ path('student_show', {'id' : profile.student.id }) }}">Dashboard</a>
-                    </li> 
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ path('student_edit', {'id' : profile.student.id }) }}">Mes Infos</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ path('profile_edit', {'id': profile.id }) }}">Edit Profile</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ path('student_apply', { id:profile.student.id }) }}">Apply</a>
-                    </li>
-                    
-                    {% endif %}
-
                     <li class="nav-item active">
                         <a class="nav-link" href="{{ path('offers_index') }}">Emploi</a>
                     </li>
-
                     <li class="nav-item active">
                         <a class="nav-link" href="{{ path('school_student_index') }}">Ecoles</a>
                     </li>                    
