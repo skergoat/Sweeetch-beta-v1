@@ -64,6 +64,11 @@ class School
      */
     private $user;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Studies", mappedBy="school", orphanRemoval=true)
+     */
+    private $studies;
+
     // /**
     //  * @ORM\OneToMany(targetEntity="App\Entity\Studies", mappedBy="school")
     //  */
@@ -183,6 +188,37 @@ class School
     public function setUser(User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Studies[]
+     */
+    public function getStudies(): Collection
+    {
+        return $this->studies;
+    }
+
+    public function addStudy(Studies $study): self
+    {
+        if (!$this->studies->contains($study)) {
+            $this->studies[] = $study;
+            $study->setSchool($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStudy(Studies $study): self
+    {
+        if ($this->studies->contains($study)) {
+            $this->studies->removeElement($study);
+            // set the owning side to null (unless already changed)
+            if ($study->getSchool() === $this) {
+                $study->setSchool(null);
+            }
+        }
 
         return $this;
     }
