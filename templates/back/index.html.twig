@@ -72,6 +72,39 @@
         </tbody>
     </table>
 
+    <br><br>
+
+    <h1>Schools to confirm</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for school in school %}
+            <tr>
+                <td class="email-{{ school.id }}">{{ school.email }}</td>
+                <td class="actions">
+                    <a href="{{ path('school_show', {'id': school.school.id}) }}" ><i class="fa fa-eye"></i></a>    
+                    <form method="post" action="{{ path('admin_confirm', {'id': school.id}) }}" onsubmit="return confirm('Are you sure you want to confirm this user ?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ school.school.id) }}">
+                        <button style="color:pruple;background:white;border:0px;"><i class="fa fa-question-circle"></i></button>
+                    </form>
+                    <a href="" style="color:red;"><i class="fa fa-ban warning" title="signaler un probleme" style="color:red;font-size:20px;" data-url="{{ school.id }}"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+    
     {{ include('back/_warning_form.html.twig') }}
 
 {% endblock %}

@@ -1,20 +1,13 @@
-{% extends 'base-admin.html.twig' %}
+{% extends 'base-back.html.twig' %}
 
 {% block title %} {{ parent() }} - students {% endblock %}
 
 {% block body %}
     <h1>School index</h1>
-
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>Address</th>
-                <th>ZipCode</th>
-                <th>City</th>
-                <th>TelNumber</th>
+                <th>Ecole</th>
                 <th>Siret</th>
                 <th>actions</th>
             </tr>
@@ -22,17 +15,23 @@
         <tbody>
         {% for school in schools %}
             <tr>
-                <td>{{ school.id }}</td>
-                <td>{{ school.firstname }}</td>
-                <td>{{ school.lastname }}</td>
-                <td>{{ school.address }}</td>
-                <td>{{ school.zipCode }}</td>
-                <td>{{ school.city }}</td>
-                <td>{{ school.telNumber }}</td>
+                <td>{{ school.companyName }}</td>
                 <td>{{ school.siret }}</td>
-                <td>
-                    <a href="{{ path('school_show', {'id': school.id}) }}">show</a>
-                    <a href="{{ path('school_edit', {'id': school.id}) }}">edit</a>
+                <td class="actions">
+                    <div style="margin-right:20px;" class="actions">
+                        <a href="{{ path('school_show', {'id': school.id}) }}">show</a>
+                        <a href="{{ path('school_edit', {'id': school.id}) }}">edit</a>
+                        {% if school.user.roles == ['ROLE_SCHOOL'] %}
+                            <form method="post" action="{{ path('admin_confirm', {'id': school.user.id}) }}" onsubmit="return confirm('Are you sure you want to confirm this user ?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ school.user.id) }}">
+                                <button style="color:purple;background:white;border:0px;">confirm</button>
+                            </form>
+                            <a href="" style="color:red;"><i class="fa fa-ban warning" title="signaler un probleme" style="color:red;font-size:20px;" data-url="{{ school.user.id }}"></i></a>
+                        {% else %}
+                            <a href="" style="color:red;"><i class="fa fa-ban warning" title="signaler un probleme" style="color:red;font-size:20px;" data-url="{{ school.user.id }}"></i></a>
+                        {% endif %}
+                    </div>
+                    {{ include('school/_delete_form.html.twig') }}
                 </td>
             </tr>
         {% else %}
@@ -43,5 +42,6 @@
         </tbody>
     </table>
 
-    <a href="{{ path('school_new') }}">Create new</a>
+    {{ include('back/_warning_form.html.twig') }}
+
 {% endblock %}

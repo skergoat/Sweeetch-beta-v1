@@ -18,10 +18,12 @@ class BackController extends AbstractController
     {
         $students = $userRepository->findByRole('ROLE_STUDENT');
         $company = $userRepository->findByRole('ROLE_COMPANY');
+        $school = $userRepository->findByRole('ROLE_SCHOOL');
         
         return $this->render('back/index.html.twig', [
             'students' => $students,
-            'company' => $company
+            'company' => $company,
+            'school' => $school
         ]);
     }
 }
