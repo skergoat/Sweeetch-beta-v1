@@ -104,10 +104,7 @@ class UserControllerAuthenticator extends AbstractFormLoginAuthenticator impleme
 
         if ($user) {
 
-            if($this->security->isGranted('ROLE_ADMIN')) {
-                return new RedirectResponse($this->urlGenerator->generate('admin'));
-            }
-            else if($this->security->isGranted('ROLE_STUDENT')) {
+            if($this->security->isGranted('ROLE_STUDENT')) {
                 $id = $user->getStudent()->getId(); 
                 return new RedirectResponse($this->urlGenerator->generate('student_show', ['id' => $id])); 
             }
@@ -118,6 +115,9 @@ class UserControllerAuthenticator extends AbstractFormLoginAuthenticator impleme
             else if($this->security->isGranted('ROLE_SCHOOL')) {
                 $id = $user->getSchool()->getId(); 
                 return new RedirectResponse($this->urlGenerator->generate('school_show', ['id' => $id])); 
+            }
+            else if($this->security->isGranted('ROLE_ADMIN')) {
+                return new RedirectResponse($this->urlGenerator->generate('admin'));
             }
         }
     }

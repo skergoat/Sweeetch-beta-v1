@@ -61,6 +61,8 @@
               <li><a href="{{ path('student_show', {'id': app.user.student.id}) }}">MON PROFILE</a></li>
             {% elseif  is_granted('ROLE_COMPANY') %}
               <li><a href="{{ path('company_show', {'id': app.user.company.id}) }}">MON ENTREPRISE</a></li>
+              {% elseif  is_granted('ROLE_SCHOOL') %}
+              <li><a href="{{ path('school_show', {'id': app.user.school.id}) }}">MON ECOLE</a></li>
             {% endif %}
             <li><a href="/logout">DECONNEXION</a></li>
           {% else %}

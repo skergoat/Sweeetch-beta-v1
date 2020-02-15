@@ -1,0 +1,18 @@
+{% extends 'base-school.html.twig' %}
+
+{% block title %} {{ parent() }} - students {% endblock %}
+
+{% block body %}
+<br>
+<div class="btn-group">
+    <a href="{{ path('school_studies_index', {'id' : school.id}) }}" class="btn btn-secondary">back to list</a>
+    {{ include('studies/_delete_form.html.twig') }} 
+</div>
+
+<br><br>
+
+    <h1>Edit Studies</h1>
+
+    {{ include('studies/_form.html.twig', {'button_label': 'Update'}) }}
+
+{% endblock %}

@@ -19,23 +19,6 @@ class StudiesRepository extends ServiceEntityRepository
         parent::__construct($registry, Studies::class);
     }
 
-    // /**
-    //  * @return Studies[] Returns an array of Studies objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
     /*
     public function findOneBySomeField($value): ?Studies
     {
