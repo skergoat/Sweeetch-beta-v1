@@ -70,8 +70,9 @@
                     </div>
                     <!-- Sidebar Menu -->
                     <nav class="mt-2">
+
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                           <li class="nav-item has-treeview">
+                            <li class="nav-item has-treeview">
                                 <a href="{{ path('admin') }}" class="nav-link">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>
@@ -103,19 +104,39 @@
                                     </p>
                                 </a>
                             </li>
-                            <li class="nav-item has-treeview">
+                            <li class="nav-item main-item">
                                 <a href="{{ path('user_index') }}" class="nav-link">
                                     <i class="nav-icon fa fa-user-shield"></i>
                                     <p>
                                         Administrateurs
                                     </p>
                                 </a>
-                            </li>  
+
+                                {% if app.request.get('_route') == 'user_index' or app.request.get('_route') == 'user_new' or app.request.get('_route') == 'user_edit' %}
+
+                                <li class="nav nav-tree">
+                                  <li class="nav-item">
+                                    <a href="{{ path('user_index') }}" class="nav-link">
+                                      <i class="far fa-circle nav-icon"></i>
+                                      <p>Tous</p>
+                                    </a>
+                                  </li>
+                                  <li class="nav-item">
+                                    <a href="{{ path('user_new') }}" class="nav-link">
+                                      <i class="far fa-circle nav-icon"></i>
+                                      <p>Nouveau</p>
+                                    </a>
+                                  </li>
+                                </li>
+
+                              {% endif %}
+
+                            </li>
+
+
                         </ul>
                     </nav>
-                <!-- /.sidebar-menu -->
                 </div>
-                <!-- /.sidebar -->
             </aside>
 
             <!-- Content Wrapper. Contains page content -->
