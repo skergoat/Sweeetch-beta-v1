@@ -19,6 +19,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "admin-lte": "^3.0",
         "animate.css": "^3.7.2",
         "font-awesome": "^4.7.0"
     }

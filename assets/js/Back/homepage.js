@@ -24,6 +24,7 @@ global.jQuery = $;
 
 // bootstrap
 import "bootstrap";
+import 'admin-lte';
 // import 'font-awesome';
 
 // var name;
