@@ -1,0 +1,36 @@
+.fas.fa-exclamation-circle {
+    color:#FFC108;font-size:20px;
+}
+
+.button-none {
+    border:0px;
+    background:transparent;
+}
+
+.btn-icon {
+    height:19px;
+    width:19px;
+    border-radius:100px;
+    font-size:10px;
+    position:relative;
+    top:-4px;
+
+    .fa-trash-alt, .fa-check {
+        position:relative; 
+    }
+
+    .fa-trash-alt {
+        left:-2.5px;
+    }
+
+    .fa-check {
+        left:-3px;
+    }
+
+    &-form {
+        margin-right:5px;
+    }
+    
+}
+
+
