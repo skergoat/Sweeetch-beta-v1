@@ -5,5 +5,5 @@
 <div class="form-group">
     {{ form_row(form.password, {'label':'Mot de passe', 'attr' : { class: 'form-control' }} ) }}
 </div>
-    <button class="btn btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+<button class="{{ app.request.get('_route') == 'user_new' ? 'btn-success' : 'btn-warning' }} btn"> {{ app.request.get('_route') == 'user_new' ? 'Enregistrer' : 'Modifier' }} </button>
 {{ form_end(form) }}
