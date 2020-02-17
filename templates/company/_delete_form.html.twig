@@ -1,5 +1,7 @@
-<form method="post" action="{{ path('company_delete', {'id': company.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+<form method="post" class="{{ app.request.get('_route') == 'company_index' ? 'form-icon' : '' }}" action="{{ path('company_delete', {'id': company.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ company.id) }}">
-    <button class="btn btn-danger">Delete</button>
+    <button class="btn-icon btn-danger">
+        {{ app.request.get('_route') == 'company_index' ? '<i class="far fa-trash-alt" title="supprimer"></i>' : 'Modifier' }}
+    </button>
 </form>

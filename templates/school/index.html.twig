@@ -33,6 +33,7 @@
                 <td><strong>{{ school.siret }}</strong></td>
                 <td>{{ school.address }}, {{ school.zipCode }} {{ school.city }} </td>
                 <td class="table-actions">
+                  <div>
                   {% if school.user.roles == ['ROLE_SCHOOL'] %}
                   <form method="post" class="form-icon" action="{{ path('admin_confirm', {'id': school.user.id}) }}" onsubmit="return confirm('Are you sure you want to confirm this user ?');">
                       <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ school.user.id) }}">
@@ -45,6 +46,7 @@
                         </a>
                     </div> 
                     {{ include('school/_delete_form.html.twig') }}
+                    </div>
                 </td>
             </tr>
             {% else %}
@@ -53,8 +55,7 @@
             </tr>
             {% endfor %}
           </tbody>
-        </table>
-      </div>
+      </table>
     </div>
   </div>
 </div>

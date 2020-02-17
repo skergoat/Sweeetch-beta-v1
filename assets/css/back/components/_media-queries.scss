@@ -8,4 +8,8 @@
     .card-row:first-child {
         padding:50px 30px;
     }
+
+    .table th, .table td {
+        min-width: 200px;
+    }
 }

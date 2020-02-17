@@ -7,52 +7,59 @@
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
+                <div class="col-sm-6 container-flex">
                     <h1 class="m-0 text-dark">Etudiants</h1>
                 </div>
             </div>
         </div>
     </div>
 
-    <h1>Students</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Email</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for student in students %}
-            <tr>
-                <td class="email-{{ student.user.id }}">{{ student.user.email }}</td>
-                <td class="actions">
-                    <div style="margin-right:20px;" class="actions">
-                        <a href="{{ path('student_show', {'id': student.id}) }}">show</a>
-                        <a href="{{ path('student_edit', {'id': student.id}) }}">edit</a>
-                        {% if student.user.roles == ['ROLE_STUDENT'] %}
-                            <form method="post" action="{{ path('admin_confirm', {'id': student.user.id}) }}" onsubmit="return confirm('Are you sure you want to confirm this user ?');">
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ student.user.id) }}">
-                                <button style="color:purple;background:white;border:0px;">confirm</button>
-                            </form>
-                            <a href="" style="color:red;"><i class="fa fa-ban warning" title="signaler un probleme" style="color:red;font-size:20px;" data-url="{{ student.user.id }}"></i></a>
+    <div class="card">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table m-0">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                        <tr>
+                            <td class="email-{{ student.user.id }}"><strong><a href="{{ path('student_show', {'id': student.id}) }}" >{{ student.user.email }}</a></strong></td>
+                            <td>{{ student.name }}</td>
+                            <td>{{ student.lastname }}</td>
+                            <td class="table-actions">
+                                <div>
+                                {% if student.user.roles == ['ROLE_STUDENT'] %}
+                                    <form method="post" class="form-icon" action="{{ path('admin_confirm', {'id': student.user.id}) }}" onsubmit="return confirm('Are you sure you want to confirm this user ?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ student.user.id) }}">
+                                        <button class="btn-icon btn-success"><i class="fas fa-check" title="confirmer le compte"></i></button>
+                                    </form>
+                                {% endif %}
+                                    <div class="btn-icon-form">
+                                        <a href="">
+                                            <i class="fas fa-exclamation-circle warning" title="signaler un probleme" data-url="{{ student.user.id }}"></i>
+                                        </a>
+                                    </div> 
+                                    {{ include('student/_delete_form.html.twig') }}
+                                </div>
+                            </td>
+                        </tr>
                         {% else %}
-                            <a href="" style="color:red;"><i class="fa fa-ban warning" title="signaler un probleme" style="color:red;font-size:20px;" data-url="{{ student.user.id }}"></i></a>
-                        {% endif %}
-                    </div>
-                    {{ include('student/_delete_form.html.twig') }}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                        <tr>
+                            <td colspan="5">no records found</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
     {{ include('back/_warning_form.html.twig') }}
-
 
 {% endblock %}

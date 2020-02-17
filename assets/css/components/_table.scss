@@ -5,12 +5,16 @@
 
     &-actions {
         border-top:0px;
-        display:flex;
+        // display:flex;
+        div {
+            display:flex;
+        }
     }
     
-    td.table-actions {
-        border-top:0px;
-    }
+    // &-actions div, form {
+    //     border-top:0px;
+    //     float:right;
+    // }
 }
 
 table {
