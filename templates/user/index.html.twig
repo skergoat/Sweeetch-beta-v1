@@ -7,43 +7,46 @@
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
+                <div class="col-sm-6 container-flex">
                     <h1 class="m-0 text-dark">Administrateurs</h1>
+                    <a href="{{ path('user_new') }}" class="btn btn-sm btn-sm-1 float-left btn-success">Nouveau</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <h1>User index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
+    <div class="card">
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table m-0">
+              <thead>
+              <tr>
                 <th>Email</th>
-                <th>Roles</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <th>Actions</th>
+              </tr>
+              </thead>
+              <tbody>
+              {% for user in users %}
+              <tr>
+                <td>{{ user.email }}</a></td>
                 <td>
-                    <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+                   {# <a href="{{ path('user_show', {'id': user.id}) }}" class="btn btn-sm btn-sm float-left btn-info">voir</a> #}
+                    <a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-sm float-left btn-warning">modifier</a>
                 </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('user_new') }}">Create new</a>
+              </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">no records found</td>
+                    </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+       {# <div class="card-footer clearfix">
+          <a href="{{ path('user_new') }}" class="btn btn-sm float-left btn-success">Nouveau</a>
+        </div> #}
+      </div>
+    </div>
 
 {% endblock %}

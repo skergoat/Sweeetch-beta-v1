@@ -1,0 +1,19 @@
+.nav-tree {
+    display:flex;
+    flex-direction:column;
+
+    & li a:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    & li a:hover p, li a:hover i {
+        color:white;
+    }
+
+    & li a:hover .main-item {
+        background-color: transparent;
+        display:none;
+    }
+
+}
+
