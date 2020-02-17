@@ -3,21 +3,34 @@
 {% block title %} {{ parent() }} - user {% endblock %}
 
 {% block body %}
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6 container-flex">
-                    <h1 class="m-0 text-dark">Modifier un Administrateur</h1>
-                    <a href="{{ path('user_index') }}" class="btn btn-sm btn-sm-1 btn-labeled btn-default">
-                        <span class="btn-label"><i class="fa fa-chevron-left"></i></span>
-                        Retour 
-                    </a>
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-12 container-flex">
+                <h1 class="m-0 text-dark">Modifier un Administrateur</h1>
+                <a href="{{ path('user_index') }}" class="btn btn-sm btn-sm-1 btn-labeled btn-default">
+                    <span class="btn-label"><i class="fa fa-chevron-left"></i></span>
+                    Retour 
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-action">
+            <div class="card-body">
+                <div class="row card-row">
+                    {{ include('user/_form.html.twig', {'button_label': 'Modifier'}) }}
+                </div>
+                <div class="row card-row">
+                    {{ include('user/_delete_form.html.twig') }}
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    {{ include('user/_form.html.twig', {'button_label': 'Modifier'}) }}
-
-    {{ include('user/_delete_form.html.twig') }}
 {% endblock %}
