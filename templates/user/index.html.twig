@@ -7,7 +7,7 @@
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6 container-flex">
+                <div class="col-sm-6">
                     <h1 class="m-0 text-dark">Administrateurs</h1>
                     <a href="{{ path('user_new') }}" class="btn btn-sm btn-sm-1 float-left btn-success">Nouveau</a>
                 </div>
@@ -22,17 +22,17 @@
               <thead>
               <tr>
                 <th>Email</th>
-                <th>Actions</th>
+                <!-- <th>Actions</th> -->
               </tr>
               </thead>
               <tbody>
               {% for user in users %}
               <tr>
-                <td>{{ user.email }}</a></td>
-                <td>
-                   {# <a href="{{ path('user_show', {'id': user.id}) }}" class="btn btn-sm btn-sm float-left btn-info">voir</a> #}
+                <td><strong><a href="{{ path('user_edit', {'id': user.id}) }}">{{ user.email }}</a></strong></td>
+                {# <td>
+                   <a href="{{ path('user_show', {'id': user.id}) }}" class="btn btn-sm btn-sm float-left btn-info">voir</a> 
                     <a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-sm float-left btn-warning">modifier</a>
-                </td>
+                </td> #}
               </tr>
                 {% else %}
                     <tr>
