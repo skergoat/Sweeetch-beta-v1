@@ -19,6 +19,16 @@ class ApplyRepository extends ServiceEntityRepository
         parent::__construct($registry, Apply::class);
     }
 
+    public function getHired()
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.agree = :agree')
+            ->setParameter('agree', true)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     public function checkIfFinished($offers) // 
     {
         return $this->createQueryBuilder('u')

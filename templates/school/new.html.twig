@@ -9,6 +9,7 @@
     <nav class="main-nav d-none d-lg-block" style="display:flex !important;margin-bottom:50px;">
         <ul>
             <li class="active"><a href="/">Acceuil</a></li>
+            <li><a href="/offers/">EMPLOIS</a></li>
             <li class="drop-down"><a>S'INSCRIRE</a>
             <ul>
                 <li><a href="/student/new">Etudiant</a></li>
@@ -16,8 +17,11 @@
                 <li><a href="/school/new">Ecole</a></li>
             </ul>
             </li> 
+            {% if is_granted('ROLE_USER') %}
+            <li><a href="/logout">DECONNEXION</a></li>
+            {% else %}
             <li><a href="/login/">CONNEXION</a></li>
-            <li><a href="/offers/">EMPLOIS</a></li>
+            {% endif %}
         </ul>
     </nav><!-- .main-nav -->
 
