@@ -1,6 +1,5 @@
 {% extends 'base-front.html.twig' %}
 
-
 {% block title %} {{ parent() }} - home {% endblock %}
 
 {% block stylesheets %}
@@ -661,19 +660,4 @@
   <!-- Uncomment below i you want to use a preloader -->
   <!-- <div id="preloader"></div> -->
 
-{% endblock %}
-
-{% block javascripts %}
-    <!-- JavaScript Libraries -->
-    <!-- import assets from assets/js/app.js -->
-    {{ parent() }}
-
-    <script src="{{ asset('lib/easing/easing.min.js') }}"></script>
-    <script src="{{ asset('lib/mobile-nav/mobile-nav.js') }}"></script>
-    <script src="{{ asset('lib/wow/wow.min.js') }}"></script>
-    <script src="{{ asset('lib/waypoints/waypoints.min.js') }}"></script>
-    <script src="{{ asset('lib/counterup/counterup.min.js') }}"></script>
-
-    <!-- Template Main Javascript File -->
-    <script src="{{ asset('js/main.js') }}"></script>
 {% endblock %}

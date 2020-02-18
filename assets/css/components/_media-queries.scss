@@ -1,0 +1,29 @@
+@media all and (max-width:1440px) {
+
+    .form-center {
+        width: 500px;
+        margin: auto;
+  
+        &--login {
+            margin-top:10%;
+        }
+    }
+}  
+
+@media all and (max-width:991px) {
+    #header .nav-desktop  {
+        display:none;
+    }
+}
+  
+@media all and (max-width:767px) 
+{
+    .form-center {
+        width: 100%;
+        margin: auto;
+
+        &--login {
+            margin-top:40%;
+        }
+    }
+}

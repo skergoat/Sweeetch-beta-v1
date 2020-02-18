@@ -4,78 +4,82 @@
 
 {% block body %}
 
-<div class="container login-page">
+<div class="background">
 
-    <header id="header" style="position:relative;">
+    <div class="container login-page">
 
-        <div id="topbar">
-          <div class="container">
-            <div class="social-links">
-              <a href="https://twitter.com/SweeetchA" target="_blank" class="twitter"><i class="fa fa-twitter"></i></a>
-              <a href="https://www.facebook.com/sweeetch.ton.alternance/" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a>
-              <a href="https://fr.linkedin.com/company/sweetchmontpellier?trk=public_profile_topcard_current_company" target="_blank" class="linkedin"><i class="fa fa-linkedin"></i></a>
-              <a href="https://www.instagram.com/sweeetch_alternance/" target="_blank" class="instagram"><i class="fa fa-instagram"></i></a>
+        <header id="header" style="position:relative;">
+
+            <div id="topbar">
+            <div class="container">
+                <div class="social-links">
+                <a href="https://twitter.com/SweeetchA" target="_blank" class="twitter"><i class="fa fa-twitter"></i></a>
+                <a href="https://www.facebook.com/sweeetch.ton.alternance/" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a>
+                <a href="https://fr.linkedin.com/company/sweetchmontpellier?trk=public_profile_topcard_current_company" target="_blank" class="linkedin"><i class="fa fa-linkedin"></i></a>
+                <a href="https://www.instagram.com/sweeetch_alternance/" target="_blank" class="instagram"><i class="fa fa-instagram"></i></a>
+                </div>
             </div>
-          </div>
-        </div>
-    
-        <div class="container">
-    
-          <nav class="main-nav d-none d-lg-block" style="display:flex !important;margin-bottom:50px;">
-            <ul>
-                <li class="active"><a href="/">Acceuil</a></li>
-                <li class="drop-down"><a>S'INSCRIRE</a>
-                  <ul>
-                      <li><a href="/student/new">Etudiant</a></li>
-                      <li><a href="/company/new">Professionel</a></li>
-                      <li><a href="/school/new">Ecole</a></li>
-                  </ul>
-                </li> 
-                <li><a href="/login/">CONNEXION</a></li>
-                <li><a href="/offers/">EMPLOIS</a></li>
-            </ul>
-        </nav>
-          
-        </div>
-    </header>
-
-    <form method="post" action="/login" class="form-center form-center--login">
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
-
-        {% if app.user %}
-            <div class="mb-3">
-                You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
             </div>
-        {% endif %}
-
-        <h1 class="h3 mb-3 font-weight-normal">Se connecter</h1>
-        <label for="inputEmail">Email</label>
-        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
-        <label for="inputPassword" style="margin-top:30px;">Password</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" required>
-
-        <input type="hidden" name="_csrf_token"
-            value="{{ csrf_token('authenticate') }}"
-        >
-
         
-        {#  Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-            See https://symfony.com/doc/current/security/remember_me.html #}
-
-            {# <div class="checkbox mb-3">
-                <label>
-                    <input type="checkbox" name="_remember_me"> Remember me
-                </label>
+            <div class="container nav-desktop">
+        
+                <nav class="main-nav d-none d-lg-block" style="display:flex !important;margin-bottom:50px;">
+                    <ul>
+                        <li class="active"><a href="/">Acceuil</a></li>
+                        <li class="drop-down"><a>S'INSCRIRE</a>
+                        <ul>
+                            <li><a href="/student/new">Etudiant</a></li>
+                            <li><a href="/company/new">Professionel</a></li>
+                            <li><a href="/school/new">Ecole</a></li>
+                        </ul>
+                        </li> 
+                        <li><a href="/login/">CONNEXION</a></li>
+                        <li><a href="/offers/">EMPLOIS</a></li>
+                    </ul>
+                </nav>
+            
             </div>
-        #}
+        </header>
 
-        <button class="btn btn-lg btn-primary" type="submit" style="margin-top:30px;">
-            Connexion
-        </button>
+        <form method="post" action="/login" class="form-center form-center--login">
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
 
-    </form>
+            {% if app.user %}
+                <div class="mb-3">
+                    You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                </div>
+            {% endif %}
+
+            <h1 class="h3 mb-3 font-weight-normal">Se connecter</h1>
+            <label for="inputEmail">Email</label>
+            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
+            <label for="inputPassword" style="margin-top:30px;">Password</label>
+            <input type="password" name="password" id="inputPassword" class="form-control" required>
+
+            <input type="hidden" name="_csrf_token"
+                value="{{ csrf_token('authenticate') }}"
+            >
+
+            
+            {#  Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                See https://symfony.com/doc/current/security/remember_me.html #}
+
+                {# <div class="checkbox mb-3">
+                    <label>
+                        <input type="checkbox" name="_remember_me"> Remember me
+                    </label>
+                </div>
+            #}
+
+            <button class="btn btn-lg btn-primary" type="submit" style="margin-top:30px;">
+                Connexion
+            </button>
+
+        </form>
+
+    </div>
 
 </div>
 
