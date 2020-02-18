@@ -105,10 +105,10 @@ class SchoolActionsController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="school_delete", methods={"DELETE"})
+     * @Route("/{id}/{from}", name="school_delete", methods={"DELETE"})
      * @IsGranted("ROLE_SCHOOL")
      */
-    public function delete(Request $request, School $school): Response
+    public function delete(Request $request, School $school, $from): Response
     {
         if ($this->isCsrfTokenValid('delete'.$school->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -116,6 +116,6 @@ class SchoolActionsController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('school_index');
+        return $this->redirectToRoute($from);
     }
 }

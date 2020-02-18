@@ -95,10 +95,10 @@ class CompanyController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="company_delete", methods={"DELETE"})
+     * @Route("/{id}/{from}", name="company_delete", methods={"DELETE"})
      * @IsGranted("ROLE_COMPANY")
      */
-    public function delete(Request $request, Company $company, ApplyRepository $repository, ApplyMailer $mailer): Response
+    public function delete(Request $request, Company $company, ApplyRepository $repository, ApplyMailer $mailer, $from): Response
     {
         if ($this->isCsrfTokenValid('delete'.$company->getId(), $request->request->get('_token'))) {
 
@@ -142,6 +142,6 @@ class CompanyController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('company_index');
+        return $this->redirectToRoute($from);
     }
 }
