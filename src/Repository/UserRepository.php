@@ -32,6 +32,17 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $qb->getQuery()->getResult();
     }
 
+    public function findByRolePaginated($role) {
+
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('u')
+                ->from($this->_entityName, 'u')
+                ->where('u.roles LIKE :roles')
+                ->setParameter('roles', '%"' . $role . '"%');
+        return $qb->getQuery()->getResult();
+
+    }
+
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
      */
