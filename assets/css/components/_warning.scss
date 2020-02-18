@@ -1,38 +1,30 @@
 
-.hidden {
-    display:none;
-}
+// .warningform {
+//     max-width:55%;
+//     margin:auto;
+//     border-radius:50px;
 
-.warningform {
-    // display:flex;
-    max-width:55%;
-    margin:auto;
-    border-radius:50px;
-    // border:2px solid red;
+//     &__form {
+//         width:60%;
+//     }
 
-    &__form {
-        width:60%;
-    }
+//     &__check {
+//         width:40%;
+//         padding: 0px 50px;
+//     }
 
-    &__check {
-        width:40%;
-        padding: 0px 50px;
-    }
+//     h5 { 
+//         margin-bottom:30px;
+//     }
 
-    h5 { 
-        margin-bottom:30px;
-    }
+//     &__check__checkbox {
 
-    &__check__checkbox {
+//         .form-control {
+//             margin-bottom:0px;
+//         }
 
-        .form-control {
-            margin-bottom:0px;
-        }
-
-        &--container {
-            width:50%;
-            // border:2px solid red;
-        }
-    }
-
-}
+//         &--container {
+//             width:50%;
+//         }
+//     }
+// }

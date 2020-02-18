@@ -25,7 +25,6 @@ global.jQuery = $;
 // bootstrap
 import "bootstrap";
 import 'admin-lte';
-// import 'font-awesome';
 
 // var name;
 // var messageText = "Bonjour, Nous avons detecte un probleme avec votre compte. Il semblerait que les documents suivants ne soient pas valides :";

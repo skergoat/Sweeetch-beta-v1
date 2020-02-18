@@ -1,7 +1,7 @@
-form {
-    width:500px;
-    margin:auto;
-}
+// form {
+//     width:500px;
+//     margin:auto;
+// }
 
 form.form-icon {
     width:19px;
@@ -11,4 +11,24 @@ form.form-icon {
 
 .card-body.p-0 .table thead > tr > th:last-of-type, .card-body.p-0 .table thead > tr > td:last-of-type {
     text-align:center;
+}
+
+.warningform {
+    width:100%;
+    max-width:100%;
+    margin:0px;
+}
+
+.warning-group {
+    display:flex;
+    justify-content:flex-start;
+}
+
+.check-documents {
+    width:25px;
+    margin-right:0px;
+
+    &-label {
+        margin-top: 5px;
+    }
 }

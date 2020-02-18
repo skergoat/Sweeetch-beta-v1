@@ -43,9 +43,11 @@ class AdminConfirmController extends AbstractController
 
     /**
      * @Route("/sendwarning/{id}", name="sendwarning", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function sendWarning(Mailer $mailer, User $user, Request $request)
     {
+
         if($user->getRoles() == ['ROLE_SUPER_STUDENT']) {
             $user->setRoles(['ROLE_STUDENT']); 
             $this->getDoctrine()->getManager()->flush();
