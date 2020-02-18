@@ -18,10 +18,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdminConfirmController extends AbstractController
 {
     /**
-     * @Route("admin/confirm/{id}", name="admin_confirm", methods={"POST"})
+     * @Route("admin/confirm/{id}/{from}", name="admin_confirm", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function confirm(User $user, UserRepository $userRepository): Response
+    public function confirm($from, User $user, UserRepository $userRepository): Response
     {     
         if($user->getStudent() != null)
         {
@@ -38,16 +38,20 @@ class AdminConfirmController extends AbstractController
                 
         $this->getDoctrine()->getManager()->flush();
 
-        return $this->redirectToRoute('admin');
+        if($from == 'admin' || $from == 'student_index' || $from == 'company_index' || $from == 'school_index') {
+            return $this->redirectToRoute($from);
+        }
+        else {
+            throw new \Exception('La route demandée n\'existe pas');
+        }  
     }
 
     /**
-     * @Route("/sendwarning/{id}", name="sendwarning", methods={"POST"})
+     * @Route("/warning/{from}/{id}", name="warning", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function sendWarning(Mailer $mailer, User $user, Request $request)
+    public function sendWarning(Mailer $mailer, User $user, Request $request, $from)
     {
-
         if($user->getRoles() == ['ROLE_SUPER_STUDENT']) {
             $user->setRoles(['ROLE_STUDENT']); 
             $this->getDoctrine()->getManager()->flush();
@@ -105,7 +109,12 @@ class AdminConfirmController extends AbstractController
 
         $mailer->sendWarningMessage($name, $email, $array, $message);
 
-        return $this->redirectToRoute('admin');
+        if($from == 'admin' || $from == 'student_index' || $from == 'company_index' || $from == 'school_index') {
+            return $this->redirectToRoute($from);
+        }
+        else {
+            throw new \Exception('La route demandée n\'existe pas');
+        }  
         
     }
 

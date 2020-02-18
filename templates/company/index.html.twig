@@ -37,7 +37,7 @@
                 <td class="table-actions">
                   <div class="icon-group">
                   {% if company.user.roles == ['ROLE_COMPANY'] %}
-                  <form method="post" class="form-icon" action="{{ path('admin_confirm', {'id': company.user.id}) }}" onsubmit="return confirm('Are you sure you want to confirm this user ?');">
+                  <form method="post" class="form-icon" action="{{ path('admin_confirm', {'id': company.user.id, 'from':'company_index'}) }}" onsubmit="return confirm('Are you sure you want to confirm this user ?');">
                       <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ company.user.id) }}">
                       <button class="btn-icon btn-success"><i class="fas fa-check" title="confirmer le compte"></i></button>
                   </form>

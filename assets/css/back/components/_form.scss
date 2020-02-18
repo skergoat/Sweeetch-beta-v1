@@ -1,7 +1,7 @@
-// form {
-//     width:500px;
-//     margin:auto;
-// }
+.form-center {
+    width: 500px;
+    margin: auto;
+}
 
 form.form-icon {
     width:19px;
@@ -11,6 +11,10 @@ form.form-icon {
 
 .card-body.p-0 .table thead > tr > th:last-of-type, .card-body.p-0 .table thead > tr > td:last-of-type {
     text-align:center;
+
+    &#last-left {
+        text-align:left;
+    }
 }
 
 .warningform {
