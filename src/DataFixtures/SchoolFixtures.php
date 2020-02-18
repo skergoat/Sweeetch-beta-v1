@@ -33,7 +33,7 @@ class SchoolFixtures extends Fixture
             $ca->setZipCode('75000');
             $ca->setCity('Paris');
             $ca->setTelNumber('06.85.83.93.34');
-            $ca->setSiret('1234567890');
+            $ca->setSiret('49248704350061');
 
             $user = new User; 
             $user->setEmail('school' . $i . '@gmail.com');
