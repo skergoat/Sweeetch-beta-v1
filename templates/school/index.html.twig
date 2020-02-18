@@ -21,8 +21,8 @@
           <thead>
             <tr>
                 <th>Ecole</th>
+                <th>Email</th>
                 <th>Siret</th>
-                <th>Adresse</th>
                 <th>Statu</th>
                 <th>Actions</th>
             </tr>
@@ -31,8 +31,8 @@
             {% for school in schools %}
             <tr>
                 <td><strong><a href="{{ path('school_show', {'id': school.id}) }}" >{{ school.companyName }}</a></strong></td>
+                <td  class="email-{{ school.user.id }}">{{ school.user.email }} </td>
                 <td><strong>{{ school.siret }}</strong></td>
-                <td>{{ school.address }}, {{ school.zipCode }} {{ school.city }} </td>
                 <td>{% if school.user.roles == ['ROLE_SCHOOL'] %}<span class="badge badge-warning">A confirmer</span>{% else %}<span class="badge badge-success">Confirmé</span>{% endif %}</td>
                 <td class="table-actions">
                   <div class="icon-group">
@@ -43,7 +43,7 @@
                   </form>
                   {% endif %}
                    <div class="btn-icon-form">
-                        <a href="">
+                        <a href="#ex1" rel="modal:open">
                             <i class="fas fa-exclamation-circle warning" title="signaler un probleme" data-url="{{ school.user.id }}"></i>
                         </a>
                     </div> 
