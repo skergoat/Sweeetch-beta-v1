@@ -19,167 +19,344 @@
       {{ message }}
   </div>
 {% endfor %}
+
+<div class="row">
+
+    <div class="col-lg-6">
+
+        <div class="card col-lg-12" style="padding:0px;">
+            <div class="card-header border-transparent">
+                <h3 class="card-title">Etudiants à confirmer</h3>
+        
+                <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                </div>
+            </div>
+        
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table m-0">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in students %}
+                                <tr>
+                                    <td class="email-{{ student.id }}"><strong><a href="{{ path('student_show', {'id': student.student.id}) }}" >{{ student.email }}</a></strong></td>
+                                    <td>{% if student.roles == ['ROLE_STUDENT'] %}<span class="badge badge-warning">A confirmer</span>{% else %}<span class="badge badge-success">Confirmé</span>{% endif %}</td>
+                                    <td class="table-actions">
+                                        <div class="icon-group">
+                                        {% if student.roles == ['ROLE_STUDENT'] %}
+                                            <form method="post" class="form-icon" action="{{ path('admin_confirm', {'id': student.id, 'from':'admin'}) }}" onsubmit="return confirm('Are you sure you want to confirm this user ?');">
+                                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ student.student.id) }}">
+                                                <button class="btn-icon btn-success"><i class="fas fa-check" title="confirmer le compte"></i></button>
+                                            </form>
+                                        {% endif %}
+                                            <div class="btn-icon-form">
+                                                <a href="#ex1" rel="modal:open">
+                                                    <i class="fas fa-exclamation-circle warning" title="signaler un probleme" data-url="{{ student.id }}"></i>
+                                                </a>
+                                            </div> 
+                                            {{ include('student/_delete_form.html.twig') }}
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="5">Aucun Elément</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card col-lg-12" style="padding:0px;">
+            <div class="card-header border-transparent">
+                <h3 class="card-title">Entreprises à confirmer</h3>
+        
+                <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                </div>
+            </div>
+                <!-- /.card-header -->
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table m-0">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for company in company %}
+                                <tr>
+                                    <td class="email-{{ company.id }}"><strong><a href="{{ path('company_show', {'id': company.company.id}) }}" >{{ company.email }}</a></strong></td>
+                                    <td>{% if company.roles == ['ROLE_COMPANY'] %}<span class="badge badge-warning">A confirmer</span>{% else %}<span class="badge badge-success">Confirmé</span>{% endif %}</td>
+                                    <td class="table-actions">
+                                        <div class="icon-group">
+                                        {% if company.roles == ['ROLE_COMPANY'] %}
+                                            <form method="post" class="form-icon" action="{{ path('admin_confirm', {'id': company.id, 'from':'admin'}) }}" onsubmit="return confirm('Are you sure you want to confirm this user ?');">
+                                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ company.company.id) }}">
+                                                <button class="btn-icon btn-success"><i class="fas fa-check" title="confirmer le compte"></i></button>
+                                            </form>
+                                        {% endif %}
+                                            <div class="btn-icon-form">
+                                                <a href="#ex1" rel="modal:open">
+                                                    <i class="fas fa-exclamation-circle warning" title="signaler un probleme" data-url="{{ company.id }}"></i>
+                                                </a>
+                                            </div> 
+                                            {{ include('company/_delete_form.html.twig') }}
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="5">Aucun Elément</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card col-lg-12" style="padding:0px;">
+            <div class="card-header border-transparent">
+                <h3 class="card-title">Ecoles à confirmer</h3>
+        
+                <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                </div>
+            </div>
+                <!-- /.card-header -->
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table m-0">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for school in school %}
+                                <tr>
+                                    <td class="email-{{ school.id }}"><strong><a href="{{ path('school_show', {'id': school.school.id}) }}" >{{ school.email }}</a></strong></td>
+                                    <td>{% if school.roles == ['ROLE_SCHOOL'] %}<span class="badge badge-warning">A confirmer</span>{% else %}<span class="badge badge-success">Confirmé</span>{% endif %}</td>
+                                    <td class="table-actions">
+                                        <div class="icon-group">
+                                        {% if school.roles == ['ROLE_SCHOOL'] %}
+                                            <form method="post" class="form-icon" action="{{ path('admin_confirm', {'id': school.id, 'from':'admin'}) }}" onsubmit="return confirm('Are you sure you want to confirm this user ?');">
+                                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ school.school.id) }}">
+                                                <button class="btn-icon btn-success"><i class="fas fa-check" title="confirmer le compte"></i></button>
+                                            </form>
+                                        {% endif %}
+                                            <div class="btn-icon-form">
+                                                <a href="#ex1" rel="modal:open">
+                                                    <i class="fas fa-exclamation-circle warning" title="signaler un probleme" data-url="{{ school.id }}"></i>
+                                                </a>
+                                            </div> 
+                                            {{ include('school/_delete_form.html.twig') }}
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="5">Aucun Elément</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="col-lg-6">
+       {#} <div class="card col-lg-12" style="padding:0px;">
+            <div class="card-header border-transparent">
+                <h3 class="card-title">Etudiants à confirmer</h3>
+        
+                <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                </div>
+            </div>
+        
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table m-0">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in students %}
+                                <tr>
+                                    <td class="email-{{ student.id }}"><strong><a href="{{ path('student_show', {'id': student.student.id}) }}" >{{ student.email }}</a></strong></td>
+                                    <td>{% if student.roles == ['ROLE_STUDENT'] %}<span class="badge badge-warning">A confirmer</span>{% else %}<span class="badge badge-success">Confirmé</span>{% endif %}</td>
+                                    <td class="table-actions">
+                                        <div class="icon-group">
+                                        {% if student.roles == ['ROLE_STUDENT'] %}
+                                            <form method="post" class="form-icon" action="{{ path('admin_confirm', {'id': student.id, 'from':'admin'}) }}" onsubmit="return confirm('Are you sure you want to confirm this user ?');">
+                                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ student.student.id) }}">
+                                                <button class="btn-icon btn-success"><i class="fas fa-check" title="confirmer le compte"></i></button>
+                                            </form>
+                                        {% endif %}
+                                            <div class="btn-icon-form">
+                                                <a href="#ex1" rel="modal:open">
+                                                    <i class="fas fa-exclamation-circle warning" title="signaler un probleme" data-url="{{ student.id }}"></i>
+                                                </a>
+                                            </div> 
+                                            {{ include('student/_delete_form.html.twig') }}
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="5">Aucun Elément</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card col-lg-12" style="padding:0px;">
+            <div class="card-header border-transparent">
+                <h3 class="card-title">Entreprises à confirmer</h3>
+        
+                <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                </div>
+            </div>
+
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table m-0">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for company in company %}
+                                <tr>
+                                    <td class="email-{{ company.id }}"><strong><a href="{{ path('company_show', {'id': company.company.id}) }}" >{{ company.email }}</a></strong></td>
+                                    <td>{% if company.roles == ['ROLE_COMPANY'] %}<span class="badge badge-warning">A confirmer</span>{% else %}<span class="badge badge-success">Confirmé</span>{% endif %}</td>
+                                    <td class="table-actions">
+                                        <div class="icon-group">
+                                        {% if company.roles == ['ROLE_COMPANY'] %}
+                                            <form method="post" class="form-icon" action="{{ path('admin_confirm', {'id': company.id, 'from':'admin'}) }}" onsubmit="return confirm('Are you sure you want to confirm this user ?');">
+                                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ company.company.id) }}">
+                                                <button class="btn-icon btn-success"><i class="fas fa-check" title="confirmer le compte"></i></button>
+                                            </form>
+                                        {% endif %}
+                                            <div class="btn-icon-form">
+                                                <a href="#ex1" rel="modal:open">
+                                                    <i class="fas fa-exclamation-circle warning" title="signaler un probleme" data-url="{{ company.id }}"></i>
+                                                </a>
+                                            </div> 
+                                            {{ include('company/_delete_form.html.twig') }}
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="5">Aucun Elément</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card col-lg-12" style="padding:0px;">
+            <div class="card-header border-transparent">
+                <h3 class="card-title">Ecoles à confirmer</h3>
+        
+                <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                </div>
+            </div>
+
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table m-0">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for school in school %}
+                                <tr>
+                                    <td class="email-{{ school.id }}"><strong><a href="{{ path('school_show', {'id': school.school.id}) }}" >{{ school.email }}</a></strong></td>
+                                    <td>{% if school.roles == ['ROLE_SCHOOL'] %}<span class="badge badge-warning">A confirmer</span>{% else %}<span class="badge badge-success">Confirmé</span>{% endif %}</td>
+                                    <td class="table-actions">
+                                        <div class="icon-group">
+                                        {% if school.roles == ['ROLE_SCHOOL'] %}
+                                            <form method="post" class="form-icon" action="{{ path('admin_confirm', {'id': school.id, 'from':'admin'}) }}" onsubmit="return confirm('Are you sure you want to confirm this user ?');">
+                                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ school.school.id) }}">
+                                                <button class="btn-icon btn-success"><i class="fas fa-check" title="confirmer le compte"></i></button>
+                                            </form>
+                                        {% endif %}
+                                            <div class="btn-icon-form">
+                                                <a href="#ex1" rel="modal:open">
+                                                    <i class="fas fa-exclamation-circle warning" title="signaler un probleme" data-url="{{ school.id }}"></i>
+                                                </a>
+                                            </div> 
+                                            {{ include('school/_delete_form.html.twig') }}
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="5">Aucun Elément</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div> 
+
+    </div>
+
+
+</div> #}
     
-<div class="card col-lg-6" style="padding:0px;">
-    <div class="card-header border-transparent">
-        <h3 class="card-title">Etudiants à confirmer</h3>
 
-        <div class="card-tools">
-        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-            <i class="fas fa-minus"></i>
-        </button>
-        </div>
-    </div>
-
-    <div class="card-body p-0">
-        <div class="table-responsive">
-            <table class="table m-0">
-                <thead>
-                    <tr>
-                        <th>Email</th>
-                        <th>Statut</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for student in students %}
-                        <tr>
-                            <td class="email-{{ student.id }}"><strong><a href="{{ path('student_show', {'id': student.student.id}) }}" >{{ student.email }}</a></strong></td>
-                            <td>{% if student.roles == ['ROLE_STUDENT'] %}<span class="badge badge-warning">A confirmer</span>{% else %}<span class="badge badge-success">Confirmé</span>{% endif %}</td>
-                            <td class="table-actions">
-                                <div class="icon-group">
-                                {% if student.roles == ['ROLE_STUDENT'] %}
-                                    <form method="post" class="form-icon" action="{{ path('admin_confirm', {'id': student.id, 'from':'admin'}) }}" onsubmit="return confirm('Are you sure you want to confirm this user ?');">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ student.student.id) }}">
-                                        <button class="btn-icon btn-success"><i class="fas fa-check" title="confirmer le compte"></i></button>
-                                    </form>
-                                {% endif %}
-                                    <div class="btn-icon-form">
-                                        <a href="#ex1" rel="modal:open">
-                                            <i class="fas fa-exclamation-circle warning" title="signaler un probleme" data-url="{{ student.id }}"></i>
-                                        </a>
-                                    </div> 
-                                    {{ include('student/_delete_form.html.twig') }}
-                                </div>
-                            </td>
-                        </tr>
-                    {% else %}
-                        <tr>
-                            <td colspan="5">no records found</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<div class="card col-lg-6" style="padding:0px;">
-    <div class="card-header border-transparent">
-        <h3 class="card-title">Entreprises à confirmer</h3>
-
-        <div class="card-tools">
-        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-            <i class="fas fa-minus"></i>
-        </button>
-        </div>
-    </div>
-        <!-- /.card-header -->
-    <div class="card-body p-0">
-        <div class="table-responsive">
-            <table class="table m-0">
-                <thead>
-                    <tr>
-                        <th>Email</th>
-                        <th>Statut</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for company in company %}
-                        <tr>
-                            <td class="email-{{ company.id }}"><strong><a href="{{ path('company_show', {'id': company.company.id}) }}" >{{ company.email }}</a></strong></td>
-                            <td>{% if company.roles == ['ROLE_COMPANY'] %}<span class="badge badge-warning">A confirmer</span>{% else %}<span class="badge badge-success">Confirmé</span>{% endif %}</td>
-                            <td class="table-actions">
-                                <div class="icon-group">
-                                {% if company.roles == ['ROLE_COMPANY'] %}
-                                    <form method="post" class="form-icon" action="{{ path('admin_confirm', {'id': company.id, 'from':'admin'}) }}" onsubmit="return confirm('Are you sure you want to confirm this user ?');">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ company.company.id) }}">
-                                        <button class="btn-icon btn-success"><i class="fas fa-check" title="confirmer le compte"></i></button>
-                                    </form>
-                                {% endif %}
-                                    <div class="btn-icon-form">
-                                        <a href="#ex1" rel="modal:open">
-                                            <i class="fas fa-exclamation-circle warning" title="signaler un probleme" data-url="{{ company.id }}"></i>
-                                        </a>
-                                    </div> 
-                                    {{ include('company/_delete_form.html.twig') }}
-                                </div>
-                            </td>
-                        </tr>
-                    {% else %}
-                        <tr>
-                            <td colspan="5">no records found</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<div class="card col-lg-6" style="padding:0px;">
-    <div class="card-header border-transparent">
-        <h3 class="card-title">Ecoles à confirmer</h3>
-
-        <div class="card-tools">
-        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-            <i class="fas fa-minus"></i>
-        </button>
-        </div>
-    </div>
-        <!-- /.card-header -->
-    <div class="card-body p-0">
-        <div class="table-responsive">
-            <table class="table m-0">
-                <thead>
-                    <tr>
-                        <th>Email</th>
-                        <th>Statut</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for school in school %}
-                        <tr>
-                            <td class="email-{{ school.id }}"><strong><a href="{{ path('school_show', {'id': school.school.id}) }}" >{{ school.email }}</a></strong></td>
-                            <td>{% if school.roles == ['ROLE_SCHOOL'] %}<span class="badge badge-warning">A confirmer</span>{% else %}<span class="badge badge-success">Confirmé</span>{% endif %}</td>
-                            <td class="table-actions">
-                                <div class="icon-group">
-                                {% if school.roles == ['ROLE_SCHOOL'] %}
-                                    <form method="post" class="form-icon" action="{{ path('admin_confirm', {'id': school.id, 'from':'admin'}) }}" onsubmit="return confirm('Are you sure you want to confirm this user ?');">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ school.school.id) }}">
-                                        <button class="btn-icon btn-success"><i class="fas fa-check" title="confirmer le compte"></i></button>
-                                    </form>
-                                {% endif %}
-                                    <div class="btn-icon-form">
-                                        <a href="#ex1" rel="modal:open">
-                                            <i class="fas fa-exclamation-circle warning" title="signaler un probleme" data-url="{{ school.id }}"></i>
-                                        </a>
-                                    </div> 
-                                    {{ include('school/_delete_form.html.twig') }}
-                                </div>
-                            </td>
-                        </tr>
-                    {% else %}
-                        <tr>
-                            <td colspan="5">no records found</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
 
 {% endblock %}

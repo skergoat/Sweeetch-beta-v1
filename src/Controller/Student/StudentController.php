@@ -15,6 +15,7 @@ use App\Repository\UserRepository;
 use App\Repository\ApplyRepository;
 use App\Repository\ResumeRepository;
 use App\Repository\StudentRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,10 +37,18 @@ class StudentController extends AbstractController
      * @Route("/", name="student_index", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function index(StudentRepository $studentRepository): Response
+    public function index(StudentRepository $studentRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $queryBuilder = $studentRepository->findAllPaginated("DESC");
+
+        $pagination = $paginator->paginate(
+            $queryBuilder, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+
         return $this->render('student/index.html.twig', [
-            'students' => $studentRepository->findAll(),
+            'students' => $pagination,
         ]);
     }
 

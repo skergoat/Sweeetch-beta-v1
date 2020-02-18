@@ -19,6 +19,15 @@ class CompanyRepository extends ServiceEntityRepository
         parent::__construct($registry, Company::class);
     }
 
+    public function findAllPaginated($order = "DESC")
+    {
+        return $this->createQueryBuilder('p')
+        ->orderBy('p.id', $order)
+        ->getQuery()
+        ->getResult();
+    }
+
+
     // /**
     //  * @return Company[] Returns an array of Company objects
     //  */

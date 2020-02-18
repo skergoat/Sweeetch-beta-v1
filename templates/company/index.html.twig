@@ -59,11 +59,12 @@
             </tr>
             {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+              <td colspan="5">Aucun Elément</td>
             </tr>
             {% endfor %}
           </tbody>
         </table>
+        {{ knp_pagination_render(companies) }}
       </div>
     </div>
   </div>

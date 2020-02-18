@@ -36,7 +36,7 @@
                     <tbody>
                         {% for student in students %}
                         <tr>
-                            <td class="email-{{ student.user.id }}"><strong><a href="{{ path('student_show', {'id': student.user.id}) }}" >{{ student.user.email }}</a></strong></td>
+                            <td class="email-{{ student.user.id }}"><strong><a href="{{ path('student_show', {'id': student.id}) }}" >{{ student.user.email }}</a></strong></td>
                             <td>{{ student.name }}</td>
                             <td>{{ student.lastname }}</td>
                             <td>{% if student.user.roles == ['ROLE_STUDENT'] %}<span class="badge badge-warning">A confirmer</span>{% else %}<span class="badge badge-success">Confirmé</span>{% endif %}</td>
@@ -59,7 +59,7 @@
                         </tr>
                         {% else %}
                         <tr>
-                            <td colspan="5">no records found</td>
+                            <td colspan="5">Aucun Elément</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -67,5 +67,7 @@
             </div>
         </div>
     </div>
+
+    {{ knp_pagination_render(students) }}
 
 {% endblock %}

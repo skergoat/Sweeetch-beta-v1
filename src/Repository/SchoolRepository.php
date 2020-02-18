@@ -19,6 +19,15 @@ class SchoolRepository extends ServiceEntityRepository
         parent::__construct($registry, School::class);
     }
 
+    public function findAllPaginated($order = "DESC")
+    {
+        return $this->createQueryBuilder('p')
+        ->orderBy('p.id', $order)
+        ->getQuery()
+        ->getResult();
+    }
+
+
     /*
     public function findOneBySomeField($value): ?School
     {

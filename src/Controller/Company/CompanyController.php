@@ -7,6 +7,7 @@ use App\Form\CompanyType;
 use App\Repository\ApplyRepository;
 use App\Service\Mailer\ApplyMailer;
 use App\Repository\CompanyRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,10 +24,18 @@ class CompanyController extends AbstractController
      * @Route("/", name="company_index", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function index(CompanyRepository $companyRepository): Response
-    {
+    public function index(CompanyRepository $companyRepository, PaginatorInterface $paginator, Request $request): Response
+    {   
+        $queryBuilder = $companyRepository->findAllPaginated("DESC");
+
+        $pagination = $paginator->paginate(
+            $queryBuilder, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+
         return $this->render('company/index.html.twig', [
-            'companies' => $companyRepository->findAll(),
+            'companies' => $pagination,
         ]);
     }
 
