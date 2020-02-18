@@ -67,7 +67,9 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('user_index');
+            $this->addFlash('success', 'Admin crée');
+
+            return $this->redirectToRoute('user_new');
         }
 
         return $this->render('user/new.html.twig', [
@@ -104,6 +106,8 @@ class UserController extends AbstractController
 
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash('success', 'Admin modifiée');
+
             // granted user to redirect 
             return $this->redirectToRoute('user_edit', ['id' => $user->getId()]);
         }
@@ -124,6 +128,8 @@ class UserController extends AbstractController
             $entityManager->remove($user);
             $entityManager->flush();
         }
+
+        $this->addFlash('success', 'Admin supprimée');
 
         return $this->redirectToRoute('user_index');
     }
