@@ -13,6 +13,12 @@
         </div>
     </div>
 </div>
+
+{% for message in app.flashes('success') %}
+  <div class="alert alert-success">
+      {{ message }}
+  </div>
+{% endfor %}
     
 <div class="card col-lg-6" style="padding:0px;">
     <div class="card-header border-transparent">

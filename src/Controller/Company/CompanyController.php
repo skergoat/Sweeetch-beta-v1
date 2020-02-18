@@ -142,6 +142,8 @@ class CompanyController extends AbstractController
             $entityManager->flush();
         }
 
+        $this->addFlash('success', 'Compte Supprimé');
+
         return $this->redirectToRoute($from);
     }
 }
