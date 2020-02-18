@@ -22,42 +22,47 @@ class SchoolFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        $ca = new School;
-        $ca->setCompanyName('Web Dev & Co.');
-        $ca->setFirstname('Stephane');
-        $ca->setLastname('Kergoat');
-        $ca->setAddress('1 rue du chemin vert');
-        $ca->setZipCode('75000');
-        $ca->setCity('Paris');
-        $ca->setTelNumber('06.85.83.93.34');
-        $ca->setSiret('1234567890');
 
-        $user = new User; 
-        $user->setEmail('kergoane22@gmail.com');
-        $user->setRoles(['ROLE_SCHOOL']);
-        $user->setPassword($this->passwordEncoder->encodePassword(
-            $user,
-            'ste'
-        ));
+        for($i = 1 ; $i < 20 ; $i++) {
 
-            $offer1 = new Studies;
-            $offer1->setTitle('developpeur web'); 
-            $offer1->setDescription('developpeur web'); 
-           
-            $offer2 = new Studies;
-            $offer2->setTitle('developpeur php'); 
-            $offer2->setDescription('developpeur web'); 
+            $ca = new School;
+            $ca->setCompanyName('Web Dev & Co.');
+            $ca->setFirstname('Stephane');
+            $ca->setLastname('Kergoat');
+            $ca->setAddress('1 rue du chemin vert');
+            $ca->setZipCode('75000');
+            $ca->setCity('Paris');
+            $ca->setTelNumber('06.85.83.93.34');
+            $ca->setSiret('1234567890');
 
-            $offer1->setSchool($ca);
-            $offer2->setSchool($ca);
+            $user = new User; 
+            $user->setEmail('kergoane' . $i . '@gmail.com');
+            $user->setRoles(['ROLE_SCHOOL']);
+            $user->setPassword($this->passwordEncoder->encodePassword(
+                $user,
+                'ste'
+            ));
 
-            $manager->persist($offer1);
-            $manager->persist($offer2);
+                $offer1 = new Studies;
+                $offer1->setTitle('developpeur web'); 
+                $offer1->setDescription('developpeur web'); 
+            
+                $offer2 = new Studies;
+                $offer2->setTitle('developpeur php'); 
+                $offer2->setDescription('developpeur web'); 
 
-        $ca->setUser($user);
+                $offer1->setSchool($ca);
+                $offer2->setSchool($ca);
 
-        $manager->persist($ca);
-        $manager->persist($user);
+                $manager->persist($offer1);
+                $manager->persist($offer2);
+
+            $ca->setUser($user);
+
+            $manager->persist($ca);
+            $manager->persist($user);
+
+        }
 
         $manager->flush();
     }

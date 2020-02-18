@@ -19,7 +19,7 @@ class UserFixture extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        for($i = 1 ; $i < 3 ; $i++) {
+        for($i = 1 ; $i < 20 ; $i++) {
 
             $user = new User; 
             $user->setEmail('admin' . $i . '@gmail.com');
