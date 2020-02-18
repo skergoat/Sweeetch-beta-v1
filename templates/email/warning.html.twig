@@ -10,15 +10,12 @@
     <title>{{ email.subject }}</title> <!-- The title tag shows in email notifications, like Android 4.4. -->
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
-    <style>
-        {# p { color:green;} #}
-    </style>
 </head>
     <body>
 
         <h3>Cher {{ email.toName }},</h3>
 
-        <p>Il semblerait que les elements suivants ne soient pas valides : </p>
+        <p>Il semblerait que les éléments suivants ne soient pas valides : </p>
         
         {% if array != [] %}
         <ul>
@@ -28,16 +25,16 @@
         </ul>
         {% endif %}
         
-        <p>Pour beneficier de toutes les fonctionnalites de votre comptes, il est tres important que vous mettiez ces documents a jours.</p>
+        <p>Pour bénéficier de toutes les fonctionnalités de votre comptes, il est très important que vous mettiez ces documents à jour.</p>
         <p> Cordialement,</p> 
-        <p><strong>L'equipe de Sweetch</strong></p>
+        <p><strong>L'équipe de Sweetch</strong></p>
         
         {% if message != '' %}
             <br/><h4>Note personnelle :</h4> 
             <p>{{ message }}</p>
         {% endif %}
 
-        <img src="{{ email.image('@images/team-4.jpg') }}" />
+        {# <img src="{{ email.image('@images/team-4.jpg') }}" /> #}
 
     </body>
 </html>

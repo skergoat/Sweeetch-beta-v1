@@ -21,8 +21,8 @@
           <thead>
             <tr>
                 <th>Ecole</th>
+                <th>Email</th>
                 <th>Siret</th>
-                <th>Adresse</th>
                 <th>statu</th>
                 <th>Actions</th>
             </tr>
@@ -31,8 +31,8 @@
             {% for company in companies %}
             <tr>
                 <td><strong><a href="{{ path('company_show', {'id': company.id}) }}" >{{ company.companyName }}</a></strong></td>
+                <td class="email-{{ company.user.id }}">{{ company.user.email }} </td>
                 <td><strong>{{ company.siret }}</strong></td>
-                <td>{{ company.address }}, {{ company.zipCode }} {{ company.city }} </td>
                 <td>{% if company.user.roles == ['ROLE_COMPANY'] %}<span class="badge badge-warning">A confirmer</span>{% else %}<span class="badge badge-success">Confirmé</span>{% endif %}</td>
                 <td class="table-actions">
                   <div class="icon-group">
@@ -43,7 +43,7 @@
                   </form>
                   {% endif %}
                    <div class="btn-icon-form">
-                        <a href="">
+                        <a href="#ex1" rel="modal:open">
                             <i class="fas fa-exclamation-circle warning" title="signaler un probleme" data-url="{{ company.user.id }}"></i>
                         </a>
                     </div> 
@@ -62,7 +62,5 @@
     </div>
   </div>
 </div>
-
-{{ include('back/_warning_form.html.twig') }}
 
 {% endblock %}
