@@ -7,6 +7,7 @@
         "ext-iconv": "*",
         "doctrine/annotations": "^1.8",
         "gedmo/doctrine-extensions": "^2.4",
+        "knplabs/knp-paginator-bundle": "^5.1",
         "league/html-to-markdown": "^4.9",
         "liip/imagine-bundle": "^2.3",
         "oneup/flysystem-bundle": "^3.4",

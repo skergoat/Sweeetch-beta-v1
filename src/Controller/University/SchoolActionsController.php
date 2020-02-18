@@ -5,6 +5,7 @@ namespace App\Controller\University;
 use App\Entity\School;
 use App\Form\SchoolType;
 use App\Repository\SchoolRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,10 +22,18 @@ class SchoolActionsController extends AbstractController
      * @Route("/", name="school_index", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function index(SchoolRepository $schoolRepository): Response
+    public function index(SchoolRepository $schoolRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $queryBuilder = $schoolRepository->findAllPaginated("DESC");
+
+        $pagination = $paginator->paginate(
+            $queryBuilder, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+
         return $this->render('school/index.html.twig', [
-            'schools' => $schoolRepository->findAll(),
+            'schools' => $pagination,
         ]);
     }
 
