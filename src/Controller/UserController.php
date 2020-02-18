@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,10 +22,23 @@ class UserController extends AbstractController
      * @Route("/", name="user_index", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $queryBuilder = $userRepository->findByRolePaginated('ROLE_ADMIN');
+
+        $pagination = $paginator->paginate(
+            $queryBuilder, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+
+        // return $this->render('student/index.html.twig', [
+        //     'students' => $pagination,
+        // ]);
+
         return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findByRole('ROLE_ADMIN'),
+            'users' => $pagination,
+            // 'users' => $userRepository->findByRole('ROLE_ADMIN'),
         ]);
     }
 
