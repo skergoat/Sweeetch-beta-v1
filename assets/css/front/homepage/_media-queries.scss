@@ -1,5 +1,18 @@
   
-  @media (min-width: 991px) {
+@media all and (max-width:1440px) {
+
+  .form-center {
+      width: 500px;
+      margin: auto;
+
+      &--login {
+          margin-top:10%;
+      }
+  }
+
+}  
+
+@media (min-width: 991px) {
     #call-to-action .cta-btn-container {
       display: -webkit-box;
       display: -webkit-flex;
