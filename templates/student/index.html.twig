@@ -37,7 +37,7 @@
                             <td class="table-actions">
                                 <div class="icon-group">
                                 {% if student.user.roles == ['ROLE_STUDENT'] %}
-                                    <form method="post" class="form-icon" action="{{ path('admin_confirm', {'id': student.user.id}) }}" onsubmit="return confirm('Are you sure you want to confirm this user ?');">
+                                    <form method="post" class="form-icon" action="{{ path('admin_confirm', {'id': student.user.id, 'from':'student_index'}) }}" onsubmit="return confirm('Are you sure you want to confirm this user ?');">
                                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ student.user.id) }}">
                                         <button class="btn-icon btn-success"><i class="fas fa-check" title="confirmer le compte"></i></button>
                                     </form>

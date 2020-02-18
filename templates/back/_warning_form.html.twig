@@ -6,7 +6,7 @@
             <p>Cochez les problèmes et envoyez le mail</p>
         </div>
     
-        <form method="post" action="" class="form" id="warning-form">
+        <form method="post" action="/warning/{{ app.request.get('_route') }}" class="form" id="warning-form">
             
             <div class="form-group" style="margin-top:40px;">
                 <label> Email</label>

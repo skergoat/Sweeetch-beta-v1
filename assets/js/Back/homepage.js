@@ -25,41 +25,7 @@ global.jQuery = $;
 // bootstrap
 import "bootstrap";
 import 'admin-lte';
-
-// var name;
-// var messageText = "Bonjour, Nous avons detecte un probleme avec votre compte. Il semblerait que les documents suivants ne soient pas valides :";
-// var messageEnd = "Veuillez les modifier au plus vite pour beneficier de toutes les fonctionnalites de votre compte. Bien Cordialement, l'equipe Sweeetch";
-
-// show / hide warning form
-$(".warning").click(function(e) {
-  e.preventDefault();
-
-  var id = $(this).attr("data-url");
-  var url = '/sendwarning/' + id;
-  var email = $('.email-' + id).text();
-  // $("#message").html(messageText + messageEnd);
-  $("#email").val(email);
-  $("#warning-form").attr('action', url);
-  $("#form-show").removeClass("hidden");
-
-});
-
-// $('input:checkbox').change(function() {
-
-//   messageText = "";
-//   var messageText = "Bonjour, Nous avons detecte un probleme avec votre compte. Il semblerait que les documents ne soient pas valides : ";
-
-//   $('.check-documents').each(function() {
-//     if($(this).prop("checked") == true){ 
-//       var name = $(this).attr('name');
-//       messageText = messageText + name + ', '
-//     }
-//   });
-
-//   messageText = messageText + messageEnd; 
-//   $("#message").val(messageText);
-
-// });
+import './components/warning';
 
 
 
