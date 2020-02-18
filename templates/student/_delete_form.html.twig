@@ -1,6 +1,6 @@
-<form method="post" class="{{ app.request.get('_route') == 'student_index' or app.request.get('_route') == 'admin' ? 'form-icon' : '' }}" action="{{ path('student_delete', {'id': student.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+<form method="post" class="{{ app.request.get('_route') == 'student_index' or app.request.get('_route') == 'admin' ? 'form-icon' : '' }}" action="{{ app.request.get('_route') == 'admin' ? path('student_delete', {'id': student.student.id, 'from' : 'admin' }) : path('student_delete', {'id': student.id, 'from' : 'student_index'})  }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
     <input type="hidden" name="_method" value="DELETE">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ student.id) }}">
+    <input type="hidden" name="_token" value="{{ app.request.get('_route') == 'admin' ? csrf_token('delete' ~ student.student.id) : csrf_token('delete' ~ student.id) }}">
     <button class="btn-icon btn-danger">
         {{ app.request.get('_route') == 'student_index' or app.request.get('_route') == 'admin' ? '<i class="far fa-trash-alt" title="supprimer"></i>' : 'Modifier' }}
     </button>

@@ -229,11 +229,12 @@ class StudentController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="student_delete", methods={"DELETE"})
+     * @Route("/{id}/{from}", name="student_delete", methods={"DELETE"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function delete(Request $request, Student $student, UploaderHelper $uploaderHelper, ApplyRepository $applyRepository): Response
+    public function delete(Request $request, Student $student, UploaderHelper $uploaderHelper, ApplyRepository $applyRepository, $from): Response
     {
+        
         if ($this->isCsrfTokenValid('delete'.$student->getId(), $request->request->get('_token'))) {
 
             // delete private files when delete entity
@@ -271,6 +272,6 @@ class StudentController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_login');
+        return $this->redirectToRoute($from);
     }
 }
