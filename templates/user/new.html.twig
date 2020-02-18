@@ -18,6 +18,12 @@
         </div>
     </div>
 
+    {% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+    {% endfor %}
+
     <div class="row">
         <div class="col-md-12">
             <div class="card card-action">

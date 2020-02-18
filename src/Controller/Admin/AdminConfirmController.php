@@ -38,6 +38,8 @@ class AdminConfirmController extends AbstractController
                 
         $this->getDoctrine()->getManager()->flush();
 
+        $this->addFlash('success', 'Compte Confirmé');
+
         if($from == 'admin' || $from == 'student_index' || $from == 'company_index' || $from == 'school_index') {
             return $this->redirectToRoute($from);
         }
@@ -108,6 +110,8 @@ class AdminConfirmController extends AbstractController
         $parameters['message'] != '' ? $message = $parameters['message'] : $message = '';
 
         $mailer->sendWarningMessage($name, $email, $array, $message);
+
+        $this->addFlash('success', 'Message Envoyé');
 
         if($from == 'admin' || $from == 'student_index' || $from == 'company_index' || $from == 'school_index') {
             return $this->redirectToRoute($from);

@@ -23,7 +23,7 @@ class SchoolFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
 
-        for($i = 1 ; $i < 20 ; $i++) {
+        for($i = 1 ; $i < 5 ; $i++) {
 
             $ca = new School;
             $ca->setCompanyName('Web Dev & Co.');
@@ -36,7 +36,7 @@ class SchoolFixtures extends Fixture
             $ca->setSiret('1234567890');
 
             $user = new User; 
-            $user->setEmail('kergoane' . $i . '@gmail.com');
+            $user->setEmail('school' . $i . '@gmail.com');
             $user->setRoles(['ROLE_SCHOOL']);
             $user->setPassword($this->passwordEncoder->encodePassword(
                 $user,

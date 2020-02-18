@@ -20,9 +20,9 @@ class CompanyFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        for($i = 1 ; $i < 20 ; $i++) {
+        for($i = 1 ; $i < 5 ; $i++) {
             $ca = new Company;
-            $ca->setCompanyName('test');
+            $ca->setCompanyName('Company');
             $ca->setFirstname('Stephane');
             $ca->setLastname('Kergoat');
             $ca->setAddress('1 rue du chemin vert');
@@ -32,7 +32,7 @@ class CompanyFixtures extends Fixture
             $ca->setSiret('1234567890');
 
             $user = new User; 
-            $user->setEmail('test' . $i . '@gmail.com');
+            $user->setEmail('company' . $i . '@gmail.com');
             $user->setRoles(['ROLE_COMPANY']);
             $user->setPassword($this->passwordEncoder->encodePassword(
                 $user,
