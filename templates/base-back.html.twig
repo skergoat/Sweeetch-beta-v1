@@ -10,7 +10,7 @@
         <meta content="" name="@">
         
         <!-- fontawesome provisoire -->
-        <script src="https://kit.fontawesome.com/1596c4b58a.js" crossorigin="anonymous"></script>
+        <script src="https://kit.fontawesome.com/1596c4b58a.js" crossorigin="anonymous"></script> 
 
         <!-- Favicons -->
         <link href="{{ asset('build/favicon.png') }}" rel="icon">
@@ -20,14 +20,19 @@
         
             <!-- Google Fonts -->
             <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,500,600,700,700i|Montserrat:300,400,500,600,700" rel="stylesheet">
-      
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css"/>
+
             <!-- bootstrap and custom styles -->    
             {{ encore_entry_link_tags('back') }}
- 
+
         {% endblock %}
 
     </head>
     <body>
+
+        <div id="ex1" class="modal">
+            {{ include('back/_warning_form.html.twig') }}
+        </div>
 
         <div class="wrapper">
 
@@ -148,19 +153,16 @@
             <!-- /.content-wrapper -->
             <footer class="main-footer">
                 <strong>Sweeetch - Admin</strong>
-                
-                </div>
             </footer>
 
-            <!-- Control Sidebar -->
-            <aside class="control-sidebar control-sidebar-dark">
-                <!-- Control sidebar content goes here -->
-            </aside>
-            <!-- /.control-sidebar -->
-            </div>
+        </div>
         <!-- scripts -->
         {% block javascripts %}
-            {{ encore_entry_script_tags('back') }}
+
+        {{ encore_entry_script_tags('back') }}
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+        
         {% endblock %}
 
     </body>

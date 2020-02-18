@@ -1,36 +1,47 @@
- <div id="form-show" class="warningform hidden jumbotron">
-        <div class="warningform__form">
-            <h4 style="text-align:center;">Signaler un Probleme</h4>
-            <form method="post" action="" class="form" id="warning-form" style="width:500px;margin:auto;">
+ <div id="form-show" class="warningform">
+    <div class="warningform__form">
 
-                <label> Email</label>
-                <input type="text" class="form-control"  style="margin-bottom:20px;" id="email" name="email">
-
-                <h5 style="text-align:center;">Cochez les problemes : </h5>
-                <div class="warningform__check__checkbox" style="display:flex;justify-content:center;">
-                    <div class="warningform__check__checkbox--container">
-                        <label><input type="checkbox" class="form-control check-documents" name="resume" style="margin-right:30px;"> CV</label>
-                    </div>
-                    <div class="warningform__check__checkbox--container">
-                        <label> <input type="checkbox" class="form-control check-documents" name="idCard">Carte d'identite</label>
-                    </div>
-                </div>
-                <div class="warningform__check__checkbox" style="display:flex;justify-content:center;margin-bottom:30px;" >
-                    <div class="warningform__check__checkbox--container">
-                        <label><input type="checkbox" class="form-control check-documents" name="studentCard" style="margin-right:30px;"> Carte d'etudiant</label>
-                    </div>
-                    <div class="warningform__check__checkbox--container">
-                        <label><input type="checkbox" class="form-control check-documents" name="proofHabitation">  Justificatif de domicile</label>
-                    </div>
-                    <div class="warningform__check__checkbox--container">
-                        <label><input type="checkbox" class="form-control check-documents" name="siret">  SIRET</label>
-                    </div>
-                </div>
-                
-                <label> Message (facultatif)</label>
-                <textarea class="form-control" id="message" rows="5" name="message"></textarea>
-
-                <button class="btn btn-primary" type="submit">Envoyer</button>
-            </form>
+        <div>
+            <h4>Signaler les Problème</h4>
+            <p>Cochez les problèmes et envoyez le mail</p>
         </div>
+    
+        <form method="post" action="" class="form" id="warning-form">
+            
+            <div class="form-group" style="margin-top:40px;">
+                <label> Email</label>
+                <input type="text" class="form-control" id="email" name="email">
+            </div>
+
+            <div class="form-group" style="margin-top:40px;">
+                <div class="warning-group">
+                    <input type="checkbox" class="form-control check-documents" name="resume">
+                    <p class="check-documents-label"> CV</p>
+                </div>
+                <div class="warning-group">
+                    <input type="checkbox" class="form-control check-documents" name="idCard">
+                    <p class="check-documents-label"> Carte d'identite</p>
+                </div>
+                <div class="warning-group">
+                    <input type="checkbox" class="form-control check-documents" name="studentCard"> 
+                    <p class="check-documents-label">Carte d'etudiant</p>
+                </div>
+                <div class="warning-group">
+                    <input type="checkbox" class="form-control check-documents" name="proofHabitation">
+                    <p class="check-documents-label">Justificatif de domicile</p>
+                </div>
+                <div class="warning-group">
+                    <input type="checkbox" class="form-control check-documents" name="siret">
+                    <p  class="check-documents-label">SIRET</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="label"> Message (facultatif)</label>
+                <textarea class="form-control" id="message" rows="5" name="message"></textarea>
+            </div>
+
+            <button class="btn btn-primary" type="submit">Envoyer</button>
+        </form>
     </div>
+</div>

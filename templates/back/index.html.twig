@@ -2,10 +2,6 @@
 
 {% block title %} {{ parent() }} - Dashboard {% endblock %}
 
-{% block stylesheets %}
-    {{ encore_entry_link_tags('back') }}
-{% endblock %}
-
 {% block body %}
 
 <div class="content-header">
@@ -53,7 +49,7 @@
                                     </form>
                                 {% endif %}
                                     <div class="btn-icon-form">
-                                        <a href="">
+                                        <a href="#ex1" rel="modal:open">
                                             <i class="fas fa-exclamation-circle warning" title="signaler un probleme" data-url="{{ student.id }}"></i>
                                         </a>
                                     </div> 
@@ -107,7 +103,7 @@
                                     </form>
                                 {% endif %}
                                     <div class="btn-icon-form">
-                                        <a href="">
+                                        <a href="#ex1" rel="modal:open">
                                             <i class="fas fa-exclamation-circle warning" title="signaler un probleme" data-url="{{ company.id }}"></i>
                                         </a>
                                     </div> 
@@ -161,7 +157,7 @@
                                     </form>
                                 {% endif %}
                                     <div class="btn-icon-form">
-                                        <a href="">
+                                        <a href="#ex1" rel="modal:open">
                                             <i class="fas fa-exclamation-circle warning" title="signaler un probleme" data-url="{{ school.id }}"></i>
                                         </a>
                                     </div> 
@@ -180,8 +176,4 @@
     </div>
 </div>
 
-{% endblock %}
-
-{% block javascripts %}
-    {{ encore_entry_script_tags('back') }}
 {% endblock %}
