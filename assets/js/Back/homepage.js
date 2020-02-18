@@ -25,8 +25,9 @@ global.jQuery = $;
 // bootstrap
 import "bootstrap";
 import 'admin-lte';
-import './components/warning';
 
+import './components/warning';
+import './components/message';
 
 
 
