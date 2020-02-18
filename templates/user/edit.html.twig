@@ -7,7 +7,7 @@
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
-            <div class="col-sm-12 container-flex">
+            <div class="col-sm-12">
                 <h1 class="m-0 text-dark">Modifier un Administrateur</h1>
                 <a href="{{ path('user_index') }}" class="btn btn-sm btn-sm-1 btn-labeled btn-default">
                     <span class="btn-label"><i class="fa fa-chevron-left"></i></span>
@@ -25,7 +25,11 @@
                 <div class="row card-row">
                     {{ include('user/_form.html.twig', {'button_label': 'Modifier'}) }}
                 </div>
-                <div class="row card-row">
+                
+            </div>
+            <div class="card-footer">
+                
+                <div class="row">
                     {{ include('user/_delete_form.html.twig') }}
                 </div>
             </div>

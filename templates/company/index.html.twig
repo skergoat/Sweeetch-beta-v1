@@ -23,6 +23,7 @@
                 <th>Ecole</th>
                 <th>Siret</th>
                 <th>Adresse</th>
+                <th>statu</th>
                 <th>Actions</th>
             </tr>
           </thead>
@@ -32,8 +33,9 @@
                 <td><strong><a href="{{ path('company_show', {'id': company.id}) }}" >{{ company.companyName }}</a></strong></td>
                 <td><strong>{{ company.siret }}</strong></td>
                 <td>{{ company.address }}, {{ company.zipCode }} {{ company.city }} </td>
+                <td>{% if company.user.roles == ['ROLE_COMPANY'] %}<span class="badge badge-warning">A confirmer</span>{% else %}<span class="badge badge-success">Confirmé</span>{% endif %}</td>
                 <td class="table-actions">
-                  <div>
+                  <div class="icon-group">
                   {% if company.user.roles == ['ROLE_COMPANY'] %}
                   <form method="post" class="form-icon" action="{{ path('admin_confirm', {'id': company.user.id}) }}" onsubmit="return confirm('Are you sure you want to confirm this user ?');">
                       <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ company.user.id) }}">
