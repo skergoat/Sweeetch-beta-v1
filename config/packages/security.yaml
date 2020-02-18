@@ -34,6 +34,10 @@ security:
             guard:
                 authenticators:
                     - App\Security\UserControllerAuthenticator
+
+            remember_me:
+                secret:   '%kernel.secret%'
+                lifetime: 2592000 # 30 days in seconds
                     
             logout:
                 path: app_logout

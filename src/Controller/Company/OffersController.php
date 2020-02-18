@@ -25,7 +25,6 @@ class OffersController extends AbstractController
 {
     /**
      * @Route("/", name="offers_index", methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
      */
     public function index(OffersRepository $offersRepository): Response
     {
