@@ -14,14 +14,11 @@
 .card {
     padding:25px;
     padding-top:20px;
+    margin-bottom:30px;
 
     &-dashboard {
         max-height:500px;
         overflow:scroll;
-    }
-
-    &-header.border-transparent {
-        padding:0px;
     }
 
     &-margin {
@@ -41,3 +38,21 @@
     border-bottom:0px;
 }
 
+/* ajustements */
+
+.card-header-color {
+    background-color:#52B3D9;
+    padding:15px;
+
+    & .card-title {
+        color:white;
+    }
+
+    & .fas.fa-minus {
+        color:white;
+    }
+}
+
+.table-padding {
+    padding:30px;
+}

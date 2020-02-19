@@ -11,8 +11,12 @@
 
     & .info-box-content {
         font-size:13px;
-        padding:0px;
+        // margin-right:15px;
     }
+}
+
+.info-box-nopage {
+    margin-top:15px;
 }
 
 .info-checked.info-box {
@@ -71,4 +75,8 @@
             color:$darkerBlue;
         }
     }
+}
+
+.fas.fa-plus, .fas.fa-minus {
+    color:white;
 }
