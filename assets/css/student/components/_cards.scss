@@ -15,6 +15,11 @@
     padding:25px;
     padding-top:20px;
 
+    &-dashboard {
+        max-height:500px;
+        overflow:scroll;
+    }
+
     &-header.border-transparent {
         padding:0px;
     }
