@@ -3,6 +3,7 @@
 namespace App\Controller\University;
 
 use App\Entity\School;
+use App\Entity\Student;
 use App\Form\SchoolType;
 use App\Repository\SchoolRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -38,12 +39,14 @@ class SchoolActionsController extends AbstractController
     }
 
     /**
-     * @Route("/student", name="school_student_index", methods={"GET"})
+     * @Route("/student/{id}", name="school_student_index", methods={"GET"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function indexByStudent(SchoolRepository $schoolRepository): Response
+    public function indexByStudent(Student $student, SchoolRepository $schoolRepository): Response
     {
-        return $this->render('school/index_student.html.twig');
+        return $this->render('school/index_student.html.twig', [
+            'student' => $student
+        ]);
     }
 
     /**

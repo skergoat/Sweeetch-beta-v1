@@ -1,10 +1,14 @@
 /* card layout */
 
 .card-body.p-0 .table thead > tr > th:last-of-type, .card-body.p-0 .table thead > tr > td:last-of-type, .card-body.p-0 .table tbody > tr > th:last-of-type, .card-body.p-0 .table tbody > tr > td:last-of-type,
-.card-body.p-0 .table thead > tr > th:first-of-type, .card-body.p-0 .table thead > tr > td:first-of-type, .card-body.p-0 .table tbody > tr > th:first-of-type, .card-body.p-0 .table tbody > tr > td:first-of-type    
+.card-body.p-0 .table thead > tr > th:first-of-type, .card-body.p-0 .table thead > tr > td:first-of-type, .card-body.p-0 .table tbody > tr > th:first-of-type, .card-body.p-0 .table tbody > tr > td:first-of-type,    
 .table th, .table td
 {    
     border:0px;
+}
+
+.table th {
+    font-size: 17px;
 }
 
 .card {
@@ -16,12 +20,12 @@
     }
 
     &-margin {
-        margin-top:40px;
+        margin-top:45px;  
     }
+}
 
-    // &-table td {
-    //     border-top:2px solid grey;
-    // }
+.card-margin-plus {
+    margin-top:60px;
 }
 
 .tr-border {

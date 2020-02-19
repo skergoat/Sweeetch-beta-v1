@@ -5,9 +5,18 @@
     font-family: 'Roboto', "Helvetica Neue", Arial, "Noto Sans", sans-serif;
 }
 
-td a {
-    color:$blue;
+h1, h2, h3, h4 {
+    color:$lightDarker;
 }
+
+th {
+    color:$lightDark;
+}
+
+td a {
+    color:$linkBlue;
+}
+
 
 /* admin lte layout */
 
