@@ -27,6 +27,7 @@ global.jQuery = $;
 
 // bootstrap 
 import 'bootstrap';
+import 'admin-lte';
 
 // main scripts 
 import './component/edit-profile.js';
