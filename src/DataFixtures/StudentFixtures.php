@@ -30,9 +30,9 @@ class StudentFixtures extends Fixture
         for($i = 1 ; $i < 5 ; $i++) {
 
             $student = new Student;
-            $student->setName('student' . $i);
-            $student->setLastname('lastname' . $i);
-            $student->setAdress($i . 'rue du chemin vert');
+            $student->setName('Marc' . $i);
+            $student->setLastname('Dupont' . $i);
+            $student->setAdress($i . ' rue du chemin vert');
             $student->setZipCode('7' . $i . '500');
             $student->setTelNumber('0' . $i . '.89.78.67.43');
             $student->setCity('Paris');
@@ -46,16 +46,16 @@ class StudentFixtures extends Fixture
             ));
 
             $profile = new Profile;
-            $profile->setDomain('development');
+            $profile->setDomain('développement web');
             $profile->setArea('Paris');
             
                 $language1 = new Language;
-                $language1->setLanguageName('anglais'); 
-                $language1->setLevel('bon'); 
+                $language1->setLanguageName('Anglais'); 
+                $language1->setLevel('B2'); 
 
                 $language2 = new Language;
-                $language2->setLanguageName('viet'); 
-                $language2->setLevel('bon'); 
+                $language2->setLanguageName('Vietnamien'); 
+                $language2->setLevel('B2'); 
 
                 $date = new \Datetime('2019-03-06');
                 $date2 = new \Datetime('2020-04-06');

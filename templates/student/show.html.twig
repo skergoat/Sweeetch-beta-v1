@@ -201,6 +201,7 @@
             </div>
             <h4>Langues</h4>
             <div class="card col-lg-12">
+
                 <div class="card-header border-transparent">
                     <!-- <h3 class="card-title">Langues</h3> -->
             
@@ -221,7 +222,7 @@
                                 </tr>
                                 {% for languages in student.profile.languages %}
                     
-                                <tr>
+                                <tr class="tr-border">
                                     <td>{{ languages.languageName }}</td>
                                     <td>{{ languages.level }}</td>
                                 </tr>
@@ -234,43 +235,47 @@
 
             <h4>Formation</h4>
 
-            <div class="card col-lg-12">
-                <div class="card-header border-transparent">
-                    <!-- <h3 class="card-title">Formation</h3> -->
-            
-                    <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                        <i class="fa fa-minus"></i>
-                    </button>
+            <div class="col-lg-12 table-scroll">
+
+                <div class="card table-scroll-card-width">
+                    <div class="card-header border-transparent">
+                        <!-- <h3 class="card-title">Formation</h3> -->
+                
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        </div>
                     </div>
+                
+                <div class="card-body p-0 card-dashboard">
+                        <div class="table-responsive">
+                            <table class="table m-0">
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Titre</strong></td>
+                                        <td><strong>Ecole</strong></td>
+                                        <td><strong>Début</strong></td>
+                                        <td><strong>Fin</strong></td>
+                                    </tr>
+                                    {% for education in student.profile.education %}
+                                    <tr class="tr-border">
+                                        <td>{{ education.title }}</td>
+                                        <td>{{ education.school }}</td>
+                                        <td>{{ education.dateStart|date("m/d/Y") }}</td>
+                                        {% if education.current == true %}
+                                        <td>  en cours </td>
+                                        {% else %}
+                                            <td>{{ education.dateEnd|date("m/d/Y") }}</td>
+                                        {% endif %}
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div> 
+                    </div>  
                 </div>
             
-               <div class="card-body p-0 card-dashboard">
-                    <div class="table-responsive">
-                        <table class="table m-0">
-                            <tbody>
-                                <tr>
-                                    <td><strong>Title</strong></td>
-                                    <td><strong>School</strong></td>
-                                    <td><strong>From</strong></td>
-                                    <td><strong>To</strong></td>
-                                </tr>
-                                {% for education in student.profile.education %}
-                                <tr>
-                                    <td>{{ education.title }}</td>
-                                    <td>{{ education.school }}</td>
-                                    <td>{{ education.dateStart|date("m/d/Y") }}</td>
-                                    {% if education.current == true %}
-                                      <td>  en cours </td>
-                                    {% else %}
-                                        <td>{{ education.dateEnd|date("m/d/Y") }}</td>
-                                    {% endif %}
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div> 
-                </div>  
             </div>
         </div>
         {# <div class="col-lg-6">
