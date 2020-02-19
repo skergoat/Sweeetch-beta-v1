@@ -6,6 +6,7 @@ use App\Entity\Profile;
 use App\Entity\Student;
 use App\Entity\Language;
 use App\Form\ProfileType;
+use App\Repository\ApplyRepository;
 use App\Repository\ProfileRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +25,7 @@ class ProfileController extends AbstractController
      * @IsGranted("ROLE_STUDENT")
      * @ParamConverter("student", options={"id" = "student_id"})
      */
-    public function edit(Request $request, Profile $profile, Student $student): Response
+    public function edit(Request $request, Profile $profile, Student $student, ApplyRepository $applyRepository): Response
     {
         $form = $this->createForm(ProfileType::class, $profile);
         $form->handleRequest($request);
@@ -39,7 +40,9 @@ class ProfileController extends AbstractController
         return $this->render('profile/edit.html.twig', [
             'profile' => $profile,
             'form' => $form->createView(),
-            'student' => $student
+            'student' => $student,
+            'fresh' =>  $applyRepository->findByStudentByFresh($student),
+            'hired' => $applyRepository->checkIfHired($student)
         ]);
     }
 }

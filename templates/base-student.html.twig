@@ -39,12 +39,13 @@
                     <li class="nav-item">
                         <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
                     </li>
-                    {# <li class="nav-item d-none d-sm-inline-block">
-                        <a href="{{ path('admin') }}" class="nav-link">Dashboard</a>
-                    </li> #}
                     <li class="nav-item d-none d-sm-inline-block">
-                        <a href="/logout" class="nav-link">Deconnexion</a>
+                        <a class="nav-link" href="{{ path('offers_index') }}">Chercher un Emploi</a>
                     </li>
+                    <li class="nav-item d-none d-sm-inline-block">
+                        <a href="/logout" class="nav-link">Déconnexion</a>
+                    </li>
+                    
                     {% if is_granted('ROLE_ADMIN') %}
 
                     <li class="nav-item d-none d-sm-inline-block" >
@@ -110,6 +111,11 @@
                                     <i class="nav-icon fa fa-bookmark"></i>
                                     <p>
                                         Postulations 
+                                        {% if fresh > 0 %}
+                                        <span class="badge badge-info right" title="postulations">{{ fresh }}</span> 
+                                        {% elseif hired == true %}
+                                            <span class="right badge badge-warning" title="mission à confirmer">!</span>
+                                        {% endif %} 
                                     </p>
                                 </a>
                             </li>

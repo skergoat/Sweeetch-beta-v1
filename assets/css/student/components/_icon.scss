@@ -43,8 +43,32 @@
     }
 } 
 
-
 #box-flex {
     display:flex;
     align-items:center;
+}
+
+.far.fa-eye {
+    color:$darkerBlue;
+    text-align:center;
+}
+
+.action-link {
+    width:100%;
+    display:block;
+
+    &:hover {
+        text-decoration:none;
+        border-bottom:0px;
+    }
+
+    & .far.fa-eye {
+        display:block;
+        margin:auto; 
+        color:$linkBlue; 
+
+        &:hover{
+            color:$darkerBlue;
+        }
+    }
 }

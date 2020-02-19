@@ -15,7 +15,7 @@
                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-check"></i></span>
 
                 <div class="info-box-content">
-                <span class="info-box-text">Etat du compte</span>
+                <span class="info-box-text">Etat du compte : </span>
                 <span class="info-box-number">Validé</span>
                 </div>
             </div>
@@ -181,16 +181,18 @@
                         </div>
                     </div>
                 
-                <div class="card-body p-0 card-dashboard">
+                    <div class="card-body p-0 card-dashboard">
                         <div class="table-responsive">
                             <table class="table m-0">
-                                <tbody>
+                                <thead>
                                     <tr>
-                                        <th>Titre</th>
-                                        <th>Ecole</th>
-                                        <th>Début</th>
-                                        <th>Fin</th>
+                                        <th class="th-border">Titre</th>
+                                        <th class="th-border">Ecole</th>
+                                        <th class="th-border">Début</th>
+                                        <th class="th-border">Fin</th>
                                     </tr>
+                                </thead>
+                                <tbody>
                                     {% for education in student.profile.education %}
                                     <tr class="tr-border">
                                         <td>{{ education.title }}</td>
@@ -216,6 +218,7 @@
             <h3>Mes Documents</h3><br> 
 
             <div class="card col-lg-12">
+                
                 <div class="card-header border-transparent">            
                     <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -256,10 +259,121 @@
                 </div>
             </div>
 
+            <h3 class="card-margin-plus">Emplois</h3><br> 
+
+            <h4>Missions en cours</h4>
+
+            <div class="col-lg-12 table-scroll">
+
+                <div class="card">
+
+                    <div class="card-header border-transparent">            
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        </div>
+                    </div>
+            
+                    <div class="card-body p-0 card-dashboard">
+                        <div class="table-responsive">
+                            <table class="table m-0">
+                                <tbody>
+                                    <tr>
+                                        <th>Entreprise</th>
+                                        <th>Situation</th>
+                                        <th class="th-centered">Actions</th>
+                                    </tr>
+                                    {% if applies[0] is defined %}
+
+                                        {% if applies[0].hired == true or applies[0].confirmed == true or applies[0].agree == true %}
+                                    
+                                            {% for applies in applies %}
+                                    <tr class="border-top">
+                                        <td>{{ applies.offers.title }}</td>
+                                        <td>
+                                            {% if applies.hired == true %}
+                                                <span class="badge badge-danger" title="L'employeur attend votre validation">vous devez valider la mission</span>
+                                            {% elseif applies.agree == true %}
+                                            <span class="badge badge-warning" title="Embauche en cours">Dossier en traitement</span>
+                                            {% elseif applies.confirmed == true %}
+                                                <span class="badge badge-success" title="Mission en cours. Bonne chance !">Mission confirmée</span>    
+                                            {% endif %}
+                                        </td>   
+                                        <td>
+                                            <a href="{{ path('student_apply', {'id': student.id}) }}" class="action-link"><i class="far fa-eye" title="voir"></i></a>
+                                        </td>
+                                    </tr>                                              
+                                            {% endfor %}
+                                        
+                                        {% else %}
+                                            <tr class="border-top">
+                                                <td colspan="8" class="border-top-td">Aucun emploi en cours</td>
+                                            </tr> 
+                                        {% endif %}
+
+                                    {% else %}
+                                    <tr class="border-top">
+                                        <td colspan="8" class="border-top-td">Aucun emploi en cours</td>
+                                    </tr>    
+                                    {% endif %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h4>Missions Accomplies</h4>
+
+            <div class="col-lg-12 table-scroll">
+
+                <div class="card">
+
+                    <div class="card-header border-transparent">            
+                        <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        </div>
+                    </div>
+            
+                    <div class="card-body p-0 card-dashboard">
+                        <div class="table-responsive">
+                            <table class="table m-0">
+                                <tbody>
+                                    <tr>
+                                        <th>Entreprise</th>
+                                        <th>Situation</th>
+                                        <th class="th-centered">Actions</th>
+                                    </tr>
+                                    {% for finished in finished %}
+                                    <tr class="border-top">
+                                        <td>{{ finished.offers.title }}</td>
+                                        <td>
+                                            <span class="badge badge-success" title="Mission en cours. Bonne chance !">Mission terminée</span>
+                                        </td>   
+                                        <td>
+                                            <a href="{{ path('student_apply', {'id': student.id}) }}" class="action-link"><i class="far fa-eye" title="voir"></i></a>
+                                        </td>
+                                    </tr>                                              
+                                    {% else %} 
+                                    <tr class="border-top">
+                                        <td colspan="8" class="border-top-td">Aucun emploi en cours</td>
+                                    </tr> 
+                                    {% endfor %}
+                                
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
     </div>        
-
-       
 
 <!-- -->
 
