@@ -8,6 +8,7 @@ use App\Entity\StudentCard;
 use App\Entity\ProofHabitation;
 use App\Service\UploaderHelper;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DownloadController extends AbstractController
