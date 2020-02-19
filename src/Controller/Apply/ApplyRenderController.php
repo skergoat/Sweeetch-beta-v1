@@ -77,11 +77,13 @@ class ApplyRenderController extends AbstractController
      * @IsGranted("ROLE_SUPER_STUDENT")
      * @ParamConverter("student", options={"id" = "student_id"})
      */
-    public function showOfferProfile(StudentRepository $studentRepository, Offers $offer, Student $student): Response
+    public function showOfferProfile(StudentRepository $studentRepository, ApplyRepository $applyRepository, Offers $offer, Student $student): Response
     {   
         return $this->render('apply/show_hired.html.twig', [
             'offers' => $offer,
-            'student' => $student
+            'student' => $student,
+            'fresh' =>  $applyRepository->findByStudentByFresh($student),
+            'hired' => $applyRepository->checkIfHired($student)
         ]);
     }
 

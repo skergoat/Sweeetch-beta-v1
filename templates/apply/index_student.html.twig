@@ -29,8 +29,8 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Title</th>
+                <th>Entreprise</th>
                 <th>Location</th>
                 <th>Domain</th>
                 <th>State</th>
@@ -41,8 +41,8 @@
 
         <tbody>
             <tr>
-                <td>{{ applies.offers.id }}</td>
                 <td>{{ applies.offers.title }}</td>
+                <td> {{ applies.offers.company.companyName }}</td>
                 <td>{{ applies.offers.location }}</td>
                 <td>{{ applies.offers.domain }}</td> 
                 <td> 
@@ -58,14 +58,22 @@
                 </td>
                 <td class="btn-group">
                     {% if applies.hired == false and applies.confirmed == false and applies.agree == false %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('offers_preview', {id : applies.offers.id}) }}" class="btn btn-secondary"> show </a> 
+                    {% else %}
                     <a href="{{ path('offers_show', {'id': applies.offers.id}) }}" class="btn btn-secondary">show</a>
+                    {% endif %}
                     <form method="post" action="{{ path('apply_delete', {'id': applies.id }) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
                         <input type="hidden" name="_method" value="DELETE">
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
                         <button class="btn btn-danger">Delete</button>
                     </form>
                     {% elseif applies.hired == true %}
-                    <a href="{{ path('offers_show_hired', {'id': applies.offers.id, 'student_id' : student.id}) }}" class="btn btn-secondary">show</a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('offers_preview', {id : applies.offers.id}) }}" class="btn btn-secondary"> show </a> 
+                    {% else %}
+                    <a href="{{ path('offers_show', {'id': applies.offers.id}) }}" class="btn btn-secondary">show</a>
+                    {% endif %}
                     <form method="post" action="{{ path('agree', { id:applies.id }) }}">
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~  applies.offers.id) }}">
                         <button class="btn btn-success">Agree</button>
@@ -98,7 +106,6 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Id</th>
             <th>Title</th>
             <th>Location</th>
             <th>Domain</th>
@@ -114,7 +121,6 @@
 
             {% if finished.offers.id is defined %}
             <tr>
-                <td>{{ finished.offers.id }}</td>
                 <td>{{ finished.offers.title }}</td>
                 <td>{{ finished.offers.location }}</td>
                 <td>{{ finished.offers.domain }}</td> 
@@ -122,7 +128,11 @@
                     Finished
                 </td>
                 <td class="btn-group">
-                    <a href="{{ path('offers_show_hired', {'id': finished.offers.id, 'student_id' : student.id}) }}" class="btn btn-success">show</a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('offers_preview', {id : finished.offers.id}) }}" class="btn btn-secondary"> show </a> 
+                    {% else %}
+                    <a href="{{ path('offers_show_hired', {'id': finished.offers.id, 'student_id' : student.id}) }}" class="btn btn-secondary">show</a>
+                    {% endif %}
                 </td>
             </tr>
             {% else %}

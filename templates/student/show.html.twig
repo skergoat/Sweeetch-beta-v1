@@ -9,7 +9,7 @@
     </div>
 
     <div class="row account-state">
-        {% if student.user.roles == ["ROLE_SUPER_STUDENT"] %}
+        {% if student.user.roles == ["ROLE_SUPER_STUDENT"] or student.user.roles == ["ROLE_SUPER_STUDENT", "ROLE_HIRED"] %}
         <div class="col-12 col-sm-6 col-md-3">
             <div class="info-checked info-box info-success mb-3">
                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-check"></i></span>
@@ -25,7 +25,7 @@
             <div class="info-progress info-box mb-3 bg-warning">
                 <span class="info-box-icon"><i class="fas fa-hourglass-start"></i></span>
     
-                <div class="info-box-content">
+                <div clas="info-box-content">
                 <span class="info-box-text">Etat du Compte</span>
                 <span class="info-box-number">En cours de confirmation...</span>
                 </div>
@@ -280,9 +280,9 @@
                             <table class="table m-0">
                                 <tbody>
                                     <tr>
-                                        <th>Entreprise</th>
+                                        <th>Mission</th>
                                         <th>Situation</th>
-                                        <th class="th-centered">Actions</th>
+                                        <!-- <th class="th-centered">Annonce</th> -->
                                     </tr>
                                     {% if applies[0] is defined %}
 
@@ -290,7 +290,15 @@
                                     
                                             {% for applies in applies %}
                                     <tr class="border-top">
-                                        <td>{{ applies.offers.title }}</td>
+
+                                        <td><a href="{{ path('student_apply', {'id': student.id}) }}" class="action-link">{{ applies.offers.title }}</a></td>
+
+                                       {#} {% if is_granted('ROLE_ADMIN') %}
+                                        <td><a href="{{ path('offers_preview', {id : applies.offers.id}) }}" title="voir l'annonce"> {{ applies.offers.title }} </a></td>  
+                                        {% else %}
+                                        <td><a href="{{ path('offers_show', {'id': applies.offers.id}) }}" title="voir l'annonce">{{ applies.offers.title }}</a></td>
+                                        {% endif %} #}
+
                                         <td>
                                             {% if applies.hired == true %}
                                                 <span class="badge badge-danger" title="L'employeur attend votre validation">vous devez valider la mission</span>
@@ -300,9 +308,9 @@
                                                 <span class="badge badge-success" title="Mission en cours. Bonne chance !">Mission confirmée</span>    
                                             {% endif %}
                                         </td>   
-                                        <td>
-                                            <a href="{{ path('student_apply', {'id': student.id}) }}" class="action-link"><i class="far fa-eye" title="voir"></i></a>
-                                        </td>
+                                       {# <td>
+                                            <a href="{{ path('student_apply', {'id': student.id}) }}" class="action-link"><i class="far fa-eye" title="voir les postulations"></i></a>
+                                        </td> #}
                                     </tr>                                              
                                             {% endfor %}
                                         
@@ -344,19 +352,19 @@
                             <table class="table m-0">
                                 <tbody>
                                     <tr>
-                                        <th>Entreprise</th>
+                                        <th>Mission</th>
                                         <th>Situation</th>
-                                        <th class="th-centered">Actions</th>
+                                        <!-- <th class="th-centered">Actions</th> -->
                                     </tr>
                                     {% for finished in finished %}
                                     <tr class="border-top">
-                                        <td>{{ finished.offers.title }}</td>
+                                        <td><a href="{{ path('student_apply', {'id': student.id}) }}" class="action-link">{{ finished.offers.title }}</a></td>
                                         <td>
                                             <span class="badge badge-success" title="Mission en cours. Bonne chance !">Mission terminée</span>
                                         </td>   
-                                        <td>
+                                       {# <td>
                                             <a href="{{ path('student_apply', {'id': student.id}) }}" class="action-link"><i class="far fa-eye" title="voir"></i></a>
-                                        </td>
+                                        </td> #}
                                     </tr>                                              
                                     {% else %} 
                                     <tr class="border-top">
