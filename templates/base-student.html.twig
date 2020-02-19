@@ -12,8 +12,8 @@
         <link href="{{ asset('build/favicon.png') }}" rel="icon">
         <link href="{{ asset('build/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
-         <!-- fontawesome provisoire -->
-        <script src="https://kit.fontawesome.com/1596c4b58a.js" crossorigin="anonymous"></script>
+         <!-- fontawesome provisoire 
+        <script src="https://kit.fontawesome.com/1596c4b58a.js" crossorigin="anonymous"></script>  -->
 
         {% block stylesheets %}
             <!-- Google Fonts -->
@@ -37,7 +37,7 @@
                 <!-- Left navbar links -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+                        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
                     </li>
                     {# <li class="nav-item d-none d-sm-inline-block">
                         <a href="{{ path('admin') }}" class="nav-link">Dashboard</a>
@@ -91,7 +91,7 @@
                             </li> 
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('student_edit', {'id' : student.id }) }}">
-                                    <i class="nav-icon fas fa-user-circle"></i>
+                                    <i class="nav-icon fa fa-user-circle"></i>
                                     <p>
                                         Infos du compte 
                                     </p>
@@ -99,7 +99,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('profile_edit', {'id': student.profile.id, 'student_id':student.id }) }}">
-                                    <i class="nav-icon fas fa-address-card"></i>
+                                    <i class="nav-icon fa fa-address-card"></i>
                                     <p>
                                         Profile Etudiant 
                                     </p>
@@ -107,7 +107,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('student_apply', { id:student.id }) }}">
-                                    <i class="nav-icon fas fa-bookmark"></i>
+                                    <i class="nav-icon fa fa-bookmark"></i>
                                     <p>
                                         Postulations 
                                     </p>
