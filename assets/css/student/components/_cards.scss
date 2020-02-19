@@ -1,0 +1,21 @@
+/* card layout */
+
+.card-body.p-0 .table thead > tr > th:last-of-type, .card-body.p-0 .table thead > tr > td:last-of-type, .card-body.p-0 .table tbody > tr > th:last-of-type, .card-body.p-0 .table tbody > tr > td:last-of-type,
+.card-body.p-0 .table thead > tr > th:first-of-type, .card-body.p-0 .table thead > tr > td:first-of-type, .card-body.p-0 .table tbody > tr > th:first-of-type, .card-body.p-0 .table tbody > tr > td:first-of-type,    
+.table th, .table td
+{    
+    border:0px;
+}
+
+.card {
+    padding:25px;
+    padding-top:20px;
+
+    &-header.border-transparent {
+        padding:0px;
+    }
+
+    &-margin {
+        margin-top:40px;
+    }
+}
