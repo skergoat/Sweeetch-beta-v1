@@ -5,33 +5,33 @@
 {% block body %}
 
     <div class="content-title">
-        <h1 class="m-0 text-dark">Tableau de Bord</h1>
+        <h1>Tableau de Bord</h1>
     </div>
 
     <div class="row account-state">
-            {% if is_granted('ROLE_SUPER_STUDENT') %} 
-            <div class="col-12 col-sm-6 col-md-3">
-                <div class="info-checked info-box info-success mb-3">
-                    <span class="info-box-icon bg-success elevation-1"><i class="fas fa-check"></i></span>
+        {% if is_granted('ROLE_SUPER_STUDENT') %} 
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-checked info-box info-success mb-3">
+                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-check"></i></span>
+
+                <div class="info-box-content">
+                <span class="info-box-text">Etat du compte</span>
+                <span class="info-box-number">Validé</span>
+                </div>
+            </div>
+        </div>
+        {% else %}  
+        <div class="col-lg-3">
+            <div class="info-progress info-box mb-3 bg-warning">
+                <span class="info-box-icon"><i class="fas fa-hourglass-start"></i></span>
     
-                    <div class="info-box-content">
-                    <span class="info-box-text">Etat du compte</span>
-                    <span class="info-box-number">Validé</span>
-                    </div>
+                <div class="info-box-content">
+                <span class="info-box-text">Etat du Compte</span>
+                <span class="info-box-number">En cours de confirmation...</span>
                 </div>
             </div>
-            {% else %}  
-            <div class="col-lg-3">
-                <div class="info-progress info-box mb-3 bg-warning">
-                    <span class="info-box-icon"><i class="fas fa-hourglass-start"></i></span>
-        
-                    <div class="info-box-content">
-                    <span class="info-box-text">Etat du Compte</span>
-                    <span class="info-box-number">En cours de confirmation...</span>
-                    </div>
-                </div>
-            </div>
-            {% endif %}
+        </div>
+        {% endif %}
         {# <div style="margin-left:50px;">
             
         <h3>Mon Emploi</h3>
@@ -58,123 +58,60 @@
 
     </div>
 
-    
     <div class="row card-margin">
 
-        <div class="col-lg-12">
-            
-            <div class="row">
-                <!-- <div clads="col-lg-12">
-                    <h3>Infos du compte</h3><br>
-                </div> -->
-                <div class="col-lg-6">
-                    <h3 class="m-0 text-dark">Infos du compte</h3><br>
-                    <div class="card col-lg-">
-                        <div class="card-header border-transparent">
-                            <!-- <h3 class="card-title">Infos du compte</h3> -->
-                    
-                            <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                <i class="fa fa-minus"></i>
-                            </button>
-                            </div>
-                        </div>
-                    
-                        <div class="card-body p-0 card-dashboard">
-                            <div class="table-responsive">
-                                <table class="table m-0">
-                                    <tr>
-                                        <th>Prénom</th>
-                                        <td>{{ student.lastname }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Nom</th>
-                                        <td>{{ student.name }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Email</th>
-                                        <td>{{ student.user.email }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Adresse</th>
-                                        <td>{{ student.adress }}, {{ student.zipCode }}, {{ student.city }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Téléphone</th>
-                                        <td>{{ student.telNumber }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Permis B</th>
-                                        <td>{% if student.drivingLicense == 1 %} oui {% else %} non {% endif %} </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Handicappé</th>
-                                        <td>{% if student.disabled == 1 %} oui {% else %} non {% endif %} </td>   
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+        <div class="col-lg-6" >
 
+            <h3>Infos du compte</h3><br>
+            <div class="card col-lg-">
+                <div class="card-header border-transparent">                    
+                    <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                    </div>
                 </div>
-                <div class="col-lg-6">
-                    <h3 class="m-0 text-dark">Mes Documents</h3><br> 
-                    <div class="card col-lg-12">
-                        <div class="card-header border-transparent">
-                            <!-- <h3 class="card-title">Mes Documents</h3> -->
-                    
-                            <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                <i class="fa fa-minus"></i>
-                            </button>
-                            </div>
-                        </div>
-                    
-                        <div class="card-body p-0 card-dashboard">
-                            <div class="table-responsive">
-                                <table class="table m-0">
-                                    <tr>
-                                        <th>Mon CV</th>
-                                        <td>
-                                            <a href="{{ path('student_download_resume', { id: student.resume.id }) }}"><span class="fa fa-download"></span></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Ma Carte d'identité</th>
-                                        <td>
-                                            <a href="{{ path('student_download_idcard', { id: student.idCard.id }) }}">{#<span class="fa fa-download">{{ student.idCard.originalFilename }}</span>#}<span class="fa fa-download"></span></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Ma Carte d'étudiant</th>
-                                        <td>
-                                            <a href="{{ path('student_download_studentcard', { id: student.studentCard.id }) }}"><span class="fa fa-download"></span></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Justificatif de domicile</th>
-                                        <td>
-                                            <a href="{{ path('student_download_proofhabitation', { id: student.proofHabitation.id }) }}"><span class="fa fa-download"></span></a>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
+            
+                <div class="card-body p-0 card-dashboard">
+                    <div class="table-responsive">
+                        <table class="table m-0">
+                            <tr>
+                                <th>Prénom</th>
+                                <td>{{ student.lastname }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nom</th>
+                                <td>{{ student.name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td>{{ student.user.email }}</td>
+                            </tr>
+                            <tr>
+                                <th>Adresse</th>
+                                <td>{{ student.adress }}, {{ student.zipCode }}, {{ student.city }}</td>
+                            </tr>
+                            <tr>
+                                <th>Téléphone</th>
+                                <td>{{ student.telNumber }}</td>
+                            </tr>
+                            <tr>
+                                <th>Permis B</th>
+                                <td>{% if student.drivingLicense == 1 %} oui {% else %} non {% endif %} </td>
+                            </tr>
+                            <tr>
+                                <th>Handicappé</th>
+                                <td>{% if student.disabled == 1 %} oui {% else %} non {% endif %} </td>   
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
 
-        </div>
-    </div>
-
-    <div class="row card-margin">
-        <div class="col-lg-6">
-            <h3 class="m-0 text-dark">Profile Etudiant</h3><br>
-            <h4 >Général</h4>
+            <h3 class="card-margin-plus">Profile Etudiant</h3><br>
+            <h4>Général</h4>
             <div class="card col-lg-12">
-                <div class="card-header border-transparent">
-                    <!-- <h3 class="card-title">Général</h3> -->
-            
+                <div class="card-header border-transparent">            
                     <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fa fa-minus"></i>
@@ -202,9 +139,7 @@
             <h4>Langues</h4>
             <div class="card col-lg-12">
 
-                <div class="card-header border-transparent">
-                    <!-- <h3 class="card-title">Langues</h3> -->
-            
+                <div class="card-header border-transparent">            
                     <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fa fa-minus"></i>
@@ -217,8 +152,8 @@
                         <table class="table m-0">
                             <tbody>
                                 <tr>
-                                    <td><strong>Langues</strong></td>
-                                    <td><strong>Niveau</strong></td>
+                                    <th>Langues</th>
+                                    <th>Niveau</th>
                                 </tr>
                                 {% for languages in student.profile.languages %}
                     
@@ -238,9 +173,7 @@
             <div class="col-lg-12 table-scroll">
 
                 <div class="card table-scroll-card-width">
-                    <div class="card-header border-transparent">
-                        <!-- <h3 class="card-title">Formation</h3> -->
-                
+                    <div class="card-header border-transparent">                
                         <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                             <i class="fa fa-minus"></i>
@@ -253,10 +186,10 @@
                             <table class="table m-0">
                                 <tbody>
                                     <tr>
-                                        <td><strong>Titre</strong></td>
-                                        <td><strong>Ecole</strong></td>
-                                        <td><strong>Début</strong></td>
-                                        <td><strong>Fin</strong></td>
+                                        <th>Titre</th>
+                                        <th>Ecole</th>
+                                        <th>Début</th>
+                                        <th>Fin</th>
                                     </tr>
                                     {% for education in student.profile.education %}
                                     <tr class="tr-border">
@@ -278,11 +211,12 @@
             
             </div>
         </div>
-        {# <div class="col-lg-6">
-            <div class="card col-lg-12" style="padding:0px;">
-                <div class="card-header border-transparent">
-                    <h3 class="card-title">Mes Documents</h3>
-            
+
+        <div class="col-lg-6">
+            <h3>Mes Documents</h3><br> 
+
+            <div class="card col-lg-12">
+                <div class="card-header border-transparent">            
                     <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fa fa-minus"></i>
@@ -300,13 +234,13 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>Ma Carte d'identite</th>
+                                <th>Ma Carte d'identité</th>
                                 <td>
-                                    <a href="{{ path('student_download_idcard', { id: student.idCard.id }) }}"><span class="fa fa-download">{{ student.idCard.originalFilename }}</span><span class="fa fa-download"></span></a>
+                                    <a href="{{ path('student_download_idcard', { id: student.idCard.id }) }}">{#<span class="fa fa-download">{{ student.idCard.originalFilename }}</span>#}<span class="fa fa-download"></span></a>
                                 </td>
                             </tr>
                             <tr>
-                                <th>Ma Carte d'etudiant</th>
+                                <th>Ma Carte d'étudiant</th>
                                 <td>
                                     <a href="{{ path('student_download_studentcard', { id: student.studentCard.id }) }}"><span class="fa fa-download"></span></a>
                                 </td>
@@ -321,8 +255,13 @@
                     </div>
                 </div>
             </div>
-        </div> #}
-    </div>
+
+        </div>
+    </div>        
+
+       
+
+<!-- -->
 
 {#
     <h3>Mes Documents</h3>
