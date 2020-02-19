@@ -123,11 +123,16 @@ class StudentController extends AbstractController
      */
     public function show(Student $student, applyRepository $applyRepository): Response
     {
-        $applies = $applyRepository->findByStudent($student);
+        // $hired = $applyRepository->checkIfHired($student);
+        // $fresh = $applyRepository->findByStudentByFresh($student);
+        // $applies = $applyRepository->findByStudent($student);
 
         return $this->render('student/show.html.twig', [
             'student' => $student,
-            'applies' => $applies
+            'applies' => $applyRepository->findByStudent($student),
+            'finished' => $applyRepository->findByStudentByFinished($student),
+            'fresh' => $applyRepository->findByStudentByFresh($student),
+            'hired' => $applyRepository->checkIfHired($student)
         ]);
     }
 
@@ -135,7 +140,7 @@ class StudentController extends AbstractController
      * @Route("/{id}/edit", name="student_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function edit(Request $request, Student $student, UserPasswordEncoderInterface $passwordEncoder, UploaderHelper $uploaderHelper): Response
+    public function edit(Request $request, Student $student, UserPasswordEncoderInterface $passwordEncoder, UploaderHelper $uploaderHelper, ApplyRepository $applyRepository): Response
     {
         $form = $this->createForm(StudentType::class, $student);
         $form->handleRequest($request);
@@ -170,6 +175,8 @@ class StudentController extends AbstractController
         return $this->render('student/edit.html.twig', [
             'student' => $student,
             'form' => $form->createView(),
+            'fresh' => $applyRepository->findByStudentByFresh($student),
+            'hired' => $applyRepository->checkIfHired($student)
         ]);
     }
 

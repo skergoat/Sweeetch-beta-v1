@@ -5,6 +5,7 @@ namespace App\Controller\University;
 use App\Entity\School;
 use App\Entity\Student;
 use App\Form\SchoolType;
+use App\Repository\ApplyRepository;
 use App\Repository\SchoolRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,10 +43,12 @@ class SchoolActionsController extends AbstractController
      * @Route("/student/{id}", name="school_student_index", methods={"GET"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function indexByStudent(Student $student, SchoolRepository $schoolRepository): Response
+    public function indexByStudent(Student $student, SchoolRepository $schoolRepository, ApplyRepository $applyRepository): Response
     {
         return $this->render('school/index_student.html.twig', [
-            'student' => $student
+            'student' => $student,
+            'fresh' => $applyRepository->findByStudentByFresh($student),
+            'hired' => $applyRepository->checkIfHired($student)
         ]);
     }
 

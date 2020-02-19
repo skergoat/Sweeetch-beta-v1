@@ -19,7 +19,54 @@ class ApplyRepository extends ServiceEntityRepository
         parent::__construct($registry, Apply::class);
     }
 
+    public function checkIfHired($student) // 
+    {
+    // {
+    //     return $this->createQueryBuilder('u')
+    //         ->andWhere('u.student = :student AND u.hired = :hired')
+    //         ->setParameter('student', $student)
+    //         ->setParameter('hired', true)
+    //         ->getQuery()
+    //         ->getResult()
+    //     ;
+
+        return (boolean)$this->createQueryBuilder('u')
+        ->andWhere('u.student = :student AND u.hired = :hired')
+        ->setParameter('student', $student)
+        ->setParameter('hired', true)
+        ->getQuery()
+        ->getOneOrNullResult();
+    }
+
+
+    public function findByStudentByFresh($student) 
+    {
+        return $this->createQueryBuilder('u')
+            ->select('count(u.id)')
+            ->andWhere('u.refused = :refused AND u.unavailable = :unavailable AND u.hired = :hired AND u.agree = :agree AND u.confirmed = :confirmed AND u.finished = :finished')
+            ->setParameter('refused', false)
+            ->setParameter('unavailable', false)
+            ->setParameter('hired', false)
+            ->setParameter('agree', false)
+            ->setParameter('confirmed', false)
+            ->setParameter('finished', false)
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
+
     public function getHired()
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.hired = :hired OR u.agree = :agree')
+            ->setParameter('hired', true)
+            ->setParameter('agree', true)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function getStudentHired()
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.agree = :agree')
