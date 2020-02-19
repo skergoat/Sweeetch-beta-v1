@@ -20,7 +20,7 @@ class CompanyFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        for($i = 1 ; $i < 5 ; $i++) {
+        for($i = 1 ; $i < 50 ; $i++) {
             $ca = new Company;
             $ca->setCompanyName('Company');
             $ca->setFirstname('Stephane');
