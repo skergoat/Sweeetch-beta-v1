@@ -41,7 +41,7 @@
 /* ajustements */
 
 .card-header-color {
-    background-color:#52B3D9;
+    // background-color:#52B3D9;
     padding:15px;
 
     & .card-title {
@@ -55,4 +55,16 @@
 
 .table-padding {
     padding:30px;
+}
+
+.cardBlue {
+    background:#85cbe6;;
+}
+
+.cardRed{
+    background:#ff737a;
+}
+
+.cardYellow {
+    background:#ffcc66;
 }

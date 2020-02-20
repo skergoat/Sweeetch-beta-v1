@@ -4,58 +4,111 @@
 
 {% block body %}
 
-    <div class="content-title">
-        <h1>Tableau de Bord</h1>
-    </div>
+    <div class="row row-top">
 
-    <div class="row account-state">
-        {% if student.user.roles == ["ROLE_SUPER_STUDENT"] or student.user.roles == ["ROLE_SUPER_STUDENT", "ROLE_HIRED"] %}
-        <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-checked info-box info-success mb-3">
-                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-check"></i></span>
+       <div class="col-lg-5">
 
-                <div class="info-box-content">
-                <span class="info-box-text">Etat du compte : </span>
-                <span class="info-box-number">Validé</span>
+            <div class="content-title">
+                <h1>Tableau de Bord</h1>
+            </div>
+
+            <div class="row account-state">
+                {% if student.user.roles == ["ROLE_SUPER_STUDENT"] or student.user.roles == ["ROLE_SUPER_STUDENT", "ROLE_HIRED"] %}
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-checked info-box info-success mb-3">
+                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-check"></i></span>
+
+                        <div class="info-box-content">
+                        <span class="info-box-text">Etat du compte : </span>
+                        <span class="info-box-number">Validé</span>
+                        </div>
+                    </div>
                 </div>
+                {% else %} 
+                <div class="col-12 col-sm-6 col-md-10">
+                    <div class="info-box mb-3">
+                    <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-hourglass-start"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Etat du Compte</span>
+                            <span class="info-box-number">En cours de confirmation...</span>
+                        </div>
+                        
+                    </div>
+                </div> 
+                {% endif %}
+
             </div>
         </div>
-        {% else %} 
-        <div class="col-12 col-sm-6 col-md-4">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-hourglass-start"></i></span>
 
-                <div class="info-box-content">
-                    <span class="info-box-text">Etat du Compte</span>
-                    <span class="info-box-number">En cours de confirmation...</span>
-                </div>
-                
-            </div>
-        </div> 
-        {% endif %}
-        {# <div style="margin-left:50px;">
-            
-        <h3>Mon Emploi</h3>
+        <div class="col-lg-7">
 
         {% if applies[0] is defined %}
-        
-            {% if applies[0].confirmed == false %} 
-                {% if applies[0].hired == false %} 
-                    {% if applies[0].agree == false %} 
-                    Vous avez des postulations 
-                    {% else %}
-                    Dossier en traitement
-                    {% endif %}
-                {% else %}
-                Vous devez Accepter
-                {% endif %}
-            {% else %}
-            L'Entreprise a confirme votre embauche
-            {% endif %}
+            {% if applies[0].hired == true or applies[0].agree == true or applies[0].confirmed == true %}
+            
+            <h5>Progression du recrutement : </h5>
 
-        {% else %}
-        <p style="color:red;">Aucune mission en cours</p>
-        {% endif %} #}
+            <div class="timeline" style="position:relative">
+
+                    <div class="time-icon" data-url="first">
+                        {% if applies[0] is defined %}
+                            {% if applies[0].hired == true %}
+                            <i class="fas fa-play-circle bg-red"></i>
+                            {% else %}
+                            <i class="fas fa-play-circle bg-grey"></i>
+                            {% endif %}
+                        {% else %}
+                        <i class="fas fa-play-circle bg-grey"></i>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="time-icon" data-url="second">
+                        {% if applies[0] is defined %}
+                            {% if applies[0].agree == true %}
+                            <i class="fas fa-cog bg-yellow"></i>
+                            {% else %}
+                            <i class="fas fa-cog bg-grey"></i>
+                            {% endif %}
+                        {% else %}
+                        <i class="fas fa-cog bg-grey"></i>
+                        {% endif %}
+                    </div>
+                    <div class="time-icon" data-url="third">
+                        {% if applies[0] is defined %}
+                            {% if applies[0].confirmed == true %}
+                            <i class="fas fa-check-circle bg-green"></i>
+                            {% else %}
+                            <i class="fas fa-check-circle bg-grey"></i>
+                            {% endif %}
+                        {% else %}
+                        <i class="fas fa-check-circle bg-grey"></i>
+                        {% endif %}
+                    </div>
+
+                <div class="message message-first">
+                    <div class="timeline-item">
+                    <h3 class="timeline-header">Acceptation de votre candidature</h3>
+                    </div>
+                </div>
+
+                <div class="message message-second">
+                    <div class="timeline-item">
+                    <h3 class="timeline-header">Traitement du dossier</h3>
+                    </div>
+                </div>
+
+                <div class="message message-third">
+                    <div class="timeline-item">
+                    <h3 class="timeline-header">Debut de la mission</h3>
+                    </div>
+                </div>
+
+            </div>
+
+            {% endif %}
+        {% endif %}
+
+        </div>
 
     </div>
 
@@ -66,27 +119,16 @@
             <!-- <h3>Infos du compte</h3><br> -->
             <div class="card col-lg-" style="padding:0px;">
 
-                <div class="card-header-color card-header border-transparent">
+                <div class="cardBlue card-header-color card-header border-transparent">
                     <p class="card-title">Infos du compte</p>
     
                     <div class="card-tools">
                       <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
                       </button>
-                      <!-- <button type="button" class="btn btn-tool" data-card-widget="remove">
-                        <i class="fas fa-times"></i>
-                      </button> -->
                     </div>
                 </div>
                 
-                <!-- <div class="card-header border-transparent">                    
-                    <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                        <i class="fa fa-minus"></i>
-                    </button>
-                    </div>
-                </div> -->
-            
                 <div class="card-body p-0 card-dashboard">
                     <div class="table-padding table-responsive">
                         <table class="table m-0">
@@ -123,20 +165,16 @@
                 </div>
             </div>
 
-            <!-- <h3 class="card-margin-plus">Profile Etudiant</h3><br>
-            <h4>Général</h4> -->
             <div class="card col-lg-12" style="padding:0px;">
 
-                <div class="card-header-color card-header border-transparent">
+                <div class="cardRed card-header-color card-header border-transparent">
                     <p class="card-title">Profile Etudiant</p>
     
                     <div class="card-tools">
                       <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
                       </button>
-                      <!-- <button type="button" class="btn btn-tool" data-card-widget="remove">
-                        <i class="fas fa-times"></i>
-                      </button> -->
+        
                     </div>
                 </div>
             
@@ -160,26 +198,25 @@
 
             <div class="card-dashboard card col-lg-12" style="padding:0px;">
 
-                <div class="card-header-color card-header border-transparent">
+                <div class="cardRed card-header-color card-header border-transparent">
                     <p class="card-title">Langues</p>
     
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
                         </button>
-                        <!-- <button type="button" class="btn btn-tool" data-card-widget="remove">
-                        <i class="fas fa-times"></i>
-                        </button> -->
                     </div>
                 </div>
             
                 <div class="card-body p-0 card-dashboard">
                     <div class="table-responsive">
                         <table class="table m-0">
-                            <tr>
-                                <th>Langues</th>
-                                <th>Niveau</th>
-                            </tr>
+                            <thead>
+                                <tr>
+                                    <th>Langues</th>
+                                    <th>Niveau</th>
+                                </tr>
+                            </thead>
                             <tbody>
                                 {% for languages in student.profile.languages %}
                     
@@ -187,6 +224,12 @@
                                     <td>{{ languages.languageName }}</td>
                                     <td>{{ languages.level }}</td>
                                 </tr>
+
+                                {% else %}
+
+                                <tr class="border-top">
+                                    <td colspan="8" class="border-top-td">Aucune langue</td>
+                                </tr> 
 
                                 {% endfor %}
                             </tbody>
@@ -197,18 +240,15 @@
             
             <div class="card-dashboard col-lg-12 table-scroll" >
 
-                <div class="card table-scroll-card-width" style="padding:0px;">
+                <div class="card table-scroll-card-width" style="padding:0px;" >
 
-                    <div class="card-header-color card-header border-transparent">
+                    <div class="cardRed card-header-color card-header border-transparent">
                         <p class="card-title">Formations</p>
         
                         <div class="card-tools">
                           <button type="button" class="btn btn-tool" data-card-widget="collapse">
                             <i class="fas fa-minus"></i>
                           </button>
-                          <!-- <button type="button" class="btn btn-tool" data-card-widget="remove">
-                            <i class="fas fa-times"></i>
-                          </button> -->
                         </div>
                     </div>
                 
@@ -235,6 +275,12 @@
                                             <td>{{ education.dateEnd|date("m/d/Y") }}</td>
                                         {% endif %}
                                     </tr>
+                                    {% else %}
+
+                                    <tr class="border-top">
+                                        <td colspan="8" class="border-top-td">Aucune formation</td>
+                                    </tr> 
+
                                     {% endfor %}
                                 </tbody>
                             </table>
@@ -249,16 +295,13 @@
 
             <div class="card col-lg-12" style="padding:0px;">
                 
-                <div class="card-header-color card-header border-transparent">
+                <div class="cardBlue card-header-color card-header border-transparent">
                     <p class="card-title">Mes Documents</p>
     
                     <div class="card-tools">
                       <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
                       </button>
-                      <!-- <button type="button" class="btn btn-tool" data-card-widget="remove">
-                        <i class="fas fa-times"></i>
-                      </button> -->
                     </div>
                 </div>
             
@@ -298,16 +341,13 @@
 
                 <div class="card" style="padding:0px;">
 
-                    <div class="card-header-color card-header border-transparent">
+                    <div class="cardYellow card-header-color card-header border-transparent">
                         <p class="card-title">Missions en cours</p>
         
                         <div class="card-tools">
                           <button type="button" class="btn btn-tool" data-card-widget="collapse">
                             <i class="fas fa-minus"></i>
                           </button>
-                          <!-- <button type="button" class="btn btn-tool" data-card-widget="remove">
-                            <i class="fas fa-times"></i>
-                          </button> -->
                         </div>
                     </div>
                 
@@ -319,7 +359,6 @@
                                     <tr>
                                         <th>Mission</th>
                                         <th>Situation</th>
-                                        <!-- <th class="th-centered">Annonce</th> -->
                                     </tr>
                                     {% if applies[0] is defined %}
 
@@ -374,17 +413,14 @@
             <div class="col-lg-12 table-scroll">
 
                 <div class="card" style="padding:0px;">
-
-                    <div class="card-header-color card-header border-transparent">
+                   
+                    <div class="cardYellow card-header-color card-header border-transparent">
                         <p class="card-title">Missions en cours</p>
         
                         <div class="card-tools">
                           <button type="button" class="btn btn-tool" data-card-widget="collapse">
                             <i class="fas fa-minus"></i>
                           </button>
-                          <!-- <button type="button" class="btn btn-tool" data-card-widget="remove">
-                            <i class="fas fa-times"></i>
-                          </button> -->
                         </div>
                     </div>
                 
@@ -396,7 +432,6 @@
                                     <tr>
                                         <th>Mission</th>
                                         <th>Situation</th>
-                                        <!-- <th class="th-centered">Actions</th> -->
                                     </tr>
                                     {% for finished in finished %}
                                     <tr class="border-top">
@@ -481,3 +516,4 @@
     #}
 
 {% endblock %}
+
