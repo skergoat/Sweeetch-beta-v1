@@ -180,6 +180,12 @@ class StudentController extends AbstractController
                     case 'idCards':
                         $entity = 'idCard';
                     break;
+                    case 'studentCards':
+                        $entity = 'studentCard';
+                    break;
+                    case 'proofHabitations':
+                        $entity = 'proofHabitation';
+                    break;
                 }
 
                 $get = 'get' . ucfirst($entity); 
