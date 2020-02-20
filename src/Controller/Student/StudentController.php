@@ -173,15 +173,19 @@ class StudentController extends AbstractController
                     switch($entity) {
                         case 'resumes':
                             $entity = 'resume';
+                            $document = $form->getData()->getResume();
                         break;
                         case 'idCards':
                             $entity = 'idCard';
+                            $document = $form->getData()->getIdCard();
                         break;
                         case 'studentCards':
                             $entity = 'studentCard';
+                            $document = $form->getData()->getStudentCard();
                         break;
                         case 'proofHabitations':
                             $entity = 'proofHabitation';
+                            $document = $form->getData()->getProofHabitation();
                         break;
                     }
 
@@ -192,7 +196,6 @@ class StudentController extends AbstractController
                     if($uploadedFile) {
                         $newFilename = $uploaderHelper->uploadPrivateFile($uploadedFile, $student->$get()->getFileName());
                         
-                        $document = new $class;
                         $document->setFileName($newFilename);
                         $document->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $newFilename);
                         $document->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');                    

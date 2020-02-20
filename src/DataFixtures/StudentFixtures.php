@@ -86,24 +86,24 @@ class StudentFixtures extends Fixture
                 $manager->persist($education2);
             
             $resume = new Resume;
-            $resume->setFileName('https://picsum.photos/536/354');
-            $resume->setOriginalFilename('https://picsum.photos/536/354');
-            $resume->setMimeType('pdf');
+            $resume->setFileName('team-1-5e4e6ea8d954f.jpeg');
+            $resume->setOriginalFilename('team-1-5e4e6ea8d954f.jpeg');
+            $resume->setMimeType('image/jpeg');
 
             $IdCard = new IdCard;
-            $IdCard->setFileName('https://picsum.photos/536/354');
-            $IdCard->setOriginalFilename('https://picsum.photos/536/354');
-            $IdCard->setMimeType('pdf');
+            $IdCard->setFileName('team-2-5e4e6ed8d830f.jpeg');
+            $IdCard->setOriginalFilename('team-2-5e4e6ed8d830f.jpeg');
+            $IdCard->setMimeType('image/jpeg');
 
             $studentCard = new StudentCard;
-            $studentCard->setFileName('https://picsum.photos/536/354');
-            $studentCard->setOriginalFilename('https://picsum.photos/536/354');
-            $studentCard->setMimeType('pdf');
+            $studentCard->setFileName('team-3-5e4e6ece85a37.jpeg');
+            $studentCard->setOriginalFilename('team-3-5e4e6ece85a37.jpeg');
+            $studentCard->setMimeType('image/jpeg');
 
             $proofHabitation = new ProofHabitation;
-            $proofHabitation->setFileName('https://picsum.photos/536/354');
-            $proofHabitation->setOriginalFilename('https://picsum.photos/536/354');
-            $proofHabitation->setMimeType('pdf');
+            $proofHabitation->setFileName('team-4-5e4e6ec479d8a.jpeg');
+            $proofHabitation->setOriginalFilename('team-4-5e4e6ec479d8a.jpeg');
+            $proofHabitation->setMimeType('image/jpeg');
 
             $student->setUser($user);
             $student->setProfile($profile);
