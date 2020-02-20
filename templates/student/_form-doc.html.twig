@@ -1,0 +1,27 @@
+{{ form_start(formDoc) }}
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="form-group">
+            {{ form_row(formDoc.resumes, {'label': 'CV', 'attr' : { class: 'form-control' }} ) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(formDoc.idCards, {'label': 'Carte d\'identité', 'attr' : { class: 'form-control' }} ) }}
+        </div> 
+    </div>
+    <div class="col-lg-6">
+        <div class="form-group">
+            {{ form_row(formDoc.studentCards, {'label': 'Carte d\'étudiant', 'attr' : { class: 'form-control' }} ) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(formDoc.proofHabitations, {'label': 'Justificatif de Domicile', 'attr' : { class: 'form-control' }} ) }} 
+        </div> 
+    </div> 
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <button class="btn btn-primary">Mettre à jour</button>
+    </div>
+</div>
+
+{{ form_end(formDoc) }}
