@@ -9,7 +9,7 @@
 <div class="card card-primary">
   <div class="card-body">
 
-    <div class="card card-outline">      
+    <div class="card card-outline">    
       <div class="card-body">
 
         <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
@@ -22,11 +22,6 @@
           <li class="nav-item">
             <a class="nav-link" id="custom-content-below-messages-tab" data-toggle="pill" href="#custom-content-below-messages" role="tab" aria-controls="custom-content-below-messages" aria-selected="false">Mot de Passe</a>
           </li>
-          <li>
-          </li>
-          {# <li class="nav-item">
-            <a class="nav-link" id="custom-content-below-settings-tab" data-toggle="pill" href="#custom-content-below-settings" role="tab" aria-controls="custom-content-below-settings" aria-selected="false">Settings</a>
-          </li> #}
         </ul>
 
         <div class="tab-content" id="custom-content-below-tabContent">
@@ -39,15 +34,15 @@
           <div class="tab-pane fade" id="custom-content-below-messages" role="tabpanel" aria-labelledby="custom-content-below-messages-tab">
             {{ include('student/_form-password.html.twig', {'button_label': 'Update'}) }}
           </div>
-          {# <div class="tab-pane fade" id="custom-content-below-settings" role="tabpanel" aria-labelledby="custom-content-below-settings-tab">
-            {{ include('student/_delete_form.html.twig') }} 
-          </div> #}
         </div>
 
       </div>
     </div>
-    
+    <div style="display:flex;justify-content:flex-end;">{{ include('student/_delete_form.html.twig') }}</div>
+
   </div>
 </div>
+
+
 
 {% endblock %}
