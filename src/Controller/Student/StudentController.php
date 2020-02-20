@@ -220,6 +220,8 @@ class StudentController extends AbstractController
 
             $manager = $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash('success', 'Mise à jour réussie');
+
             return $this->redirectToRoute('student_edit', ['id' => $student->getId()]);
         }
 
