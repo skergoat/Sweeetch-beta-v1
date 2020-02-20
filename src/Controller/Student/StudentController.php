@@ -29,6 +29,8 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
+
 
 /**
  * @Route("/student")
@@ -244,6 +246,15 @@ class StudentController extends AbstractController
                 else {
                     $applies->setStudent(NULL);
                 } 
+            }
+
+            // delete session
+            $currentUserId = $this->getUser()->getId();
+            if ($currentUserId == $student->getUser()->getId())
+            {
+              $session = $this->get('session');
+              $session = new Session();
+              $session->invalidate();
             }
 
             $entityManager->remove($student);

@@ -40,13 +40,14 @@
             </div>
             <div class="tab-pane fade" id="custom-content-below-profile" role="tabpanel" aria-labelledby="custom-content-below-profile-tab">
               {# {{ include('student/_form-doc.html.twig', {'button_label': 'Update'}) }} #}
+              <h3>Supprimer le Compte</h3>
+              {{ include('student/_delete_form.html.twig') }}
             </div> 
             <div class="tab-pane fade" id="custom-content-below-messages" role="tabpanel" aria-labelledby="custom-content-below-messages-tab">
               {{ include('student/_form-password.html.twig', {'button_label': 'Update'}) }}
             </div>
             <div class="tab-pane fade" id="custom-content-below-settings" role="tabpanel" aria-labelledby="custom-content-below-settings-tab">
-              <h3>Supprimer le Compte</h3>
-              {{ include('student/_delete_form.html.twig') }}
+             
             </div> 
           </div>
 
