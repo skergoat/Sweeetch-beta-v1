@@ -3,18 +3,30 @@
 <div class="row">
     <div class="col-lg-6">
         <div class="form-group">
-            {{ form_row(formDoc.resumes, {'label': 'CV', 'attr' : { class: 'form-control' }} ) }}
+            <div class="custom-file">
+                <label class="custom-file-label browse" for="customFileLang" style="position:absolute;top:32px;" data-url="update_student_doc_resumes" id="browse-update_student_doc_resumes"></label>
+                {{ form_row(formDoc.resumes, {'label': 'CV', 'attr' : { class: 'form-control' }} ) }}
+            </div>
         </div>
         <div class="form-group">
-            {{ form_row(formDoc.idCards, {'label': 'Carte d\'identité', 'attr' : { class: 'form-control' }} ) }}
+            <div class="custom-file">
+                <label class="custom-file-label browse" for="customFileLang" style="position:absolute;top:32px;" data-url="update_student_doc_idCards" id="browse-update_student_doc_idCards"></label>
+                {{ form_row(formDoc.idCards, {'label': 'Carte d\'identité', 'attr' : { class: 'form-control' }} ) }}
+            </div>
         </div> 
     </div>
     <div class="col-lg-6">
         <div class="form-group">
-            {{ form_row(formDoc.studentCards, {'label': 'Carte d\'étudiant', 'attr' : { class: 'form-control' }} ) }}
+            <div class="custom-file">
+                <label class="custom-file-label browse" for="customFileLang" style="position:absolute;top:32px;" data-url="update_student_doc_studentCards" id="browse-update_student_doc_studentCards"></label>
+                {{ form_row(formDoc.studentCards, {'label': 'Carte d\'étudiant', 'attr' : { class: 'form-control' }} ) }}
+            </div>
         </div>
         <div class="form-group">
-            {{ form_row(formDoc.proofHabitations, {'label': 'Justificatif de Domicile', 'attr' : { class: 'form-control' }} ) }} 
+            <div class="custom-file">
+                <label class="custom-file-label browse" for="customFileLang" style="position:absolute;top:32px;" data-url="update_student_doc_proofHabitations" id="browse-update_student_doc_proofHabitations"></label>
+                {{ form_row(formDoc.proofHabitations, {'label': 'Justificatif de Domicile', 'attr' : { class: 'form-control' }} ) }}
+            </div>
         </div> 
     </div> 
 </div>
