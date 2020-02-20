@@ -34,6 +34,7 @@ import './component/edit-profile.js';
 import './component/timeline.js';
 import './component/buttons.js';
 import './component/edit.js';
+import './component/message.js';
 
 
 

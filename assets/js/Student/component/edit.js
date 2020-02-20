@@ -7,6 +7,8 @@ $('.nav-link.edit-items').click(function() {
 $(document).ready(function() {
     var id = sessionStorage.getItem('test');
     // var height = sessionStorage.getItem('height');
+
+    // alert(height);
     
     if(id == null) {
         id = '#custom-content-below-home-tab';
