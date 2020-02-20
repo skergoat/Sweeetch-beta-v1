@@ -150,7 +150,7 @@ class StudentController extends AbstractController
     public function edit(Request $request, Student $student, UserPasswordEncoderInterface $passwordEncoder, UploaderHelper $uploaderHelper, ApplyRepository $applyRepository): Response
     {
         $form = $this->createForm(UpdateStudentGeneralType::class, $student);
-        // $formDoc = $this->createForm(UpdateStudentDocType::class, $student);
+        $formDoc = $this->createForm(UpdateStudentDocType::class, $student);
         $formPassword = $this->createForm(StudentEditPasswordType::class, $student); 
 
         // check old pass 
@@ -158,32 +158,66 @@ class StudentController extends AbstractController
 
         $form->handleRequest($request);
         $formPassword->handleRequest($request);
+        $formDoc->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid() || $formPassword->isSubmitted() && $formPassword->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() || $formPassword->isSubmitted() && $formPassword->isValid() || $formDoc->isSubmitted() && $formDoc->isValid()) {
 
-            // $student = $form->getData();
+            $student = $form->getData();
 
-            // if(isset($form['resume']['file'])) {
+            // get uploaded files name 
+            $keys = array_keys($request->files->get('update_student_doc'));
+          
+            foreach($keys as $key) {
 
-            //     $uploadedFile = $form['resume']['file']->getData();
+                $uploadedFile = $formDoc[$key]->getData();
+
+                $entity = $formDoc[$key]->getName();
+
+                switch($entity) {
+                    case 'resumes':
+                        $entity = 'resume';
+                    break;
+                    case 'idCards':
+                        $entity = 'idCard';
+                    break;
+                }
+
+                $get = 'get' . ucfirst($entity); 
+                $set = 'set' . ucfirst($entity);
+                $class = "App\Entity\\" . ucfirst($entity);
+
+                if($uploadedFile) {
+                    $newFilename = $uploaderHelper->uploadPrivateFile($uploadedFile, $student->$get()->getFileName());
+                    
+                    $document = new $class;
+                    $document->setFileName($newFilename);
+                    $document->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $newFilename);
+                    $document->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');                    
+                } 
+
+                if($uploadedFile != null) {
+                    $student->$set($document);
+                } 
+            }
+
+
+            // if(isset($formDoc['idCard']['file'])) {
+
+            //     $uploadedFile = $formDoc['idCard']['file']->getData();
 
             //     if($uploadedFile) {
-            //         $newFilename = $uploaderHelper->uploadPrivateFile($uploadedFile, $student->getResume()->getFilename());
+            //         $newFilename = $uploaderHelper->uploadPrivateFile($uploadedFile, $student->getIdCard()->getFilename());
 
-            //         $resume = $form->getData()->getResume();
+            //         $resume = $formDoc->getData()->getIdCard();
             //         $resume->setFilename($newFilename);
             //         $resume->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $newFilename);
             //         $resume->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');
-            //         $student->setResume($resume);
+            //         $student->setIdCard($resume);
             //     }
             // }
 
             // edit password 
             $user = $formPassword->getData()->getUser();
-
-            // dd($user->getPassword());
-
-            // dd(password_verify($user->getPassword(), $oldPass));
 
             if($user->getPassword() != $oldPass)
             {
@@ -201,7 +235,7 @@ class StudentController extends AbstractController
         return $this->render('student/edit.html.twig', [
             'student' => $student,
             'form' => $form->createView(),
-            // 'formDoc' => $formDoc->createView(),
+            'formDoc' => $formDoc->createView(),
             'formPassword' => $formPassword->createView(),
             'fresh' => $applyRepository->findByStudentByFresh($student),
             'hired' => $applyRepository->checkIfHired($student)
