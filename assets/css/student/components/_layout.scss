@@ -26,11 +26,6 @@ td {
     font-weight:bold;
 }
 
-// .nav-item a.nav-link {
-//     color:$darkerBlue;
-//     font-weight:bold;
-// }
-
 td a {
     color:$linkBlue;
     
@@ -45,6 +40,10 @@ td a {
 
 .row-top {
     height:170px;
+}
+
+.edit-items {
+    color:$linkBlue;   
 }
 
 /* admin lte layout */

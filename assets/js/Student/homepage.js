@@ -33,7 +33,7 @@ import 'admin-lte';
 import './component/edit-profile.js';
 import './component/timeline.js';
 import './component/buttons.js';
-
+import './component/edit.js';
 
 
 

@@ -23,6 +23,7 @@
             {{ encore_entry_link_tags('student') }}
         {% endblock %}
 
+
     </head>
     <body>
 
@@ -127,58 +128,27 @@
                                     </p>
                                 </a>
                             </li>
-                            
-                            {# <li class="nav-item main-item">
-                                <a class="nav-link" href="{{ path('offers_index') }}">
-                                    <i class="nav-icon fa fa-user-shield"></i>
-                                    <p>
-                                        Emploi
-                                    </p>
-                                </a>
-
-                                {% if app.request.get('_route') == 'user_index' or app.request.get('_route') == 'user_new' or app.request.get('_route') == 'user_edit' %}
-
-                                <li class="nav nav-tree">
-                                  <li class="nav-item">
-                                    <a href="{{ path('user_index') }}" class="nav-link">
-                                      <i class="far fa-circle nav-icon"></i>
-                                      <p>Tous</p>
-                                    </a>
-                                  </li>
-                                  <li class="nav-item">
-                                    <a href="{{ path('user_new') }}" class="nav-link">
-                                      <i class="far fa-circle nav-icon"></i>
-                                      <p>Nouveau</p>
-                                    </a>
-                                  </li>
-                                </li> 
-
-                              {% endif %} #}
-
-                            </li>
                         </ul>
                     </nav>
                 </div>
             </aside>
-
-            <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
-                <!-- Main content -->
                <section class="content content-back">
                     {% block body %}{% endblock %}
                 </section>
-                <!-- /.content -->
             </div>
-            <!-- /.content-wrapper -->
             <footer class="main-footer">
                 <strong>Sweeetch - Etudiant</strong>
             </footer>
-
         </div>
-        <!-- scripts -->
+
         {% block javascripts %}
 
         {{ encore_entry_script_tags('student') }}
+
+        <script>
+            
+        </script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 
@@ -192,86 +162,12 @@
 
                     $('#browse-' + id).text(fileName);
                 });   
-            });
-        
+            });   
         </script>
 
-
+        
 
         {% endblock %}
-
-    {#
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="/">Sweeetch - student</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-
-
-                {% if student.id is defined  %} 
-                    
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ path('student_show', {'id' : student.id }) }}">Dashboard</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ path('student_edit', {'id' : student.id }) }}">Mes Infos</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ path('profile_edit', {'id': student.profile.id, 'student_id':student.id }) }}">Edit Profile</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ path('student_apply', { id:student.id }) }}">Apply</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ path('offers_index') }}">Emploi</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ path('school_student_index') }}">Ecoles</a>
-                    </li>                    
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/logout">Deconnexion</a>
-                    </li>
-                
-                {% endif %}
-
-                    {% if is_granted('ROLE_ADMIN') %}
-
-                    <li class="nav-item active" >
-                        <a class="nav-link" href="{{ path('admin') }}"> // Admin</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ path('student_index') }}">Liste</a>
-                    </li>
-
-                    {% endif %}
-                     
-
-                </ul>
-
-                {% if is_granted("ROLE_STUDENT") %}
-
-                <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
-
-                {% endif %}
-
-               
-            </div>
-        </nav>
-
-        <!-- content block -->
-       {# <div class="container">{% block body %}{% endblock %}</div> 
-
-        <!-- scripts -->
-        {% block javascripts %}
-            {{ encore_entry_script_tags('student') }}
-        {% endblock %} #}
 
     </body>
 </html>
