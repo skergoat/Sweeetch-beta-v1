@@ -49,9 +49,9 @@ class StudentController extends AbstractController
         $queryBuilder = $studentRepository->findAllPaginated("DESC");
 
         $pagination = $paginator->paginate(
-            $queryBuilder, /* query NOT result */
-            $request->query->getInt('page', 1)/*page number*/,
-            10/*limit per page*/
+            $queryBuilder,
+            $request->query->getInt('page', 1),
+            10
         );
 
         return $this->render('student/index.html.twig', [
@@ -130,10 +130,6 @@ class StudentController extends AbstractController
      */
     public function show(Student $student, applyRepository $applyRepository): Response
     {
-        // $hired = $applyRepository->checkIfHired($student);
-        // $fresh = $applyRepository->findByStudentByFresh($student);
-        // $applies = $applyRepository->findByStudent($student);
-
         return $this->render('student/show.html.twig', [
             'student' => $student,
             'applies' => $applyRepository->findByStudent($student),
@@ -165,63 +161,49 @@ class StudentController extends AbstractController
             $student = $form->getData();
 
             // get uploaded files name 
-            $keys = array_keys($request->files->get('update_student_doc'));
-          
-            foreach($keys as $key) {
+            if($request->files->get('update_student_doc') != null) {
+                $keys = array_keys($request->files->get('update_student_doc'));
+            
+                foreach($keys as $key) {
 
-                $uploadedFile = $formDoc[$key]->getData();
+                    $uploadedFile = $formDoc[$key]->getData();
 
-                $entity = $formDoc[$key]->getName();
+                    $entity = $formDoc[$key]->getName();
 
-                switch($entity) {
-                    case 'resumes':
-                        $entity = 'resume';
-                    break;
-                    case 'idCards':
-                        $entity = 'idCard';
-                    break;
-                    case 'studentCards':
-                        $entity = 'studentCard';
-                    break;
-                    case 'proofHabitations':
-                        $entity = 'proofHabitation';
-                    break;
+                    switch($entity) {
+                        case 'resumes':
+                            $entity = 'resume';
+                        break;
+                        case 'idCards':
+                            $entity = 'idCard';
+                        break;
+                        case 'studentCards':
+                            $entity = 'studentCard';
+                        break;
+                        case 'proofHabitations':
+                            $entity = 'proofHabitation';
+                        break;
+                    }
+
+                    $get = 'get' . ucfirst($entity); 
+                    $set = 'set' . ucfirst($entity);
+                    $class = "App\Entity\\" . ucfirst($entity);
+
+                    if($uploadedFile) {
+                        $newFilename = $uploaderHelper->uploadPrivateFile($uploadedFile, $student->$get()->getFileName());
+                        
+                        $document = new $class;
+                        $document->setFileName($newFilename);
+                        $document->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $newFilename);
+                        $document->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');                    
+                    } 
+
+                    if($uploadedFile != null) {
+                        $student->$set($document);
+                    } 
                 }
-
-                $get = 'get' . ucfirst($entity); 
-                $set = 'set' . ucfirst($entity);
-                $class = "App\Entity\\" . ucfirst($entity);
-
-                if($uploadedFile) {
-                    $newFilename = $uploaderHelper->uploadPrivateFile($uploadedFile, $student->$get()->getFileName());
-                    
-                    $document = new $class;
-                    $document->setFileName($newFilename);
-                    $document->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $newFilename);
-                    $document->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');                    
-                } 
-
-                if($uploadedFile != null) {
-                    $student->$set($document);
-                } 
             }
-
-
-            // if(isset($formDoc['idCard']['file'])) {
-
-            //     $uploadedFile = $formDoc['idCard']['file']->getData();
-
-            //     if($uploadedFile) {
-            //         $newFilename = $uploaderHelper->uploadPrivateFile($uploadedFile, $student->getIdCard()->getFilename());
-
-            //         $resume = $formDoc->getData()->getIdCard();
-            //         $resume->setFilename($newFilename);
-            //         $resume->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $newFilename);
-            //         $resume->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');
-            //         $student->setIdCard($resume);
-            //     }
-            // }
-
+            
             // edit password 
             $user = $formPassword->getData()->getUser();
 
