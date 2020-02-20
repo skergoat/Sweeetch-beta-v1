@@ -31,4 +31,5 @@ import 'admin-lte';
 
 // main scripts 
 import './component/edit-profile.js';
+import './component/timeline.js';
 
