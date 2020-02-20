@@ -2,6 +2,6 @@
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ app.request.get('_route') == 'admin' ? csrf_token('delete' ~ student.student.id) : csrf_token('delete' ~ student.id) }}">
     <button class="btn-icon btn-danger">
-        {{ app.request.get('_route') == 'student_index' or app.request.get('_route') == 'admin' ? '<i class="far fa-trash-alt" title="supprimer"></i>' : 'Modifier' }}
+        {{ app.request.get('_route') == 'student_index' or app.request.get('_route') == 'admin' ? '<i class="far fa-trash-alt" title="supprimer"></i>' : 'Supprimer' }}
     </button>
 </form>
