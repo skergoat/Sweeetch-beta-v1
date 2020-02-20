@@ -9,12 +9,17 @@ use App\Entity\Student;
 use App\Form\StudentType;
 use App\Entity\StudentCard;
 use App\Entity\ProofHabitation;
+use App\Form\UpdateStudentType;
 use App\Service\UploaderHelper;
 use Gedmo\Sluggable\Util\Urlizer;
+use App\Form\UpdateStudentDocType;
+use App\Form\UserEditPasswordType;
 use App\Repository\UserRepository;
 use App\Repository\ApplyRepository;
 use App\Repository\ResumeRepository;
+use App\Form\StudentEditPasswordType;
 use App\Repository\StudentRepository;
+use App\Form\UpdateStudentGeneralType;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -142,30 +147,49 @@ class StudentController extends AbstractController
      */
     public function edit(Request $request, Student $student, UserPasswordEncoderInterface $passwordEncoder, UploaderHelper $uploaderHelper, ApplyRepository $applyRepository): Response
     {
-        $form = $this->createForm(StudentType::class, $student);
+        $form = $this->createForm(UpdateStudentGeneralType::class, $student);
+        // $formDoc = $this->createForm(UpdateStudentDocType::class, $student);
+        $formPassword = $this->createForm(StudentEditPasswordType::class, $student); 
+
+        // check old pass 
+        $oldPass = $student->getUser()->getPassword();
+
         $form->handleRequest($request);
+        $formPassword->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() || $formPassword->isSubmitted() && $formPassword->isValid()) {
 
-            $student = $form->getData();
+            // $student = $form->getData();
 
-            // upload resume temporary
-            $uploadedFile = $form['resume']['file']->getData();
-            if($uploadedFile) {
-                $newFilename = $uploaderHelper->uploadPrivateFile($uploadedFile, $student->getResume()->getFilename());
+            // if(isset($form['resume']['file'])) {
 
-                $resume = $form->getData()->getResume();
-                $resume->setFilename($newFilename);
-                $resume->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $newFilename);
-                $resume->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');
-                $student->setResume($resume);
+            //     $uploadedFile = $form['resume']['file']->getData();
+
+            //     if($uploadedFile) {
+            //         $newFilename = $uploaderHelper->uploadPrivateFile($uploadedFile, $student->getResume()->getFilename());
+
+            //         $resume = $form->getData()->getResume();
+            //         $resume->setFilename($newFilename);
+            //         $resume->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $newFilename);
+            //         $resume->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');
+            //         $student->setResume($resume);
+            //     }
+            // }
+
+            // edit password 
+            $user = $formPassword->getData()->getUser();
+
+            // dd($user->getPassword());
+
+            // dd(password_verify($user->getPassword(), $oldPass));
+
+            if($user->getPassword() != $oldPass)
+            {
+                $user->setPassword($passwordEncoder->encodePassword(
+                    $user,
+                    $user->getPassword()
+                ));
             }
-
-            $user = $form->getData()->getUser();
-            $user->setPassword($passwordEncoder->encodePassword(
-                $user,
-                $user->getPassword()
-            ));
 
             $manager = $this->getDoctrine()->getManager()->flush();
 
@@ -175,6 +199,8 @@ class StudentController extends AbstractController
         return $this->render('student/edit.html.twig', [
             'student' => $student,
             'form' => $form->createView(),
+            // 'formDoc' => $formDoc->createView(),
+            'formPassword' => $formPassword->createView(),
             'fresh' => $applyRepository->findByStudentByFresh($student),
             'hired' => $applyRepository->checkIfHired($student)
         ]);

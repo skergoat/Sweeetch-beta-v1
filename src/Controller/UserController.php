@@ -32,10 +32,6 @@ class UserController extends AbstractController
             10/*limit per page*/
         );
 
-        // return $this->render('student/index.html.twig', [
-        //     'students' => $pagination,
-        // ]);
-
         return $this->render('user/index.html.twig', [
             'users' => $pagination,
             // 'users' => $userRepository->findByRole('ROLE_ADMIN'),
