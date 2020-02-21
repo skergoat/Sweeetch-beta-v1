@@ -316,44 +316,4 @@ class Student
         return $this;
     }
 
-    public function getGender(): ?string
-    {
-        return $this->gender;
-    }
-
-    public function setGender(string $gender): self
-    {
-        $this->gender = $gender;
-
-        return $this;
-    }
-
-    // /**
-    //  * @return Collection|Offers[]
-    //  */
-    // public function getOffers(): Collection
-    // {
-    //     return $this->offers;
-    // }
-
-    // public function addOffer(Offers $offer): self
-    // {
-    //     if (!$this->offers->contains($offer)) {
-    //         $this->offers[] = $offer;
-    //         $offer->addStudent($this);
-    //     }
-
-    //     return $this;
-    // }
-
-    // public function removeOffer(Offers $offer): self
-    // {
-    //     if ($this->offers->contains($offer)) {
-    //         $this->offers->removeElement($offer);
-    //         $offer->removeStudent($this);
-    //     }
-
-    //     return $this;
-    // }
-
 }
