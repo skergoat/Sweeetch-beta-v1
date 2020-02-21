@@ -28,6 +28,7 @@ global.jQuery = $;
 // bootstrap 
 import 'bootstrap';
 import 'admin-lte';
+// import 'bootstrap-datepicker';
 
 // main scripts 
 import './component/edit-profile.js';

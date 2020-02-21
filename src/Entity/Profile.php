@@ -43,7 +43,7 @@ class Profile
      */
     private $education;
 
-
+    
     public function __construct()
     {
         $this->languages = new ArrayCollection();

@@ -27,7 +27,7 @@ class StudentFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        for($i = 1 ; $i < 5 ; $i++) {
+        for($i = 1 ; $i < 3 ; $i++) {
 
             $student = new Student;
             $student->setName('Marc' . $i);
@@ -70,8 +70,9 @@ class StudentFixtures extends Fixture
                 $education2 = new Education;
                 $education2->setTitle('L1 developement web'); 
                 $education2->setSchool('Universite de Paris'); 
-                $education2->setDateStart($date2); 
-                $education2->setCurrent(true);
+                $education2->setDateStart($date);
+                $education2->setDateEnd($date2);  
+                $education2->setCurrent(false);
 
                 $language1->setProfile($profile);
                 $language2->setProfile($profile);

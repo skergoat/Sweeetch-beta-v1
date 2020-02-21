@@ -9,16 +9,21 @@ $('input[type="radio"]').on('click', function() {
 
     if(!$(this).hasClass('true')) { 
 
-         $(this).addClass('true')
+        // check
+        $(this).addClass('true')
                 .prop('checked', true);
         
+        // date end fade out
         var closest = $(this).closest('.language-card');
-        
         $(closest).children('.date-finish').fadeOut();
 
     }
     else {
         $(this).removeClass('true').prop('checked', false);
+
+        // date end fade out
+        var closest = $(this).closest('.language-card');
+        $(closest).children('.date-finish').fadeIn();
     }
 
 });
