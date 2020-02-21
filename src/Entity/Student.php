@@ -316,6 +316,18 @@ class Student
         return $this;
     }
 
+    public function getGender(): ?string
+    {
+        return $this->gender;
+    }
+
+    public function setGender(string $gender): self
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
     // /**
     //  * @return Collection|Offers[]
     //  */
