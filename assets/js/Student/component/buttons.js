@@ -1,3 +1,11 @@
+
+// add true to :checked
+$(document).ready(function() {
+    $('input[type="radio"]:checked').addClass('true');
+    alert('hello');
+});
+
+// toggle checked 
 $('input[type="radio"]').on('click', function() {
 
     if(!$(this).hasClass('true')) { 
