@@ -17,8 +17,29 @@ class ProfileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('domain', TextType::class)
-            // ->add('area', TextType::class)
+
+            ->add('domain', ChoiceType::class, [
+                'choices' => [
+                    'Administration & législation' => 'Administration & législation',
+                    'Bâtiment & construction' => 'Bâtiment & construction',
+                    'Communication' => 'Communication',
+                    'Culture' => 'Culture',
+                    'Economie & gestion' => 'Economie & gestion',
+                    'Environnement & nature' => 'Environnement & nature',
+                    'Hôtellerie & alimentation' => 'Hôtellerie & alimentation',
+                    'Informatique & télécommunication' => 'Informatique & télécommunication',
+                    'Santé & bien-être' => 'Santé & bien-être',
+                    'Sciences' => 'Sciences',
+                    'Sciences humaines & sociales' => 'Sciences humaines & sociales',
+                    'Sécurité' => 'Sécurité', 
+                    'Technique & industrie' => 'Technique & industrie',
+                    'Tourisme, sports & loisirs' => 'Tourisme, sports & loisirs',
+                    'Transports & logistique' => 'Transports & logistique'
+                ],
+                'choice_attr' => function($choice, $key, $value) {
+                    return ['class' => 'attending_'.strtolower($key)];
+                },
+            ])
 
             ->add('area', ChoiceType::class, [
                 'choices' => [
@@ -37,7 +58,6 @@ class ProfileType extends AbstractType
                     'Provence-Alpes-Côte d\'Azur' => 'Provence-Alpes-Côte d\'Azur'
                 ],
                 'choice_attr' => function($choice, $key, $value) {
-                    // adds a class like attending_yes, attending_no, etc
                     return ['class' => 'attending_'.strtolower($key)];
                 },
             ])
