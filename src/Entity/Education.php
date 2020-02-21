@@ -26,15 +26,15 @@ class Education
      */
     private $school;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $date_start;
+    // /**
+    //  * @ORM\Column(type="datetime")
+    //  */
+    // private $date_start;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $date_end;
+    // /**
+    //  * @ORM\Column(type="datetime", nullable=true)
+    //  */
+    // private $date_end;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -46,6 +46,15 @@ class Education
      */
     private $profile;
 
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $date_start;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $date_end;
 
     public function getId(): ?int
     {
@@ -76,29 +85,29 @@ class Education
         return $this;
     }
 
-    public function getDateStart(): ?\DateTimeInterface
-    {
-        return $this->date_start;
-    }
+    // public function getDateStart(): ?\DateTimeInterface
+    // {
+    //     return $this->date_start;
+    // }
 
-    public function setDateStart(\DateTimeInterface $date_start): self
-    {
-        $this->date_start = $date_start;
+    // public function setDateStart(\DateTimeInterface $date_start): self
+    // {
+    //     $this->date_start = $date_start;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function getDateEnd(): ?\DateTimeInterface
-    {
-        return $this->date_end;
-    }
+    // public function getDateEnd(): ?\DateTimeInterface
+    // {
+    //     return $this->date_end;
+    // }
 
-    public function setDateEnd(?\DateTimeInterface $date_end): self
-    {
-        $this->date_end = $date_end;
+    // public function setDateEnd(?\DateTimeInterface $date_end): self
+    // {
+    //     $this->date_end = $date_end;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getCurrent(): ?bool
     {
@@ -123,4 +132,29 @@ class Education
 
         return $this;
     }
+
+    public function getDateStart(): ?\DateTimeInterface
+    {
+        return $this->date_start;
+    }
+
+    public function setDateStart(\DateTimeInterface $date_start): self
+    {
+        $this->date_start = $date_start;
+
+        return $this;
+    }
+
+    public function getDateEnd(): ?\DateTimeInterface
+    {
+        return $this->date_end;
+    }
+
+    public function setDateEnd(?\DateTimeInterface $date_end): self
+    {
+        $this->date_end = $date_end;
+
+        return $this;
+    }
+
 }
