@@ -5,8 +5,20 @@
     &--login {
         margin-top:20%;
     }
+
+    &--signin {
+        margin-top:7%;
+    }
 }
 
 .checkbox {
     margin-top:20px;
+}
+
+// input[type="checkbox"] {
+//     width:20px;
+// }
+
+.form-check {
+    width:20px;
 }

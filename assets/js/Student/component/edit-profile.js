@@ -4,9 +4,10 @@ $(document).ready(function() {
     var $wrapper = $('.js-profile-wrapper');
 
     $wrapper.on('click', '.js-profile-add', function(e) {
+    // $('.js-profile-add').on('.js-profile-add', 'click', function(e) {
 
         e.preventDefault();
-
+        
         // select wright wrapper
         var id = $(this).attr('data-url');
         $wrappers = $('#' + id);
@@ -30,21 +31,8 @@ $(document).ready(function() {
             });
         });
 
-        // $('input[type="checkbox"]').off('click', test());
-
-        // function test2(c) {
-        //     var closest = $(c).closest('.language-card');
-        //     $(closest).children('.date-finish').toggleClass('none');
-        // }
-
-        // $('input[type="checkbox"]').change(function() {
-        //     $('input[type="checkbox"]').trigger('click');
-        // });
-    
-
     });
 
-   
     $wrapper.on('click', '.js-remove-data', function(e) {
         e.preventDefault();
         $(this).closest('.js-remove-profile-item')

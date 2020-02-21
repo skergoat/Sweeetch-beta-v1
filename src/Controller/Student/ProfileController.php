@@ -34,6 +34,8 @@ class ProfileController extends AbstractController
 
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash('success', 'Mise à jour réussie');
+
             return $this->redirectToRoute('profile_edit', ['id' => $profile->getId(), 'student_id' => $student->getId()]);
         }
 
