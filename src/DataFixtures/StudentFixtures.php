@@ -47,7 +47,7 @@ class StudentFixtures extends Fixture
 
             $profile = new Profile;
             $profile->setDomain('Développement web');
-            $profile->setArea('Paris');
+            $profile->setArea('Normandie');
             
                 $language1 = new Language;
                 $language1->setLanguageName('Anglais'); 
