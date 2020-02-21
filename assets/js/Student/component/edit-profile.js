@@ -29,13 +29,27 @@ $(document).ready(function() {
                 format: 'dd-mm-yyyy'
             });
         });
-            
+
+        // $('input[type="checkbox"]').off('click', test());
+
+        // function test2(c) {
+        //     var closest = $(c).closest('.language-card');
+        //     $(closest).children('.date-finish').toggleClass('none');
+        // }
+
+        // $('input[type="checkbox"]').change(function() {
+        //     $('input[type="checkbox"]').trigger('click');
+        // });
+    
+
     });
 
+   
     $wrapper.on('click', '.js-remove-data', function(e) {
         e.preventDefault();
         $(this).closest('.js-remove-profile-item')
             .fadeOut()
             .remove();
     });
+
 });
