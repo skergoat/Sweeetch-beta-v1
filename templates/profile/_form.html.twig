@@ -4,7 +4,7 @@
             <span class="fa fa-close js-remove-data" style="color:red;font-size:20px;"></span>
         </a>
         <div class="form-group">
-            {{ form_row(lang.languageName, {'label':'Langue' ,'attr' : { class: 'form-control' }} ) }}
+        {{ form_row(lang.languageName, {'label':'Langue' ,'attr' : { class: 'form-control' }} ) }}
         </div>
         <div class="form-group">
         {{ form_row(lang.level, {'label':'Niveau' ,'attr' : { class: 'form-control' }} ) }}
@@ -19,7 +19,7 @@
             <span class="fa fa-close js-remove-data" style="color:red;font-size:20px;"></span>
         </a>
         <div class="form-group">
-            {{ form_row(educ.title, {'attr' : { class: 'form-control' }} ) }}
+        {{ form_row(educ.title, {'attr' : { class: 'form-control' }} ) }}
         </div>
         <div class="form-group">
         {{ form_row(educ.school, {'attr' : { class: 'form-control' }} ) }}
@@ -27,18 +27,19 @@
         <div class="form-group">
         {{ form_row(educ.date_start, {'attr' : { class: 'form-control' }} ) }}
         </div>
-        <div class="form-group">
-            {{ form_row(educ.current, {'attr' : { class: 'form-control' }} ) }}
-        </div>
         {% if educ.vars.value.current is defined and educ.vars.value.current == false %}
-        <div class="form-group">
-            {{ form_row(educ.date_end, {'attr' : { class: 'form-control' }} ) }}
+        <div class="form-group date-finish">
+            {{ form_row(educ.date_end, {'attr' : { class: 'form-control', class: 'form-control' }} ) }}
         </div> 
         {% else %} 
-        <div class="form-group" style="display:none;">
+        <div class="form-group date-finish" style="display:none;">
             {{ form_row(educ.date_end, {'attr' : { class: 'form-control' }} ) }}
         </div> 
         {% endif %} 
+        <div class="form-group">
+            {{ form_row(educ.current, {'attr' : { class: 'form-control' }} ) }}
+        </div>
+        
     </div>
 {% endmacro %}
 
