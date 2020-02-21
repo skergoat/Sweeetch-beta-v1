@@ -14,15 +14,31 @@
 {% endmacro %}
 
 {% macro printEducationFormRow(educ) %}
-    <div href="#" class="js-remove-profile-item pull-right">
-        {{ form_row(educ.title, {'attr' : { class: 'form-control' }} ) }}
-        {{ form_row(educ.school, {'attr' : { class: 'form-control' }} ) }}
-        {{ form_row(educ.date_start, {'attr' : { class: 'form-control' }} ) }}
-        {{ form_row(educ.date_end, {'attr' : { class: 'form-control' }} ) }}
-        {{ form_row(educ.current, {'attr' : { class: 'form-control' }} ) }}
+    <div href="#" class="js-remove-profile-item language-card">
         <a href="#" class="js-remove-data pull-right">
-            <span class="fa fa-close js-remove-data">delete</span>
+            <span class="fa fa-close js-remove-data" style="color:red;font-size:20px;"></span>
         </a>
+        <div class="form-group">
+            {{ form_row(educ.title, {'attr' : { class: 'form-control' }} ) }}
+        </div>
+        <div class="form-group">
+        {{ form_row(educ.school, {'attr' : { class: 'form-control' }} ) }}
+        </div>
+        <div class="form-group">
+        {{ form_row(educ.date_start, {'attr' : { class: 'form-control' }} ) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(educ.current, {'attr' : { class: 'form-control' }} ) }}
+        </div>
+        {% if educ.vars.value.current is defined and educ.vars.value.current == false %}
+        <div class="form-group">
+            {{ form_row(educ.date_end, {'attr' : { class: 'form-control' }} ) }}
+        </div> 
+        {% else %} 
+        <div class="form-group" style="display:none;">
+            {{ form_row(educ.date_end, {'attr' : { class: 'form-control' }} ) }}
+        </div> 
+        {% endif %} 
     </div>
 {% endmacro %}
 
@@ -59,7 +75,7 @@
                         <div class="row">
 
                             <div class="col-lg-6" style="margin:auto;">
-                                <h5>Je recherche :</h5><br>
+                                <h5>Vous cherchez :</h5><br>
 
                                 <div class="form-group">
                                 {{ form_row(form.domain, {'label' : 'Discipline', 'attr' : { class: 'form-control' }} ) }}
@@ -91,16 +107,23 @@
 
                     </div>
                     <div class="tab-pane fade" id="custom-content-below-messages" role="tabpanel" aria-labelledby="custom-content-below-messages-tab">
-                        <h2>Formations</h2>
-                        <div class="col-xs-4 js-profile-wrapper" id="education-wrapper" data-prototype="{{ formEducationMacros.printEducationFormRow(form.education.vars.prototype)|e('html_attr') }}"  data-index="{{ form.education|length }}">
-                        {% for educ in form.education %}
-                            {{ formEducationMacros.printEducationFormRow(educ) }}
-                        {% endfor %}
+                     
+                        <div class="col-lg-6 js-profile-wrapper" id="education-wrapper" data-prototype="{{ formEducationMacros.printEducationFormRow(form.education.vars.prototype)|e('html_attr') }}"  data-index="{{ form.education|length }}" style="margin:auto;">
+
+                            <div clqss="col-lg-6">
+                                <h5>Indiquez votre formation :</h5><br><br>
+                                
+                                {% for educ in form.education %}
+                                {{ formEducationMacros.printEducationFormRow(educ) }}
+                                {% endfor %}
+                            </div>
+
                             <a href="#" class="js-profile-add" data-url="education-wrapper">
-                                <span class="btn btn-success">Add Another Trainning</span>
+                                <span class="btn btn-success">Ajouter une formation</span>
                             </a>
+                        
                         </div>
-                    
+
                     </div>
                 </div>
 
