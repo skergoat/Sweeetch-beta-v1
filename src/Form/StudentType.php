@@ -13,6 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\RadioType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class StudentType extends AbstractType
 {
@@ -26,10 +27,10 @@ class StudentType extends AbstractType
             ->add('city', TextType::class)
             ->add('telNumber', TextType::class)
             ->add('user', UserType::class)
-            ->add('driving_license', RadioType::class, [
+            ->add('driving_license', CheckboxType::class, [
                 'required' => false
             ])
-            ->add('disabled', RadioType::class, [
+            ->add('disabled', CheckboxType::class, [
                 'required' => false
             ])
             ->add('resume', ResumeType::class)

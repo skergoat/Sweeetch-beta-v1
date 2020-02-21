@@ -22,8 +22,23 @@
     <body>
     
         {% block body %}{% endblock %}
+
         {% block javascripts %}
         {{ encore_entry_script_tags('front') }}
+   
+         <script>
+            $('.browse').click(function() {
+
+                var id = $(this).attr('data-url');
+                $('#' + id).click();
+
+                $('#' + id).change(function(e){
+                    var fileName = e.target.files[0].name;
+
+                    $('#browse-' + id).text(fileName);
+                });   
+            });   
+        </script>
 
         <script src="{{ asset('lib/easing/easing.min.js') }}"></script>
         <script src="{{ asset('lib/mobile-nav/mobile-nav.js') }}"></script>
