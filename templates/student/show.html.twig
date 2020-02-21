@@ -268,11 +268,11 @@
                                     <tr class="tr-border">
                                         <td>{{ education.title }}</td>
                                         <td>{{ education.school }}</td>
-                                        <td>{{ education.dateStart|date("m/d/Y") }}</td>
+                                        <td>{{ education.dateStart|date("d/m/Y") }}</td>
                                         {% if education.current == true %}
                                         <td>  en cours </td>
                                         {% else %}
-                                            <td>{{ education.dateEnd|date("m/d/Y") }}</td>
+                                            <td>{{ education.dateEnd|date("d/m/Y") }}</td>
                                         {% endif %}
                                     </tr>
                                     {% else %}

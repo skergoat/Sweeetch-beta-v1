@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\RadioType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 class EducationType extends AbstractType
@@ -30,7 +31,7 @@ class EducationType extends AbstractType
                 'html5' => false,
                 'attr' => ['class' => 'js-datepicker'],
             ])
-            ->add('current', RadioType::Class, [
+            ->add('current', CheckboxType::Class, [
                 'required' => false
             ])
         ;
