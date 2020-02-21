@@ -25,21 +25,27 @@
         {{ form_row(educ.school, {'label':'Ecole', 'attr' : { class: 'form-control' }} ) }}
         </div>
         <div class="form-group">
-       {# {{ form_row(educ.date_start, {'attr' : { class: 'form-control' }} ) }} #}
-       {{ form_row(educ.date_start, {'label':'Début'}) }}
+        {{ form_row(educ.date_start, {'label':'Début'}) }}
         </div>
 
-        {% if educ.vars.value.current is defined and educ.vars.value.current == false %}
-        <div class="form-group date-finish">
-            {# {{ form_row(educ.date_end, {'attr' : { class: 'form-control' }} ) }} #}
+        {% if educ.vars.value.current is defined %}
+
+            {% if educ.vars.value.current == true %}
+            <div class="form-group date-finish none">
             {{ form_row(educ.date_end, {'label':'Fin'}) }}
-        </div> 
-        {% else %} 
-        <!-- <div class="form-group date-finish" style="display:none;"> -->
+            </div>
+            {% elseif educ.vars.value.current == false %}
             <div class="form-group date-finish">
-            {# {{ form_row(educ.date_end, {'attr' : { class: 'form-control js-datepicker' }} ) }} #}
+                {{ form_row(educ.date_end, {'label':'Fin'}) }}
+            </div>
+            {% endif %}
+        
+        {% else %}
+
+            <div class="form-group date-finish" >
             {{ form_row(educ.date_end, {'label':'Fin'}) }}
-        </div> 
+            </div>
+
         {% endif %} 
 
         <div class="form-group">
