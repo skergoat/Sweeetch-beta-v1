@@ -4,6 +4,7 @@ $(document).ready(function() {
     var $wrapper = $('.js-profile-wrapper');
 
     $wrapper.on('click', '.js-profile-add', function(e) {
+
         e.preventDefault();
 
         // select wright wrapper
@@ -21,6 +22,14 @@ $(document).ready(function() {
         $wrappers.data('index', index + 1);
         // Display the form in the page before the "new" link
         $(this).before(newForm);
+        
+        // date picker
+        $(document).ready(function() {
+            $('.js-datepicker').datepicker({
+                format: 'dd-mm-yyyy'
+            });
+        });
+            
     });
 
     $wrapper.on('click', '.js-remove-data', function(e) {
