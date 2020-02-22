@@ -65,7 +65,7 @@ class OffersController extends AbstractController
 
             $this->addFlash('success', 'Emploi crée !');
 
-            return $this->redirectToRoute('offers_company_index', ['id' => $company->getId()]);
+            return $this->redirectToRoute('offers_new', ['id' => $company->getId()]);
         }
 
         return $this->render('offers/new.html.twig', [
