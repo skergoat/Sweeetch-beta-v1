@@ -4,52 +4,61 @@
 
 {% block body %}
 
-<br><br>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6">
+            <h1 class="m-0 titles-front">{{ offers.title }}</h1> <br>
+            {# <a href="{{ path('offers_edit', {'id': offers.id, 'company':company.id}) }}" class="btn btn-light">edit</a> #}
+            <a href="{{ path('offers_company_index', {id:offers.company.id}) }}" class="btn btn-sm btn-sm-1 btn-labeled btn-default">
+                <span class="btn-label"><i class="fa fa-chevron-left"></i></span>
+                Revenir 
+            </a>
+        </div>
+    </div>
+</div> <br>
 
-<a href="{{ path('offers_company_index', {id:offers.company.id}) }}" class="btn btn-secondary">back to list</a>
+<div class="col-md-12">
+    <div class="card">
 
-<a href="{{ path('offers_edit', {'id': offers.id, 'company':company.id}) }}" class="btn btn-light">edit</a>
+        {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+        {% endfor %}
 
-<br><br>
+        <div class="Password card col-lg-12">
+            <div class="card-body">
+                <table class="table offers-show col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <tbody>
+                        <tr>
+                            <th>Lieu</th>
+                            <td>{{ offers.location }}</td>
+                        </tr>
+                        <tr>
+                            <th>Domaine</th>
+                            <td>{{ offers.domain }}</td>
+                        </tr>
+                        <tr>
+                            <th>Du</th>
+                            <td>{{ offers.dateStart ? offers.dateStart|date('d-m-Y') : '' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Au</th>
+                            <td>{{ offers.dateEnd ? offers.dateEnd|date('d-m-Y') : '' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-    <h3>Offers</h3>
+                <div class="card description" style="padding:10px;">
+                    <h5 class="mb-3">Description</h5>
+                    <p>{{ offers.description }}</p>
+                </div>
+                
+            </div>
+        </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ offers.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ offers.title }}</td>
-            </tr>
-            <tr>
-                <th>Location</th>
-                <td>{{ offers.location }}</td>
-            </tr>
-            <tr>
-                <th>Domain</th>
-                <td>{{ offers.domain }}</td>
-            </tr>
-            <tr>
-                <th>DateStart</th>
-                <td>{{ offers.dateStart ? offers.dateStart|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>DateEnd</th>
-                <td>{{ offers.dateEnd ? offers.dateEnd|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ offers.description }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <br> 
-
-    {% if applies[0] is defined %}
+  
+        {% if applies[0] is defined %}
 
         {% if applies[0].confirmed == false %}  
         <h3>Appliants</h3>
@@ -57,120 +66,122 @@
         <h3>Hired</h3>
         {% endif %}
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Location</th>
-                <th>Profile</th>
-                <th>Action</th>
-            </tr>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Location</th>
+                    <th>Profile</th>
+                    <th>Action</th>
+                </tr>
 
-            {% for applies in applies %}
-            
-            <tr>
-                <td>{{ applies.student.id }}</td>
-                <td>{{ applies.student.name }}</td>
-                <td>{{ applies.student.lastname }}</td>
-                {% if is_granted('ROLE_ADMIN') %}
-                <td><a href="{{ path('student_show', { "id":applies.student.id }) }}">show</a></td>
-                {% else %}
-                <td><a href="{{ path('show_applied_profile', { "id":applies.student.id, "company_id": offers.company.id }) }}">show</a></td>
-                {% endif %}
-                <td class='btn btn-group' style="color:white;">
+                {% for applies in applies %}
+                
+                <tr>
+                    <td>{{ applies.student.id }}</td>
+                    <td>{{ applies.student.name }}</td>
+                    <td>{{ applies.student.lastname }}</td>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <td><a href="{{ path('student_show', { "id":applies.student.id }) }}">show</a></td>
+                    {% else %}
+                    <td><a href="{{ path('show_applied_profile', { "id":applies.student.id, "company_id": offers.company.id }) }}">show</a></td>
+                    {% endif %}
+                    <td class='btn btn-group' style="color:white;">
 
-                {% if applies.hired == false and applies.confirmed == false and applies.agree == false %}
+                    {% if applies.hired == false and applies.confirmed == false and applies.agree == false %}
 
-                    <form method="post" action="{{ path('hire', { id:applies.id }) }}">
+                        <form method="post" action="{{ path('hire', { id:applies.id }) }}">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ offers.id) }}">
+                            <button class="btn btn-success">Embaucher</button>
+                        </form>
+
+                        <form method="post" action="{{ path('apply_refuse', {'id': applies.id, 'from' : 'company'}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
+                            <button class="btn btn-danger">Remove</button>
+                        </form>
+
+                    {% elseif applies.hired == true %}
+
+                        <div style="color:red">En attente d'acceptation</div>
+
+                    {% elseif applies.agree == true %}
+
+                    <form method="post" action="{{ path('confirm', { id:applies.id }) }}">
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ offers.id) }}">
-                        <button class="btn btn-success">Embaucher</button>
+                        <button class="btn btn-success">Confirmer</button>
                     </form>
 
-                    <form method="post" action="{{ path('apply_refuse', {'id': applies.id, 'from' : 'company'}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                    {% elseif applies.confirmed == true %}
+
+                    <form method="post" action="{{ path('apply_finish', {'id': applies.id }) }}" onsubmit="return confirm('Are you sure you want to finish this mission ?');">
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
-                        <button class="btn btn-danger">Remove</button>
+                        <button class="btn btn-warning">Finish</button>
                     </form>
 
-                {% elseif applies.hired == true %}
+                    {% endif %}
 
-                    <div style="color:red">En attente d'acceptation</div>
+                    </td>
+                </tr>
+            
+            {% endfor %}
 
-                {% elseif applies.agree == true %}
-
-                <form method="post" action="{{ path('confirm', { id:applies.id }) }}">
-                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ offers.id) }}">
-                    <button class="btn btn-success">Confirmer</button>
-                </form>
-
-                {% elseif applies.confirmed == true %}
-
-                <form method="post" action="{{ path('apply_finish', {'id': applies.id }) }}" onsubmit="return confirm('Are you sure you want to finish this mission ?');">
-                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
-                    <button class="btn btn-warning">Finish</button>
-                </form>
-
-                {% endif %}
-
-                </td>
-            </tr>
-        
-        {% endfor %}
-
-    </tbody>
-</table>
-
-    {% endif %}
-
-{% if finished is not empty %}
-
-    <h3>Finished</h3>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Location</th>
-                <th>Profile</th>
-            </tr>
-
-        {% for finished in finished %} 
-        
-            {% if finished.student.id is defined %}
-
-            <tr>
-                <td>{{ finished.student.id }}</td>
-                <td>{{ finished.student.name }}</td>
-                <td>{{ finished.student.lastname }}</td>
-                {% if is_granted('ROLE_ADMIN') %}
-                <td><a href="{{ path('student_show', { "id":finished.student.id }) }}">show</a></td>
-                {% else %}
-                <td><a href="{{ path('show_applied_profile', { "id":finished.student.id, "company_id": offers.company.id }) }}">show</a></td>
-                {% endif %}
-            </tr>
-
-            {% else %}
-
-            <tr>
-                <th style="color:red;">Student profile deleted</th>
-                <th></th>
-                <th></th>
-                <th>
-                    <form method="post" action="{{ path('delete_empty_companySide', {'id': offers.id }) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ offers.id) }}">
-                        <button class="btn btn-danger">Delete</button>
-                    </form>
-                </th>
-            </tr>
+        </tbody>
+        </table>
 
             {% endif %}
-            
-        {% endfor %}
 
-    </tbody>
-</table>
+        {% if finished is not empty %}
+
+            <h3>Finished</h3>
+
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>Location</th>
+                        <th>Profile</th>
+                    </tr>
+
+                {% for finished in finished %} 
+                
+                    {% if finished.student.id is defined %}
+
+                    <tr>
+                        <td>{{ finished.student.id }}</td>
+                        <td>{{ finished.student.name }}</td>
+                        <td>{{ finished.student.lastname }}</td>
+                        {% if is_granted('ROLE_ADMIN') %}
+                        <td><a href="{{ path('student_show', { "id":finished.student.id }) }}">show</a></td>
+                        {% else %}
+                        <td><a href="{{ path('show_applied_profile', { "id":finished.student.id, "company_id": offers.company.id }) }}">show</a></td>
+                        {% endif %}
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+                        <th style="color:red;">Student profile deleted</th>
+                        <th></th>
+                        <th></th>
+                        <th>
+                            <form method="post" action="{{ path('delete_empty_companySide', {'id': offers.id }) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ offers.id) }}">
+                                <button class="btn btn-danger">Delete</button>
+                            </form>
+                        </th>
+                    </tr>
+
+                    {% endif %}
+                    
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
 
     {% endif %}
 
