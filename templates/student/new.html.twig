@@ -5,11 +5,9 @@
 {% block body %}
 
 <div class="background">
-
     <div class="container container-jobs">
 
-        <header id="header" >
-
+        <header id="header">
             <div id="topbar">
             <div class="container">
                 <div class="social-links">
@@ -23,7 +21,7 @@
         
             <div class="container nav-desktop">
         
-                <nav class="main-nav d-none d-lg-block" style="display:flex !important;margin-bottom:50px;">
+                <nav class="nav-jobs main-nav d-none d-lg-block">
                     <ul>
                         <li class="active"><a href="/">Acceuil</a></li>
                         <li><a href="/offers/">EMPLOIS</a></li>
@@ -41,8 +39,7 @@
             </div>
         </header>
 
-        <h1 style="margin-top:50px;">Devenir alternant</h1>
-
+        <h1 class="titles-front">Devenir alternant</h1>
         {{ include('student/_form.html.twig') }}
 
     </div>
@@ -54,8 +51,7 @@
         &copy; Copyright <strong>SWEEETCH</strong>. All Rights Reserved
       </div>
       <div class="credits">
-
-        L'équipe de SWEEETCH</a>
+        L'équipe de SWEEETCH
       </div>
     </div>
 </footer>
