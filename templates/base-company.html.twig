@@ -130,7 +130,7 @@
                           <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                         </div> -->
                         <div class="info">
-                          <a href="{{ path('user_show', {'id': app.user.id}) }}" class="d-block">{{ app.user.email }}</a>
+                          <a href="{{ path('company_show', {'id' : company.id }) }}" class="d-block">{{ app.user.email }}</a>
                         </div>
                     </div>
 
@@ -138,7 +138,7 @@
 
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                             <li class="nav-item has-treeview">
-                                <a class="nav-link" href="">
+                                <a class="nav-link" href="{{ path('company_show', {'id' : company.id }) }}">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>
                                         Tableau de Bord
