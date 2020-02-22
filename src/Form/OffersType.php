@@ -6,6 +6,7 @@ use App\Entity\Offers;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -18,11 +19,23 @@ class OffersType extends AbstractType
             ->add('title', TextType::class)
             ->add('location', TextType::class)
             ->add('domain', TextType::class)
-            ->add('dateStart', DateTimeType::Class, [
-                'widget' => 'single_text'
+            // ->add('dateStart', DateTimeType::Class, [
+            //     'widget' => 'single_text'
+            // ])
+            // ->add('dateEnd', DateTimeType::Class, [
+            //     'widget' => 'single_text'
+            // ])
+            ->add('dateStart', DateType::Class, [
+                'widget' => 'single_text',
+                'format' => 'dd-MM-yyyy',
+                'html5' => false,
+                'attr' => ['class' => 'js-datepicker'],
             ])
-            ->add('dateEnd', DateTimeType::Class, [
-                'widget' => 'single_text'
+            ->add('dateEnd', DateType::Class, [
+                'widget' => 'single_text',
+                'format' => 'dd-MM-yyyy',
+                'html5' => false,
+                'attr' => ['class' => 'js-datepicker'],
             ])
             ->add('description', TextareaType::class)
             // ->add('company')
