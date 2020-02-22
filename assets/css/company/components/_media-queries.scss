@@ -36,4 +36,19 @@
         margin:auto;
         margin-top:50px;
     }
+
+    .card-responsive {
+        & textarea {
+            text-align:justify;
+        }
+        padding:0px;
+    }
+
+    .card.description, .Password.card {
+        border:0px;
+    }
+
+    .pl-3-responsive {
+        padding-left:0px;
+    }
 }

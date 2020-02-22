@@ -116,3 +116,13 @@
         text-align:left;
     }
 }
+
+.card-responsive {         
+    & textarea {
+        text-align:justify;
+    }
+
+    &-table {
+        overflow:scroll;
+    }
+}
