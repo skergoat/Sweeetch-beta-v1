@@ -33,7 +33,7 @@
                 </thead>
                 <tbody>
 
-                    {% for offers in offers %}
+                {% for offers in offers %}
 
                     {% if offers.applies | length == 0 %}
                 
@@ -76,6 +76,12 @@
                         {% endif %}
 
                     {% endif %}
+
+                {% else %}
+
+                <tr>
+                  <td colspan="8" class="border-top-td">Aucun emploi pour le moment</td>
+                </tr>
 
                 {% endfor %}
 
