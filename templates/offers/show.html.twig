@@ -32,6 +32,12 @@
         <h1 class="titles-front">{{ offers.title }}</h1>
         <h4 class="card-subtitle mb-2 text-muted">{{ offers.location }}</h4>
 
+        {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+        {% endfor %}
+
         <div class="Password card col-lg-12">
             <div class="card-body">
                 <table class="table offers-show col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -89,3 +95,4 @@
 </footer>
 
 {% endblock %}
+
