@@ -4,9 +4,11 @@
 
 {% block body %}
 
-    <div class="container">
+<div class="background-jobs">
 
-        <header id="header" style="position:relative;">
+    <div class="container container-jobs">
+
+        <header id="header" >
 
             <div id="topbar">
             <div class="container">
@@ -38,9 +40,9 @@
                         {% else %}
                         <li class="drop-down"><a>S'INSCRIRE</a>
                             <ul>
-                                <li><a href="/student/new">Etudiant</a></li>
-                                <li><a href="/company/new">Entreprise</a></li>
-                                <li><a href="/school/new">Ecole</a></li>
+                                <li><a href="/student/new">Etudiants</a></li>
+                                <li><a href="/company/new">Entreprises</a></li>
+                                <li><a href="/school/new">Ecoles</a></li>
                             </ul>
                         </li> 
                         <li><a href="/login/">CONNEXION</a></li>
@@ -51,70 +53,49 @@
             </div>
         </header>
 
-        {# <nav class="main-nav d-none d-lg-block" style="display:flex !important;margin-bottom:50px;">
-            <ul>
-                <li class="active"><a href="/">ACCUEIL</a></li>
-                {% if is_granted('ROLE_USER') %}
-                    {% if is_granted('ROLE_ADMIN') %}
-                    <li><a href="/admin">ADMIN</a></li>
-                    {% elseif  is_granted('ROLE_STUDENT') %}
-                    <li><a href="{{ path('student_show', {'id': app.user.student.id}) }}">MON PROFILE</a></li>
-                    {% elseif  is_granted('ROLE_COMPANY') %}
-                    <li><a href="{{ path('company_show', {'id': app.user.company.id}) }}">MON ENTREPRISE</a></li>
-                    {% endif %}
-                    <li><a href="/logout">DECONNEXION</a></li>
-                {% else %}
-                <li class="drop-down"><a>S'INSCRIRE</a>
-                    <ul>
-                        <li><a href="/student/new">Etudiant</a></li>
-                        <li><a href="/company/new">Professionel</a></li>
-                        <li><a href="/school/new">Ecole</a></li>
-                    </ul>
-                </li> 
-                <li><a href="/login">CONNEXION</a></li>
-                {% endif %}
-            </ul>
-        </nav><!-- .main-nav --> #}
+    <div style="margin-top:80px">
 
-        <h1>Offers index</h1>
+        <h1>Offres d'emploi</h1>
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Title</th>
-                    <th>Location</th>
-                    <th>Domain</th>
-                    <th>DateStart</th>
-                    <th>DateEnd</th>
-                    <th>Description</th>
-                    <th>actions</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for offer in offers %}
-                <tr>
-                    {% if offer.applies[0] is not defined or offer.applies[0] is defined and offer.applies[0].hired == false and offer.applies[0].confirmed == false and offer.applies[0].finished == false %}
-                    <td>{{ offer.id }}</td>
-                    <td>{{ offer.title }}</td>
-                    <td>{{ offer.location }}</td>
-                    <td>{{ offer.domain }}</td>
-                    <td>{{ offer.dateStart ? offer.dateStart|date('Y-m-d H:i:s') : '' }}</td>
-                    <td>{{ offer.dateEnd ? offer.dateEnd|date('Y-m-d H:i:s') : '' }}</td>
-                    <td>{{ offer.description }}</td>
-                    <td>
-                        <a href="{{ path('offers_show', {'id': offer.id}) }}">show</a>
-                    </td>
-                    {% endif %}
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="5">Aucun Elément</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    
+        <div style="margin-bottom:40px;margin-top:40px;">{{ knp_pagination_render(offers) }}</div>
+
+        <div class="row" style="justify-content:center;">
+        {% for offer in offers %}
+            {% if offer.applies[0] is not defined or offer.applies[0] is defined and offer.applies[0].hired == false and offer.applies[0].confirmed == false and offer.applies[0].finished == false %}
+
+            <div class="card col-lg-4 mr-2 ml-2 mt-2 mb-2">
+                <div class="card-body">
+                    <div style="margin-bottom:30px;">
+                        <h5 class="card-title">{{ offer.title }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ offer.location }}</h6>
+                    </div>
+                    <p class="card-text" style="text-align:justify;">{{ offer.description|u.truncate(200) }}...</p>
+                    <a  href="{{ path('offers_show', {'id': offer.id}) }}" class="card-link">Lire la suite</a>
+                </div>
+            </div>
+
+            {% endif %}
+        {% else %}
+            <tr>
+                <td colspan="5">Aucun Elément</td>
+            </tr>
+        {% endfor %}
+        </div>
+        <div style="margin-top:80px;">{{ knp_pagination_render(offers) }}</div>
     </div>
+</div>
+
+
+<footer id="footer" class="section-bg">
+    <div class="container">
+        <div class="copyright">
+        &copy; Copyright <strong>SWEEETCH</strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+
+        L'équipe de SWEEETCH</a>
+        </div>
+    </div>
+</footer>
 
 {% endblock %}

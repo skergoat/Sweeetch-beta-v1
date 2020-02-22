@@ -3,3 +3,5 @@ twig:
     paths:
         'assets/img': images
         'assets/css/components': styles
+
+   
