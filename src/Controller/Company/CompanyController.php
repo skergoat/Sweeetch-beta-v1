@@ -13,6 +13,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -168,6 +169,15 @@ class CompanyController extends AbstractController
                 }
                 // remove offers 
                 $entityManager->remove($offers);
+            }
+
+            // delete session
+            $currentUserId = $this->getUser()->getId();
+            if ($currentUserId == $company->getUser()->getId())
+            {
+              $session = $this->get('session');
+              $session = new Session();
+              $session->invalidate();
             }
 
             $entityManager->remove($company);
