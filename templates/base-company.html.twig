@@ -159,7 +159,9 @@
                                     <p>
                                         Emplois
                                     </p>
-                                    {# <p>
+                                    
+                                </a>
+                                {# <p>
                                         Postulations 
                                         {% if fresh > 0 %}
                                         <span class="badge badge-info right" title="postulations">{{ fresh }}</span>                                         
@@ -167,7 +169,25 @@
                                         <span class="right badge badge-warning" title="mission à confirmer">!</span>
                                         {% endif %} 
                                     </p> #}
-                                </a>
+                                   
+                                {% if app.request.get('_route') == 'offers_company_index' or app.request.get('_route') == 'offers_new' %}
+
+                                <li class="nav nav-tree">
+                                    <li class="nav-item">
+                                        <a href="{{ path('offers_company_index', {id:company.id}) }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Tous</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ path('offers_new', {id:company.id}) }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Nouveau</p>
+                                        </a>
+                                    </li>
+                                </li>
+
+                                {% endif %}
                             </li>
                         </ul>
                     </nav>
