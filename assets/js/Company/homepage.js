@@ -16,3 +16,6 @@ global.jQuery = $;
 import 'bootstrap';
 import 'admin-lte';
 
+import './components/edit.js';
+import './components/message.js';
+

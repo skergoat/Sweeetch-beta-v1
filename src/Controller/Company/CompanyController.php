@@ -94,7 +94,9 @@ class CompanyController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('company_index');
+            $this->addFlash('success', 'Mise à jour réussie');
+
+            return $this->redirectToRoute('company_edit', ['id' => $company->getId() ]);
         }
 
         return $this->render('company/edit.html.twig', [
@@ -126,7 +128,7 @@ class CompanyController extends AbstractController
 
                     // set roles 
                     $student->getUser()->setRoles([
-                        "ROLE_SUPER_STUDENT"
+                        "ROLE_SUPER_COMPANY"
                     ]);
 
                     // send mail 
