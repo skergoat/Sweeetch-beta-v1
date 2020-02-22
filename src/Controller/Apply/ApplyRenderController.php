@@ -57,10 +57,11 @@ class ApplyRenderController extends AbstractController
     }
 
     /**
-     * @Route("/show/company/{id}", name="offers_preview", methods={"GET"})
+     * @Route("/show/company/{id}/{company}", name="offers_preview", methods={"GET"})
      * @IsGranted("ROLE_SUPER_COMPANY")
+     * @ParamConverter("company", options={"id" = "company"})
      */
-    public function showByCompany(ApplyRepository $applyRepository, Offers $offer): Response
+    public function showByCompany(ApplyRepository $applyRepository, Offers $offer, Company $company): Response
     {   
         $applies = $applyRepository->findByOffer($offer);
         $finished = $applyRepository->findByOfferByFinished($offer);
@@ -68,7 +69,8 @@ class ApplyRenderController extends AbstractController
         return $this->render('apply/show_preview.html.twig', [
             'offers' => $offer,
             'applies' => $applies,
-            'finished' => $finished
+            'finished' => $finished,
+            'company' => $company,
         ]);
     }
 

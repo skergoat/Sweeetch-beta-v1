@@ -14,18 +14,20 @@
     font-size:10px;
     position:relative;
     top:-4px;
+    padding:1.5px;
+    border:0px;
 
     .fa-trash-alt, .fa-check {
         position:relative; 
     }
 
-    .fa-trash-alt {
-        left:-2.5px;
-    }
+    // .fa-trash-alt {
+    //     left:-1.5px;
+    // }
 
-    .fa-check {
-        left:-3px;
-    }
+    // .fa-check {
+    //     left:-3px;
+    // }
 
     &-form {
         margin-right:5px;
