@@ -8,7 +8,7 @@
 
     <div class="container container-jobs">
 
-        <header id="header" >
+        <header id="header">
 
             <div id="topbar">
             <div class="container">
@@ -53,23 +53,23 @@
             </div>
         </header>
 
-    <div style="margin-top:80px">
+    <div class="jobs-container">
 
         <h1>Offres d'emploi</h1>
 
-        <div style="margin-bottom:40px;margin-top:40px;">{{ knp_pagination_render(offers) }}</div>
+        <div class="pagination-top">{{ knp_pagination_render(offers) }}</div>
 
-        <div class="row" style="justify-content:center;">
+        <div class="row">
         {% for offer in offers %}
             {% if offer.applies[0] is not defined or offer.applies[0] is defined and offer.applies[0].hired == false and offer.applies[0].confirmed == false and offer.applies[0].finished == false %}
 
             <div class="card col-lg-4 mr-2 ml-2 mt-2 mb-2">
                 <div class="card-body">
-                    <div style="margin-bottom:30px;">
+                    <div class="card-body-1">
                         <h5 class="card-title">{{ offer.title }}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">{{ offer.location }}</h6>
                     </div>
-                    <p class="card-text" style="text-align:justify;">{{ offer.description|u.truncate(200) }}...</p>
+                    <p class="card-text">{{ offer.description|u.truncate(200) }}...</p>
                     <a  href="{{ path('offers_show', {'id': offer.id}) }}" class="card-link">Lire la suite</a>
                 </div>
             </div>
@@ -81,7 +81,8 @@
             </tr>
         {% endfor %}
         </div>
-        <div style="margin-top:80px;">{{ knp_pagination_render(offers) }}</div>
+        <div class="pagination-bottom">{{ knp_pagination_render(offers) }}</div>
+
     </div>
 </div>
 
@@ -92,8 +93,7 @@
         &copy; Copyright <strong>SWEEETCH</strong>. All Rights Reserved
         </div>
         <div class="credits">
-
-        L'équipe de SWEEETCH</a>
+        L'équipe de SWEEETCH
         </div>
     </div>
 </footer>
