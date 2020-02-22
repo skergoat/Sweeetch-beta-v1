@@ -4,11 +4,11 @@
 
 {% block body %}
 
-<div class="background" style="height:100%;padding-bottom:100px;">
+<div class="background">
 
-    <div class="container login-page" style="padding-top:100px;">
+    <div class="container container-jobs">
 
-        <header id="header" >
+        <header id="header">
 
             <div id="topbar">
             <div class="container">
@@ -34,7 +34,6 @@
                             <li><a href="/school/new">Ecole</a></li>
                         </ul>
                         </li> 
-                        {# <li><a href="/login/">CONNEXION</a></li> #}
                     </ul>
                 </nav>
             
@@ -55,7 +54,7 @@
             <h1 class="h3 mb-3 font-weight-normal">Se connecter</h1>
             <label for="inputEmail">Email</label>
             <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
-            <label for="inputPassword" style="margin-top:30px;">Password</label>
+            <label for="inputPassword" class="Password">Password</label>
             <input type="password" name="password" id="inputPassword" class="form-control" required>
 
             <input type="hidden" name="_csrf_token"
@@ -68,7 +67,7 @@
                 </label>
             </div>
             
-            <button class="btn btn-lg btn-primary" type="submit" style="margin-top:30px;">
+            <button class="Password btn btn-lg btn-primary" type="submit">
                 Connexion
             </button>
 
@@ -84,10 +83,9 @@
         &copy; Copyright <strong>SWEEETCH</strong>. All Rights Reserved
       </div>
       <div class="credits">
-
-        L'équipe de SWEEETCH</a>
+        L'équipe de SWEEETCH
       </div>
     </div>
-</footer><!-- #footer -->
+</footer>
 
 {% endblock %}

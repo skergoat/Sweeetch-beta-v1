@@ -60,3 +60,38 @@ h1.titles-front {
     display:flex !important;
     margin-bottom:50px;
 }
+
+.description {
+    text-align:justify;
+    margin-top:30px;
+
+    & h5 {
+        font-weight:bold;
+        text-align:left;
+    }
+}
+
+.pagination-top {
+    margin-bottom:40px;
+    margin-top:40px;
+}
+
+.pagination-bottom {
+    margin-top:80px;
+}
+
+.jobs-container {
+    margin-top:80px;
+
+    & .row {
+        justify-content:center;
+    }
+
+    & .card-body-1 {
+        margin-bottom:30px;
+    }
+
+    & p {
+        text-align:justify;
+    }
+}

@@ -4,8 +4,7 @@
 
 {% block body %}
 
-<div class="background-jobs"
->
+<div class="background-jobs">
     <div class="container container-jobs">
 
         <header id="header">
@@ -30,10 +29,10 @@
             </div>
         </header>
 
-        <h1 style="margin-top:50px;">{{ offers.title }}</h1>
+        <h1 class="titles-front">{{ offers.title }}</h1>
         <h4 class="card-subtitle mb-2 text-muted">{{ offers.location }}</h4>
 
-        <div class="card col-lg-12" style="margin-top:30px;">
+        <div class="Password card col-lg-12">
             <div class="card-body">
                 <table class="table offers-show col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <tbody>
@@ -56,8 +55,8 @@
                     </tbody>
                 </table>
 
-                <div style="text-align:justify;margin-top:30px;">
-                    <h5 style="font-weight:bold;text-align:left;">Description</h5>
+                <div class="description">
+                    <h5>Description</h5>
                     <p>{{ offers.description }}</p>
                 </div>
         
@@ -84,8 +83,7 @@
         &copy; Copyright <strong>SWEEETCH</strong>. All Rights Reserved
         </div>
         <div class="credits">
-
-        L'équipe de SWEEETCH</a>
+        L'équipe de SWEEETCH
         </div>
     </div>
 </footer>
