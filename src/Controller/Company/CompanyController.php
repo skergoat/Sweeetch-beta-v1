@@ -4,8 +4,10 @@ namespace App\Controller\Company;
 
 use App\Entity\Company;
 use App\Form\CompanyType;
+use App\Form\UpdateCompanyType;
 use App\Repository\ApplyRepository;
 use App\Service\Mailer\ApplyMailer;
+use App\Form\CompanyEditPasswordType;
 use App\Repository\CompanyRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -86,12 +88,30 @@ class CompanyController extends AbstractController
      * @Route("/{id}/edit", name="company_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_COMPANY")
      */
-    public function edit(Request $request, Company $company): Response
+    public function edit(Request $request, Company $company, UserPasswordEncoderInterface $passwordEncoder): Response
     {
-        $form = $this->createForm(CompanyType::class, $company);
-        $form->handleRequest($request);
+        $form = $this->createForm(UpdateCompanyType::class, $company);
+        $formPassword = $this->createForm(CompanyEditPasswordType::class, $company); 
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        // check old pass 
+        $oldPass = $company->getUser()->getPassword();
+
+        $form->handleRequest($request);
+        $formPassword->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid() || $formPassword->isSubmitted() && $formPassword->isValid()) {
+
+            // edit password 
+            $user = $formPassword->getData()->getUser();
+
+            if($user->getPassword() != $oldPass)
+            {
+                $user->setPassword($passwordEncoder->encodePassword(
+                    $user,
+                    $user->getPassword()
+                ));
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('success', 'Mise à jour réussie');
@@ -102,6 +122,7 @@ class CompanyController extends AbstractController
         return $this->render('company/edit.html.twig', [
             'company' => $company,
             'form' => $form->createView(),
+            'formPassword' => $formPassword->createView(),
         ]);
     }
 
