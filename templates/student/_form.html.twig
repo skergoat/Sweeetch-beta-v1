@@ -39,49 +39,43 @@
     </div>
 
     <div class="col-lg-5 col-md-12 col-sm-12 margin-left">
-        <!-- <div class="col-lg-12"> -->
-            <!-- <div class="row"> -->
-                <div class="form-group">
-                    <div class="custom-file">
-                        <label class="custom-file-label browse" for="customFileLang" style="position:absolute;top:32px;" data-url="student_resume_file" id="browse-student_resume_file"></label>
-                        {{ form_row(form.resume, {'label': 'CV', 'attr' : { class: 'form-control' }} ) }}
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="custom-file">
-                        <label class="custom-file-label browse" for="customFileLang" style="position:absolute;top:32px;" data-url="student_idCard_file" id="browse-student_idCard_file"></label>
-                        {{ form_row(form.idCard, {'label': 'Carte d\'identité', 'attr' : { class: 'form-control' }} ) }}
-                    </div>
-                </div> 
-            <!-- </div>
-            <div class="row"> -->
-                <div class="form-group">
-                    <div class="custom-file">
-                        <label class="custom-file-label browse" for="customFileLang" style="position:absolute;top:32px;" data-url="student_studentCard_file" id="browse-student_studentCard_file"></label>
-                        {{ form_row(form.studentCard, {'label': 'Carte d\'étudiant', 'attr' : { class: 'form-control' }} ) }}
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="custom-file">
-                        <label class="custom-file-label browse" for="customFileLang" style="position:absolute;top:32px;" data-url="student_proofHabitation_file" id="browse-student_proofHabitation_file"></label>
-                        {{ form_row(form.proofHabitation, {'label': 'Justificatif de Domicile', 'attr' : { class: 'form-control' }} ) }}
-                    </div>
-                </div> 
-            <!-- </div> -->
-            <div class="row" id="row-radio">
-                <div class="col-lg-6 form-group">
-                    {{ form_row(form.driving_license, {'label': 'Permis de Conduire', 'attr' : { class: 'form-check' }} ) }}
-                </div>
-                <div class="col-lg-6 form-group">
-                    {{ form_row(form.disabled, {'label': 'Handicap', 'attr' : { class: 'form-check' }} ) }}
-                </div>
+        <div class="form-group">
+            <div class="custom-file">
+                <label class="custom-file-label browse" for="customFileLang" style="position:absolute;top:32px;" data-url="student_resume_file" id="browse-student_resume_file"></label>
+                {{ form_row(form.resume, {'label': 'CV', 'attr' : { class: 'form-control' }} ) }}
             </div>
-            <div class="row">
-                <div class="col-lg-12" style="margin-top:25px;">
-                    <button class="btn btn-primary">Envoyer</button>
-                </div>
+        </div>
+        <div class="form-group">
+            <div class="custom-file">
+                <label class="custom-file-label browse" for="customFileLang" style="position:absolute;top:32px;" data-url="student_idCard_file" id="browse-student_idCard_file"></label>
+                {{ form_row(form.idCard, {'label': 'Carte d\'identité', 'attr' : { class: 'form-control' }} ) }}
             </div>
-        <!-- </div>      -->
+        </div> 
+        <div class="form-group">
+            <div class="custom-file">
+                <label class="custom-file-label browse" for="customFileLang" style="position:absolute;top:32px;" data-url="student_studentCard_file" id="browse-student_studentCard_file"></label>
+                {{ form_row(form.studentCard, {'label': 'Carte d\'étudiant', 'attr' : { class: 'form-control' }} ) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="custom-file">
+                <label class="custom-file-label browse" for="customFileLang" style="position:absolute;top:32px;" data-url="student_proofHabitation_file" id="browse-student_proofHabitation_file"></label>
+                {{ form_row(form.proofHabitation, {'label': 'Justificatif de Domicile', 'attr' : { class: 'form-control' }} ) }}
+            </div>
+        </div> 
+        <div class="row" id="row-radio">
+            <div class="col-lg-6 form-group col-lg-button">
+                {{ form_row(form.driving_license, {'label': 'Permis de Conduire', 'attr' : { class: 'form-check' }} ) }}
+            </div>
+            <div class="col-lg-6 form-group col-lg-button">
+                {{ form_row(form.disabled, {'label': 'Handicap', 'attr' : { class: 'form-check' }} ) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-lg-button" style="margin-top:25px;">
+                <button class="btn btn-primary">Envoyer</button>
+            </div>
+        </div>
     </div>  
 </div> 
 
