@@ -106,3 +106,13 @@
 .card-body > .table-offers > thead > tr > th {
     border-top: 1px solid #dee2e6;
 }
+
+.description {
+    text-align:justify;
+    margin-top:30px;
+
+    & h5 {
+        font-weight:bold;
+        text-align:left;
+    }
+}
