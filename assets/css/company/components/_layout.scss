@@ -1,0 +1,108 @@
+
+.alert.alert-success {
+    background:#76C381;
+    border:1px solid #76C381;
+}
+
+/* general */
+
+* {
+    font-family: 'Roboto', "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+}
+
+h1, h2 {
+    color:$lightDarker;
+}
+
+h3 {
+    color:$titleBlue;
+}
+
+h4 {
+    color:$titleYellow;
+}
+
+h5 {
+    color:$titleGrey; 
+}
+
+th {
+    color:$titleGrey;  
+}
+
+td {
+    color:$lightDarker;
+    font-weight:bold;
+}
+
+td a {
+    color:$linkBlue;
+    
+    &:hover{
+        color:$darkerBlue;
+    }
+}
+
+:not(.layout-fixed) .main-sidebar{
+    position:fixed !important;
+}
+
+.row-top {
+    height:170px;
+}
+
+.edit-items {
+    color:$linkBlue;   
+}
+
+/* admin lte layout */
+
+.main-header {
+    background: #59D2FF;
+
+    & .navbar-nav .nav-link {
+        color:white;
+    }
+}
+
+.bg-warning {
+    background:$yellow;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color:rgb(250, 231, 232);
+}
+
+.content-wrapper > .content {
+    padding-bottom:30px;
+}
+
+/* content margins */
+
+.content {
+
+    &.content-back {
+        padding-top:40px;
+    }
+}
+
+.account-state {
+    margin-top:30px;
+}
+
+/* content none */
+
+.border-top {
+    color: $contentNone;
+    border-top:1px solid #dee2e6;
+}
+
+td.border-top-td {
+    color:#bdbcbc !important;
+    font-style:italic;
+}
+
+.alert.alert-success {
+    background:#76C381;
+    border:1px solid #76C381;
+}
