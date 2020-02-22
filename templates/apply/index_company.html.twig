@@ -38,7 +38,7 @@
                     <tr>
                         <td><a href="{{ path('offers_preview', {'id': offers.id, 'company':company.id}) }}">{{ offers.title }}</a></td>
                         <td>{{ offers.location }}</td>
-                        <td>{{ offers.dateStart ? offers.dateStart|date('Y-m-d') : '' }}</td>
+                        <td>{{ offers.dateStart ? offers.dateStart|date("d/m/Y") : '' }}</td>
                         <td> <span class="badge bg-primary">ouvert</span> </td>
                         <td>
                             {# <a href="{{ path('offers_preview', {'id': offers.id}) }}">show</a>#}
@@ -55,7 +55,7 @@
                     <tr>
                         <td><a href="{{ path('offers_preview', {'id': offers.applies[0].offers.id, 'company':company.id}) }}">{{ offers.applies[0].offers.title }}</a></td>
                         <td>{{ offers.applies[0].offers.location }}</td>
-                        <td>{{ offers.applies[0].offers.dateStart ? offers.applies[0].offers.dateStart|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ offers.applies[0].offers.dateStart ? offers.applies[0].offers.dateStart|date("d/m/Y") : '' }}</td>
                         <td>    
                             {% if offers.applies[0].confirmed == false %}
                                 {% if offers.applies[0].hired == false %}
