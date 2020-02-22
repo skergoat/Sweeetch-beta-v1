@@ -106,3 +106,18 @@ td.border-top-td {
     background:#76C381;
     border:1px solid #76C381;
 }
+
+ul.pagination {
+
+    display:flex;
+    justify-content:center;
+
+    & li.page-item:nth-child(1) {
+        display:none;
+    }
+
+    & li.page-item:last-child {
+        display:none;
+    }
+   
+}

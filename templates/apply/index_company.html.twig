@@ -18,6 +18,8 @@
 <div class="col-md-12">
     <div class="card">
 
+      <div class="pagination-bottom mb-4 mt-4">{{ knp_pagination_render(offers) }}</div>
+
         <div class="card-body p-0">
             <table class="table-offers table">
                 <thead>
@@ -80,6 +82,8 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="pagination-bottom mt-5">{{ knp_pagination_render(offers) }}</div>
 
     </div>      
 </div>
