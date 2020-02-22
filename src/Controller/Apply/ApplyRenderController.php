@@ -11,6 +11,7 @@ use App\Service\Mailer\ApplyMailer;
 use App\Repository\OffersRepository;
 use App\Repository\CompanyRepository;
 use App\Repository\StudentRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -48,10 +49,20 @@ class ApplyRenderController extends AbstractController
      * @Route("/index/company/{id}", name="offers_company_index", methods={"GET"})
      * @IsGranted("ROLE_COMPANY")
      */
-    public function indexByCompany(Company $company, OffersRepository $offersRepository): Response
+    public function indexByCompany(Company $company, OffersRepository $offersRepository, PaginatorInterface $paginator, Request $request): Response
     {       
+        $queryBuilder = $offersRepository->findAllPaginatedByCompany("DESC", $company);
+
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page', 1),
+            10
+        );
+
+        // $offersRepository->findBy(['company' => $company->getId()])
+
         return $this->render('apply/index_company.html.twig', [
-            'offers' => $offersRepository->findBy(['company' => $company->getId()]),
+            'offers' => $pagination,
             'company' => $company,
         ]);
     }
