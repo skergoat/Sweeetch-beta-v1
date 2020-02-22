@@ -1,0 +1,82 @@
+/* icon box */
+
+.info-progress.info-box {
+
+    min-height:20px;
+    padding-left:0px;
+
+    & .info-box-icon {
+        font-size:15px;
+    }
+
+    & .info-box-content {
+        font-size:13px;
+        // margin-right:15px;
+    }
+}
+
+.info-box-nopage {
+    margin-top:15px;
+}
+
+.info-checked.info-box {
+   
+    width: 200px;
+
+    &.info-progress {
+        min-height:20px;
+    }
+
+    &.info-success {
+        min-height:60px;
+        height:60px;
+    }
+
+    & .info-box-icon {
+        font-size:15px;  
+
+        &.bg-success { 
+            width:40px;  
+            height:40px; 
+            background:#28a745b0 !important;
+        }
+    }
+
+    & .info-box-content {
+        font-size:13px;
+    }
+} 
+
+#box-flex {
+    display:flex;
+    align-items:center;
+}
+
+.far.fa-eye {
+    color:$darkerBlue;
+    text-align:center;
+}
+
+.action-link {
+    width:100%;
+    display:block;
+
+    &:hover {
+        text-decoration:none;
+        border-bottom:0px;
+    }
+
+    & .far.fa-eye {
+        display:block;
+        margin:auto; 
+        color:$linkBlue; 
+
+        &:hover{
+            color:$darkerBlue;
+        }
+    }
+}
+
+.fas.fa-plus, .fas.fa-minus {
+    color:white;
+}

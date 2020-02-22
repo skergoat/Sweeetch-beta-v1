@@ -241,7 +241,6 @@ class StudentController extends AbstractController
      */
     public function delete(Request $request, Student $student, UploaderHelper $uploaderHelper, ApplyRepository $applyRepository, $from): Response
     {
-        
         if ($this->isCsrfTokenValid('delete'.$student->getId(), $request->request->get('_token'))) {
 
             // delete private files when delete entity
