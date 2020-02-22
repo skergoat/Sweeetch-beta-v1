@@ -19,6 +19,14 @@ class OffersRepository extends ServiceEntityRepository
         parent::__construct($registry, Offers::class);
     }
 
+    public function findAllPaginated($order = "DESC")
+    {
+        return $this->createQueryBuilder('p')
+        ->orderBy('p.id', $order)
+        ->getQuery()
+        ->getResult();
+    }
+
     /*
     public function findOneBySomeField($value): ?Offers
     {

@@ -30,7 +30,13 @@
 }
 
 input[type="file"] {
-    // position:relative;
     opacity:0;
     top:-2px;
 }    
+
+.offers-show {
+
+    &.table th, &.table td {
+        border:0px;
+    }
+}

@@ -5,32 +5,32 @@
         <div class="col-lg-5 col-sm-12 margin-right">
             <div class="row">
                 <div class="col-lg-12 form-group">
-                    {{ form_row(form.companyName, {'attr' : { class: 'form-control' }} ) }}
+                    {{ form_row(form.companyName, {'label':'Entreprise' ,'attr' : { class: 'form-control' }} ) }}
                 </div>
                 <div class="col-lg-12 form-group">
-                    {{ form_row(form.siret, {'attr' : { class: 'form-control' }} ) }}
+                    {{ form_row(form.siret, {'label':'Siret' ,'attr' : { class: 'form-control' }} ) }}
                 </div>
                 <div class="col-lg-6 form-group">
-                    {{ form_row(form.firstname, {'attr' : { class: 'form-control' }} ) }}
+                    {{ form_row(form.firstname, {'label':'Prénom' ,'attr' : { class: 'form-control' }} ) }}
                 </div>
                 <div class="col-lg-6 form-group">
-                    {{ form_row(form.lastname, {'attr' : { class: 'form-control' }} ) }}
+                    {{ form_row(form.lastname, {'label':'Nom' ,'attr' : { class: 'form-control' }} ) }}
                 </div>  
             </div>
             <div class="row" style="margin-top:30px;">
                 <div class="col-lg-12 form-group">
-                    {{ form_row(form.address, {'attr' : { class: 'form-control' }} ) }}
+                    {{ form_row(form.address, {'label':'Adresse' ,'attr' : { class: 'form-control' }} ) }}
                 </div>
                 <div class="col-lg-6 form-group">
-                    {{ form_row(form.zipCode, {'attr' : { class: 'form-control' }} ) }}
+                    {{ form_row(form.zipCode, {'label':'Code Postal' ,'attr' : { class: 'form-control' }} ) }}
                 </div>
                 <div class="col-lg-6 form-group">
-                    {{ form_row(form.city, {'attr' : { class: 'form-control' }} ) }}
+                    {{ form_row(form.city, {'label':'Ville' ,'attr' : { class: 'form-control' }} ) }}
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-6 form-group">
-                    {{ form_row(form.telNumber, {'attr' : { class: 'form-control' }} ) }}
+                    {{ form_row(form.telNumber, {'label':'Téléphone' ,'attr' : { class: 'form-control' }} ) }}
                 </div> 
             </div>
         </div>
@@ -38,13 +38,13 @@
         <div class="col-lg-5 col-md-12 col-sm-12 margin-left">
             <!-- <div class="row"> -->
                 <div class="form-group">
-                    {{ form_row(form.user.email, {'attr' : { class: 'form-control' }} ) }}
+                    {{ form_row(form.user.email, {'label':'Email' ,'attr' : { class: 'form-control' }} ) }}
                 </div>
                 <div class="form-group">
-                {{ form_row(form.user.password.first, {'attr' : { class: 'form-control' }} ) }}
+                {{ form_row(form.user.password.first, {'label':'Mot de Passe' ,'attr' : { class: 'form-control' }} ) }}
                 </div>
                 <div class="form-group">
-                {{ form_row(form.user.password.second, {'attr' : { class: 'form-control' }} ) }} 
+                {{ form_row(form.user.password.second, {'label':'Répéter le mot de Passe' ,'attr' : { class: 'form-control' }} ) }} 
                 </div> 
             <!-- </div> -->
             <div class="row">

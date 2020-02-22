@@ -11,6 +11,7 @@ use App\Service\Mailer\ApplyMailer;
 use App\Repository\OffersRepository;
 use App\Repository\StudentRepository;
 use App\Controller\Company\ApplyController;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,10 +27,18 @@ class OffersController extends AbstractController
     /**
      * @Route("/", name="offers_index", methods={"GET"})
      */
-    public function index(OffersRepository $offersRepository): Response
+    public function index(OffersRepository $offersRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $queryBuilder = $offersRepository->findAllPaginated("DESC");
+
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page', 1),
+            6
+        );
+
         return $this->render('offers/index.html.twig', [
-            'offers' => $offersRepository->findAll(),
+            'offers' => $pagination,
         ]);
     }
 
