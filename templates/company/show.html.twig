@@ -1,6 +1,6 @@
 {% extends 'base-company.html.twig' %}
 
-{% block title %} {{ parent() }} - students {% endblock %}
+{% block title %} {{ parent() }} - Entrepirses {% endblock %}
 
 {% block body %}
 
@@ -37,86 +37,14 @@
                     </div>
                 </div> 
                 {% endif %}
-
             </div>
-        </div> 
-
-        {# <div class="col-lg-7">
-
-        {% if applies[0] is defined %}
-            {% if applies[0].hired == true or applies[0].agree == true or applies[0].confirmed == true %}
-            
-            <h5>Progression du recrutement : </h5>
-
-            <div class="timeline" style="position:relative">
-
-                    <div class="time-icon" data-url="first">
-                        {% if applies[0] is defined %}
-                            {% if applies[0].hired == true %}
-                            <i class="fas fa-play-circle bg-red"></i>
-                            {% else %}
-                            <i class="fas fa-play-circle bg-grey"></i>
-                            {% endif %}
-                        {% else %}
-                        <i class="fas fa-play-circle bg-grey"></i>
-                        {% endif %}
-                    </div>
-                    
-                    <div class="time-icon" data-url="second">
-                        {% if applies[0] is defined %}
-                            {% if applies[0].agree == true %}
-                            <i class="fas fa-cog bg-yellow"></i>
-                            {% else %}
-                            <i class="fas fa-cog bg-grey"></i>
-                            {% endif %}
-                        {% else %}
-                        <i class="fas fa-cog bg-grey"></i>
-                        {% endif %}
-                    </div>
-                    <div class="time-icon" data-url="third">
-                        {% if applies[0] is defined %}
-                            {% if applies[0].confirmed == true %}
-                            <i class="fas fa-check-circle bg-green"></i>
-                            {% else %}
-                            <i class="fas fa-check-circle bg-grey"></i>
-                            {% endif %}
-                        {% else %}
-                        <i class="fas fa-check-circle bg-grey"></i>
-                        {% endif %}
-                    </div>
-
-                <div class="message message-first">
-                    <div class="timeline-item">
-                    <h3 class="timeline-header">Acceptation de votre candidature</h3>
-                    </div>
-                </div>
-
-                <div class="message message-second">
-                    <div class="timeline-item">
-                    <h3 class="timeline-header">Traitement du dossier</h3>
-                    </div>
-                </div>
-
-                <div class="message message-third">
-                    <div class="timeline-item">
-                    <h3 class="timeline-header">Debut de la mission</h3>
-                    </div>
-                </div>
-
-            </div>
-
-            {% endif %}
-        {% endif %}
-
-        </div> #}
-
+        </div>
     </div> 
 
     <div class="row card-margin">
 
         <div class="col-lg-6" >
 
-            <!-- <h3>Infos du compte</h3><br> -->
             <div class="card col-lg-" style="padding:0px;">
 
                 <div class="cardRed card-header-color card-header border-transparent">
@@ -170,11 +98,8 @@
                     </div>
                 </div>
             </div>
-        
-        </div>
-    </div>
-
-           {# <div class="card col-lg-12" style="padding:0px;">
+    
+            {# <div class="card col-lg-12" style="padding:0px;">
 
                 <div class="cardRed card-header-color card-header border-transparent">
                     <p class="card-title">Profil Etudiant</p>
@@ -193,11 +118,11 @@
                             <tbody>
                                 <tr>
                                     <th>Domaine d'activité</th>
-                                    <td>{{ student.profile.domain }}</td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <th>Région</th>
-                                    <td>{{ student.profile.area }}</td>
+                                    <td></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -227,29 +152,29 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for languages in student.profile.languages %}
+                               {# } {% for languages in student.profile.languages %}
                     
                                 <tr class="tr-border">
                                     <td>{{ languages.languageName }}</td>
                                     <td>{{ languages.level }}</td>
                                 </tr>
 
-                                {% else %}
+                                {% else %} 
 
                                 <tr class="border-top">
                                     <td colspan="8" class="border-top-td">Aucune langue</td>
                                 </tr> 
 
-                                {% endfor %}
-                            </tbody>
+                                {% endfor %} #}
+                         {#}   </tbody> 
                         </table>
                     </div>
                 </div>  
-            </div> 
+           </div>  #}
             
             <div class="card-dashboard col-lg-12 table-scroll" >
 
-                <div class="card table-scroll-card-width" style="padding:0px;" >
+                {# <div class="card table-scroll-card-width" style="padding:0px;" >
 
                     <div class="cardRed card-header-color card-header border-transparent">
                         <p class="card-title">Formations</p>
@@ -273,7 +198,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for education in student.profile.education %}
+                                    {# {% for education in student.profile.education %}
                                     <tr class="tr-border">
                                         <td>{{ education.title }}</td>
                                         <td>{{ education.school }}</td>
@@ -282,7 +207,7 @@
                                         <td>  en cours </td>
                                         {% else %}
                                             <td>{{ education.dateEnd|date("d/m/Y") }}</td>
-                                        {% endif %}
+                                        {% endif %} 
                                     </tr>
                                     {% else %}
 
@@ -290,19 +215,19 @@
                                         <td colspan="8" class="border-top-td">Aucune formation</td>
                                     </tr> 
 
-                                    {% endfor %}
-                                </tbody>
+                                    {% endfor %}#}
+                                {# </tbody>
                             </table>
                         </div> 
                     </div>  
-                </div>
+                </div> #}
             
             </div>
         </div>
 
         <div class="col-lg-6">
 
-            <div class="card col-lg-12" style="padding:0px;">
+            {# <div class="card col-lg-12" style="padding:0px;">
                 
                 <div class="cardBlue card-header-color card-header border-transparent">
                     <p class="card-title">Mes Documents</p>
@@ -320,33 +245,33 @@
                             <tr>
                                 <td>Mon CV</td>
                                 <td>
-                                    <a href="{{ path('student_download_resume', { id: student.resume.id }) }}"><span class="fa fa-download"></span></a>
+                                    <a href=""><span class="fa fa-download"></span></a>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="th-dark">Ma Carte d'identité</td>
                                 <td>
-                                    <a href="{{ path('student_download_idcard', { id: student.idCard.id }) }}"><span class="fa fa-download"></span></a>
+                                    <a href=""><span class="fa fa-download"></span></a>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="th-dark">Ma Carte d'étudiant</td>
                                 <td>
-                                    <a href="{{ path('student_download_studentcard', { id: student.studentCard.id }) }}"><span class="fa fa-download"></span></a>
+                                    <a href=""><span class="fa fa-download"></span></a>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="th-dark">Justificatif de domicile</td>
                                 <td>
-                                    <a href="{{ path('student_download_proofhabitation', { id: student.proofHabitation.id }) }}"><span class="fa fa-download"></span></a>
+                                    <a href=""><span class="fa fa-download"></span></a>
                                 </td>
                             </tr>
                         </table>
                     </div>
                 </div>
-            </div>
+            </div> #}
 
-            <div class="col-lg-12 table-scroll">
+           <div class="col-lg-12 table-scroll">
 
                 <div class="card" style="padding:0px;">
 
@@ -376,12 +301,12 @@
                                             {% for applies in applies %}
                                     <tr class="border-top">
 
-                                        <td><a href="{{ path('student_apply', {'id': student.id}) }}" class="action-link">{{ applies.offers.title }}</a></td>
+                                        <td><a href="" class="action-link">{{ applies.offers.title }}</a></td>
 
                                         {% if is_granted('ROLE_ADMIN') %}
-                                        <td><a href="{{ path('offers_preview', {id : applies.offers.id}) }}" title="voir l'annonce"> {{ applies.offers.title }} </a></td>  
+                                        <td><a href="" title="voir l'annonce"> {{ applies.offers.title }} </a></td>  
                                         {% else %}
-                                        <td><a href="{{ path('offers_show', {'id': applies.offers.id}) }}" title="voir l'annonce">{{ applies.offers.title }}</a></td>
+                                        <td><a href="" title="voir l'annonce">{{ applies.offers.title }}</a></td>
                                         {% endif %}
 
                                         <td>
@@ -394,20 +319,20 @@
                                             {% endif %}
                                         </td>   
                                         <td>
-                                            <a href="{{ path('student_apply', {'id': student.id}) }}" class="action-link"><i class="far fa-eye" title="voir les postulations"></i></a>
+                                            <a href="" class="action-link"><i class="far fa-eye" title="voir les postulations"></i></a>
                                         </td> 
                                     </tr>                                              
                                             {% endfor %}
                                         
                                         {% else %}
                                             <tr class="border-top">
-                                                <td colspan="8" class="border-top-td">Aucun emploi en cours</td>
+                                                <td colspan="8" class="border-top-td">Aucune mission en cours</td>
                                             </tr> 
                                         {% endif %}
 
                                     {% else %}
                                     <tr class="border-top">
-                                        <td colspan="8" class="border-top-td">Aucun emploi en cours</td>
+                                        <td colspan="8" class="border-top-td">Aucune mission en cours</td>
                                     </tr>    
                                     {% endif %}
 
@@ -417,14 +342,14 @@
                     </div>
 
                 </div>
-            </div>
+            </div> 
 
             <div class="col-lg-12 table-scroll">
 
                 <div class="card" style="padding:0px;">
                    
                     <div class="cardYellow card-header-color card-header border-transparent">
-                        <p class="card-title">Missions en cours</p>
+                        <p class="card-title">Missions terminées</p>
         
                         <div class="card-tools">
                           <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -442,21 +367,24 @@
                                         <th>Mission</th>
                                         <th>Situation</th>
                                     </tr>
-                                    {% for finished in finished %}
                                     <tr class="border-top">
-                                        <td><a href="{{ path('student_apply', {'id': student.id}) }}" class="action-link">{{ finished.offers.title }}</a></td>
+                                        <td colspan="8" class="border-top-td">Aucune mission en terminée</td>
+                                    </tr>
+                                 {# }   {% for finished in finished %}
+                                    <tr class="border-top">
+                                        <td><a href="" class="action-link">{{ finished.offers.title }}</a></td>
                                         <td>
                                             <span class="badge badge-success" title="Mission en cours. Bonne chance !">Mission terminée</span>
                                         </td>   
                                        <td>
-                                            <a href="{{ path('student_apply', {'id': student.id}) }}" class="action-link"><i class="far fa-eye" title="voir"></i></a>
+                                            <a href="" class="action-link"><i class="far fa-eye" title="voir"></i></a>
                                         </td> 
                                     </tr>                                              
                                     {% else %} 
                                     <tr class="border-top">
                                         <td colspan="8" class="border-top-td">Aucun emploi en cours</td>
                                     </tr> 
-                                    {% endfor %}
+                                    {% endfor %} #}
                                 </tbody>
                             </table>
                         </div>
@@ -467,62 +395,7 @@
             </div>
 
         </div>
-    </div>        
-
-<!-- -->
-
-{#
-    <h3>Mes Documents</h3>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <td><strong>Mon CV</strong></td>
-                {% if is_granted("ROLE_STUDENT") %}
-                <td><strong>Ma Carte d'identite</strong></td>
-                <td><strong>Ma Carte d'etudiant</strong></td>
-                <td><strong>Justificatif de domicile</strong></td>
-                {% endif %}
-            </tr>
-            <tr>
-                <td>
-                    <span>
-                        <a href="{{ path('student_download_resume', { id: student.resume.id }) }}"><span class="fa fa-download">{{ student.resume.originalFilename }}</span></a>
-                    </span>
-                    <a href="{{ uploaded_asset(student.resume.fileName) }}" target="_blank">
-                        <img class="show-article-img" src="{{ student.resume.fileName|imagine_filter('squared_thumbnail_small') }}" alt=""/>
-                    </a>
-                </td>
-                <td>   
-                    <span>
-                        <a href="{{ path('student_download_idcard', { id: student.idCard.id }) }}"><span class="fa fa-download">{{ student.idCard.originalFilename }}</span></a>
-                    </span>
-                    <a href="{{ uploaded_asset(student.resume.fileName) }}" target="_blank">
-                        <img class="show-article-img" src="{{ student.resume.fileName|imagine_filter('squared_thumbnail_small') }}" alt=""/>
-                    </a>
-                </td>
-                <td>   
-                    <span>
-                        <a href="{{ path('student_download_studentcard', { id: student.studentCard.id }) }}"><span class="fa fa-download">{{ student.studentCard.originalFilename }}</span></a>
-                    </span>
-                    <a href="{{ uploaded_asset(student.resume.fileName) }}" target="_blank">
-                        <img class="show-article-img" src="{{ student.resume.fileName|imagine_filter('squared_thumbnail_small') }}" alt=""/>
-                    </a>
-                </td>
-                <td>   
-                    <span>
-                        <a href="{{ path('student_download_proofhabitation', { id: student.proofHabitation.id }) }}"><span class="fa fa-download">{{ student.proofHabitation.originalFilename }}</span></a>
-                    </span>
-                   
-                    <a href="{{ uploaded_asset(student.resume.fileName) }}" target="_blank">
-                        <img class="show-article-img" src="{{ student.resume.fileName|imagine_filter('squared_thumbnail_small') }}" alt=""/>
-                    </a> 
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-    #}
+    </div>  
 
 {% endblock %}
 
