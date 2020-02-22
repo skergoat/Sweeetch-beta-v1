@@ -6,87 +6,150 @@
 
 {% if is_granted('ROLE_SUPER_COMPANY') %}
 
-    <br><br>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Emplois</h1> <br>
+            <a href="{{ path('offers_new', {id:company.id}) }}" class="btn btn-success">Créer un Emploi</a>
+        </div>
+    </div>
+</div> <br>
 
-    <a href="{{ path('offers_new', {id:company.id}) }}" class="btn btn-success">Create new</a>
+<div class="col-md-12">
+    <div class="card">
 
-    <br><br>
+        <div class="card-body p-0">
+            <table class="table-offers table">
+                <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Lieu</th>
+                        <th>Debut</th>
+                        <th>Situation</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Location</th>
-                <th>Domain</th>
-                <th>DateStart</th>
-                <th>DateEnd</th>
-                <th>State</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+                    {% for offers in offers %}
 
-    <tr>
-        <h3>Missions</h3>
-    </tr>
+                    {% if offers.applies | length == 0 %}
+                
+                    <tr>
+                        <td><a href="{{ path('offers_preview', {'id': offers.id, 'company':company.id}) }}">{{ offers.title }}</a></td>
+                        <td>{{ offers.location }}</td>
+                        <td>{{ offers.dateStart ? offers.dateStart|date('Y-m-d') : '' }}</td>
+                        <td> <span class="badge bg-primary">ouvert</span> </td>
+                        <td>
+                            {# <a href="{{ path('offers_preview', {'id': offers.id}) }}">show</a>#}
+                            <a href="{{ path('offers_edit', {'id': offers.id, 'company':company.id}) }}" title="Modifier"><i class="fas fa-edit"></i></a>
+                        </td> 
+                    </tr>
 
-    {% for offers in offers %}
+                    {% endif %}
 
-        {% if offers.applies | length == 0 %}
-     
-            <tr>
-                <td>{{ offers.id }}</td>
-                <td>{{ offers.title }}</td>
-                <td>{{ offers.location }}</td>
-                <td>{{ offers.domain }}</td>
-                <td>{{ offers.dateStart ? offers.dateStart|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ offers.dateEnd ? offers.dateEnd|date('Y-m-d H:i:s') : '' }}</td>
-                <td> open </td>
-                <td>
-                    <a href="{{ path('offers_preview', {'id': offers.id}) }}">show</a>
-                    <a href="{{ path('offers_edit', {'id': offers.id}) }}">edit</a>
-                </td> 
-            </tr>
+                    {% if offers.applies | length > 0 %}
 
-        {% endif %}
+                        {% if offers.applies[0].finished == false %}
 
-        {% if offers.applies | length > 0 %}
-
-            {% if offers.applies[0].finished == false %}
-
-            <tr>
-                <td>{{ offers.applies[0].offers.id }}</td>
-                <td>{{ offers.applies[0].offers.title }}</td>
-                <td>{{ offers.applies[0].offers.location }}</td>
-                <td>{{ offers.applies[0].offers.domain }}</td>
-                <td>{{ offers.applies[0].offers.dateStart ? offers.applies[0].offers.dateStart|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ offers.applies[0].offers.dateEnd ? offers.applies[0].offers.dateEnd|date('Y-m-d H:i:s') : '' }}</td>
-                <td>    
-                    {% if offers.applies[0].confirmed == false %}
-                        {% if offers.applies[0].hired == false %}
-                            open
-                        {% else %}
-                        En attente
+                    <tr>
+                        <td><a href="{{ path('offers_preview', {'id': offers.applies[0].offers.id, 'company':company.id}) }}">{{ offers.applies[0].offers.title }}</a></td>
+                        <td>{{ offers.applies[0].offers.location }}</td>
+                        <td>{{ offers.applies[0].offers.dateStart ? offers.applies[0].offers.dateStart|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>    
+                            {% if offers.applies[0].confirmed == false %}
+                                {% if offers.applies[0].hired == false %}
+                                    open
+                                {% else %}
+                                En attente
+                                {% endif %}
+                            {% else %}
+                            confirmed
+                            {% endif %} 
+                        </td>
+                        <td>
+                            <a href="{{ path('offers_edit', {'id': offers.applies[0].offers.id, 'company':company.id}) }}" title="Modifier"><i class="fas fa-edit"></i></a>
+                        </td> 
+                    </tr>
                         {% endif %}
-                    {% else %}
-                    confirmed
-                    {% endif %} 
-                </td>
-                <td>
-                    <a href="{{ path('offers_preview', {'id': offers.applies[0].offers.id}) }}">show</a>
-                    <a href="{{ path('offers_edit', {'id': offers.applies[0].offers.id}) }}">edit</a>
-                </td> 
+
+                    {% endif %}
+
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>      
+</div>
+
+                  
+        
+{#
+
+<div class="col-md-6">
+    <div class="card">
+     
+      <div class="card-body p-0">
+        <table class="table">
+          <thead>
+            <tr>
+              <th style="width: 10px">#</th>
+              <th>Task</th>
+              <th>Progress</th>
+              <th style="width: 40px">Label</th>
             </tr>
-            {% endif %}
-
-        {% endif %}
-
-   {% endfor %}
-
-    </tbody>
-</table>
-
+          </thead>
+          <tbody>
+            <tr>
+              <td>1.</td>
+              <td>Update software</td>
+              <td>
+                <div class="progress progress-xs">
+                  <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
+                </div>
+              </td>
+              <td><span class="badge bg-danger">55%</span></td>
+            </tr>
+            <tr>
+              <td>2.</td>
+              <td>Clean database</td>
+              <td>
+                <div class="progress progress-xs">
+                  <div class="progress-bar bg-warning" style="width: 70%"></div>
+                </div>
+              </td>
+              <td><span class="badge bg-warning">70%</span></td>
+            </tr>
+            <tr>
+              <td>3.</td>
+              <td>Cron job running</td>
+              <td>
+                <div class="progress progress-xs progress-striped active">
+                  <div class="progress-bar bg-primary" style="width: 30%"></div>
+                </div>
+              </td>
+              <td><span class="badge bg-primary">30%</span></td>
+            </tr>
+            <tr>
+              <td>4.</td>
+              <td>Fix and squish bugs</td>
+              <td>
+                <div class="progress progress-xs progress-striped active">
+                  <div class="progress-bar bg-success" style="width: 90%"></div>
+                </div>
+              </td>
+              <td><span class="badge bg-success">90%</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+#}
+{# 
     <br><br>
 
     <h3>Finished</h3>
@@ -123,7 +186,7 @@
                     <td>
                         <a href="{{ path('offers_preview', {'id': applies.offers.id}) }}">show</a>
                         {# <a href="{{ path('offers_edit', {'id': applies.offers.id}) }}">edit</a> #}
-                    </td>
+                {#    </td>
                 </tr>
 
             {% endif %}
@@ -133,7 +196,9 @@
    {% endfor %}
 
     </tbody>
-</table>  
+</table> 
+
+#}
 
 {% else %}
 

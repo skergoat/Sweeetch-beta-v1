@@ -78,7 +78,7 @@ class CompanyController extends AbstractController
      * @Route("/{id}", name="company_show", methods={"GET"})
      * @IsGranted("ROLE_COMPANY")
      */
-    public function show(Company $company): Response
+    public function show(Company $company, ApplyRepository $applyRepository): Response
     {
         return $this->render('company/show.html.twig', [
             'company' => $company,

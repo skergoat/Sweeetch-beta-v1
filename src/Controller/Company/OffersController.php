@@ -84,10 +84,11 @@ class OffersController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="offers_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit/{company}", name="offers_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_SUPER_COMPANY")
+     * @ParamConverter("company", options={"id" = "company"})
      */
-    public function edit(Request $request, Offers $offer, ApplyRepository $repository): Response
+    public function edit(Request $request, Offers $offer, ApplyRepository $repository, Company $company): Response
     {
         $finished = $repository->checkIfFinished($offer);
 
@@ -106,6 +107,7 @@ class OffersController extends AbstractController
 
         return $this->render('offers/edit.html.twig', [
             'offers' => $offer,
+            'company' => $company,
             'form' => $form->createView(),
         ]);
     }
