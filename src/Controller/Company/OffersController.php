@@ -63,6 +63,8 @@ class OffersController extends AbstractController
             $entityManager->persist($offer);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Emploi crée !');
+
             return $this->redirectToRoute('offers_company_index', ['id' => $company->getId()]);
         }
 
