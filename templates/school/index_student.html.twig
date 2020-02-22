@@ -11,10 +11,11 @@
     {% if is_granted('ROLE_ADMIN') %}
         List Schools
     {% else %}
+    <br><br>
     <div class="col-12 col-sm-6 col-md-6">
-        <div class="info-box mb-3">
-          <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-hourglass-start"></i></span>
-    
+        <div class="info-box mb-3 overflow-box">
+        <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-hourglass-start"></i></span>
+
             <div class="info-box-nopage info-box-content">
                 <span class="info-box-text">Vous devez avoir un emploi pour accéder aux écoles</span>            
             </div>
