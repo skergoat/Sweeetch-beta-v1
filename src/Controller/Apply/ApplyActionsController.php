@@ -71,6 +71,8 @@ class ApplyActionsController extends AbstractController
         $manager = $this->getDoctrine()->getManager();
         $manager->persist($apply);
         $manager->flush();
+
+        $this->addFlash('success', 'Postulation enregistrée !');
  
         return $this->redirectToRoute('offers_show', ['id' => $offers->getId()]);
     }
