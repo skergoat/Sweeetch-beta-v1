@@ -27,10 +27,5 @@ import 'animate.css';
 // main scripts 
 import './components/contactform.js';
 
-if($(".alert-success")[0]){
-    setTimeout(function() {
-        $(".alert-success").css('display', 'none');
-    }, 3000); 
-} 
 
 
