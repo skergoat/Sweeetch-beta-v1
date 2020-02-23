@@ -8,11 +8,13 @@
     <div class="row">
         <div class="col-sm-6">
             <h1 class="m-0 titles-front">{{ offers.title }}</h1> <br>
-            {# <a href="{{ path('offers_edit', {'id': offers.id, 'company':company.id}) }}" class="btn btn-light">edit</a> #}
-            <a href="{{ path('offers_company_index', {id:offers.company.id}) }}" class="btn btn-sm btn-sm-1 btn-labeled btn-default">
-                <span class="btn-label"><i class="fa fa-chevron-left"></i></span>
-                Revenir 
-            </a>
+            <div>
+                <a href="{{ path('offers_company_index', {id:offers.company.id}) }}" class="btn btn-sm btn-sm-1 btn-labeled btn-default">
+                    <span class="btn-label"><i class="fa fa-chevron-left"></i></span>
+                    Revenir 
+                </a>
+                {# <a href="{{ path('offers_edit', {'id': offers.id, 'company':company.id}) }}" class="btn btn-sm btn-warning">Modifier</a> #}
+            </div>
         </div>
     </div>
 </div> <br>
@@ -93,10 +95,10 @@
                             <td style="padding-top: 18px;"><a href="{{ path('show_applied_profile', { "id":applies.student.id, "company_id": offers.company.id }) }}">{{ applies.student.name }} {{ applies.student.lastname }}</a></td>
                             {% endif %}
                             <td style="color:white;">
-
-                            {% if applies.hired == false and applies.confirmed == false and applies.agree == false %}
-
+                            
                                 <div class="btn-group">
+                            {% if applies.hired == false and applies.confirmed == false and applies.agree == false %}
+                                
                                     <form method="post" action="{{ path('hire', { id:applies.id }) }}" class="btn-icon-form">
                                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ offers.id) }}">
                                         <button class="btn-icon btn-success"><i class="fas fa-user-check" title="Embaucher"></i></button>
@@ -108,36 +110,31 @@
                                             <i class="fas fa-times" title="Refuser"></i>
                                         </button>
                                     </form>
-                                </div>
 
                             {% elseif applies.hired == true %}
-
-                                <div class="apply-message-red">Avant d'aller plus loin, l'étudiant doit accepter votre embauche</div>
+                                    <button class="btn-icon-form btn-icon btn-warning" title="En attente d'acceptation de l'étudiant">
+                                        <i class="fas fa-hourglass-start"></i>
+                                    </button>
 
                             {% elseif applies.agree == true %}
 
-                            <div class="btn-group">
-
-                                <form method="post" class="btn-icon-form" action="{{ path('confirm', { id:applies.id }) }}">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ offers.id) }}">
-                                    <button class="btn-icon btn-success" title="Démarrer la mission"><i class="far fa-play-circle"></i></button>
-                                </form>
-
-                                <a href="#ex1" rel="modal:open" class="btn-modal btn-icon-form btn-icon btn-secondary" title="aide">
-                                    <i class="fas fa-question-circle"></i>
-                                </a>
-                                <!-- L'etudiant a accepte votre demande. Vous pouvez demarrer la procedure d'embauche puis cliquer sur ce bouton lorsque la mission commence-->
-                            </div>
+                                    <form method="post" class="btn-icon-form" action="{{ path('confirm', { id:applies.id }) }}">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ offers.id) }}">
+                                        <button class="btn-icon btn-success" title="Démarrer la mission"><i class="far fa-play-circle"></i></button>
+                                    </form>
 
                             {% elseif applies.confirmed == true %}
 
-                            <form method="post" action="{{ path('apply_finish', {'id': applies.id }) }}" onsubmit="return confirm('Are you sure you want to finish this mission ?');">
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
-                                <button class="btn btn-warning">Finish</button>
-                            </form>
+                                    <form method="post" class="btn-icon-form" action="{{ path('apply_finish', {'id': applies.id }) }}" onsubmit="return confirm('Are you sure you want to finish this mission ?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
+                                        <button class="btn-icon btn-warning"><i class="far fa-stop-circle"></i></button>
+                                    </form>
 
                             {% endif %}
-
+                                    <a href="#help-1" rel="modal:open" class="btn-modal btn-icon-form btn-icon btn-secondary" title="aide">
+                                        <i class="fas fa-question-circle"></i>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     

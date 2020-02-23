@@ -49,7 +49,7 @@ class ApplyRenderController extends AbstractController
      * @Route("/index/company/{id}", name="offers_company_index", methods={"GET"})
      * @IsGranted("ROLE_COMPANY")
      */
-    public function indexByCompany(Company $company, OffersRepository $offersRepository, PaginatorInterface $paginator, Request $request): Response
+    public function indexByCompany(Company $company, OffersRepository $offersRepository, ApplyRepository $applyRepository, PaginatorInterface $paginator, Request $request): Response
     {       
         $queryBuilder = $offersRepository->findAllPaginatedByCompany("DESC", $company);
 
@@ -58,6 +58,9 @@ class ApplyRenderController extends AbstractController
             $request->query->getInt('page', 1),
             10
         );
+
+
+        // $builder = $applyRepository
 
         // $offersRepository->findBy(['company' => $company->getId()])
 

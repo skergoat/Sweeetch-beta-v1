@@ -94,7 +94,6 @@ class ApplyMailer
 
     public function sendFinishMessage($email, $name, $title)
     {
-        // dd('send');
 
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))

@@ -157,6 +157,10 @@ td a.btn-modal {
         position:relative;
         top:-3px;
     } 
+
+    &-warning {
+        color:#FFC756;
+    }
 }
 
 .jquery-modal.blocker.current {
