@@ -40,7 +40,7 @@
 
         <div class="Password card col-lg-12">
             <div class="card-body">
-                <table class="table offers-show col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <table class="table offers-show col-lg-5 col-md-5 col-sm-12 col-xs-12">
                     <tbody>
                         <tr>
                             <th>Lieu</th>
@@ -63,7 +63,7 @@
 
                 <div class="description">
                     <h5>Description</h5>
-                    <p>{{ offers.description }}</p>
+                    <p>{{ offers.description|raw }}</p>
                 </div>
         
                 {% if app.user.student.id is defined %}
