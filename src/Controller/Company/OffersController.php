@@ -171,6 +171,8 @@ class OffersController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('offers_index');
+        $this->addFlash('success', 'Offre supprimée !');
+
+        return $this->redirectToRoute('offers_company_index', ['id' => $offer->getCompany()->getId()]);
     }
 }

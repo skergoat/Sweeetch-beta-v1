@@ -52,17 +52,12 @@ class ApplyRenderController extends AbstractController
     public function indexByCompany(Company $company, OffersRepository $offersRepository, ApplyRepository $applyRepository, PaginatorInterface $paginator, Request $request): Response
     {       
         $queryBuilder = $offersRepository->findAllPaginatedByCompany("DESC", $company);
-
+        
         $pagination = $paginator->paginate(
             $queryBuilder,
             $request->query->getInt('page', 1),
             10
         );
-
-
-        // $builder = $applyRepository
-
-        // $offersRepository->findBy(['company' => $company->getId()])
 
         return $this->render('apply/index_company.html.twig', [
             'offers' => $pagination,
