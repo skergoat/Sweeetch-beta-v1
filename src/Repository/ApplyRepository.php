@@ -20,17 +20,33 @@ class ApplyRepository extends ServiceEntityRepository
     }
 
 
-    public function findByWaiting($offers)
+    public function findAppliedIfExists($student, $offer)
+    {
+        return (boolean)$this->createQueryBuilder('u')
+        ->andWhere('u.student = :student AND u.offers = :offer AND u.hired = :hired OR u.agree = :agree OR u.confirmed = :confirmed OR u.finished = :finished')
+        ->setParameter('student', $student)
+        ->setParameter('offer', $offer)
+        ->setParameter('hired', true)
+        ->setParameter('agree', true)
+        ->setParameter('confirmed', true)
+        ->setParameter('finished', true)
+        ->getQuery()
+        ->getOneOrNullResult();
+    }
+
+    public function checkIfOpen($offers) 
     {
         return $this->createQueryBuilder('u')
-            ->where('u.offers = :offers and u.hired = :hired')
+            ->andWhere('u.offers = :offers AND u.hired = :hired OR u.agree = :agree OR u.confirmed = :confirmed OR u.finished = :finished')
             ->setParameter('offers', $offers)
             ->setParameter('hired', true)
+            ->setParameter('agree', true)
+            ->setParameter('confirmed', true)
+            ->setParameter('finished', true)
             ->getQuery()
             ->getResult()
         ;
     }
-
 
     public function checkIfHired($student) // 
     { 

@@ -31,6 +31,13 @@ class ApplyActionsController extends AbstractController
      */
     public function apply(ApplyRepository $repository, Offers $offers, Student $student, ApplyMailer $mailer)
     {
+        $already = $repository->checkIfOpen($offers); 
+
+        if($already) {
+            $this->addFlash('error', 'Offre Indisponible');
+            return $this->redirectToRoute('offers_index');
+        }
+
         $applies = $repository->checkIfRowExsists($offers, $student);
 
         if($applies) {  

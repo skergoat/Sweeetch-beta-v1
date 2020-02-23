@@ -57,6 +57,12 @@
 
         <h1>Offres d'emploi</h1>
 
+        {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+        {% endfor %}
+
         <div class="pagination-top">{{ knp_pagination_render(offers) }}</div>
 
         <div class="row">
