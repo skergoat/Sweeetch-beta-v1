@@ -4,126 +4,144 @@
 
 {% block body %}
 
-    {% if student.applies[0].hired == true %}
-    <p style="font-size:25px;">State : <strong>Hired</Mstrong></p>
-    {% elseif student.applies[0].confirmed == true %}
-    <p style="font-size:25px;">State : <strong>Confirmed</strong></p>
-    {% endif %}
-
-    <h1>Mes Infos</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Email</th>
-                <td>{{ student.user.email }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ student.name }}</td>
-            </tr>
-            <tr>
-                <th>Lastname</th>
-                <td>{{ student.lastname }}</td>
-            </tr>
-            <tr>
-                <th>Adress</th>
-                <td>{{ student.adress }}, {{ student.zipCode }}, {{ student.city }}</td>
-            </tr>
-            <tr>
-                <th>Telephone</th>
-                <td>{{ student.telNumber }}</td>
-            </tr>
-            <tr>
-                <th>Permis B</th>
-                <td>{% if student.drivingLicense == 1 %} oui {% else %} non {% endif %} </td>
-            </tr>
-            <tr>
-                <th>Disabled</th>
-                <td>{% if student.disabled == 1 %} oui {% else %} non {% endif %} </td>   
-            </tr>
-        </tbody>
-    </table>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+               {# <h1 class="m-0 titles-front">{{ offers.title }}</h1> <br> #}
+                <div>
+                    {# <a href="{{ path('student_apply', {id:student.id}) }}" class="btn btn-sm btn-sm-1 btn-labeled btn-default">
+                        <span class="btn-label"><i class="fa fa-chevron-left"></i></span>
+                        Revenir 
+                    </a> #}
+                </div>
+            </div>
+        </div>
+    </div> <br>
     
-    <h1>Mon Profile</h1>
+    {% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+    {% endfor %}
+    
+    <div class="col-md-12">
+        <div class="card-responsive card">
+    
+            <div class="Password card col-lg-12">
+    
+                <div class="col-lg-12">
+                    <h3 class="mb-3 mt-3 pl-3-responsive titles-front">Détail de l'Offre</h3>
+                </div>
+    
+                <div class="card-responsive card-body">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th>Email</th>
+                                <td>{{ student.user.email }}</td>
+                            </tr>
+                            <tr>
+                                <th>Prénom</th>
+                                <td>{{ student.name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nom</th>
+                                <td>{{ student.lastname }}</td>
+                            </tr>
+                            <tr>
+                                <th>Adresse</th>
+                                <td>{{ student.adress }}, {{ student.zipCode }}, {{ student.city }}</td>
+                            </tr>
+                            <tr>
+                                <th>Téléphone</th>
+                                <td>{{ student.telNumber }}</td>
+                            </tr>
+                            <tr>
+                                <th>Permis B</th>
+                                <td>{% if student.drivingLicense == 1 %} oui {% else %} non {% endif %} </td>
+                            </tr>
+                            <tr>
+                                <th>Handicap</th>
+                                <td>{% if student.disabled == 1 %} oui {% else %} non {% endif %} </td>   
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Domaine d'activite</th>
-                <td>{{ student.profile.domain }}</td>
-            </tr>
-            <tr>
-                <th>Region recherchee</th>
-                <td>{{ student.profile.area }}</td>
-            </tr>
-        </tbody>
-    </table>
+                <div class="col-lg-12">
+                    <h3 class="mb-3 mt-3 pl-3-responsive titles-front">Langues</h3>
+                </div>
 
-    <h1>Langues</h1>
+                <div class="card-responsive card-body">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th>Domaine d'activité</th>
+                                <td>{{ student.profile.domain }}</td>
+                            </tr>
+                            <tr>
+                                <th>Région recherchée</th>
+                                <td>{{ student.profile.area }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <td><strong>Name</strong></td>
-                <td><strong>Level</strong></td>
-            </tr>
-            {% for languages in student.profile.languages %}
+                <div class="col-lg-12">
+                    <h3 class="mb-3 mt-3 pl-3-responsive titles-front">Formation</h3>
+                </div>
 
-            <tr>
-                <td>{{ languages.languageName }}</td>
-                <td>{{ languages.level }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                <div class="card-responsive card-body">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td><strong>Titre</strong></td>
+                                <td><strong>Ecole</strong></td>
+                                <td><strong>Début</strong></td>
+                                <td><strong>Fin</strong></td>
+                            </tr>
+                            {% for education in student.profile.education %}
+                            <tr>
+                                <td>{{ education.title }}</td>
+                                <td>{{ education.school }}</td>
+                                <td>{{ education.dateStart|date("m/d/Y") }}</td>
+                                {% if education.current == true %}
+                                  <td>  en cours </td>
+                                {% else %}
+                                    <td>{{ education.dateEnd|date("m/d/Y") }}</td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
 
-    <h1>Formation</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <td><strong>Title</strong></td>
-                <td><strong>School</strong></td>
-                <td><strong>From</strong></td>
-                <td><strong>To</strong></td>
-            </tr>
-            {% for education in student.profile.education %}
-            <tr>
-                <td>{{ education.title }}</td>
-                <td>{{ education.school }}</td>
-                <td>{{ education.dateStart|date("m/d/Y") }}</td>
-                {% if education.current == true %}
-                  <td>  en cours </td>
-                {% else %}
-                    <td>{{ education.dateEnd|date("m/d/Y") }}</td>
-                {% endif %}
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-    <h1>Mes Documents</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <td><strong>Mon CV</strong></td>
-                {% if is_granted("ROLE_STUDENT") %}
-                <td><strong>Ma Carte d'identite</strong></td>
-                <td><strong>Ma Carte d'etudiant</strong></td>
-                <td><strong>Justificatif de domicile</strong></td>
-                {% endif %}
-            </tr>
-            <tr>
-                <td>
-                    <span>
-                        <a href="{{ path('student_download_resume', { id: student.resume.id }) }}"><span class="fa fa-download">{{ student.resume.originalFilename }}</span></a>
-                    </span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                <div class="col-lg-12">
+                    <h3 class="mb-3 mt-3 pl-3-responsive titles-front">Documents</h3>
+                </div>
+    
+                <div class="card-responsive card-body">
+                
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td><strong>CV</strong></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>
+                                        <a href="{{ path('student_download_resume', { id: student.resume.id }) }}"><span class="fa fa-download">{{ student.resume.originalFilename }}</span></a>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
 
