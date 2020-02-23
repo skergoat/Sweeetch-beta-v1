@@ -36,16 +36,4 @@ class OffersRepository extends ServiceEntityRepository
         ->getQuery()
         ->getResult();
     }
-
-    /*
-    public function findOneBySomeField($value): ?Offers
-    {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

@@ -32,7 +32,8 @@ class OffersController extends AbstractController
      */
     public function index(OffersRepository $offersRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $queryBuilder = $offersRepository->findAllPaginated("DESC");
+        // $queryBuilder = $offersRepository->findAllPaginated("DESC");
+        $queryBuilder = $offersRepository->findAll();
 
         $pagination = $paginator->paginate(
             $queryBuilder,
