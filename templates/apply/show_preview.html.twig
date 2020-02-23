@@ -9,13 +9,20 @@
         <div class="col-sm-6">
             <h1 class="m-0 titles-front">{{ offers.title }}</h1> <br>
             <div>
-                {% if offers.applies[0].finished == false %}
-                <a href="{{ path('offers_company_index', {id:offers.company.id}) }}" class="btn btn-sm btn-sm-1 btn-labeled btn-default">
-                    <span class="btn-label"><i class="fa fa-chevron-left"></i></span>
-                    Revenir 
-                </a>
+                {% if offers.applies[0] is defined %}
+                    {% if offers.applies[0].finished == false %}
+                    <a href="{{ path('offers_company_index', {id:offers.company.id}) }}" class="btn btn-sm btn-sm-1 btn-labeled btn-default">
+                        <span class="btn-label"><i class="fa fa-chevron-left"></i></span>
+                        Revenir 
+                    </a>
+                    {% else %}
+                    <a href="{{ path('offers_company_finished', {id:offers.company.id}) }}" class="btn btn-sm btn-sm-1 btn-labeled btn-default">
+                        <span class="btn-label"><i class="fa fa-chevron-left"></i></span>
+                        Revenir 
+                    </a>
+                    {% endif %}
                 {% else %}
-                <a href="{{ path('offers_company_finished', {id:offers.company.id}) }}" class="btn btn-sm btn-sm-1 btn-labeled btn-default">
+                <a href="{{ path('offers_company_index', {id:offers.company.id}) }}" class="btn btn-sm btn-sm-1 btn-labeled btn-default">
                     <span class="btn-label"><i class="fa fa-chevron-left"></i></span>
                     Revenir 
                 </a>

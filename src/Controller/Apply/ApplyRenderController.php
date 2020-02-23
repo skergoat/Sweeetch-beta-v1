@@ -89,7 +89,7 @@ class ApplyRenderController extends AbstractController
     public function finishedByCompany(Company $company, OffersRepository $offersRepository, ApplyRepository $applyRepository, PaginatorInterface $paginator, Request $request): Response
     {       
         $queryBuilder = $offersRepository->findAllPaginatedByCompany("DESC", $company);
-        
+    
         $pagination = $paginator->paginate(
             $queryBuilder,
             $request->query->getInt('page', 1),
