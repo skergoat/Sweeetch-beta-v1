@@ -150,64 +150,10 @@
 
                     </tbody>
                 </table>
-
-         
-
-            {# {% if finished is not empty %}
-
-            <h3>Finished</h3>
-
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <th>Id</th>
-                        <th>Title</th>
-                        <th>Location</th>
-                        <th>Profile</th>
-                    </tr>
-
-                {% for finished in finished %} 
                 
-                    {% if finished.student.id is defined %}
-
-                    <tr>
-                        <td>{{ finished.student.id }}</td>
-                        <td>{{ finished.student.name }}</td>
-                        <td>{{ finished.student.lastname }}</td>
-                        {% if is_granted('ROLE_ADMIN') %}
-                        <td><a href="{{ path('student_show', { "id":finished.student.id }) }}">show</a></td>
-                        {% else %}
-                        <td><a href="{{ path('show_applied_profile', { "id":finished.student.id, "company_id": offers.company.id }) }}">show</a></td>
-                        {% endif %}
-                    </tr>
-
-                    {% else %}
-
-                    <tr>
-                        <th style="color:red;">Student profile deleted</th>
-                        <th></th>
-                        <th></th>
-                        <th>
-                            <form method="post" action="{{ path('delete_empty_companySide', {'id': offers.id }) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-                                <input type="hidden" name="_method" value="DELETE">
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ offers.id) }}">
-                                <button class="btn btn-danger">Delete</button>
-                            </form>
-                        </th>
-                    </tr>
-
-                        {% endif %}
-                        
-                    {% endfor %}
-
-                </tbody>
-            </table>
-            
-            {% endif %} #}
             </div>
         </div>
     </div>
 </div>
-
 
 {% endblock %}

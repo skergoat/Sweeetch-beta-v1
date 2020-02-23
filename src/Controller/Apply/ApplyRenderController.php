@@ -65,6 +65,26 @@ class ApplyRenderController extends AbstractController
         ]);
     }
 
+     /**
+     * @Route("/finished/company/{id}", name="offers_company_finished", methods={"GET"})
+     * @IsGranted("ROLE_COMPANY")
+     */
+    public function finishedByCompany(Company $company, OffersRepository $offersRepository, ApplyRepository $applyRepository, PaginatorInterface $paginator, Request $request): Response
+    {       
+        $queryBuilder = $offersRepository->findAllPaginatedByCompany("DESC", $company);
+        
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page', 1),
+            10
+        );
+
+        return $this->render('apply/finished_company.html.twig', [
+            'offers' => $pagination,
+            'company' => $company,
+        ]);
+    }
+
     /**
      * @Route("/show/company/{id}/{company}", name="offers_preview", methods={"GET"})
      * @IsGranted("ROLE_SUPER_COMPANY")
