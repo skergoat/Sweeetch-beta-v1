@@ -19,6 +19,19 @@ class ApplyRepository extends ServiceEntityRepository
         parent::__construct($registry, Apply::class);
     }
 
+
+    public function findByWaiting($offers)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.offers = :offers and u.hired = :hired')
+            ->setParameter('offers', $offers)
+            ->setParameter('hired', true)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
     public function checkIfHired($student) // 
     { 
         return (boolean)$this->createQueryBuilder('u')

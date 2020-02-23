@@ -42,7 +42,7 @@
             
                     {% for applies in applies %}
 
-                        {% if applies.finished == true %} 
+                        {# {% if applies.finished == true %} #}
                     
                             <tr>
                                 <td><a href="{{ path('offers_preview', {'id': applies.offers.id, 'company':company.id}) }}">{{ applies.offers.title }}</a></td>
@@ -53,7 +53,7 @@
                                 <td> <span class="badge bg-warning">Terminée</span> </td>
                             </tr>
                         
-                        {% endif %}
+                        {# {% endif %} #}
                     
                     {% else %}
 
