@@ -9,10 +9,17 @@
             <div class="col-sm-6">
                 <h1 class="m-0 titles-front">{{ offers.title }}</h1> <br>
                 <div>
+                    {% if offers.applies[0].finished == false %}
                     <a href="{{ path('student_apply', {id:student.id}) }}" class="btn btn-sm btn-sm-1 btn-labeled btn-default">
                         <span class="btn-label"><i class="fa fa-chevron-left"></i></span>
                         Revenir 
                     </a>
+                    {% else %}
+                    <a href="{{ path('student_finished', {id:student.id}) }}" class="btn btn-sm btn-sm-1 btn-labeled btn-default">
+                        <span class="btn-label"><i class="fa fa-chevron-left"></i></span>
+                        Revenir 
+                    </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
