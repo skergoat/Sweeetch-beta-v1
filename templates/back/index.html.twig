@@ -212,7 +212,7 @@
                         <tbody>
                             {% for applies in applies %}
                                 <tr>
-                                   <td><strong><a href="{{ path('offers_preview', {'id': applies.offers.id}) }}" >{{ applies.Offers.title }}</a></strong></td>
+                                   <td><strong><a href="{{ path('offers_preview', {'id': applies.offers.id, 'company':applies.offers.company.id}) }}" >{{ applies.Offers.title }}</a></strong></td>
                                    {% if applies.hired == true %}
                                    <td><span class="badge badge-danger" title="l'etudiant doit confirmer sa mission">En attente</span></td>
                                    {% elseif applies.agree == true %}

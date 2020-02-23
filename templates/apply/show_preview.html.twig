@@ -116,10 +116,18 @@
 
                             {% elseif applies.agree == true %}
 
-                            <form method="post" action="{{ path('confirm', { id:applies.id }) }}">
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ offers.id) }}">
-                                <button class="btn btn-success">Confirmer</button>
-                            </form>
+                            <div class="btn-group">
+
+                                <form method="post" class="btn-icon-form" action="{{ path('confirm', { id:applies.id }) }}">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ offers.id) }}">
+                                    <button class="btn-icon btn-success" title="Démarrer la mission"><i class="far fa-play-circle"></i></button>
+                                </form>
+
+                                <a href="#ex1" rel="modal:open" class="btn-modal btn-icon-form btn-icon btn-secondary" title="aide">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                                <!-- L'etudiant a accepte votre demande. Vous pouvez demarrer la procedure d'embauche puis cliquer sur ce bouton lorsque la mission commence-->
+                            </div>
 
                             {% elseif applies.confirmed == true %}
 
