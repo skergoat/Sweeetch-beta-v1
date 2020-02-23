@@ -145,6 +145,26 @@
                                         {% endif %} 
                                     </p>
                                 </a>
+                                {% if is_granted('ROLE_SUPER_STUDENT') %}
+                                    {% if app.request.get('_route') == 'student_apply' or app.request.get('_route') == 'offers_show_hired' or app.request.get('_route') == 'student_finished' %}
+
+                                <li class="nav nav-tree">
+                                    <li class="nav-item">
+                                        <a href="{{ path('student_apply', {id:student.id}) }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Toutes</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ path('student_finished', {id:student.id}) }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Terminées</p>
+                                        </a>
+                                    </li>
+                                </li>
+
+                                    {% endif %} 
+                                {% endif %}
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('school_student_index', { id:student.id }) }}">
