@@ -17,7 +17,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+
 
 /**
  * @Route("/offers")
@@ -41,7 +44,6 @@ class OffersController extends AbstractController
             'offers' => $pagination,
         ]);
     }
-
 
     /**
      * @Route("/new/{id}", name="offers_new", methods={"GET","POST"})
@@ -78,8 +80,36 @@ class OffersController extends AbstractController
     /**
      * @Route("/{id}", name="offers_show", methods={"GET"})
      */
-    public function show(Offers $offer): Response
+    public function show(Offers $offer, ApplyRepository $applyRepository, AuthorizationCheckerInterface $authorizationChecker): Response
     {
+        if (!$authorizationChecker->isGranted('ROLE_ADMIN')) { // if ADMIN then ok 
+        
+            $already = $applyRepository->checkIfOpen($offer);
+
+            if($already) {  // if there are already applies then ... 
+
+                if ($authorizationChecker->isGranted('ROLE_SUPER_STUDENT')) { // if STUDENT then okk 
+                
+                    $student = $this->getUser()->getStudent();
+                    $applied = $applyRepository->findAppliedIfExists($student, $offer);
+
+                    if($applied) {
+
+                        return $this->render('offers/show.html.twig', [ // if student = student.apply then ok 
+                            'offers' => $offer,
+                        ]);
+                    }
+                    else {
+                        throw new \Exception('denied');
+                    }
+        
+                }
+                else {
+                    throw new \Exception('denied');
+                }
+            }
+        }
+
         return $this->render('offers/show.html.twig', [
             'offers' => $offer,
         ]);
