@@ -83,11 +83,13 @@ class CompanyController extends AbstractController
     {
         $offers = $offersRepository->findAllPaginatedByCompany("DESC", $company);
         $finished = $applyRepository->findBy(['offers' => $offers, 'finished' => 1]);
+        $confirmed = $applyRepository->findBy(['offers' => $offers, 'confirmed' => 1]);
 
         return $this->render('company/show.html.twig', [
             'company' => $company,
             'offers' => $offers,
-            'finished' => $finished
+            'finished' => $finished,
+            'confirmed' => $confirmed
         ]);
     }
 
