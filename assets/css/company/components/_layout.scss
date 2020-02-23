@@ -55,6 +55,12 @@ td a {
     color:$linkBlue;   
 }
 
+.apply-message-red {
+    margin-top:5px;
+    color:$red;
+    // overflow:scroll;
+}
+
 /* admin lte layout */
 
 .main-header {
@@ -123,5 +129,5 @@ ul.pagination {
 }
 
 .pl-3-responsive {
-    padding-left:20px;
+    padding-left:15px;
 }
