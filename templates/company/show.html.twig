@@ -125,20 +125,27 @@
                                         <th>Situation</th>
                                     </tr>
 
-                                 {% for confirmed in confirmed %}
+                                 {% for applies in applies %}
+                                    
+                                    {% if applies.hired == true or applies.agree == true %}
 
                                     <tr class="border-top">
-                                        <td><a href="" class="action-link">{{ confirmed.offers.title }}</a></td>
+                                        <td><a href="" class="action-link">{{ applies.offers.title }}</a></td>
                                         <td>
-                                            <span class="badge badge-success" title="Mission en cours. Bonne chance !">Mission en cours</span>
+                                            {% if applies.hired == true %}
+                                            <span class="badge badge-danger" title="Mission en cours. Bonne chance !">L'Eleve doit confirmer</span>
+                                            {% else %}
+                                            <span class="badge badge-warning" title="Mission en cours. Bonne chance !">Dossier en traitement</span>
+                                            {% endif %}
                                         </td>   
-                                    </tr>  
+                                    </tr> 
+                                    
+                                    {% endif %}
 
                                  {% else %} 
                                     <tr class="border-top">
-                                        <td colspan="8" class="border-top-td">Aucun emploi en cours</td>
+                                        <td colspan="8" class="border-top-td">Aucune mission en cours</td>
                                     </tr> 
-
                                  {% endfor %} 
                                 </tbody>
                             </table>

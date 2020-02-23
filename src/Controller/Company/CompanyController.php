@@ -81,15 +81,29 @@ class CompanyController extends AbstractController
      */
     public function show(Company $company, OffersRepository $offersRepository, ApplyRepository $applyRepository): Response
     {
-        $offers = $offersRepository->findAllPaginatedByCompany("DESC", $company);
+        $offers = $offersRepository->findBy(['company' => $company]);
         $finished = $applyRepository->findBy(['offers' => $offers, 'finished' => 1]);
         $confirmed = $applyRepository->findBy(['offers' => $offers, 'confirmed' => 1]);
+        $applies = $applyRepository->findBy(['offers' => $offers]);
+        // $waiting = $applyRepository->findByWaiting($offers);
+        // $waiting = $applyRepository->findBy(['offers' => $offers, 'hired' => 1]);
+
+        // $queryBuilder = $this->getDoctrine()->getManager()->getRepository('App\\Entity\\Apply')
+        //     ->createQueryBuilder('c');
+
+        // $result = $queryBuilder->select('c')
+        //     ->where('c.offers = :offers and c.hired = :hired')
+        //     ->setParameter(':offers', $offers)
+        //     ->setParameter(':hired', true)
+        //     ->getQuery()
+        //     ->getResult();
 
         return $this->render('company/show.html.twig', [
             'company' => $company,
             'offers' => $offers,
             'finished' => $finished,
-            'confirmed' => $confirmed
+            'confirmed' => $confirmed,
+            'applies' => $applies
         ]);
     }
 
