@@ -46,6 +46,24 @@ class ApplyRenderController extends AbstractController
     }
 
     /**
+     * @Route("/finished/student/{id}", name="student_finished", methods={"GET"})
+     * @IsGranted("ROLE_STUDENT")
+     */
+    public function finishedByStudent(StudentRepository $repository, applyRepository $applyRepository, Student $student)
+    {   
+        $applies = $applyRepository->findByStudent($student);
+        $finished = $applyRepository->findByStudentByFinished($student);
+       
+        return $this->render('apply/finished-student.html.twig', [
+            'student' => $student,
+            'applies' => $applies,
+            'finished' => $finished,
+            'fresh' =>  $applyRepository->findByStudentByFresh($student),
+            'hired' => $applyRepository->checkIfHired($student)
+        ]);
+    }
+
+    /**
      * @Route("/index/company/{id}", name="offers_company_index", methods={"GET"})
      * @IsGranted("ROLE_COMPANY")
      */
