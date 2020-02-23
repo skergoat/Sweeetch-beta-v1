@@ -15,6 +15,12 @@
     </div>
 </div> <br>
 
+{% for message in app.flashes('success') %}
+<div class="alert alert-success">
+    {{ message }}
+</div>
+{% endfor %}
+
 <div class="col-md-12">
     <div class="card card-responsive-table">
 
@@ -35,7 +41,7 @@
 
                 {% for offers in offers %}
 
-                    {% if offers.applies | length == 0 %}
+                  {% if offers.applies | length == 0 %}
                 
                     <tr>
                         <td><a href="{{ path('offers_preview', {'id': offers.id, 'company':company.id}) }}">{{ offers.title }}</a></td>
@@ -46,12 +52,12 @@
                             <a href="{{ path('offers_edit', {'id': offers.id, 'company':company.id}) }}" title="Modifier"><i class="fas fa-edit"></i></a>
                         </td> 
                     </tr>
+
+                  {% endif %}
                     
-                      {% endif %}
+                  {% if offers.applies | length > 0 %}
 
-                    {% if offers.applies | length > 0 %}
-
-                        {% if offers.applies[0].finished == false %}
+                    {% if offers.applies[0].finished == false %}
 
                     <tr>
                         <td><a href="{{ path('offers_preview', {'id': offers.applies[0].offers.id, 'company':company.id}) }}">{{ offers.applies[0].offers.title }}</a></td>
@@ -76,12 +82,18 @@
                             <a href="{{ path('offers_edit', {'id': offers.applies[0].offers.id, 'company':company.id}) }}" title="Modifier"><i class="fas fa-edit"></i></a>
                         </td>
                     </tr>
-                        {% endif %}
-
-                      {% endif %}
-                  <!-- <tr class="border-top">
+                    {% else %}
+                    <tr class="border-top">
                       <td colspan="8" class="border-top-td">Aucune postulation en cours</td>
-                  </tr>  -->
+                    </tr> 
+                    {% endif %}
+
+                  {% endif %}
+                
+                {% else %}
+                <tr class="border-top">
+                  <td colspan="8" class="border-top-td">Aucune postulation en cours</td>
+                </tr> 
                 {% endfor %}
 
                 </tbody>
