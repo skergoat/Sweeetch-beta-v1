@@ -72,7 +72,9 @@ class OffersType extends AbstractType
                 'html5' => false,
                 'attr' => ['class' => 'js-datepicker'],
             ])
-            ->add('description', TextareaType::class)
+            ->add('description', TextareaType::class, [
+                'required' => false
+            ])
         ;
     }
 
