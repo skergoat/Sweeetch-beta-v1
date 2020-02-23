@@ -7,6 +7,7 @@ use App\Form\CompanyType;
 use App\Form\UpdateCompanyType;
 use App\Repository\ApplyRepository;
 use App\Service\Mailer\ApplyMailer;
+use App\Repository\OffersRepository;
 use App\Form\CompanyEditPasswordType;
 use App\Repository\CompanyRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -78,10 +79,15 @@ class CompanyController extends AbstractController
      * @Route("/{id}", name="company_show", methods={"GET"})
      * @IsGranted("ROLE_COMPANY")
      */
-    public function show(Company $company, ApplyRepository $applyRepository): Response
+    public function show(Company $company, OffersRepository $offersRepository, ApplyRepository $applyRepository): Response
     {
+        $offers = $offersRepository->findAllPaginatedByCompany("DESC", $company);
+        $finished = $applyRepository->findBy(['offers' => $offers, 'finished' => 1]);
+
         return $this->render('company/show.html.twig', [
             'company' => $company,
+            'offers' => $offers,
+            'finished' => $finished
         ]);
     }
 
