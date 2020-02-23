@@ -137,7 +137,9 @@ class ApplyActionsController extends AbstractController
         // save 
         $entityManager->flush();
 
-        return $this->redirectToRoute('offers_preview', ['id' => $offers->getId()]);
+        $this->addFlash('success', 'élève Embauché !');
+ 
+        return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
     }
 
     /**
@@ -207,7 +209,7 @@ class ApplyActionsController extends AbstractController
 
         $this->getDoctrine()->getManager()->flush();
 
-        return $this->redirectToRoute('offers_preview', ['id' => $offers->getId()]);
+        return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
     }
 
      /**

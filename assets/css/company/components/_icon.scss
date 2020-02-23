@@ -80,3 +80,32 @@
 .fas.fa-plus, .fas.fa-minus {
     color:white;
 }
+
+/* admin */
+
+.btn-icon {
+    height:30px;
+    width:30px;
+    border-radius:100px;
+    font-size:15px;
+    position:relative;
+    top:-4px;
+    padding:1.5px;
+    border:0px;
+
+    .fa-trash-alt, .fa-check {
+        position:relative; 
+    }
+
+    &-form {
+        margin-right:10px;
+        margin-top:10px;
+    } 
+}
+
+.icon {
+    &-group {
+        display:flex;
+        justify-content:center;
+    }
+}
