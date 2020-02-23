@@ -23,52 +23,47 @@
 <div class="col-md-12">
     <div class="card card-responsive-table">
 
-      <div class="pagination-bottom mb-4 mt-4">{{ knp_pagination_render(offers) }}</div>
+       <div class="pagination-bottom mb-4 mt-4">{{ knp_pagination_render(offers) }}</div>
 
-        <div class="card-body p-0">
+            <div class="card-body p-0">
 
-            <table class="table-offers table">
-                <thead>
-                    <tr>
-                        <th>Titre</th>
-                        <th>Lieu</th>
-                        <th>Domaine</th>
-                        <th>Début</th>
-                        <th>Fin</th>
-                        <th>Situation</th>
-                        {# <th>actions</th>#}
-                    </tr>
-                </thead>
-                <tbody>
-        
-           {% for offers in offers %}
-        
-                {% for applies in offers.applies %}
-        
-                    {% if applies.finished == true %}
-                
+                <table class="table-offers table">
+                    <thead>
                         <tr>
-                            <td><a href="{{ path('offers_preview', {'id': offers.id, 'company':company.id}) }}">{{ applies.offers.title }}</a></td>
-                            <td>{{ applies.offers.location }}</td>
-                            <td>{{ applies.offers.domain }}</td>
-                            <td>{{ applies.offers.dateStart ? applies.offers.dateStart|date('Y-m-d H:i:s') : '' }}</td>
-                            <td>{{ applies.offers.dateEnd ? applies.offers.dateEnd|date('Y-m-d H:i:s') : '' }}</td>
-                            <td> <span class="badge bg-warning">Terminée</span> </td>
+                            <th>Titre</th>
+                            <th>Lieu</th>
+                            <th>Domaine</th>
+                            <th>Début</th>
+                            <th>Fin</th>
+                            <th>Situation</th>
                         </tr>
-        
-                    {% endif %}
-        
-                {% endfor %}
-        
-           {% endfor %}
-        
-            </tbody>
-        </table> 
-        
-        {% else %}
+                    </thead>
+                    <tbody>
+            
+                   {% for offers in offers %}
 
+                        {% for applies in offers.applies %}
+
+                            {% if applies.finished == true %} 
+                        
+                                <tr>
+                                    <td><a href="{{ path('offers_preview', {'id': offers.id, 'company':company.id}) }}">{{ applies.offers.title }}</a></td>
+                                    <td>{{ applies.offers.location }}</td>
+                                    <td>{{ applies.offers.domain }}</td>
+                                    <td>{{ applies.offers.dateStart ? applies.offers.dateStart|date('Y-m-d H:i:s') : '' }}</td>
+                                    <td>{{ applies.offers.dateEnd ? applies.offers.dateEnd|date('Y-m-d H:i:s') : '' }}</td>
+                                    <td> <span class="badge bg-warning">Terminée</span> </td>
+                                </tr>
+
+                            {% endif %}
+
+                        {% endfor %}
+                                                    
+                    {% endfor %}
+
+                </tbody>
+            </table> 
         </div>
-
         <div class="pagination-bottom mt-5">{{ knp_pagination_render(offers) }}</div>
 
     </div>      
