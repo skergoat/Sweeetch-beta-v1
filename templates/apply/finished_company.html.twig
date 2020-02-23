@@ -23,7 +23,7 @@
 <div class="col-md-12">
     <div class="card card-responsive-table">
 
-       <div class="pagination-bottom mb-4 mt-4">{{ knp_pagination_render(offers) }}</div>
+       <div class="pagination-bottom mb-4 mt-4">{{ knp_pagination_render(applies) }}</div>
 
             <div class="card-body p-0">
 
@@ -40,31 +40,33 @@
                     </thead>
                     <tbody>
             
-                   {% for offers in offers %}
+                    {% for applies in applies %}
 
-                        {% for applies in offers.applies %}
-
-                            {% if applies.finished == true %} 
+                        {% if applies.finished == true %} 
+                    
+                            <tr>
+                                <td><a href="{{ path('offers_preview', {'id': applies.offers.id, 'company':company.id}) }}">{{ applies.offers.title }}</a></td>
+                                <td>{{ applies.offers.location }}</td>
+                                <td>{{ applies.offers.domain }}</td>
+                                <td>{{ applies.offers.dateStart ? applies.offers.dateStart|date('Y-m-d H:i:s') : '' }}</td>
+                                <td>{{ applies.offers.dateEnd ? applies.offers.dateEnd|date('Y-m-d H:i:s') : '' }}</td>
+                                <td> <span class="badge bg-warning">Terminée</span> </td>
+                            </tr>
                         
-                                <tr>
-                                    <td><a href="{{ path('offers_preview', {'id': offers.id, 'company':company.id}) }}">{{ applies.offers.title }}</a></td>
-                                    <td>{{ applies.offers.location }}</td>
-                                    <td>{{ applies.offers.domain }}</td>
-                                    <td>{{ applies.offers.dateStart ? applies.offers.dateStart|date('Y-m-d H:i:s') : '' }}</td>
-                                    <td>{{ applies.offers.dateEnd ? applies.offers.dateEnd|date('Y-m-d H:i:s') : '' }}</td>
-                                    <td> <span class="badge bg-warning">Terminée</span> </td>
-                                </tr>
+                        {% endif %}
+                    
+                    {% else %}
 
-                            {% endif %}
+                    <tr class="border-top">
+                        <td colspan="8" class="border-top-td">Aucun emploi terminé</td>
+                    </tr>   
 
-                        {% endfor %}
-                                                    
                     {% endfor %}
-
+                                                    
                 </tbody>
             </table> 
         </div>
-        <div class="pagination-bottom mt-5">{{ knp_pagination_render(offers) }}</div>
+        <div class="pagination-bottom mt-5">{{ knp_pagination_render(applies) }}</div>
 
     </div>      
 </div> 
