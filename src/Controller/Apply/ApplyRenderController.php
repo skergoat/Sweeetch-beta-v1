@@ -119,15 +119,17 @@ class ApplyRenderController extends AbstractController
     }
 
      /**
-     * @Route("/profile/{id}/company/{company_id}", name="show_applied_profile", methods={"GET"})
+     * @Route("/profile/{id}/company/{company_id}/offers/{offers}", name="show_applied_profile", methods={"GET"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      * @ParamConverter("company", options={"id" = "company_id"})
+     * @ParamConverter("offers", options={"id" = "offers"})
      */
-    public function showStudentProfile(Student $student, Company $company): Response
+    public function showStudentProfile(Student $student, Company $company, Offers $offers): Response
     {   
         return $this->render('apply/show_applied.html.twig', [
             'student' => $student,
-            'company' => $company
+            'company' => $company,
+            'offers' => $offers,
         ]);
     }
 

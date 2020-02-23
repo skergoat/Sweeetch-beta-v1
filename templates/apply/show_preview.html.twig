@@ -92,7 +92,7 @@
                             {% if is_granted('ROLE_ADMIN') %}
                             <td style="padding-top: 18px;"><a href="{{ path('student_show', { "id":applies.student.id }) }}">{{ applies.student.name }} {{ applies.student.lastname }}</a></td>
                             {% else %}
-                            <td style="padding-top: 18px;"><a href="{{ path('show_applied_profile', { "id":applies.student.id, "company_id": offers.company.id }) }}">{{ applies.student.name }} {{ applies.student.lastname }}</a></td>
+                            <td style="padding-top: 18px;"><a href="{{ path('show_applied_profile', { "id":applies.student.id, "company_id": offers.company.id, "offers":offers.id }) }}">{{ applies.student.name }} {{ applies.student.lastname }}</a></td>
                             {% endif %}
                             <td style="color:white;">
                             
