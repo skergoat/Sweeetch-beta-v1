@@ -131,7 +131,7 @@
                                     </p> #}
                                   
                                 {% if is_granted('ROLE_SUPER_COMPANY') %}
-                                    {% if app.request.get('_route') == 'offers_company_index' or app.request.get('_route') == 'offers_new' or app.request.get('_route') == 'offers_preview' or app.request.get('_route') == 'offers_edit' or app.request.get('_route') == 'offers_company_finished' %}
+                                    {% if app.request.get('_route') == 'offers_company_index' or app.request.get('_route') == 'offers_new' or app.request.get('_route') == 'offers_preview' or app.request.get('_route') == 'offers_edit' or app.request.get('_route') == 'offers_company_finished' or app.request.get('_route') == 'show_applied_profile' %}
 
                                 <li class="nav nav-tree">
                                     <li class="nav-item">

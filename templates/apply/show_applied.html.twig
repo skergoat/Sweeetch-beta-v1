@@ -7,12 +7,12 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
-               {# <h1 class="m-0 titles-front">{{ offers.title }}</h1> <br> #}
+               <h1 class="m-0 titles-front">{{ student.Name }} {{ student.lastname }}</h1> <br>
                 <div>
-                    {# <a href="{{ path('student_apply', {id:student.id}) }}" class="btn btn-sm btn-sm-1 btn-labeled btn-default">
+                   <a href="{{ path('offers_preview', {id: offers.id, company:company.id }) }}" class="btn btn-sm btn-sm-1 btn-labeled btn-default">
                         <span class="btn-label"><i class="fa fa-chevron-left"></i></span>
                         Revenir 
-                    </a> #}
+                   </a> 
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@
             <div class="Password card col-lg-12">
     
                 <div class="col-lg-12">
-                    <h3 class="mb-3 mt-3 pl-3-responsive titles-front">Détail de l'Offre</h3>
+                    <h3 class="mb-3 mt-3 titles-front">Général</h3>
                 </div>
     
                 <div class="card-responsive card-body">
@@ -39,14 +39,6 @@
                             <tr>
                                 <th>Email</th>
                                 <td>{{ student.user.email }}</td>
-                            </tr>
-                            <tr>
-                                <th>Prénom</th>
-                                <td>{{ student.name }}</td>
-                            </tr>
-                            <tr>
-                                <th>Nom</th>
-                                <td>{{ student.lastname }}</td>
                             </tr>
                             <tr>
                                 <th>Adresse</th>
@@ -70,7 +62,7 @@
                 </div>
 
                 <div class="col-lg-12">
-                    <h3 class="mb-3 mt-3 pl-3-responsive titles-front">Langues</h3>
+                    <h3 class="mb-3 mt-3 titles-front">Langues</h3>
                 </div>
 
                 <div class="card-responsive card-body">
@@ -89,17 +81,17 @@
                 </div>
 
                 <div class="col-lg-12">
-                    <h3 class="mb-3 mt-3 pl-3-responsive titles-front">Formation</h3>
+                    <h3 class="mb-3 mt-3 titles-front">Formation</h3>
                 </div>
 
                 <div class="card-responsive card-body">
                     <table class="table">
                         <tbody>
                             <tr>
-                                <td><strong>Titre</strong></td>
-                                <td><strong>Ecole</strong></td>
-                                <td><strong>Début</strong></td>
-                                <td><strong>Fin</strong></td>
+                                <th><strong>Titre</strong></th>
+                                <th><strong>Ecole</strong></th>
+                                <th><strong>Début</strong></th>
+                                <th><strong>Fin</strong></th>
                             </tr>
                             {% for education in student.profile.education %}
                             <tr>
@@ -118,7 +110,7 @@
                 </div>
 
                 <div class="col-lg-12">
-                    <h3 class="mb-3 mt-3 pl-3-responsive titles-front">Documents</h3>
+                    <h3 class="mb-3 mt-3 titles-front">Documents</h3>
                 </div>
     
                 <div class="card-responsive card-body">
@@ -126,7 +118,7 @@
                     <table class="table">
                         <tbody>
                             <tr>
-                                <td><strong>CV</strong></td>
+                                <th><strong>CV</strong></th>
                             </tr>
                             <tr>
                                 <td>
