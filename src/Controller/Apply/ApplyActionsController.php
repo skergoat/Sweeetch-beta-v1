@@ -353,6 +353,8 @@ class ApplyActionsController extends AbstractController
             $entityManager->flush();
         }
 
+        $this->addFlash('success', 'Postulation supprimée !');
+
         return $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
     }
 
