@@ -131,7 +131,7 @@
                                     </p> #}
                                   
                                 {% if is_granted('ROLE_SUPER_COMPANY') %}
-                                    {% if app.request.get('_route') == 'offers_company_index' or app.request.get('_route') == 'offers_new' or app.request.get('_route') == 'offers_preview' or app.request.get('_route') == 'offers_edit' %}
+                                    {% if app.request.get('_route') == 'offers_company_index' or app.request.get('_route') == 'offers_new' or app.request.get('_route') == 'offers_preview' or app.request.get('_route') == 'offers_edit' or app.request.get('_route') == 'offers_company_finished' %}
 
                                 <li class="nav nav-tree">
                                     <li class="nav-item">
@@ -144,6 +144,12 @@
                                         <a href="{{ path('offers_new', {id:company.id}) }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Nouveau</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a  href="{{ path('offers_company_finished', {id:company.id}) }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Terminés</p>
                                         </a>
                                     </li>
                                 </li>
