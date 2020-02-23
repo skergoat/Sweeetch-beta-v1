@@ -57,7 +57,11 @@
                     {% if is_granted('ROLE_ADMIN') %}
                     <a href="{{ path('offers_preview', {id : applies.offers.id}) }}">{{ applies.offers.title }}</a> 
                     {% else %}
+                        {% if applies.confirmed == true %}
+                    <a href="{{ path('offers_show_hired', {'id': applies.offers.id, 'student_id' : student.id}) }}">{{ applies.offers.title }}</a>
+                        {% else %}
                     <a href="{{ path('offers_show', {'id': applies.offers.id}) }}">{{ applies.offers.title }}</a>
+                        {% endif %}
                     {% endif %}
                     </td>
                     <td> {{ applies.offers.company.companyName }}</td>
@@ -66,38 +70,47 @@
                     <td> 
                         {% if applies.confirmed == false %}
                             {% if applies.hired == false %}
-                            applied
+                            <span class="badge bg-primary">Ouverte</span>
                             {% else %}
-                            hired
+                            <span class="badge bg-warning">Dossier en Traitement</span>
                             {% endif %}
                         {% else %}
-                        confirmed
+                        <span class="badge bg-success">En cours</span>
                         {% endif %}
                     </td>
                     <td>
-                        {% if applies.hired == false and applies.confirmed == false and applies.agree == false %}
-                        <form method="post" action="{{ path('apply_delete', {'id': applies.id }) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
-                            <button class="btn-icon btn-danger">
-                                <i class="fas fa-times" title="Supprimer"></i>
+                        <div class="btn-group">
+                            {% if applies.hired == false and applies.confirmed == false and applies.agree == false %}
+                            <form method="post" action="{{ path('apply_delete', {'id': applies.id }) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
+                                <button class="btn-icon btn-danger" title="Supprimer">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </form>
+                            {% elseif applies.hired == true %}
+                            <form method="post" class="btn-icon-form" action="{{ path('agree', { id:applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir accepter ?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~  applies.offers.id) }}">
+                                <button class="btn-icon btn-success" title="Accepter">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                            </form>
+                            <form method="post" class="btn-icon-form" action="{{ path('apply_delete', {'id': applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette postulation ?');">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
+                                <button class="btn-icon btn-danger" title="Supprimer">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </form>
+                            {% elseif applies.agree == true %}
+                            <button class="btn-icon-form btn-icon btn-warning" title="Dossier en cours de traitement">
+                                <i class="fas fa-hourglass-start"></i>
                             </button>
-                        </form>
-                        {% elseif applies.hired == true %}
-                        <form method="post" action="{{ path('agree', { id:applies.id }) }}">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~  applies.offers.id) }}">
-                            <button class="btn btn-success">Agree</button>
-                        </form>
-                        <form method="post" action="{{ path('apply_delete', {'id': applies.id }) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
-                            <button class="btn btn-danger">Delete</button>
-                        </form>
-                        {% elseif applies.agree == true %}
-                        <p style="color:red;">En attente de confirmation</p>
-                        {% elseif applies.confirmed == true %}
-                        <a href="{{ path('offers_show_hired', {'id': applies.offers.id, 'student_id' : student.id}) }}" class="btn btn-secondary">show</a>
-                        {% endif %}
+                            {% endif %}
+                            <a href="#help-1" rel="modal:open" class="btn-modal btn-icon-form btn-icon btn-secondary" title="aide">
+                                <i class="fas fa-question-circle"></i>
+                            </a>
+                        </div>
                     </td>
                 </tr>
 
