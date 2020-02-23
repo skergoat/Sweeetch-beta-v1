@@ -89,16 +89,19 @@ class ApplyRenderController extends AbstractController
     public function finishedByCompany(Company $company, OffersRepository $offersRepository, ApplyRepository $applyRepository, PaginatorInterface $paginator, Request $request): Response
     {       
         $queryBuilder = $offersRepository->findAllPaginatedByCompany("DESC", $company);
-    
+
+        $test = $applyRepository->findBy(['offers' => $queryBuilder, 'finished' => 1]);
+
         $pagination = $paginator->paginate(
-            $queryBuilder,
+            $test,
             $request->query->getInt('page', 1),
             10
         );
 
         return $this->render('apply/finished_company.html.twig', [
-            'offers' => $pagination,
+            'offers' => $queryBuilder,
             'company' => $company,
+            'applies' => $pagination
         ]);
     }
 
