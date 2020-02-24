@@ -25,11 +25,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class ApplyActionsController extends AbstractController
 {
     /**
-     * @Route("/offers/{id}/student/{student_id}", name="apply", methods={"POST"})
+     * @Route("/offers/{id}/student/{student_id}/page/{page}", name="apply", methods={"POST"})
      * @IsGranted("ROLE_SUPER_STUDENT")
      * @ParamConverter("student", options={"id" = "student_id"})
      */
-    public function apply(ApplyRepository $repository, Offers $offers, Student $student, ApplyMailer $mailer)
+    public function apply(ApplyRepository $repository, Offers $offers, Student $student, ApplyMailer $mailer, $page)
     {
         // check if apply is open to current offer
         $hired = $repository->findBy(['offers' => $offers, 'hired' => 1]);
@@ -50,7 +50,7 @@ class ApplyActionsController extends AbstractController
 
         if($hired2 || $agree2 || $confirmed2) {
             $this->addFlash('error', 'Vous êtes déjà embauché ailleurs. Rendez-vous sur votre profil.');
-            return $this->redirectToRoute('offers_show', ['id' => $offers->getId()]);
+            return $this->redirectToRoute('offers_show', ['id' => $offers->getId(), 'page' => $page]);
         }
 
         // check if student have already applied to current offer 
@@ -62,17 +62,17 @@ class ApplyActionsController extends AbstractController
             
             if($refused) {
                 $this->addFlash('error', 'Offre Indisponible');
-                return $this->redirectToRoute('offers_show', ['id' => $offers->getId()]);
+                return $this->redirectToRoute('offers_show', ['id' => $offers->getId(), 'page' => $page]);
             }
             else {
                 $this->addFlash('error', 'Vous avez déjà postulé');
-                return $this->redirectToRoute('offers_show', ['id' => $offers->getId()]);
+                return $this->redirectToRoute('offers_show', ['id' => $offers->getId(), 'page' => $page]);
             }  
         }
 
         if($applies) {
             $this->addFlash('error', 'Offre Indisponible');
-            return $this->redirectToRoute('offers_show', ['id' => $offers->getId()]);
+            return $this->redirectToRoute('offers_show', ['id' => $offers->getId(), 'page' => $page]);
         }
 
         // send notification to company 
@@ -100,7 +100,7 @@ class ApplyActionsController extends AbstractController
 
         $this->addFlash('success', 'Postulation enregistrée !');
  
-        return $this->redirectToRoute('offers_show', ['id' => $offers->getId()]);
+        return $this->redirectToRoute('offers_show', ['id' => $offers->getId(), 'page' => $page]);
     }
 
     /**
