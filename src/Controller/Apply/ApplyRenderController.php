@@ -81,7 +81,8 @@ class ApplyRenderController extends AbstractController
             'company' => $company,
             'hired' => $applyRepository->findBy(['offers' => $queryBuilder, 'hired' => 1]),
             'agree' => $applyRepository->findBy(['offers' => $queryBuilder, 'agree' => 1]),
-            'applies' => $applyRepository->findBy(['offers' => $queryBuilder, 'finished' => 1])
+            'applies' => $applyRepository->findBy(['offers' => $queryBuilder, 'finished' => 1]),
+            'apply' => $applyRepository->findBy(['offers' => $queryBuilder, 'refused' => 0, 'unavailable' => 0, 'confirmed' => 0, 'finished' => 0])
         ]);
     }
 

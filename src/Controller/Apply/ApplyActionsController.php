@@ -323,7 +323,7 @@ class ApplyActionsController extends AbstractController
         $user->setRoles(['ROLE_SUPER_STUDENT']);
 
         // close offer 
-        // $offers->setState(false);
+        $offers->setState(false);
 
         // send notification to student 
         $email = $student->getUser()->getEmail();
