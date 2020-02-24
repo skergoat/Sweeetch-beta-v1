@@ -142,7 +142,8 @@ class ApplyRenderController extends AbstractController
             'offers' => $offer,
             'student' => $student,
             'fresh' =>  $applyRepository->findByStudentByFresh($student),
-            'hired' => $applyRepository->checkIfHired($student)
+            'hired' => $applyRepository->checkIfHired($student),
+            'finished' => $applyRepository->findByStudentByFinished($student)
         ]);
     }
 

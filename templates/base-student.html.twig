@@ -159,6 +159,11 @@
                                         <a href="{{ path('student_finished', {id:student.id}) }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Terminées</p>
+                                        {% if finished is defined %}
+                                            {% if finished | length > 0 %}
+                                        <span class="right badge badge-warning">{{ finished | length }}</span>
+                                            {% endif %}
+                                        {% endif %}
                                         </a>
                                     </li>
                                 </li>
