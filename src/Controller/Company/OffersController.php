@@ -28,21 +28,23 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 class OffersController extends AbstractController
 {
     /**
-     * @Route("/", name="offers_index", methods={"GET"})
+     * @Route("/page/{page<\d+>?1}", name="offers_index", methods={"GET"})
      */
-    public function index(OffersRepository $offersRepository, PaginatorInterface $paginator, Request $request): Response
+    public function index(OffersRepository $offersRepository, PaginatorInterface $paginator, Request $request, $page): Response
     {
         $queryBuilder = $offersRepository->findAllPaginatedAndOpen("DESC");
 
         $pagination = $paginator->paginate(
             $queryBuilder,
-            $request->query->getInt('page', 1),
+            $request->query->getInt('page', $page),
             6
         );
 
         return $this->render('offers/index.html.twig', [
             'offers' => $pagination,
+            'page' => $page
         ]);
+
     }
 
     /**
@@ -74,14 +76,15 @@ class OffersController extends AbstractController
         return $this->render('offers/new.html.twig', [
             'offers' => $offer,
             'form' => $form->createView(),
-            'company' => $company
+            'company' => $company,
+            'page' => $page
         ]);
     }
 
     /**
-     * @Route("/{id}", name="offers_show", methods={"GET"})
+     * @Route("/{id}/{page<\d+>?1}", name="offers_show", methods={"GET"})
      */
-    public function show(Offers $offer, ApplyRepository $applyRepository, AuthorizationCheckerInterface $authorizationChecker): Response
+    public function show(Offers $offer, ApplyRepository $applyRepository, AuthorizationCheckerInterface $authorizationChecker, $page): Response
     {
         if (!$authorizationChecker->isGranted('ROLE_ADMIN')) { // if ADMIN then ok 
         
@@ -117,6 +120,7 @@ class OffersController extends AbstractController
 
         return $this->render('offers/show.html.twig', [
             'offers' => $offer,
+            'page' => $page
         ]);
     }
 
