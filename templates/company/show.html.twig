@@ -124,29 +124,37 @@
                                         <th>Mission</th>
                                         <th>Situation</th>
                                     </tr>
-
-                                 {% for applies in applies %}
                                     
-                                    {% if applies.hired == true or applies.agree == true %}
+                                    {% if hired | length != 0 and agree | length != 0 %}
 
-                                    <tr class="border-top">
-                                        <td><a href="" class="action-link">{{ applies.offers.title }}</a></td>
-                                        <td>
-                                            {% if applies.hired == true %}
-                                            <span class="badge badge-danger" title="Mission en cours. Bonne chance !">L'Eleve doit confirmer</span>
-                                            {% else %}
-                                            <span class="badge badge-warning" title="Mission en cours. Bonne chance !">Dossier en traitement</span>
-                                            {% endif %}
-                                        </td>   
-                                    </tr> 
+                                        {% for hired in hired %}
                                     
-                                    {% endif %}
+                                        <tr class="border-top">
+                                            <td><a href="" class="action-link">{{ hired.offers.title }}</a></td>
+                                            <td>
+                                                <span class="badge badge-danger" title="Mission en cours. Bonne chance !">L'Eleve doit confirmer</span>
+                                            </td>   
+                                        </tr> 
 
-                                 {% else %} 
+                                        {% endfor %}
+
+                                        {% for agree in agree %}
+                                    
+                                        <tr class="border-top">
+                                            <td><a href="" class="action-link">{{ agree.offers.title }}</a></td>
+                                            <td>
+                                                <span class="badge badge-warning" title="Mission en cours. Bonne chance !">Dossier en traitement</span>
+                                            </td>   
+                                        </tr> 
+
+                                        {% endfor %}
+                                        
+                                    {% else %}
                                     <tr class="border-top">
                                         <td colspan="8" class="border-top-td">Aucune mission en cours</td>
                                     </tr> 
-                                 {% endfor %} 
+                                    {% endif %}
+                                    
                                 </tbody>
                             </table>
                         </div>

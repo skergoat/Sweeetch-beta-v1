@@ -19,6 +19,24 @@ class ApplyRepository extends ServiceEntityRepository
         parent::__construct($registry, Apply::class);
     }
 
+    public function findTest($offers)
+    {
+        return (boolean)$this->createQueryBuilder('u')
+        ->andWhere('u.offers = :offers')
+        ->andWhere('u.hired = :hired')
+        ->setParameter('offers', $offers)
+        ->setParameter('hired', true)
+        ->getQuery()
+        ->getResult();
+        // ->andWhere('cat.name LIKE :searchTerm')
+        // ->orWhere('cat.iconKey LIKE :searchTerm')
+        // ->andWhere('cat.enabled = :enabled')
+    }
+
+
+
+
+
 
     public function findAppliedIfExists($student, $offer)
     {
