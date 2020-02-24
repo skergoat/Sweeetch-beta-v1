@@ -34,8 +34,7 @@ class ApplyRenderController extends AbstractController
     {   
         $applies = $applyRepository->findByStudent($student);
         $finished = $applyRepository->findByStudentByFinished($student);
-       
-
+    
         return $this->render('apply/index_student.html.twig', [
             'student' => $student,
             'applies' => $applies,
