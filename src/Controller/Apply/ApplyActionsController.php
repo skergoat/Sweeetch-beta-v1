@@ -46,10 +46,11 @@ class ApplyActionsController extends AbstractController
         $hired2 = $repository->findBy(['student' => $student, 'hired' => 1]);
         $agree2 = $repository->findBy(['student' => $student, 'agree' => 1]);
         $confirmed2 = $repository->findBy(['student' => $student, 'confirmed' => 1]);
-        $finished2 = $repository->findBy(['student' => $student, 'finished' => 1]);
+        // $finished2 = $repository->findBy(['student' => $student, 'finished' => 1]);
 
-        if($hired2 || $agree2 || $confirmed2 || $finished2) {
-            throw new \Exception('you are not available');
+        if($hired2 || $agree2 || $confirmed2) {
+            $this->addFlash('error', 'Vous êtes déjà embauché ailleurs. Rendez-vous sur votre profil.');
+            return $this->redirectToRoute('offers_show', ['id' => $offers->getId()]);
         }
 
         // check if student have already applied to current offer 
@@ -60,15 +61,18 @@ class ApplyActionsController extends AbstractController
             $refused = $repository->checkIfrefusedExsists($offers, $student);
             
             if($refused) {
-                throw new \Exception('already applied or refused');
+                $this->addFlash('error', 'Offre Indisponible');
+                return $this->redirectToRoute('offers_show', ['id' => $offers->getId()]);
             }
             else {
-                throw new \Exception('already applied');
+                $this->addFlash('error', 'Vous avez déjà postulé');
+                return $this->redirectToRoute('offers_show', ['id' => $offers->getId()]);
             }  
         }
 
         if($applies) {
-            throw new \Exception('already applied or refused');
+            $this->addFlash('error', 'Offre Indisponible');
+            return $this->redirectToRoute('offers_show', ['id' => $offers->getId()]);
         }
 
         // send notification to company 
@@ -113,9 +117,9 @@ class ApplyActionsController extends AbstractController
         $hired2 = $repository->findBy(['student' => $student, 'hired' => 1]);
         $agree2 = $repository->findBy(['student' => $student, 'agree' => 1]);
         $confirmed2 = $repository->findBy(['student' => $student, 'confirmed' => 1]);
-        $finished2 = $repository->findBy(['student' => $student, 'finished' => 1]);
+        // $finished2 = $repository->findBy(['student' => $student, 'finished' => 1]);
 
-        if($hired2 || $agree2 || $confirmed2 || $finished2) {
+        if($hired2 || $agree2 || $confirmed2) {
             throw new \Exception('you are not available');
         }
 
@@ -298,8 +302,14 @@ class ApplyActionsController extends AbstractController
      */
     public function refuse(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer, $from)
     {
+
+        // get users
+        $student = $apply->getStudent();
+        $offers = $apply->getOffers();
+
         if($apply->getRefused() == true) {
-            throw new \Exception('already refused');
+            $this->addFlash('error', 'Vous avez déjà refusé cette candidature');
+            return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
         }
 
         $apply->setHired(false);
@@ -309,11 +319,7 @@ class ApplyActionsController extends AbstractController
         // set appliant roles 
         $user = $apply->getStudent()->getUser();
         // $user->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_TO_APPLY']);
-        $user->setRoles(['ROLE_SUPER_STUDENT']); 
-        
-        // get other applies
-        $student = $apply->getStudent();
-        $offers = $apply->getOffers();
+        $user->setRoles(['ROLE_SUPER_STUDENT']);
 
         // close offer 
         // $offers->setState(false);

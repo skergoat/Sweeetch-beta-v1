@@ -1,5 +1,11 @@
-if($(".alert-success")[0]){
+if($(".alert.alert-success")[0]){
     setTimeout(function() {
         $(".alert-success").css('display', 'none');
+    }, 3000); 
+} 
+
+if($(".alert.alert-danger")[0]){
+    setTimeout(function() {
+        $(".alert-danger").css('display', 'none');
     }, 3000); 
 } 

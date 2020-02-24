@@ -19,6 +19,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * @Route("/apply")
@@ -143,8 +144,26 @@ class ApplyRenderController extends AbstractController
      * @ParamConverter("company", options={"id" = "company_id"})
      * @ParamConverter("offers", options={"id" = "offers"})
      */
-    public function showStudentProfile(Student $student, Company $company, Offers $offers): Response
+    public function showStudentProfile(Student $student, Company $company, Offers $offers, ApplyRepository $applyRepository, AuthorizationCheckerInterface $authorizationChecker): Response
     {   
+        if (!$authorizationChecker->isGranted('ROLE_ADMIN')) {
+
+            $checkApply = $applyRepository->findBy(['offers' => $offers, 'student' => $student]);
+        
+            if ($checkApply) { 
+
+                return $this->render('apply/show_applied.html.twig', [
+                    'student' => $student,
+                    'company' => $company,
+                    'offers' => $offers,
+                ]);
+            }  
+            else {
+                $this->addFlash('error', 'Vous n\'êtes pas autorisé à voir cette candidature');
+                return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
+            }
+        }
+
         return $this->render('apply/show_applied.html.twig', [
             'student' => $student,
             'company' => $company,

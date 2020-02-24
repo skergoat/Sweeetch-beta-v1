@@ -129,7 +129,8 @@ class OffersController extends AbstractController
         $finished = $repository->checkIfFinished($offer);
 
         if($finished) {
-            throw new \Exception('already finished');
+            $this->addFlash('error', 'Mission terminée');
+            return $this->redirectToRoute('offers_company_index', ['id' => $company->getId()]);
         }
 
         $form = $this->createForm(OffersType::class, $offer);
@@ -161,7 +162,9 @@ class OffersController extends AbstractController
             $finished = $repository->checkIfFinished($offer);
 
             if($finished) {
-                throw new \Exception('already finished');
+                // throw new \Exception('already finished');
+                $this->addFlash('error', 'Mission terminée');
+                return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
             }
 
             $entityManager = $this->getDoctrine()->getManager();

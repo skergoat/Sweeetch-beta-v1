@@ -47,6 +47,12 @@
         </div>
         {% endfor %}
 
+        {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+        {% endfor %}
+
         <div class="Password card col-lg-12">
             <div class="card-body">
                 <table class="table offers-show col-lg-5 col-md-5 col-sm-12 col-xs-12">
