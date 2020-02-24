@@ -89,7 +89,7 @@
                             <a href="{{ path('offers_edit', {'id': offers.applies[0].offers.id, 'company':company.id}) }}" title="Modifier"><i class="fas fa-edit"></i></a>
                         </td>
                     </tr>
-                    {% elseif offers.applies[0].finished == true %}
+                    {% elseif offers.applies[0].finished == true and offers.applies | length == 0 %}
                     <tr class="border-top">
                       <td colspan="8" class="border-top-td">Aucun emploi pour le moment</td>
                     </tr> 
@@ -98,11 +98,9 @@
                   {% endif %}
                 
                 {% else %}
-                  
                 <tr class="border-top">
                     <td colspan="8" class="border-top-td">Aucun emploi pour le moment</td>
                 </tr> 
-
                 {% endfor %}
 
                 </tbody>
