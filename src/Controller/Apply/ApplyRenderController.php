@@ -114,18 +114,20 @@ class ApplyRenderController extends AbstractController
      * @IsGranted("ROLE_SUPER_COMPANY")
      * @ParamConverter("company", options={"id" = "company"})
      */
-    public function showByCompany(ApplyRepository $applyRepository, Offers $offer, Company $company): Response
+    public function showByCompany(ApplyRepository $applyRepository, Offers $offer, Company $company, OffersRepository $offersRepository): Response
     {   
         $applies = $applyRepository->findByOffer($offer);
         $finished = $applyRepository->findByOfferByFinished($offer);
+
+        $offers = $offersRepository->findBy(['company' => $company]);
        
         return $this->render('apply/show_preview.html.twig', [
             'offers' => $offer,
             'applies' => $applies,
             'finished' => $finished,
             'company' => $company,
-            'hired' => $applyRepository->findBy(['offers' => $offer, 'hired' => 1]),
-            'agree' => $applyRepository->findBy(['offers' => $offer, 'agree' => 1]),
+            'hired' => $applyRepository->findBy(['offers' => $offers, 'hired' => 1]),
+            'agree' => $applyRepository->findBy(['offers' => $offers, 'agree' => 1]),
         ]);
     }
 
@@ -150,7 +152,7 @@ class ApplyRenderController extends AbstractController
      * @ParamConverter("company", options={"id" = "company_id"})
      * @ParamConverter("offers", options={"id" = "offers"})
      */
-    public function showStudentProfile(Student $student, Company $company, Offers $offers, ApplyRepository $applyRepository, AuthorizationCheckerInterface $authorizationChecker): Response
+    public function showStudentProfile(Student $student, Company $company, Offers $offers, ApplyRepository $applyRepository, AuthorizationCheckerInterface $authorizationChecker, OffersRepository $offersRepository): Response
     {   
         if (!$authorizationChecker->isGranted('ROLE_ADMIN')) {
 
@@ -158,12 +160,14 @@ class ApplyRenderController extends AbstractController
         
             if ($checkApply) { 
 
+                $offer = $offersRepository->findBy(['company' => $company]);
+
                 return $this->render('apply/show_applied.html.twig', [
                     'student' => $student,
                     'company' => $company,
                     'offers' => $offers,
-                    'hired' => $applyRepository->findBy(['offers' => $offers, 'hired' => 1]),
-                    'agree' => $applyRepository->findBy(['offers' => $offers, 'agree' => 1]),
+                    'hired' => $applyRepository->findBy(['offers' => $offer, 'hired' => 1]),
+                    'agree' => $applyRepository->findBy(['offers' => $offer, 'agree' => 1]),
                 ]);
             }  
             else {
@@ -176,8 +180,8 @@ class ApplyRenderController extends AbstractController
             'student' => $student,
             'company' => $company,
             'offers' => $offers,
-            'hired' => $applyRepository->findBy(['offers' => $offers, 'hired' => 1]),
-            'agree' => $applyRepository->findBy(['offers' => $offers, 'agree' => 1]),
+            'hired' => $applyRepository->findBy(['offers' => $offer, 'hired' => 1]),
+            'agree' => $applyRepository->findBy(['offers' => $offer, 'agree' => 1]),
         ]);
     }
 
