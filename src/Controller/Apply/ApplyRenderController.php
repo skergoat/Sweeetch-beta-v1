@@ -82,6 +82,7 @@ class ApplyRenderController extends AbstractController
             'company' => $company,
             'hired' => $applyRepository->findBy(['offers' => $queryBuilder, 'hired' => 1]),
             'agree' => $applyRepository->findBy(['offers' => $queryBuilder, 'agree' => 1]),
+            'applies' => $applyRepository->findBy(['offers' => $queryBuilder, 'finished' => 1])
         ]);
     }
 
@@ -128,6 +129,7 @@ class ApplyRenderController extends AbstractController
             'company' => $company,
             'hired' => $applyRepository->findBy(['offers' => $offers, 'hired' => 1]),
             'agree' => $applyRepository->findBy(['offers' => $offers, 'agree' => 1]),
+            'appliesf' => $applyRepository->findBy(['offers' => $offers, 'finished' => 1])
         ]);
     }
 
@@ -169,6 +171,7 @@ class ApplyRenderController extends AbstractController
                     'offers' => $offers,
                     'hired' => $applyRepository->findBy(['offers' => $offer, 'hired' => 1]),
                     'agree' => $applyRepository->findBy(['offers' => $offer, 'agree' => 1]),
+                    'applies' => $applyRepository->findBy(['offers' => $offer, 'finished' => 1])
                 ]);
             }  
             else {
@@ -183,6 +186,7 @@ class ApplyRenderController extends AbstractController
             'offers' => $offers,
             'hired' => $applyRepository->findBy(['offers' => $offer, 'hired' => 1]),
             'agree' => $applyRepository->findBy(['offers' => $offer, 'agree' => 1]),
+            'applies' => $applyRepository->findBy(['offers' => $offer, 'finished' => 1])
         ]);
     }
 

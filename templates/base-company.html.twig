@@ -147,9 +147,18 @@
                                         <a  href="{{ path('offers_company_finished', {id:company.id}) }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Terminés</p>
+                                        {% if appliesf is defined %}
+                                            {% if appliesf | length > 0 %}
+                                            <span class="badge badge-warning right" title="postulations">{{ appliesf | length }}</span>
+                                            {% endif %}
+                                        {% elseif applies is defined %}
+                                            {% if applies | length > 0 %}
+                                            <span class="badge badge-warning right" title="postulations">{{ applies | length }}</span>
+                                            {% endif %}
+                                        {% endif %}
                                         </a>
                                     </li>
-                                </li>
+                                </li> 
 
                                     {% endif %} 
                                 {% endif %}
