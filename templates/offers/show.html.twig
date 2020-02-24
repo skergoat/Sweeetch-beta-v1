@@ -1,6 +1,6 @@
 {% extends 'base-front.html.twig' %}
 
-{% block title %} {{ parent() }} - offers {% endblock %}
+{% block title %} {{ parent() }} - Emploi {% endblock %}
 
 {% block body %}
 
@@ -77,13 +77,38 @@
         
                 {% if app.user.student.id is defined %}
                     {% if is_granted('ROLE_SUPER_STUDENT') %}
+                        {% if offers.state == false %}
                         <form method="post" action="{{ path('apply', { id:offers.id, student_id: app.user.student.id }) }}">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ offers.id) }}">
                             <button class="btn btn-success">Postuler</button>
                         </form> 
+                        {% else %}
+                        <div class="col-12 col-sm-6 col-md-6">
+                            <div class="info-box mb-3">
+                              <span class="info-box-icon bg-warning elevation-1"><i class="fa fa-info"></i></span>
+                
+                              <div class="info-box-content">
+                                <span class="info-box-number">Dossier en cours</span>
+                                <span class="info-box-text">Controllez votre profil</span>
+                              </div>
+                              <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        {% endif %}
                     {% elseif is_granted('ROLE_STUDENT') %}
-                    <br><br>
-                    <p style="color:red;">Votre compte doit etre valide pour pouvoir postuler</p>
+                    <div class="col-12 col-sm-6 col-md-6">
+                        <div class="info-box mb-3">
+                          <span class="info-box-icon bg-danger elevation-1"><i class="fa fa-exclamation-triangle"></i></span>
+            
+                          <div class="info-box-content">
+                            <span class="info-box-number">Validation en attente</span>
+                            <span class="info-box-text">Votre compte doit être validé pour pouvoir postuler</span>
+                          </div>
+                          <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
                     {% endif %}
                 {% endif %}
             </div>

@@ -31,7 +31,7 @@ class ApplyRepository extends ServiceEntityRepository
         ->setParameter('confirmed', true)
         ->setParameter('finished', true)
         ->getQuery()
-        ->getOneOrNullResult();
+        ->getResult();
     }
 
     public function checkIfOpen($offers) 
