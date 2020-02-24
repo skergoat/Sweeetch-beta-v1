@@ -98,18 +98,19 @@ class OffersController extends AbstractController
                     $applied = $applyRepository->findAppliedIfExists($student, $offer);
 
                     if($applied) {
-
                         return $this->render('offers/show.html.twig', [ // if student = student.apply then ok 
                             'offers' => $offer,
                         ]);
                     }
                     else {
-                        throw new \Exception('denied');
+                        $this->addFlash('error', 'Vous n\'êtes pas autorisé à voir cette annonce');
+                        return $this->redirectToRoute('offers_index');
                     }
         
                 }
                 else {
-                    throw new \Exception('denied');
+                    $this->addFlash('error', 'Vous n\'êtes pas autorisé à voir cette annonce');
+                    return $this->redirectToRoute('offers_index');
                 }
             }
         }
@@ -162,7 +163,6 @@ class OffersController extends AbstractController
             $finished = $repository->checkIfFinished($offer);
 
             if($finished) {
-                // throw new \Exception('already finished');
                 $this->addFlash('error', 'Mission terminée');
                 return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
             }
