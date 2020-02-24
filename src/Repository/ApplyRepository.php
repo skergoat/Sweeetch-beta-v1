@@ -58,7 +58,6 @@ class ApplyRepository extends ServiceEntityRepository
         ->getOneOrNullResult();
     }
 
-
     public function findByStudentByFresh($student) 
     {
         return $this->createQueryBuilder('u')

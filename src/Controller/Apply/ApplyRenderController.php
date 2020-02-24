@@ -80,6 +80,8 @@ class ApplyRenderController extends AbstractController
         return $this->render('apply/index_company.html.twig', [
             'offers' => $pagination,
             'company' => $company,
+            'hired' => $applyRepository->findBy(['offers' => $queryBuilder, 'hired' => 1]),
+            'agree' => $applyRepository->findBy(['offers' => $queryBuilder, 'agree' => 1]),
         ]);
     }
 
@@ -101,7 +103,9 @@ class ApplyRenderController extends AbstractController
         return $this->render('apply/finished_company.html.twig', [
             'offers' => $queryBuilder,
             'company' => $company,
-            'applies' => $pagination
+            'applies' => $pagination,
+            'hired' => $applyRepository->findBy(['offers' => $queryBuilder, 'hired' => 1]),
+            'agree' => $applyRepository->findBy(['offers' => $queryBuilder, 'agree' => 1]),
         ]);
     }
 
@@ -120,6 +124,8 @@ class ApplyRenderController extends AbstractController
             'applies' => $applies,
             'finished' => $finished,
             'company' => $company,
+            'hired' => $applyRepository->findBy(['offers' => $offer, 'hired' => 1]),
+            'agree' => $applyRepository->findBy(['offers' => $offer, 'agree' => 1]),
         ]);
     }
 
@@ -156,6 +162,8 @@ class ApplyRenderController extends AbstractController
                     'student' => $student,
                     'company' => $company,
                     'offers' => $offers,
+                    'hired' => $applyRepository->findBy(['offers' => $offers, 'hired' => 1]),
+                    'agree' => $applyRepository->findBy(['offers' => $offers, 'agree' => 1]),
                 ]);
             }  
             else {
@@ -168,6 +176,8 @@ class ApplyRenderController extends AbstractController
             'student' => $student,
             'company' => $company,
             'offers' => $offers,
+            'hired' => $applyRepository->findBy(['offers' => $offers, 'hired' => 1]),
+            'agree' => $applyRepository->findBy(['offers' => $offers, 'agree' => 1]),
         ]);
     }
 

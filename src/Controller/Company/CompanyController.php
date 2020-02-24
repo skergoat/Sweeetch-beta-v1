@@ -82,28 +82,16 @@ class CompanyController extends AbstractController
     public function show(Company $company, OffersRepository $offersRepository, ApplyRepository $applyRepository): Response
     {
         $offers = $offersRepository->findBy(['company' => $company]);
-        $finished = $applyRepository->findBy(['offers' => $offers, 'finished' => 1]);
-        $confirmed = $applyRepository->findBy(['offers' => $offers, 'confirmed' => 1]);
         $applies = $applyRepository->findBy(['offers' => $offers]);
-        // $waiting = $applyRepository->findByWaiting($offers);
-        // $waiting = $applyRepository->findBy(['offers' => $offers, 'hired' => 1]);
-
-        // $queryBuilder = $this->getDoctrine()->getManager()->getRepository('App\\Entity\\Apply')
-        //     ->createQueryBuilder('c');
-
-        // $result = $queryBuilder->select('c')
-        //     ->where('c.offers = :offers and c.hired = :hired')
-        //     ->setParameter(':offers', $offers)
-        //     ->setParameter(':hired', true)
-        //     ->getQuery()
-        //     ->getResult();
 
         return $this->render('company/show.html.twig', [
             'company' => $company,
             'offers' => $offers,
-            'finished' => $finished,
-            'confirmed' => $confirmed,
-            'applies' => $applies
+            'applies' => $applies,
+            'finished' => $applyRepository->findBy(['offers' => $offers, 'finished' => 1]),
+            'confirmed' => $applyRepository->findBy(['offers' => $offers, 'confirmed' => 1]),
+            'hired' => $applyRepository->findBy(['offers' => $offers, 'hired' => 1]),
+            'agree' => $applyRepository->findBy(['offers' => $offers, 'agree' => 1]),
         ]);
     }
 
@@ -111,7 +99,7 @@ class CompanyController extends AbstractController
      * @Route("/{id}/edit", name="company_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_COMPANY")
      */
-    public function edit(Request $request, Company $company, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function edit(Request $request, Company $company, UserPasswordEncoderInterface $passwordEncoder, OffersRepository $offersRepository, ApplyRepository $applyRepository): Response
     {
         $form = $this->createForm(UpdateCompanyType::class, $company);
         $formPassword = $this->createForm(CompanyEditPasswordType::class, $company); 
@@ -142,10 +130,14 @@ class CompanyController extends AbstractController
             return $this->redirectToRoute('company_edit', ['id' => $company->getId() ]);
         }
 
+        $offers = $offersRepository->findBy(['company' => $company]);
+
         return $this->render('company/edit.html.twig', [
             'company' => $company,
             'form' => $form->createView(),
             'formPassword' => $formPassword->createView(),
+            'hired' => $applyRepository->findBy(['offers' => $offers, 'hired' => 1]),
+            'agree' => $applyRepository->findBy(['offers' => $offers, 'agree' => 1]),
         ]);
     }
 
