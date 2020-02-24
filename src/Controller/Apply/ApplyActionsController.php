@@ -31,12 +31,12 @@ class ApplyActionsController extends AbstractController
      */
     public function apply(ApplyRepository $repository, Offers $offers, Student $student, ApplyMailer $mailer)
     {
-        $already = $repository->checkIfOpen($offers); 
+        // $already = $repository->checkIfOpen($offers); 
 
-        if($already) {
-            $this->addFlash('error', 'Offre Indisponible');
-            return $this->redirectToRoute('offers_index');
-        }
+        // if($already) {
+        //     $this->addFlash('error', 'Offre Indisponible');
+        //     return $this->redirectToRoute('offers_index');
+        // }
 
         $applies = $repository->checkIfRowExsists($offers, $student);
 
@@ -100,6 +100,9 @@ class ApplyActionsController extends AbstractController
         // get other applies
         $student = $apply->getStudent();
         $offers = $apply->getOffers();
+
+        // close offer 
+        $offers->setState(true);
 
         // prevent student from applying 
         $student->getUser()->setRoles(['ROLE_SUPER_STUDENT']);
@@ -287,6 +290,9 @@ class ApplyActionsController extends AbstractController
         $student = $apply->getStudent();
         $offers = $apply->getOffers();
 
+        // close offer 
+        // $offers->setState(false);
+
         // send notification to student 
         $email = $student->getUser()->getEmail();
         $name = $student->getName();
@@ -332,6 +338,9 @@ class ApplyActionsController extends AbstractController
 
         $student = $apply->getStudent();
         $offers = $apply->getOffers();
+
+        // close offer 
+        $offers->setState(false);
 
         // set other student offers to unavailable
         $unavailables = $repository->setToUnavailables($offers, $student);

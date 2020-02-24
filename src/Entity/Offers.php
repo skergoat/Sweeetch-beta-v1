@@ -56,7 +56,12 @@ class Offers
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Apply", mappedBy="offers")
      */
-    private $applies; 
+    private $applies;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $state; 
     
 
     public function __construct()
@@ -181,6 +186,18 @@ class Offers
                 $apply->setOffers(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getState(): ?bool
+    {
+        return $this->state;
+    }
+
+    public function setState(bool $state): self
+    {
+        $this->state = $state;
 
         return $this;
     }
