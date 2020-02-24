@@ -32,8 +32,8 @@ class OffersController extends AbstractController
      */
     public function index(OffersRepository $offersRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        // $queryBuilder = $offersRepository->findAllPaginated("DESC");
-        $queryBuilder = $offersRepository->findAll();
+        $queryBuilder = $offersRepository->findAllPaginatedAndOpen("ASC");
+        // $queryBuilder = $offersRepository->findAll();
 
         $pagination = $paginator->paginate(
             $queryBuilder,
@@ -61,6 +61,7 @@ class OffersController extends AbstractController
             $offer = $form->getData();
 
             $offer->setCompany($company);
+            $offer->setState(false);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($offer);
