@@ -92,6 +92,7 @@ class CompanyController extends AbstractController
             'confirmed' => $applyRepository->findBy(['offers' => $offers, 'confirmed' => 1]),
             'hired' => $applyRepository->findBy(['offers' => $offers, 'hired' => 1]),
             'agree' => $applyRepository->findBy(['offers' => $offers, 'agree' => 1]),
+            'applyc' => $applyRepository->findBy(['offers' => $offers, 'refused' => 0, 'unavailable' => 0, 'confirmed' => 0, 'finished' => 0])
         ]);
     }
 
@@ -138,6 +139,7 @@ class CompanyController extends AbstractController
             'formPassword' => $formPassword->createView(),
             'hired' => $applyRepository->findBy(['offers' => $offers, 'hired' => 1]),
             'agree' => $applyRepository->findBy(['offers' => $offers, 'agree' => 1]),
+            'applyc' => $applyRepository->findBy(['offers' => $offers, 'refused' => 0, 'unavailable' => 0, 'confirmed' => 0, 'finished' => 0])
         ]);
     }
 
