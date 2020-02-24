@@ -77,7 +77,6 @@ class OffersController extends AbstractController
             'offers' => $offer,
             'form' => $form->createView(),
             'company' => $company,
-            'page' => $page
         ]);
     }
 
