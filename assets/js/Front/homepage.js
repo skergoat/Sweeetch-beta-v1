@@ -26,6 +26,7 @@ import 'animate.css';
 
 // main scripts 
 import './components/contactform.js';
+import './components/message.js';
 
 
 
