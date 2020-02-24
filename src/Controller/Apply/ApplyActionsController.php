@@ -31,16 +31,28 @@ class ApplyActionsController extends AbstractController
      */
     public function apply(ApplyRepository $repository, Offers $offers, Student $student, ApplyMailer $mailer)
     {
+        // check if apply is open to current offer
         $hired = $repository->findBy(['offers' => $offers, 'hired' => 1]);
         $agree = $repository->findBy(['offers' => $offers, 'agree' => 1]);
         $confirmed = $repository->findBy(['offers' => $offers, 'confirmed' => 1]);
         $finished = $repository->findBy(['offers' => $offers, 'finished' => 1]);
 
-        if($hired || $agree || $confirmed || $finished) {  // if there are already applies then ... 
+        if($hired || $agree || $confirmed || $finished) {  
             $this->addFlash('error', 'Offre Indisponible');
             return $this->redirectToRoute('offers_index');
         }
 
+        // check if student is available
+        $hired2 = $repository->findBy(['student' => $student, 'hired' => 1]);
+        $agree2 = $repository->findBy(['student' => $student, 'agree' => 1]);
+        $confirmed2 = $repository->findBy(['student' => $student, 'confirmed' => 1]);
+        $finished2 = $repository->findBy(['student' => $student, 'finished' => 1]);
+
+        if($hired2 || $agree2 || $confirmed2 || $finished2) {
+            throw new \Exception('you are not available');
+        }
+
+        // check if student have already applied to current offer 
         $applies = $repository->checkIfRowExsists($offers, $student);
 
         if($applies) {  
@@ -93,16 +105,26 @@ class ApplyActionsController extends AbstractController
      */
     public function hire(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer)
     {   
+        // get users
+        $student = $apply->getStudent();
+        $offers = $apply->getOffers();
+
+        // check if student is available
+        $hired2 = $repository->findBy(['student' => $student, 'hired' => 1]);
+        $agree2 = $repository->findBy(['student' => $student, 'agree' => 1]);
+        $confirmed2 = $repository->findBy(['student' => $student, 'confirmed' => 1]);
+        $finished2 = $repository->findBy(['student' => $student, 'finished' => 1]);
+
+        if($hired2 || $agree2 || $confirmed2 || $finished2) {
+            throw new \Exception('you are not available');
+        }
+
         // set apply state 
         if($apply->getHired() == false && $apply->getConfirmed() == false) {
             $apply->setHired(true);
             $apply->setConfirmed(false);
             $apply->setRefused(false);
         }
-
-        // get other applies
-        $student = $apply->getStudent();
-        $offers = $apply->getOffers();
 
         // close offer 
         $offers->setState(true);
