@@ -120,7 +120,8 @@ class ApplyActionsController extends AbstractController
         // $finished2 = $repository->findBy(['student' => $student, 'finished' => 1]);
 
         if($hired2 || $agree2 || $confirmed2) {
-            throw new \Exception('you are not available');
+            $this->addFlash('error', 'Cet étudiant n\'est plus disponile');
+            return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
         }
 
         // set apply state 
