@@ -45,32 +45,34 @@
     }
 }
 
-.message {
+.timeline {
 
-    opacity:0;
-
-    &-first {
-        width:350px;
-        position:relative;
-        top:30px;
-        left:-70px;
+    &::before {
+        width:100%;
     }
 
-    &-second {
-        width:270px;
-        position:relative;
-        top:-23px;
-        left:120px;
+    & > div > .timeline-item {
+        margin:0px;
+        margin:auto;
     }
-
-    &-third {
-        width:250px;
-        position:relative;
-        top:-75px;
-        left:310px;
-    }
-
 }
+
+.time-icon:nth-child(3) {
+    left:94%;
+}
+
+.time-icon:nth-child(2) {
+    left:45%;
+}
+
+.timeline > .message {
+    // position:absolute;
+    opacity:0;
+    top:40px;
+    margin:auto;
+    max-width:400px;
+}
+
 
 
 

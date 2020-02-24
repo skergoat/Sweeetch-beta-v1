@@ -6,7 +6,7 @@
 
     <div class="row row-top">
 
-       <div class="col-lg-5">
+       <div class="col-lg-6">
 
             <div class="content-title">
                 <h1>Tableau de Bord</h1>
@@ -41,57 +41,57 @@
             </div>
         </div>
 
-        <div class="col-lg-7">
+        <div class="col-timeline col-lg-6">
 
         {% if applies[0] is defined %}
             {% if applies[0].hired == true or applies[0].agree == true or applies[0].confirmed == true %}
             
             <h5>Progression du recrutement : </h5>
 
-            <div class="timeline" style="position:relative">
+            <div class="timeline col-lg-10" style="position:relative">
 
-                    <div class="time-icon" data-url="first">
-                        {% if applies[0] is defined %}
-                            {% if applies[0].hired == true %}
-                            <i class="fas fa-play-circle bg-red"></i>
-                            {% else %}
-                            <i class="fas fa-play-circle bg-grey"></i>
-                            {% endif %}
+                <div class="time-icon" data-url="first">
+                    {% if applies[0] is defined %}
+                        {% if applies[0].hired == true %}
+                        <i class="fas fa-play-circle bg-red"></i>
                         {% else %}
                         <i class="fas fa-play-circle bg-grey"></i>
                         {% endif %}
-                    </div>
-                    
-                    <div class="time-icon" data-url="second">
-                        {% if applies[0] is defined %}
-                            {% if applies[0].agree == true %}
-                            <i class="fas fa-cog bg-yellow"></i>
-                            {% else %}
-                            <i class="fas fa-cog bg-grey"></i>
-                            {% endif %}
+                    {% else %}
+                    <i class="fas fa-play-circle bg-grey"></i>
+                    {% endif %}
+                </div>
+                
+                <div class="time-icon" data-url="second">
+                    {% if applies[0] is defined %}
+                        {% if applies[0].agree == true %}
+                        <i class="fas fa-cog bg-yellow"></i>
                         {% else %}
                         <i class="fas fa-cog bg-grey"></i>
                         {% endif %}
-                    </div>
-                    <div class="time-icon" data-url="third">
-                        {% if applies[0] is defined %}
-                            {% if applies[0].confirmed == true %}
-                            <i class="fas fa-check-circle bg-green"></i>
-                            {% else %}
-                            <i class="fas fa-check-circle bg-grey"></i>
-                            {% endif %}
+                    {% else %}
+                    <i class="fas fa-cog bg-grey"></i>
+                    {% endif %}
+                </div>
+                <div class="time-icon" data-url="third">
+                    {% if applies[0] is defined %}
+                        {% if applies[0].confirmed == true %}
+                        <i class="fas fa-check-circle bg-green"></i>
                         {% else %}
                         <i class="fas fa-check-circle bg-grey"></i>
                         {% endif %}
-                    </div>
+                    {% else %}
+                    <i class="fas fa-check-circle bg-grey"></i>
+                    {% endif %}
+                </div>
 
                 <div class="message message-first">
                     <div class="timeline-item">
-                    <h3 class="timeline-header">Acceptation de votre candidature</h3>
+                    <h3 style="text-align:center;" class="timeline-header"></h3>
                     </div>
                 </div>
 
-                <div class="message message-second">
+                <!-- <div class="message message-second">
                     <div class="timeline-item">
                     <h3 class="timeline-header">Traitement du dossier</h3>
                     </div>
@@ -102,6 +102,12 @@
                     <h3 class="timeline-header">Debut de la mission</h3>
                     </div>
                 </div>
+
+                <div class="message message-fourth">
+                    <div class="timeline-item">
+                    <h3 class="timeline-header">Debut de la mission</h3>
+                    </div>
+                </div> -->
 
             </div>
 
