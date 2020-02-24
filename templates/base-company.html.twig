@@ -119,13 +119,13 @@
                                     <p>
                                         Emplois
                                     </p>
-                                    {% if agree is defined or hired is defined or apply is defined %}
+                                    {% if agree is defined or hired is defined or applyc is defined %}
                                         {% if agree | length > 0 %}
                                         <span class="badge badge-warning right" title="postulations">A valider : {{ agree | length }}</span>
                                         {% elseif hired | length > 0 %}
                                         <span class="badge badge-warning right" title="postulations">En attente : {{ hired | length }}</span>
-                                        {% elseif apply| length > 0 %}
-                                        <span class="badge badge-primary right" title="postulations">Candidats : {{ apply | length }}</span>
+                                        {% elseif applyc| length > 0 %}
+                                        <span class="badge badge-primary right" title="postulations">Candidats : {{ applyc | length }}</span>
                                         {% endif %}
                                     {% endif %}
                                     </a>

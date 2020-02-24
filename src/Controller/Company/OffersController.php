@@ -81,7 +81,9 @@ class OffersController extends AbstractController
             'company' => $company,
             'hired' => $applyRepository->findBy(['offers' => $offers, 'hired' => 1]),
             'agree' => $applyRepository->findBy(['offers' => $offers, 'agree' => 1]),
-            'applies' => $applyRepository->findBy(['offers' => $offers, 'finished' => 1])
+            'applies' => $applyRepository->findBy(['offers' => $offers, 'finished' => 1]),
+            'applyc' => $applyRepository->findBy(['offers' => $offers, 'refused' => 0, 'unavailable' => 0, 'confirmed' => 0, 'finished' => 0])
+            
         ]);
     }
 
