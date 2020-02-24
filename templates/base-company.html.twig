@@ -119,17 +119,14 @@
                                     <p>
                                         Emplois
                                     </p>
-                                    
-                                </a>
-                                {# <p>
-                                        Postulations 
-                                        {% if fresh > 0 %}
-                                        <span class="badge badge-info right" title="postulations">{{ fresh }}</span>                                         
-                                        {% elseif hired == true %}
-                                        <span class="right badge badge-warning" title="mission à confirmer">!</span>
-                                        {% endif %} 
-                                    </p> #}
-                                  
+                                    {% if agree is defined or hired is defined %}
+                                        {% if agree | length > 0 %}
+                                        <span class="badge badge-warning right" title="postulations">A valider : {{ agree | length }}</span>
+                                        {% elseif hired | length > 0 %}
+                                        <span class="badge badge-warning right" title="postulations">En attente : {{ hired | length }}</span>
+                                        {% endif %}
+                                    {% endif %}
+                                    </a>
                                 {% if is_granted('ROLE_SUPER_COMPANY') %}
                                     {% if app.request.get('_route') == 'offers_company_index' or app.request.get('_route') == 'offers_new' or app.request.get('_route') == 'offers_preview' or app.request.get('_route') == 'offers_edit' or app.request.get('_route') == 'offers_company_finished' or app.request.get('_route') == 'show_applied_profile' %}
 

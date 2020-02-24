@@ -41,7 +41,7 @@
                 <tr>
                     <td>
                     {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('offers_preview', {id : applies.offers.id}) }}">{{ applies.offers.title }}</a> 
+                   {# <a href="{{ path('offers_preview', {id : applies.offers.id}) }}">{{ applies.offers.title }}</a> #} 
                     {% else %}
                         {% if applies.confirmed == true %}
                     <a href="{{ path('offers_show_hired', {'id': applies.offers.id, 'student_id' : student.id}) }}">{{ applies.offers.title }}</a>

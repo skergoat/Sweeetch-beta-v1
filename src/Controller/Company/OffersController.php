@@ -51,7 +51,7 @@ class OffersController extends AbstractController
      * @Route("/new/{id}", name="offers_new", methods={"GET","POST"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
-    public function new(Request $request, Company $company): Response
+    public function new(Request $request, Company $company, ApplyRepository $applyRepository, OffersRepository $offersRepository): Response
     {
         $offer = new Offers();
         $form = $this->createForm(OffersType::class, $offer);
@@ -73,10 +73,14 @@ class OffersController extends AbstractController
             return $this->redirectToRoute('offers_new', ['id' => $company->getId()]);
         }
 
+        $offers = $offersRepository->findBy(['company' => $company]);
+
         return $this->render('offers/new.html.twig', [
             'offers' => $offer,
             'form' => $form->createView(),
             'company' => $company,
+            'hired' => $applyRepository->findBy(['offers' => $offers, 'hired' => 1]),
+            'agree' => $applyRepository->findBy(['offers' => $offers, 'agree' => 1]),
         ]);
     }
 
