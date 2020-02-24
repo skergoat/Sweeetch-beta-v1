@@ -32,8 +32,7 @@ class OffersController extends AbstractController
      */
     public function index(OffersRepository $offersRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $queryBuilder = $offersRepository->findAllPaginatedAndOpen("ASC");
-        // $queryBuilder = $offersRepository->findAll();
+        $queryBuilder = $offersRepository->findAllPaginatedAndOpen("DESC");
 
         $pagination = $paginator->paginate(
             $queryBuilder,
@@ -86,9 +85,12 @@ class OffersController extends AbstractController
     {
         if (!$authorizationChecker->isGranted('ROLE_ADMIN')) { // if ADMIN then ok 
         
-            $already = $applyRepository->checkIfOpen($offer);
-
-            if($already) {  // if there are already applies then ... 
+            $hired = $applyRepository->findBy(['offers' => $offer, 'hired' => 1]);
+            $agree = $applyRepository->findBy(['offers' => $offer, 'agree' => 1]);
+            $confirmed = $applyRepository->findBy(['offers' => $offer, 'confirmed' => 1]);
+            $finished = $applyRepository->findBy(['offers' => $offer, 'finished' => 1]);
+    
+            if($hired || $agree || $confirmed || $finished) {  // if there are already applies then ... 
 
                 if ($authorizationChecker->isGranted('ROLE_SUPER_STUDENT')) { // if STUDENT then okk 
                 

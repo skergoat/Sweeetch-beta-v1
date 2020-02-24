@@ -31,12 +31,15 @@ class ApplyActionsController extends AbstractController
      */
     public function apply(ApplyRepository $repository, Offers $offers, Student $student, ApplyMailer $mailer)
     {
-        // $already = $repository->checkIfOpen($offers); 
+        $hired = $repository->findBy(['offers' => $offers, 'hired' => 1]);
+        $agree = $repository->findBy(['offers' => $offers, 'agree' => 1]);
+        $confirmed = $repository->findBy(['offers' => $offers, 'confirmed' => 1]);
+        $finished = $repository->findBy(['offers' => $offers, 'finished' => 1]);
 
-        // if($already) {
-        //     $this->addFlash('error', 'Offre Indisponible');
-        //     return $this->redirectToRoute('offers_index');
-        // }
+        if($hired || $agree || $confirmed || $finished) {  // if there are already applies then ... 
+            $this->addFlash('error', 'Offre Indisponible');
+            return $this->redirectToRoute('offers_index');
+        }
 
         $applies = $repository->checkIfRowExsists($offers, $student);
 
