@@ -51,4 +51,50 @@
         border:0px;
         padding:0px;
     }
+
+    .row-top {
+        height:100%;
+    }
+
+    .col-timeline {
+        margin-top:30px;
+        height:250px;
+    }
+
+    .timeline::before {
+        width:100%;
+        top:100px;
+    }
+
+    .time-icon:first-child {
+        top:87px;
+    }
+
+    .time-icon:nth-child(2) {
+        left:40%;
+        top:72px;
+    }
+
+    .time-icon:nth-child(3) {
+        left:87%;
+        top:57px;
+    }
+
+    // .message-third, .message-second, .message-first  {
+    //     display:none;
+    // }
+
+    .message-fourth {
+        opacity:1;
+        display:block;
+        top:120px;
+        left:-25px;
+    }
+
+    .timeline > .message {
+        // position:absolute;
+        top:100px;
+        margin:auto;
+        max-width:400px;
+    }
 }

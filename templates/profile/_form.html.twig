@@ -10,7 +10,6 @@
         {{ form_row(lang.level, {'label':'Niveau' ,'attr' : { class: 'form-control' }} ) }}
         </div>
     </div>
- 
 {% endmacro %}
 
 {% macro printEducationFormRow(educ) %}
@@ -27,27 +26,6 @@
         <div class="form-group">
         {{ form_row(educ.date_start, {'label':'Début'}) }}
         </div>
-
-       {# {% if educ.vars.value.current is defined %}
-
-            {% if educ.vars.value.current == true %}
-            <div class="form-group date-finish none">
-            {{ form_row(educ.date_end, {'label':'Fin'}) }}
-            </div>
-            {% elseif educ.vars.value.current == false %}
-            <div class="form-group date-finish">
-                {{ form_row(educ.date_end, {'label':'Fin'}) }}
-            </div>
-            {% endif %}
-        
-        {% else %}
-
-            <div class="form-group date-finish" >
-            {{ form_row(educ.date_end, {'label':'Fin'}) }}
-            </div>
-
-        {% endif %} #} 
-
         <div class="form-group date-finish" >
             {{ form_row(educ.date_end, {'label':'Fin'}) }}
         </div>
