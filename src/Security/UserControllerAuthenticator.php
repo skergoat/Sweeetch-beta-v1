@@ -96,9 +96,6 @@ class UserControllerAuthenticator extends AbstractFormLoginAuthenticator impleme
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        // if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-        //     return new RedirectResponse($targetPath);
-        // }
 
         $user = $this->security->getUser();
 
