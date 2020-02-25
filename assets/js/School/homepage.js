@@ -14,4 +14,6 @@ global.jQuery = $;
 
 // bootstrap 
 import 'bootstrap';
+import 'admin-lte';
+
 

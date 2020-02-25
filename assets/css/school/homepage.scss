@@ -1,5 +1,8 @@
-@import "~bootstrap/scss/bootstrap";
+@import "~bootstrap";
+@import "~font-awesome";
+@import "~admin-lte";
 
-.navbar-nav .nav-link, .navbar-brand {
-    color:white;
-}
+@import '../components/helpers';
+@import '../components/form';
+
+@import '/components/layout';

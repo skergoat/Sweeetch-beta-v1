@@ -4,7 +4,10 @@
 
 {% block body %}
 
-{% if is_granted('ROLE_SUPER_SCHOOL') %}
+{# {% if is_granted('ROLE_SUPER_SCHOOL') %} #}
+
+{% if is_granted('ROLE_SUPER_ADMIN') %} 
+
 <br>
     <h1>Studies index</h1>
 <br>
