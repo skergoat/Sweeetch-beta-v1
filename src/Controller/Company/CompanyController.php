@@ -10,6 +10,7 @@ use App\Service\Mailer\ApplyMailer;
 use App\Repository\OffersRepository;
 use App\Form\CompanyEditPasswordType;
 use App\Repository\CompanyRepository;
+use App\Service\UserChecker\CompanyChecker;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -79,68 +80,74 @@ class CompanyController extends AbstractController
      * @Route("/{id}", name="company_show", methods={"GET"})
      * @IsGranted("ROLE_COMPANY")
      */
-    public function show(Company $company, OffersRepository $offersRepository, ApplyRepository $applyRepository): Response
+    public function show(Company $company, OffersRepository $offersRepository, ApplyRepository $applyRepository, CompanyChecker $checker): Response
     {
-        $offers = $offersRepository->findBy(['company' => $company]);
-        $applies = $applyRepository->findBy(['offers' => $offers]);
+        if($checker->companyValid($company)) {
+            $offers = $offersRepository->findBy(['company' => $company]);
+            $applies = $applyRepository->findBy(['offers' => $offers]);
 
-        return $this->render('company/show.html.twig', [
-            'company' => $company,
-            'offers' => $offers,
-            'applies' => $applies,
-            'finished' => $applyRepository->findBy(['offers' => $offers, 'finished' => 1]),
-            'confirmed' => $applyRepository->findBy(['offers' => $offers, 'confirmed' => 1]),
-            'hired' => $applyRepository->findBy(['offers' => $offers, 'hired' => 1]),
-            'agree' => $applyRepository->findBy(['offers' => $offers, 'agree' => 1]),
-            'applyc' => $applyRepository->findBy(['offers' => $offers, 'refused' => 0, 'unavailable' => 0, 'confirmed' => 0, 'finished' => 0])
-        ]);
+            return $this->render('company/show.html.twig', [
+                'company' => $company,
+                'offers' => $offers,
+                'applies' => $applies,
+                'finished' => $applyRepository->findBy(['offers' => $offers, 'finished' => 1]),
+                'confirmed' => $applyRepository->findBy(['offers' => $offers, 'confirmed' => 1]),
+                'hired' => $applyRepository->findBy(['offers' => $offers, 'hired' => 1]),
+                'agree' => $applyRepository->findBy(['offers' => $offers, 'agree' => 1]),
+                'applyc' => $applyRepository->findBy(['offers' => $offers, 'refused' => 0, 'unavailable' => 0, 'confirmed' => 0, 'finished' => 0])
+            ]);
+        }
+
     }
 
     /**
      * @Route("/{id}/edit", name="company_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_COMPANY")
      */
-    public function edit(Request $request, Company $company, UserPasswordEncoderInterface $passwordEncoder, OffersRepository $offersRepository, ApplyRepository $applyRepository): Response
+    public function edit(Request $request, Company $company, UserPasswordEncoderInterface $passwordEncoder, OffersRepository $offersRepository, ApplyRepository $applyRepository, CompanyChecker $checker): Response
     {
-        $form = $this->createForm(UpdateCompanyType::class, $company);
-        $formPassword = $this->createForm(CompanyEditPasswordType::class, $company); 
+        if($checker->companyValid($company)) {
 
-        // check old pass 
-        $oldPass = $company->getUser()->getPassword();
+            $form = $this->createForm(UpdateCompanyType::class, $company);
+            $formPassword = $this->createForm(CompanyEditPasswordType::class, $company); 
 
-        $form->handleRequest($request);
-        $formPassword->handleRequest($request);
+            // check old pass 
+            $oldPass = $company->getUser()->getPassword();
 
-        if ($form->isSubmitted() && $form->isValid() || $formPassword->isSubmitted() && $formPassword->isValid()) {
+            $form->handleRequest($request);
+            $formPassword->handleRequest($request);
 
-            // edit password 
-            $user = $formPassword->getData()->getUser();
+            if ($form->isSubmitted() && $form->isValid() || $formPassword->isSubmitted() && $formPassword->isValid()) {
 
-            if($user->getPassword() != $oldPass)
-            {
-                $user->setPassword($passwordEncoder->encodePassword(
-                    $user,
-                    $user->getPassword()
-                ));
+                // edit password 
+                $user = $formPassword->getData()->getUser();
+
+                if($user->getPassword() != $oldPass)
+                {
+                    $user->setPassword($passwordEncoder->encodePassword(
+                        $user,
+                        $user->getPassword()
+                    ));
+                }
+
+                $this->getDoctrine()->getManager()->flush();
+
+                $this->addFlash('success', 'Mise à jour réussie');
+
+                return $this->redirectToRoute('company_edit', ['id' => $company->getId() ]);
             }
 
-            $this->getDoctrine()->getManager()->flush();
+            $offers = $offersRepository->findBy(['company' => $company]);
 
-            $this->addFlash('success', 'Mise à jour réussie');
-
-            return $this->redirectToRoute('company_edit', ['id' => $company->getId() ]);
+            return $this->render('company/edit.html.twig', [
+                'company' => $company,
+                'form' => $form->createView(),
+                'formPassword' => $formPassword->createView(),
+                'hired' => $applyRepository->findBy(['offers' => $offers, 'hired' => 1]),
+                'agree' => $applyRepository->findBy(['offers' => $offers, 'agree' => 1]),
+                'applyc' => $applyRepository->findBy(['offers' => $offers, 'refused' => 0, 'unavailable' => 0, 'confirmed' => 0, 'finished' => 0])
+            ]);
         }
-
-        $offers = $offersRepository->findBy(['company' => $company]);
-
-        return $this->render('company/edit.html.twig', [
-            'company' => $company,
-            'form' => $form->createView(),
-            'formPassword' => $formPassword->createView(),
-            'hired' => $applyRepository->findBy(['offers' => $offers, 'hired' => 1]),
-            'agree' => $applyRepository->findBy(['offers' => $offers, 'agree' => 1]),
-            'applyc' => $applyRepository->findBy(['offers' => $offers, 'refused' => 0, 'unavailable' => 0, 'confirmed' => 0, 'finished' => 0])
-        ]);
     }
 
     /**

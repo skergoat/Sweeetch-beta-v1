@@ -11,13 +11,14 @@ use App\Service\Mailer\ApplyMailer;
 use App\Repository\OffersRepository;
 use App\Repository\StudentRepository;
 use App\Controller\Company\ApplyController;
+use App\Service\UserChecker\CompanyChecker;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -51,40 +52,42 @@ class OffersController extends AbstractController
      * @Route("/new/{id}", name="offers_new", methods={"GET","POST"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
-    public function new(Request $request, Company $company, ApplyRepository $applyRepository, OffersRepository $offersRepository): Response
+    public function new(Request $request, Company $company, ApplyRepository $applyRepository, OffersRepository $offersRepository, CompanyChecker $checker): Response
     {
-        $offer = new Offers();
-        $form = $this->createForm(OffersType::class, $offer);
-        $form->handleRequest($request);
+        if($checker->companyValid($company)) {
 
-        if ($form->isSubmitted() && $form->isValid()) {
+            $offer = new Offers();
+            $form = $this->createForm(OffersType::class, $offer);
+            $form->handleRequest($request);
 
-            $offer = $form->getData();
+            if ($form->isSubmitted() && $form->isValid()) {
 
-            $offer->setCompany($company);
-            $offer->setState(false);
+                $offer = $form->getData();
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($offer);
-            $entityManager->flush();
+                $offer->setCompany($company);
+                $offer->setState(false);
 
-            $this->addFlash('success', 'Emploi crée !');
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($offer);
+                $entityManager->flush();
 
-            return $this->redirectToRoute('offers_new', ['id' => $company->getId()]);
+                $this->addFlash('success', 'Emploi crée !');
+
+                return $this->redirectToRoute('offers_new', ['id' => $company->getId()]);
+            }
+
+            $offers = $offersRepository->findBy(['company' => $company]);
+
+            return $this->render('offers/new.html.twig', [
+                'offers' => $offer,
+                'form' => $form->createView(),
+                'company' => $company,
+                'hired' => $applyRepository->findBy(['offers' => $offers, 'hired' => 1]),
+                'agree' => $applyRepository->findBy(['offers' => $offers, 'agree' => 1]),
+                'applies' => $applyRepository->findBy(['offers' => $offers, 'finished' => 1]),
+                'applyc' => $applyRepository->findBy(['offers' => $offers, 'refused' => 0, 'unavailable' => 0, 'confirmed' => 0, 'finished' => 0])     
+            ]);
         }
-
-        $offers = $offersRepository->findBy(['company' => $company]);
-
-        return $this->render('offers/new.html.twig', [
-            'offers' => $offer,
-            'form' => $form->createView(),
-            'company' => $company,
-            'hired' => $applyRepository->findBy(['offers' => $offers, 'hired' => 1]),
-            'agree' => $applyRepository->findBy(['offers' => $offers, 'agree' => 1]),
-            'applies' => $applyRepository->findBy(['offers' => $offers, 'finished' => 1]),
-            'applyc' => $applyRepository->findBy(['offers' => $offers, 'refused' => 0, 'unavailable' => 0, 'confirmed' => 0, 'finished' => 0])
-            
-        ]);
     }
 
     /**

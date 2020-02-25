@@ -19,6 +19,15 @@ class OffersRepository extends ServiceEntityRepository
         parent::__construct($registry, Offers::class);
     }
 
+    public function offerExists($company, $offers) { 
+        return (boolean)$this->createQueryBuilder('u')
+        ->andWhere('u.company = :company AND u.id = :id')
+        ->setParameter('company', $company->getId())
+        ->setParameter('id', $offers->getId())
+        ->getQuery()
+        ->getOneOrNullResult();
+    }
+
     public function findAllPaginatedAndOpen($order = "DESC") 
     {
         return $this->createQueryBuilder('p')
