@@ -114,7 +114,7 @@ class ApplyActionsController extends AbstractController
      * @Route("/hire/{id}", name="hire", methods={"POST"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
-    public function hire(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer)
+    public function hire(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer, Request $request)
     {   
         // get users
         $student = $apply->getStudent();
@@ -161,28 +161,37 @@ class ApplyActionsController extends AbstractController
         
         // $mailer->sendHireMessage($email, $name, $offerTitle); 
 
-        $entityManager = $this->getDoctrine()->getManager();
- 
-        $others = $repository->getOtherApplies($student->getId(), $offers->getId());
+        // dd($this->isCsrfTokenValid('hire'.$apply->getId(), $request->request->get('_token')));
 
-        if($others) {
 
-            foreach($others as $others) {
+        if($this->isCsrfTokenValid('hire'.$apply->getId(), $request->request->get('_token'))) {
 
-                // send mail to other applies 
-                // $offerTitle = $others->getOffers()->getTitle();
-                // $name = $others->getStudent()->getName();
-                // $email = $others->getStudent()->getUser()->getEmail();
+            $entityManager = $this->getDoctrine()->getManager();
+    
+            $others = $repository->getOtherApplies($student->getId(), $offers->getId());
+
+            if($others) {
+
+                foreach($others as $others) {
+
+                    // send mail to other applies 
+                    // $offerTitle = $others->getOffers()->getTitle();
+                    // $name = $others->getStudent()->getName();
+                    // $email = $others->getStudent()->getUser()->getEmail();
+            
+                    // $mailer->sendOthersMessage($email, $name, $offerTitle); 
+
+                    // delete other applies 
+                    $entityManager->remove($others);   
+                }
         
-                // $mailer->sendOthersMessage($email, $name, $offerTitle); 
-
-                // delete other applies 
-                $entityManager->remove($others);   
             }
+              // save 
+              $entityManager->flush();
         }
-
-        // save 
-        $entityManager->flush();
+        else {
+            throw new \Exception('Candidature Invalide');
+        }
 
         $this->addFlash('success', 'Elève Embauché !');
  

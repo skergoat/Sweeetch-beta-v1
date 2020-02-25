@@ -7,6 +7,7 @@ use App\Entity\Resume;
 use App\Entity\StudentCard;
 use App\Entity\ProofHabitation;
 use App\Repository\ApplyRepository;
+use App\Repository\OffersRepository;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -16,12 +17,14 @@ class StudentChecker
     private $authorizationChecker;
     private $user; 
     private $applyRepository;
+    private $offersRepository;
 
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker, Security $security, ApplyRepository $applyRepository)
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker, Security $security, ApplyRepository $applyRepository, OffersRepository $offersRepository)
     {
         $this->authorizationChecker = $authorizationChecker;
         $this->user = $security->getUser();
         $this->applyRepository = $applyRepository;
+        $this->offersRepository = $offersRepository;
     }
 
     // general 
@@ -99,5 +102,7 @@ class StudentChecker
         }
 
         return $this->isAdmin() or $this->user->getStudent()->$get()->getId() == $document->getId() ? true : $this->Exception(); 
+    
+        //
     }
 }

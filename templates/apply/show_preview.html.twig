@@ -112,7 +112,7 @@
                             {% if applies.hired == false and applies.confirmed == false and applies.agree == false %}
                                 
                                     <form method="post" action="{{ path('hire', { id:applies.id }) }}" class="btn-icon-form" onsubmit="return confirm('Etes-vous certain de vouloir embaucher cet étudiant ?');">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ offers.id) }}">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('hire' ~ applies.id) }}">
                                         <button class="btn-icon btn-success"><i class="fas fa-user-check" title="Embaucher"></i></button>
                                     </form>
 
@@ -130,7 +130,7 @@
                             {% elseif applies.agree == true %}
 
                                     <form method="post" class="btn-icon-form" action="{{ path('confirm', { id:applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir commencer la mission ?');">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ offers.id) }}">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('confirm' ~ applies.id) }}">
                                         <button class="btn-icon btn-success" title="Démarrer la mission"><i class="far fa-play-circle"></i></button>
                                     </form>
 
