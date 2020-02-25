@@ -37,7 +37,6 @@ class DownloadController extends AbstractController
         $response->headers->set('Content-Type', $resume->getMimeType());
         // $response->headers->set('Content-Disposition', $disposition);
         return $response;
-        
     }
 
     /**
