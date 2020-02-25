@@ -1,6 +1,16 @@
 
 /* general */
 
+.alert.alert-success {
+    background:#76C381;
+    border:1px solid #76C381;
+}
+
+.alert.alert-danger {
+    background:#FF5961AB !important;
+    border:1px solid #FF5961AB !important;
+}
+
 * {
     font-family: 'Roboto', "Helvetica Neue", Arial, "Noto Sans", sans-serif;
 }
@@ -93,10 +103,6 @@ td.border-top-td {
     font-style:italic;
 }
 
-.alert.alert-success {
-    background:#76C381;
-    border:1px solid #76C381;
-}
 
 /* modal */
 
@@ -130,4 +136,8 @@ td a.btn-modal {
 
 .jquery-modal.blocker.current {
     z-index:9999;
+}
+
+label.required {
+    display:none;
 }
