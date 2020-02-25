@@ -24,7 +24,25 @@
         {% block body %}{% endblock %}
 
         {% block javascripts %}
+
         {{ encore_entry_script_tags('front') }}
+
+        <script>
+            // redirect if no offers on undex page 
+            var pathname = window.location.pathname;
+
+            if(pathname.match("/offers/page/[2-9]")) {
+
+                if($(".card").length == 0) {
+
+                    var arr = pathname.split("/");
+                    var int = parseInt(arr[3]);
+                    var route = int - 1;
+                    window.location.href = "/offers/page/" + route;
+                }
+            }
+
+        </script>
 
         <script>
             if($(".alert-success")[0]){
