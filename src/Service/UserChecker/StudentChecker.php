@@ -98,7 +98,6 @@ class StudentChecker
             break;
         }
 
-        return $this->isAdmin() or $this->user->getStudent()->$get()->getId() == $document->getId() ? true : $this->Exception();
-       
+        return $this->isAdmin() or $this->user->getStudent()->$get()->getId() == $document->getId() ? true : $this->Exception(); 
     }
 }

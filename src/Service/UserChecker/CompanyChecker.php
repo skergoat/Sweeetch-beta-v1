@@ -42,22 +42,36 @@ class CompanyChecker
     }
 
      // student show single apply  
-     public function companyOffersValid($company, $offers)
-     {    
+    public function companyOffersValid($company, $offers)
+    {    
          $userRequired = $company->getUser()->getId();
  
          if($this->isAdmin() 
          || $this->user->getId() == $userRequired 
-         AND $this->offersRepository->offerExists($company, $offers)) {
+         AND $this->offersRepository->offerExists($company, $offers)) 
+         {
              return true;
          }
          else {
              $this->Exception() ;
          }
-     }
+    }
 
+    public function studentProfileValid($company, $offers, $student) 
+    {
+        $userRequired = $company->getUser()->getId();
 
+        if($this->isAdmin()
+        || $this->user->getId() == $userRequired 
+        AND $this->offersRepository->offerExists($company, $offers)
+        AND $this->applyRepository->applyExists($student, $offers))
+        {
+            return true;
+        }
+        else {
+            $this->Exception() ;
+        }
 
-
+    }
 
 }
