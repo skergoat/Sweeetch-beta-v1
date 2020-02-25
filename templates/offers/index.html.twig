@@ -72,8 +72,8 @@
             <div class="card col-lg-4 mr-2 ml-2 mt-2 mb-2">
                 <div class="card-body">
                     <div class="card-body-1">
-                        <h5 class="card-title">{{ offer.title }}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">{{ offer.location }}</h6>
+                        <div><h5 class="card-title">{{ offer.title }}</h5> </div> <br>
+                        <div><h6 class="card-subtitle mb-2 text-muted">{{ offer.location }}</h6></div>
                     </div>
                     <p class="card-text">{{ offer.description|u.truncate(200)|raw }}...</p>
                     <a  href="{{ path('offers_show', {'id': offer.id, 'page':page}) }}" class="card-link">Lire la suite</a>
