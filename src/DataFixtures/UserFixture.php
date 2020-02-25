@@ -33,6 +33,16 @@ class UserFixture extends Fixture
             $manager->persist($user);
         }
 
+        $superAdmin = new User; 
+        $superAdmin->setEmail('kergoane@gmail.com');
+        $superAdmin->setRoles(['ROLE_SUPER_ADMIN']);
+        $superAdmin->setPassword($this->passwordEncoder->encodePassword(
+            $superAdmin,
+            'ker'
+        ));
+
+        $manager->persist($superAdmin);
+
         $manager->flush();
     }
 }

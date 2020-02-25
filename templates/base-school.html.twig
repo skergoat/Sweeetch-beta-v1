@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{# <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -92,6 +92,215 @@
         <!-- scripts -->
         {% block javascripts %}
             {{ encore_entry_script_tags('school') }}
+        {% endblock %}
+
+    </body>
+</html>#}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Sweeetch{% endblock %}</title>
+
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="@">
+
+        <!-- Favicons -->
+        <link href="{{ asset('build/favicon.png') }}" rel="icon">
+        <link href="{{ asset('build/apple-touch-icon.png') }}" rel="apple-touch-icon">
+
+        {#<script src="https://cdn.tiny.cloud/1/wscb7rdrlan56zedv3ooukb16xb5136jcxtqv1u85x1lfu9f/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+        <!-- <script src="https://cdn.ckeditor.com/ckeditor5/17.0.0/classic/ckeditor.js"></script> -->
+    
+       <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script> 
+        <!-- // <script src="//cdn.ckeditor.com/4.13.1/full/ckeditor.js"></script> -->#}
+
+        {% block stylesheets %}
+
+            <!-- fontawesome provisoire -->
+            <script src="https://kit.fontawesome.com/1596c4b58a.js" crossorigin="anonymous"></script>
+        
+            <!-- Google Fonts -->
+            <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,500,600,700,700i|Montserrat:300,400,500,600,700" rel="stylesheet">
+            {# <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">#}
+
+            <!-- bootstrap and custom styles -->    
+            {{ encore_entry_link_tags('school') }}
+ 
+        {% endblock %}
+
+    </head>
+    <body>
+
+        {# <div id="help-1" class="modal">
+            <div class="container" style="text-align:justify;">
+                <h5>L'embauche se déroule en 5 étapes :</h5>
+                <br>
+                <ol>
+                    <li>L'étudiant postule à votre offre</li><br>
+                    <li>Vous choisissez de l'embaucher en cliquant sur le bouton <button class="btn-icon btn-success" title="Supprimer"><i class="fas fa-user-check"></i></button></li><br>
+                    <li>Vous devez ensuite attendre qu'il accepte votre offre</li><br>
+                    <li>Quand il a accepté vous pouvez commencer la procédure d'embauche. <br> Une fois celle-ci terminée, cliquez sur le bouton <button class="btn-icon btn-success" title="Supprimer"><i class="far fa-play-circle"></i></button> pour indiquer que la mission commence</li><br>
+                    <li>Quand la mission est terminée, cliquez sur <button class="btn-icon btn-danger" title="Supprimer"><i class="far fa-stop-circle"></i></button></li><br>
+                </ol>
+                <p><strong>Nb :</strong> si vous souhaitez refuser définitivement une candidature, cliquez sur : <button class="btn-icon btn-danger" title="Supprimer"><i class="fas fa-times"></i></button></p>
+            </div> 
+        </div>#}
+        
+        <div class="wrapper">
+
+            <nav class="main-header navbar navbar-expand navbar-warning">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
+                    </li>
+                    <li class="nav-item d-sm-inline-block">
+                        <a href="/logout" class="nav-link">Déconnexion</a>
+                    </li>
+                    
+                    {% if is_granted('ROLE_ADMIN') %}
+
+                    <li class="nav-item d-none d-sm-inline-block" >
+                        <a class="nav-link" href="{{ path('admin') }}"> Retour à l'admin </a>
+                    </li>
+                    <li class="nav-item d-none d-sm-inline-block">
+                        <a class="nav-link" href="{{ path('student_index') }}">Liste des étudiants</a>
+                    </li>
+
+                    {% endif %}
+                </ul>
+
+            </nav>
+        
+            <aside class="main-sidebar sidebar-light-primary elevation-4">
+                <a href="{{ path('homepage') }}" class="brand-link">
+                    <img src="{{ asset('build/favicon.png') }}" alt="AdminLTE Logo" class="brand-image" style="opacity: .8">
+                    <span class="brand-text font-weight-light"> Ecoles </span>
+                </a>
+
+                <div class="sidebar">
+
+                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                        <!-- <div class="image">
+                          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                        </div> -->
+                        <div class="info">
+                          <a href="{{ path('company_show', {'id' : school.id }) }}" class="d-block">{{ app.user.email }}</a>
+                        </div>
+                    </div>
+
+                    <nav class="mt-2">
+
+                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                            <li class="nav-item has-treeview">
+                                <a class="nav-link" href="{{ path('school_show', {'id' : school.id }) }}">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>
+                                        Tableau de Bord
+                                    </p>
+                                </a>
+                            </li> 
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('school_edit', {'id' : school.id }) }}">
+                                    <i class="nav-icon fa fa-user-circle"></i>
+                                    <p>
+                                        Infos du compte 
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item"> 
+                                <a class="nav-link" href="">
+                                    <i class="nav-icon fa fa-graduation-cap"></i>
+                                    <p>
+                                        Cursus
+                                    </p>
+                                    {# {% if agree is defined or hired is defined or applyc is defined %}
+                                        {% if agree | length > 0 %}
+                                        <span class="badge badge-warning right" title="candidatures">A valider : {{ agree | length }}</span>
+                                        {% elseif hired | length > 0 %}
+                                        <span class="badge badge-warning right" title="candidatures">En attente : {{ hired | length }}</span>
+                                        {% elseif applyc| length > 0 %}
+                                        <span class="badge badge-primary right" title="candidatures">Candidats : {{ applyc | length }}</span>
+                                        {% endif %}
+                                    {% endif %}#}
+                                    </a>
+                               {# {% if is_granted('ROLE_SUPER_COMPANY') %}
+                                    {% if app.request.get('_route') == 'offers_company_index' or app.request.get('_route') == 'offers_new' or app.request.get('_route') == 'offers_preview' or app.request.get('_route') == 'offers_edit' or app.request.get('_route') == 'offers_company_finished' or app.request.get('_route') == 'show_applied_profile' %}
+
+                                <li class="nav nav-tree">
+                                    <li class="nav-item">
+                                        <a href="{{ path('offers_company_index', {id:company.id}) }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Tous</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ path('offers_new', {id:company.id}) }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Nouveau</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a  href="{{ path('offers_company_finished', {id:company.id}) }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Terminés</p>
+                                        {% if appliesf is defined %}
+                                            {% if appliesf | length > 0 %}
+                                            <span class="badge badge-warning right" title="candidatures">{{ appliesf | length }}</span>
+                                            {% endif %}
+                                        {% elseif applies is defined %}
+                                            {% if applies | length > 0 %}
+                                            <span class="badge badge-warning right" title="candidatures">{{ applies | length }}</span>
+                                            {% endif %}
+                                        {% endif %}
+                                        </a>
+                                    </li>
+                                </li> 
+
+                                    {% endif %} 
+                                {% endif %} #}
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </aside>
+            <div class="content-wrapper">
+               <section class="content content-back">
+                {% block body %}{% endblock %}
+                </section>
+            </div>
+            <footer class="main-footer">
+                <strong>Sweeetch - Ecoles</strong>
+            </footer>
+        </div>
+
+        <!-- scripts -->
+        {% block javascripts %}
+
+            {{ encore_entry_script_tags('school') }}
+
+           {# <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+
+           <script>
+                tinymce.init({
+                    selector: 'textarea'
+                });
+            </script>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+            <script>
+                $(document).ready(function() {
+                    $('.js-datepicker').datepicker({
+                        format: 'dd-mm-yyyy'
+                    });
+                });
+            </script> #}
+            
         {% endblock %}
 
     </body>

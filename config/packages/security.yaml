@@ -16,6 +16,7 @@ security:
 
         ROLE_ADMIN: [ROLE_USER, ROLE_SUPER_STUDENT, ROLE_SUPER_COMPANY, ROLE_SUPER_SCHOOL, ROLE_ADMIN]
 
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_SUPER_STUDENT, ROLE_SUPER_COMPANY, ROLE_SUPER_SCHOOL, ROLE_ADMIN]
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
