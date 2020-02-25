@@ -1,0 +1,128 @@
+/* card layout */
+
+.card-body.p-0 .table thead > tr > th:last-of-type, .card-body.p-0 .table thead > tr > td:last-of-type, .card-body.p-0 .table tbody > tr > th:last-of-type, .card-body.p-0 .table tbody > tr > td:last-of-type,
+.card-body.p-0 .table thead > tr > th:first-of-type, .card-body.p-0 .table thead > tr > td:first-of-type, .card-body.p-0 .table tbody > tr > th:first-of-type, .card-body.p-0 .table tbody > tr > td:first-of-type,    
+.table th, .table td
+{    
+    border:0px;
+}
+
+.table th {
+    font-size: 17px;
+}
+
+.card {
+    padding:25px;
+    padding-top:20px;
+    margin-bottom:30px;
+
+    &-dashboard {
+        max-height:500px;
+        overflow:scroll;
+    }
+
+    &-margin {
+        margin-top:45px;  
+    }
+
+    &.card-primary {
+        margin-top:30px;
+    }
+}
+
+.card-margin-plus {
+    margin-top:60px;
+}
+
+.tr-border {
+    border-top:1px solid #dee2e6;
+}
+
+.table thead .th-border {
+    border-bottom:0px;
+}
+
+/* ajustements */
+
+.card-header-color {
+    // background-color:#52B3D9;
+    padding:15px;
+
+    & .card-title {
+        color:white;
+    }
+
+    & .fas.fa-minus {
+        color:white;
+    }
+}
+
+.table-padding {
+    padding:30px;
+}
+
+.cardBlue {
+    background:#85cbe6;
+}
+
+.cardRed{
+    background:#ff737a;
+}
+
+.cardYellow {
+    background:#ffcc66;
+}
+
+.language-card {
+    background:#F5F6F9;
+    border-radius:10px;
+    padding:30px;
+    margin-bottom:35px;
+}
+
+/* offers and applies tables */
+
+.table-offers td, .table-offers th {
+    border: 1px solid #dee2e6;
+}
+
+.card-body.p-0 .table-offers thead > tr > th:last-of-type, .card-body.p-0 .table-offers thead > tr > td:last-of-type, .card-body.p-0 .table-offers tbody > tr > th:last-of-type, .card-body.p-0 .table-offers tbody > tr > td:last-of-type,
+.card-body.p-0 .table-offers thead > tr > th:first-of-type, .card-body.p-0 .table-offers thead > tr > td:first-of-type, .card-body.p-0 .table-offers tbody > tr > th:first-of-type, .card-body.p-0 .table-offers tbody > tr > td:first-of-type,    
+.table th, .table td
+{    
+    border: 1px solid #dee2e6;
+}
+
+.table-bordered thead td, .table-bordered thead th {
+    border-bottom-width: 2px;
+}
+
+.table-offers thead th,
+.card-body.p-0 .table-offers thead > tr > th:first-of-type,
+.card-body.p-0 .table-offers thead > tr > th:last-of-type {
+    border-bottom: 2px solid #dee2e6;
+}
+
+.card-body > .table-offers > thead > tr > th {
+    border-top: 1px solid #dee2e6;
+}
+
+.description {
+    text-align:justify;
+    margin-top:30px;
+
+    & h5 {
+        font-weight:bold;
+        text-align:left;
+    }
+}
+
+.card-responsive {         
+    & textarea {
+        text-align:justify;
+    }
+
+    &-table {
+        overflow:scroll;
+    }
+}

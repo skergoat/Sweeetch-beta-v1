@@ -1,9 +1,9 @@
 {% extends 'base-school.html.twig' %}
 
-{% block title %} {{ parent() }} - students {% endblock %}
+{% block title %} {{ parent() }} - Ecoles {% endblock %}
 
 {% block body %}
-<br><br>
+{# <br><br>
     <h1>School</h1>
 <br>
     <table class="table">
@@ -41,6 +41,266 @@
                 <td>{{ school.siret }}</td>
             </tr>
         </tbody>
-    </table>
+    </table>#}
+
+    <div class="row row-top">
+
+        <div class="col-lg-5">
+ 
+             <div class="content-title">
+                 <h1>Tableau de Bord</h1>
+             </div>
+ 
+             <div class="row account-state">
+                 {% if school.user.roles == ["ROLE_SUPER_SCHOOL"] %}
+                 <div class="col-12 col-sm-6 col-md-3">
+                     <div class="info-checked info-box info-success mb-3">
+                         <span class="info-box-icon bg-success elevation-1"><i class="fas fa-check"></i></span>
+ 
+                         <div class="info-box-content">
+                         <span class="info-box-text">Etat du compte : </span>
+                         <span class="info-box-number">Validé</span>
+                         </div>
+                     </div>
+                 </div>
+                 {% else %} 
+                 <div class="col-12 col-sm-6 col-md-10">
+                     <div class="info-box mb-3">
+                     <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-hourglass-start"></i></span>
+ 
+                         <div class="info-box-content">
+                             <span class="info-box-text">Etat du Compte</span>
+                             <span class="info-box-number">En cours de confirmation...</span>
+                         </div>
+                         
+                     </div>
+                 </div> 
+                 {% endif %}
+             </div>
+         </div>
+     </div> 
+ 
+     <div class="row card-margin">
+ 
+         <div class="col-lg-6">
+ 
+             <div class="card col-lg-" style="padding:0px;">
+ 
+                 <div class="cardBlue card-header-color card-header border-transparent">
+                     <p class="card-title">Infos du compte</p>
+     
+                     <div class="card-tools">
+                       <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                         <i class="fas fa-minus"></i>
+                       </button>
+                     </div>
+                 </div>
+                 
+                 <div class="card-body p-0 card-dashboard">
+                     <div class="table-padding table-responsive">
+                         <table class="table m-0">
+                             <tbody>
+                                 <tr>
+                                     <th>Entreprise</th>
+                                     <td>{{ school.companyName }}</td>
+                                 </tr>
+                                 <tr>
+                                     <th>Prénom</th>
+                                     <td>{{ school.firstname }}</td>
+                                 </tr>
+                                 <tr>
+                                     <th>Nom</th>
+                                     <td>{{ school.lastname }}</td>
+                                 </tr>
+                                 <tr>
+                                     <th>Adresse</th>
+                                     <td>{{ school.address }}</td>
+                                 </tr>
+                                 <tr>
+                                     <th>Code Postal</th>
+                                     <td>{{ school.zipCode }}</td>
+                                 </tr>
+                                 <tr>
+                                     <th>Ville</th>
+                                     <td>{{ school.city }}</td>
+                                 </tr>
+                                 <tr>
+                                     <th>Téléphone</th>
+                                     <td>{{ school.telNumber }}</td>
+                                 </tr>
+                                 <tr>
+                                     <th>Siret</th>
+                                     <td>{{ school.siret }}</td>
+                                 </tr>
+                             </tbody>
+                         </table>
+                     </div>
+                 </div>
+             </div>
+         </div>
+ 
+         {# <div class="col-lg-6">
+ 
+             <div class="col-lg- table-scroll">
+ 
+                 <div class="card" style="padding:0px; height:510px;max-height:510px;overflow:scroll;">
+                    
+                     <div class="cardYellow card-header-color card-header border-transparent">
+                         <p class="card-title">Missions en attente</p>
+         
+                         <div class="card-tools">
+                           <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                             <i class="fas fa-minus"></i>
+                           </button>
+                         </div>
+                     </div>
+                 
+                     <div class="card-body p-0 card-dashboard">
+                         <div class="table-responsive">
+                             <table class="table m-0">
+                                 <tbody>
+                                     <tr>
+                                         <th>Mission</th>
+                                         <th>Situation</th>
+                                     </tr>
+                                     
+                                     {% if hired | length != 0 and agree | length != 0 %}
+ 
+                                         {% for hired in hired %}
+                                     
+                                         <tr class="border-top">
+                                             <td><a href="" class="action-link">{{ hired.offers.title }}</a></td>
+                                             <td>
+                                                 <span class="badge badge-danger" title="Mission en cours. Bonne chance !">L'Eleve doit confirmer</span>
+                                             </td>   
+                                         </tr> 
+ 
+                                         {% endfor %}
+ 
+                                         {% for agree in agree %}
+                                     
+                                         <tr class="border-top">
+                                             <td><a href="" class="action-link">{{ agree.offers.title }}</a></td>
+                                             <td>
+                                                 <span class="badge badge-warning" title="Mission en cours. Bonne chance !">Dossier en traitement</span>
+                                             </td>   
+                                         </tr> 
+ 
+                                         {% endfor %}
+                                         
+                                     {% else %}
+                                     <tr class="border-top">
+                                         <td colspan="8" class="border-top-td">Aucune mission en cours</td>
+                                     </tr> 
+                                     {% endif %}
+                                     
+                                 </tbody>
+                             </table>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div> #}
+ 
+     <div class="row">
+ 
+         {# <div class="col-lg-12">
+     
+             <div class="col-lg- table-scroll">
+ 
+                 <div class="card" style="padding:0px;">
+                    
+                     <div class="cardBlue card-header-color card-header border-transparent">
+                         <p class="card-title">Missions en cours</p>
+         
+                         <div class="card-tools">
+                           <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                             <i class="fas fa-minus"></i>
+                           </button>
+                         </div>
+                     </div>
+                 
+             
+                     <div class="card-body p-0 card-dashboard">
+                         <div class="table-responsive">
+                             <table class="table m-0">
+                                 <tbody>
+                                     <tr>
+                                         <th>Mission</th>
+                                         <th>Situation</th>
+                                     </tr>
+ 
+                                  {% for confirmed in confirmed %}
+ 
+                                     <tr class="border-top">
+                                         <td><a href="" class="action-link">{{ confirmed.offers.title }}</a></td>
+                                         <td>
+                                             <span class="badge badge-success" title="Mission en cours. Bonne chance !">Mission en cours</span>
+                                         </td>   
+                                     </tr>  
+ 
+                                  {% else %} 
+                                     <tr class="border-top">
+                                         <td colspan="8" class="border-top-td">Aucun emploi en cours</td>
+                                     </tr> 
+ 
+                                  {% endfor %} 
+                                 </tbody>
+                             </table>
+                         </div>
+                     </div>
+ 
+                 </div>
+ 
+             </div>
+ 
+             <div class="col-lg-12 table-scroll">
+ 
+                 <div class="card" style="padding:0px;">
+                    
+                     <div class="cardBlue card-header-color card-header border-transparent">
+                         <p class="card-title">Missions terminées</p>
+         
+                         <div class="card-tools">
+                           <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                             <i class="fas fa-minus"></i>
+                           </button>
+                         </div>
+                     </div>
+                 
+             
+                     <div class="card-body p-0 card-dashboard">
+                         <div class="table-responsive">
+                             <table class="table m-0">
+                                 <tbody>
+                                     <tr>
+                                         <th>Mission</th>
+                                         <th>Situation</th>
+                                     </tr>
+ 
+                                  {% for finished in finished %}
+ 
+                                     <tr class="border-top">
+                                         <td><a href="" class="action-link">{{ finished.offers.title }}</a></td>
+                                         <td>
+                                             <span class="badge badge-warning" title="Mission en cours. Bonne chance !">Mission terminée</span>
+                                         </td>   
+                                     </tr>  
+ 
+                                  {% else %} 
+                                     <tr class="border-top">
+                                         <td colspan="8" class="border-top-td">Aucun emploi en cours</td>
+                                     </tr> 
+ 
+                                  {% endfor %} 
+                                 </tbody>
+                             </table>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>#}
+     </div> 
 
 {% endblock %}
