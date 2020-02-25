@@ -137,7 +137,7 @@
                             {% elseif applies.confirmed == true %}
 
                                     <form method="post" class="btn-icon-form" action="{{ path('apply_finish', {'id': applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir terminer la mission ?');">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('stop' ~ applies.id) }}">
                                         <button class="btn-icon btn-warning" title="Terminer la mission"><i class="far fa-stop-circle"></i></button>
                                     </form>
 

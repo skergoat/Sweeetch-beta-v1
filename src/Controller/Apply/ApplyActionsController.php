@@ -230,7 +230,7 @@ class ApplyActionsController extends AbstractController
                 $this->getDoctrine()->getManager()->flush();
             }
             else {
-                throw new \Exception('Candidature Invalide');
+                throw new \Exception('Demande Invalide');
             }
 
             return $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
@@ -274,7 +274,7 @@ class ApplyActionsController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
         }
         else {
-            throw new \Exception('Candidature Invalide');
+            throw new \Exception('Demande Invalide');
         }
 
         $this->addFlash('success', 'Mission Commencée. Bon travail !');
@@ -286,7 +286,7 @@ class ApplyActionsController extends AbstractController
      * @Route("/finish/{id}", name="apply_finish", methods={"POST"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
-    public function finish(Apply $apply, ApplyRepository $applyRepository, ApplyMailer $mailer)
+    public function finish(Apply $apply, ApplyRepository $applyRepository, ApplyMailer $mailer, Request $request)
     {
         $apply->setConfirmed(false);
         $apply->setFinished(true);
@@ -318,7 +318,13 @@ class ApplyActionsController extends AbstractController
             }      
         }
 
-        $this->getDoctrine()->getManager()->flush();
+        if($this->isCsrfTokenValid('stop'.$apply->getId(), $request->request->get('_token'))) {
+
+            $this->getDoctrine()->getManager()->flush();
+        }
+        else {
+            throw new \Exception('Demande Invalide');
+        }
 
         $this->addFlash('success', 'Mission Terminée. Bravo !');
 
