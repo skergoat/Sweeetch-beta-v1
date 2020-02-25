@@ -25,11 +25,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\HeaderUtils;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 
 /**
@@ -128,111 +131,124 @@ class StudentController extends AbstractController
      * @Route("/{id}", name="student_show", methods={"GET"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function show(Student $student, ApplyRepository $applyRepository): Response
+    public function show(Student $student, ApplyRepository $applyRepository, AuthorizationCheckerInterface $authorizationChecker): Response
     {
-        return $this->render('student/show.html.twig', [
-            'student' => $student,
-            'applies' => $applyRepository->findByStudent($student),
-            'finished' => $applyRepository->findByStudentByFinished($student),
-            'fresh' => $applyRepository->findByStudentByFresh($student),
-            'hired' => $applyRepository->checkIfHired($student)
-        ]);
+        if ($authorizationChecker->isGranted('ROLE_ADMIN') || $this->userValid($student)) {
+
+            return $this->render('student/show.html.twig', [
+                'student' => $student,
+                'applies' => $applyRepository->findByStudent($student),
+                'finished' => $applyRepository->findByStudentByFinished($student),
+                'fresh' => $applyRepository->findByStudentByFresh($student),
+                'hired' => $applyRepository->checkIfHired($student)
+            ]);
+        } 
+        else {
+            throw new AccessDeniedException('Accès refusé');
+        }  
     }
 
     /**
      * @Route("/{id}/edit", name="student_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function edit(Request $request, Student $student, UserPasswordEncoderInterface $passwordEncoder, UploaderHelper $uploaderHelper, ApplyRepository $applyRepository): Response
+    public function edit(Request $request, Student $student, UserPasswordEncoderInterface $passwordEncoder, UploaderHelper $uploaderHelper, ApplyRepository $applyRepository, AuthorizationCheckerInterface $authorizationChecker): Response
     {
-        $form = $this->createForm(UpdateStudentGeneralType::class, $student);
-        $formDoc = $this->createForm(UpdateStudentDocType::class, $student);
-        $formPassword = $this->createForm(StudentEditPasswordType::class, $student); 
+        if ($authorizationChecker->isGranted('ROLE_ADMIN') || $this->userValid($student)) {
 
-        // check old pass 
-        $oldPass = $student->getUser()->getPassword();
+            $form = $this->createForm(UpdateStudentGeneralType::class, $student);
+            $formDoc = $this->createForm(UpdateStudentDocType::class, $student);
+            $formPassword = $this->createForm(StudentEditPasswordType::class, $student); 
 
-        $form->handleRequest($request);
-        $formPassword->handleRequest($request);
-        $formDoc->handleRequest($request);
+            // check old pass 
+            $oldPass = $student->getUser()->getPassword();
 
-        if ($form->isSubmitted() && $form->isValid() || $formPassword->isSubmitted() && $formPassword->isValid() || $formDoc->isSubmitted() && $formDoc->isValid()) {
+            $form->handleRequest($request);
+            $formPassword->handleRequest($request);
+            $formDoc->handleRequest($request);
 
-            $student = $form->getData();
+            if ($form->isSubmitted() && $form->isValid() || $formPassword->isSubmitted() && $formPassword->isValid() || $formDoc->isSubmitted() && $formDoc->isValid()) {
 
-            // get uploaded files name 
-            if($request->files->get('update_student_doc') != null) {
-                $keys = array_keys($request->files->get('update_student_doc'));
-            
-                foreach($keys as $key) {
+                $student = $form->getData();
 
-                    $uploadedFile = $formDoc[$key]->getData();
+                // get uploaded files name 
+                if($request->files->get('update_student_doc') != null) {
+                    $keys = array_keys($request->files->get('update_student_doc'));
+                
+                    foreach($keys as $key) {
 
-                    $entity = $formDoc[$key]->getName();
+                        $uploadedFile = $formDoc[$key]->getData();
 
-                    switch($entity) {
-                        case 'resumes':
-                            $entity = 'resume';
-                            $document = $form->getData()->getResume();
-                        break;
-                        case 'idCards':
-                            $entity = 'idCard';
-                            $document = $form->getData()->getIdCard();
-                        break;
-                        case 'studentCards':
-                            $entity = 'studentCard';
-                            $document = $form->getData()->getStudentCard();
-                        break;
-                        case 'proofHabitations':
-                            $entity = 'proofHabitation';
-                            $document = $form->getData()->getProofHabitation();
-                        break;
+                        $entity = $formDoc[$key]->getName();
+
+                        switch($entity) {
+                            case 'resumes':
+                                $entity = 'resume';
+                                $document = $form->getData()->getResume();
+                            break;
+                            case 'idCards':
+                                $entity = 'idCard';
+                                $document = $form->getData()->getIdCard();
+                            break;
+                            case 'studentCards':
+                                $entity = 'studentCard';
+                                $document = $form->getData()->getStudentCard();
+                            break;
+                            case 'proofHabitations':
+                                $entity = 'proofHabitation';
+                                $document = $form->getData()->getProofHabitation();
+                            break;
+                        }
+
+                        $get = 'get' . ucfirst($entity); 
+                        $set = 'set' . ucfirst($entity);
+                        $class = "App\Entity\\" . ucfirst($entity);
+
+                        if($uploadedFile) {
+                            $newFilename = $uploaderHelper->uploadPrivateFile($uploadedFile, $student->$get()->getFileName());
+                            
+                            $document->setFileName($newFilename);
+                            $document->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $newFilename);
+                            $document->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');                    
+                        } 
+
+                        if($uploadedFile != null) {
+                            $student->$set($document);
+                        } 
                     }
-
-                    $get = 'get' . ucfirst($entity); 
-                    $set = 'set' . ucfirst($entity);
-                    $class = "App\Entity\\" . ucfirst($entity);
-
-                    if($uploadedFile) {
-                        $newFilename = $uploaderHelper->uploadPrivateFile($uploadedFile, $student->$get()->getFileName());
-                        
-                        $document->setFileName($newFilename);
-                        $document->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $newFilename);
-                        $document->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');                    
-                    } 
-
-                    if($uploadedFile != null) {
-                        $student->$set($document);
-                    } 
                 }
+                
+                // edit password 
+                $user = $formPassword->getData()->getUser();
+
+                if($user->getPassword() != $oldPass)
+                {
+                    $user->setPassword($passwordEncoder->encodePassword(
+                        $user,
+                        $user->getPassword()
+                    ));
+                }
+
+                $manager = $this->getDoctrine()->getManager()->flush();
+
+                $this->addFlash('success', 'Mise à jour réussie');
+
+                return $this->redirectToRoute('student_edit', ['id' => $student->getId()]);
             }
-            
-            // edit password 
-            $user = $formPassword->getData()->getUser();
 
-            if($user->getPassword() != $oldPass)
-            {
-                $user->setPassword($passwordEncoder->encodePassword(
-                    $user,
-                    $user->getPassword()
-                ));
-            }
+            return $this->render('student/edit.html.twig', [
+                'student' => $student,
+                'form' => $form->createView(),
+                'formDoc' => $formDoc->createView(),
+                'formPassword' => $formPassword->createView(),
+                'fresh' => $applyRepository->findByStudentByFresh($student),
+                'hired' => $applyRepository->checkIfHired($student)
+            ]);
 
-            $manager = $this->getDoctrine()->getManager()->flush();
-
-            $this->addFlash('success', 'Mise à jour réussie');
-
-            return $this->redirectToRoute('student_edit', ['id' => $student->getId()]);
-        }
-
-        return $this->render('student/edit.html.twig', [
-            'student' => $student,
-            'form' => $form->createView(),
-            'formDoc' => $formDoc->createView(),
-            'formPassword' => $formPassword->createView(),
-            'fresh' => $applyRepository->findByStudentByFresh($student),
-            'hired' => $applyRepository->checkIfHired($student)
-        ]);
+        } 
+        else {
+            throw new AccessDeniedException('Accès refusé');
+        }  
     }
 
     /**
@@ -290,5 +306,10 @@ class StudentController extends AbstractController
         $this->addFlash('success', 'Compte Supprimé');
 
         return $this->redirectToRoute($from);
+    }
+
+    public function userValid(Student $student) : bool  
+    {
+        return  $userConnected = $this->getUser()->getId() == $userRequired = $student->getUser()->getId();
     }
 }
