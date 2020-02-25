@@ -121,11 +121,11 @@
                                     </p>
                                     {% if agree is defined or hired is defined or applyc is defined %}
                                         {% if agree | length > 0 %}
-                                        <span class="badge badge-warning right" title="postulations">A valider : {{ agree | length }}</span>
+                                        <span class="badge badge-warning right" title="candidatures">A valider : {{ agree | length }}</span>
                                         {% elseif hired | length > 0 %}
-                                        <span class="badge badge-warning right" title="postulations">En attente : {{ hired | length }}</span>
+                                        <span class="badge badge-warning right" title="candidatures">En attente : {{ hired | length }}</span>
                                         {% elseif applyc| length > 0 %}
-                                        <span class="badge badge-primary right" title="postulations">Candidats : {{ applyc | length }}</span>
+                                        <span class="badge badge-primary right" title="candidatures">Candidats : {{ applyc | length }}</span>
                                         {% endif %}
                                     {% endif %}
                                     </a>
@@ -151,11 +151,11 @@
                                         <p>Terminés</p>
                                         {% if appliesf is defined %}
                                             {% if appliesf | length > 0 %}
-                                            <span class="badge badge-warning right" title="postulations">{{ appliesf | length }}</span>
+                                            <span class="badge badge-warning right" title="candidatures">{{ appliesf | length }}</span>
                                             {% endif %}
                                         {% elseif applies is defined %}
                                             {% if applies | length > 0 %}
-                                            <span class="badge badge-warning right" title="postulations">{{ applies | length }}</span>
+                                            <span class="badge badge-warning right" title="candidatures">{{ applies | length }}</span>
                                             {% endif %}
                                         {% endif %}
                                         </a>
