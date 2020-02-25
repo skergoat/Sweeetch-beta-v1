@@ -9,6 +9,8 @@ use App\Form\UpdateSchoolType;
 use App\Repository\ApplyRepository;
 use App\Form\SchoolEditPasswordType;
 use App\Repository\SchoolRepository;
+use App\Service\UserChecker\SchoolChecker;
+use App\Service\UserChecker\StudentChecker;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -81,51 +83,57 @@ class SchoolActionsController extends AbstractController
      * @Route("/{id}", name="school_show", methods={"GET"})
      * @IsGranted("ROLE_SCHOOL")
      */
-    public function show(School $school): Response
+    public function show(School $school, SchoolChecker $checker): Response
     {
-        return $this->render('school/show.html.twig', [
-            'school' => $school,
-        ]);
+        if ($checker->schoolValid($school)) {
+
+            return $this->render('school/show.html.twig', [
+                'school' => $school,
+            ]);
+        }
     }
 
     /**
      * @Route("/{id}/edit", name="school_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_SCHOOL")
      */
-    public function edit(Request $request, School $school, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function edit(Request $request, School $school, UserPasswordEncoderInterface $passwordEncoder, SchoolChecker $checker): Response
     {
-        $form = $this->createForm(UpdateSchoolType::class, $school);
-        $formPassword = $this->createForm(SchoolEditPasswordType::class, $school); 
-        // check old pass 
-        $oldPass = $school->getUser()->getPassword();
+        if ($checker->schoolValid($school)) {
 
-        $form->handleRequest($request);
-        $formPassword->handleRequest($request);
+            $form = $this->createForm(UpdateSchoolType::class, $school);
+            $formPassword = $this->createForm(SchoolEditPasswordType::class, $school); 
+            // check old pass 
+            $oldPass = $school->getUser()->getPassword();
 
-        if ($form->isSubmitted() && $form->isValid() || $formPassword->isSubmitted() && $formPassword->isValid()) {
-            // edit password 
-            $user = $formPassword->getData()->getUser();
+            $form->handleRequest($request);
+            $formPassword->handleRequest($request);
 
-            if($user->getPassword() != $oldPass)
-            {
-                $user->setPassword($passwordEncoder->encodePassword(
-                    $user,
-                    $user->getPassword()
-                ));
+            if ($form->isSubmitted() && $form->isValid() || $formPassword->isSubmitted() && $formPassword->isValid()) {
+                // edit password 
+                $user = $formPassword->getData()->getUser();
+
+                if($user->getPassword() != $oldPass)
+                {
+                    $user->setPassword($passwordEncoder->encodePassword(
+                        $user,
+                        $user->getPassword()
+                    ));
+                }
+
+                $this->getDoctrine()->getManager()->flush();
+
+                $this->addFlash('success', 'Mise à jour réussie');
+
+                return $this->redirectToRoute('school_edit', ['id' => $school->getId() ]);
             }
 
-            $this->getDoctrine()->getManager()->flush();
-
-            $this->addFlash('success', 'Mise à jour réussie');
-
-            return $this->redirectToRoute('school_edit', ['id' => $school->getId() ]);
+            return $this->render('school/edit.html.twig', [
+                'school' => $school,
+                'form' => $form->createView(),
+                'formPassword' => $formPassword->createView(),
+            ]);
         }
-
-        return $this->render('school/edit.html.twig', [
-            'school' => $school,
-            'form' => $form->createView(),
-            'formPassword' => $formPassword->createView(),
-        ]);
     }
 
     /**

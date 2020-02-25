@@ -8,6 +8,7 @@ use App\Entity\Studies;
 use App\Repository\ApplyRepository;
 use App\Repository\SchoolRepository;
 use App\Repository\StudiesRepository;
+use App\Service\UserChecker\SchoolChecker;
 use App\Service\UserChecker\StudentChecker;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,12 +26,15 @@ class SchoolRenderController extends AbstractController
      * @Route("/studies/index/{id}", name="school_studies_index", methods={"GET"})
      * @IsGranted("ROLE_SCHOOL")
      */
-    public function index(StudiesRepository $studiesRepository, School $school): Response
+    public function index(StudiesRepository $studiesRepository, School $school, SchoolChecker $checker): Response
     {
-        return $this->render('studies/index.html.twig', [
-            'studies' => $studiesRepository->findBy(['school' => $school]),
-            'school' => $school
-        ]);
+        if ($checker->schoolValid($school)) {
+
+            return $this->render('studies/index.html.twig', [
+                'studies' => $studiesRepository->findBy(['school' => $school]),
+                'school' => $school
+            ]);
+        }
     }
 
     /**
