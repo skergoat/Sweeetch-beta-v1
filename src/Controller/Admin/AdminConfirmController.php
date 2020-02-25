@@ -16,7 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminConfirmController extends AbstractController
-{
+{   
     /**
      * @Route("admin/confirm/{id}/{from}", name="admin_confirm", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")

@@ -5,12 +5,15 @@ namespace App\Controller\University;
 use App\Entity\School;
 use App\Entity\Student;
 use App\Form\SchoolType;
+use App\Form\UpdateSchoolType;
 use App\Repository\ApplyRepository;
+use App\Form\SchoolEditPasswordType;
 use App\Repository\SchoolRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -89,20 +92,39 @@ class SchoolActionsController extends AbstractController
      * @Route("/{id}/edit", name="school_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_SCHOOL")
      */
-    public function edit(Request $request, School $school): Response
+    public function edit(Request $request, School $school, UserPasswordEncoderInterface $passwordEncoder): Response
     {
-        $form = $this->createForm(SchoolType::class, $school);
-        $form->handleRequest($request);
+        $form = $this->createForm(UpdateSchoolType::class, $school);
+        $formPassword = $this->createForm(SchoolEditPasswordType::class, $school); 
+        // check old pass 
+        $oldPass = $school->getUser()->getPassword();
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $form->handleRequest($request);
+        $formPassword->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid() || $formPassword->isSubmitted() && $formPassword->isValid()) {
+            // edit password 
+            $user = $formPassword->getData()->getUser();
+
+            if($user->getPassword() != $oldPass)
+            {
+                $user->setPassword($passwordEncoder->encodePassword(
+                    $user,
+                    $user->getPassword()
+                ));
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('school_index');
+            $this->addFlash('success', 'Mise à jour réussie');
+
+            return $this->redirectToRoute('school_edit', ['id' => $school->getId() ]);
         }
 
         return $this->render('school/edit.html.twig', [
             'school' => $school,
             'form' => $form->createView(),
+            'formPassword' => $formPassword->createView(),
         ]);
     }
 
@@ -114,6 +136,16 @@ class SchoolActionsController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$school->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
+
+            // delete session
+            $currentUserId = $this->getUser()->getId();
+            if ($currentUserId == $school->getUser()->getId())
+            {
+              $session = $this->get('session');
+              $session = new Session();
+              $session->invalidate();
+            }
+
             $entityManager->remove($school);
             $entityManager->flush();
         }
