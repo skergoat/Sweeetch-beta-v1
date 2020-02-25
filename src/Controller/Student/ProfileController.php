@@ -6,9 +6,9 @@ use App\Entity\Profile;
 use App\Entity\Student;
 use App\Entity\Language;
 use App\Form\ProfileType;
-use App\Service\UserChecker;
 use App\Repository\ApplyRepository;
 use App\Repository\ProfileRepository;
+use App\Service\UserChecker\StudentChecker;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,7 +28,7 @@ class ProfileController extends AbstractController
      * @IsGranted("ROLE_STUDENT")
      * @ParamConverter("student", options={"id" = "student_id"})
      */
-    public function edit(Request $request, Profile $profile, Student $student, ApplyRepository $applyRepository, UserChecker $checker): Response
+    public function edit(Request $request, Profile $profile, Student $student, ApplyRepository $applyRepository, StudentChecker $checker): Response
     {
         if ($checker->studentProfileValid($student, $profile)) {
 

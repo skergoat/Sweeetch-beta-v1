@@ -5,10 +5,10 @@ namespace App\Controller\University;
 use App\Entity\School;
 use App\Entity\Student;
 use App\Entity\Studies;
-use App\Service\UserChecker;
 use App\Repository\ApplyRepository;
 use App\Repository\SchoolRepository;
 use App\Repository\StudiesRepository;
+use App\Service\UserChecker\StudentChecker;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -37,7 +37,7 @@ class SchoolRenderController extends AbstractController
      * @Route("/student/{id}", name="school_student_index", methods={"GET"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function indexByStudent(Student $student, SchoolRepository $schoolRepository, ApplyRepository $applyRepository, UserChecker $checker): Response
+    public function indexByStudent(Student $student, SchoolRepository $schoolRepository, ApplyRepository $applyRepository, StudentChecker $checker): Response
     {
         if ($checker->studentValid($student)) {
 

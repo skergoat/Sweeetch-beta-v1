@@ -11,6 +11,7 @@ use App\Service\Mailer\ApplyMailer;
 use App\Repository\OffersRepository;
 use App\Repository\CompanyRepository;
 use App\Repository\StudentRepository;
+use App\Service\UserChecker\StudentChecker;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,36 +31,40 @@ class ApplyRenderController extends AbstractController
      * @Route("/index/student/{id}", name="student_apply", methods={"GET"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function indexByStudent(StudentRepository $repository, applyRepository $applyRepository, Student $student)
+    public function indexByStudent(StudentRepository $repository, applyRepository $applyRepository, Student $student, StudentChecker $checker)
     {   
-        $applies = $applyRepository->findByStudent($student);
-        $finished = $applyRepository->findByStudentByFinished($student);
-    
-        return $this->render('apply/index_student.html.twig', [
-            'student' => $student,
-            'applies' => $applies,
-            'finished' => $finished,
-            'fresh' =>  $applyRepository->findByStudentByFresh($student),
-            'hired' => $applyRepository->checkIfHired($student)
-        ]);
+        if ($checker->studentValid($student)) {
+            $applies = $applyRepository->findByStudent($student);
+            $finished = $applyRepository->findByStudentByFinished($student);
+        
+            return $this->render('apply/index_student.html.twig', [
+                'student' => $student,
+                'applies' => $applies,
+                'finished' => $finished,
+                'fresh' =>  $applyRepository->findByStudentByFresh($student),
+                'hired' => $applyRepository->checkIfHired($student)
+            ]);
+        }
     }
 
     /**
      * @Route("/finished/student/{id}", name="student_finished", methods={"GET"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function finishedByStudent(StudentRepository $repository, applyRepository $applyRepository, Student $student)
+    public function finishedByStudent(StudentRepository $repository, applyRepository $applyRepository, Student $student, StudentChecker $checker)
     {   
-        $applies = $applyRepository->findByStudent($student);
-        $finished = $applyRepository->findByStudentByFinished($student);
-       
-        return $this->render('apply/finished-student.html.twig', [
-            'student' => $student,
-            'applies' => $applies,
-            'finished' => $finished,
-            'fresh' =>  $applyRepository->findByStudentByFresh($student),
-            'hired' => $applyRepository->checkIfHired($student)
-        ]);
+        if ($checker->studentValid($student)) {
+            $applies = $applyRepository->findByStudent($student);
+            $finished = $applyRepository->findByStudentByFinished($student);
+        
+            return $this->render('apply/finished-student.html.twig', [
+                'student' => $student,
+                'applies' => $applies,
+                'finished' => $finished,
+                'fresh' =>  $applyRepository->findByStudentByFresh($student),
+                'hired' => $applyRepository->checkIfHired($student)
+            ]);
+        }
     }
 
     /**
@@ -141,15 +146,17 @@ class ApplyRenderController extends AbstractController
      * @IsGranted("ROLE_SUPER_STUDENT")
      * @ParamConverter("student", options={"id" = "student_id"})
      */
-    public function showOfferProfile(StudentRepository $studentRepository, ApplyRepository $applyRepository, Offers $offer, Student $student): Response
+    public function showOfferProfile(StudentRepository $studentRepository, ApplyRepository $applyRepository, Offers $offer, Student $student, StudentChecker $checker): Response
     {   
-        return $this->render('apply/show_hired.html.twig', [
-            'offers' => $offer,
-            'student' => $student,
-            'fresh' =>  $applyRepository->findByStudentByFresh($student),
-            'hired' => $applyRepository->checkIfHired($student),
-            'finished' => $applyRepository->findByStudentByFinished($student)
-        ]);
+       if($checker->studentApplyValid($student, $offer)) {
+            return $this->render('apply/show_hired.html.twig', [
+                'offers' => $offer,
+                'student' => $student,
+                'fresh' =>  $applyRepository->findByStudentByFresh($student),
+                'hired' => $applyRepository->checkIfHired($student),
+                'finished' => $applyRepository->findByStudentByFinished($student)
+            ]);
+        }
     }
 
      /**

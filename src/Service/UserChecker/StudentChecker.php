@@ -1,24 +1,27 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\UserChecker;
 
 use App\Entity\IdCard;
 use App\Entity\Resume;
 use App\Entity\StudentCard;
 use App\Entity\ProofHabitation;
+use App\Repository\ApplyRepository;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-class UserChecker
+class StudentChecker
 {
     private $authorizationChecker;
     private $user; 
+    private $applyRepository;
 
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker, Security $security)
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker, Security $security, ApplyRepository $applyRepository)
     {
         $this->authorizationChecker = $authorizationChecker;
         $this->user = $security->getUser();
+        $this->applyRepository = $applyRepository;
     }
 
     // general 
@@ -52,6 +55,26 @@ class UserChecker
         else {
             $this->Exception() ;
         }
+    }
+
+    // student show single apply  
+    public function studentApplyValid($student, $offers)
+    {    
+        $userRequired = $student->getUser()->getId();
+
+        if($this->isAdmin() 
+        || $this->user->getId() == $userRequired 
+        AND $this->applyRepository->applyExists($student, $offers)) {
+            return true;
+        }
+        else {
+            $this->Exception() ;
+        }
+    }
+
+    public function applyValid($apply)
+    {
+        return $this->isAdmin() or $this->applyRepository->applyExists($this->user->getStudent(), $apply->getOffers()) ? true : $this->Exception();
     }
 
     // student documents 
