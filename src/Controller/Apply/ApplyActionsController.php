@@ -32,8 +32,8 @@ class ApplyActionsController extends AbstractController
      */
     public function apply(ApplyRepository $repository, Offers $offers, Student $student, ApplyMailer $mailer, StudentChecker $checker, Request $request, $page)
     {
-        if($checker->studentValid($student)) 
-        {
+        // if($checker->studentValid($student)) 
+        // {
             // check if apply is open to current offer
             $hired = $repository->findBy(['offers' => $offers, 'hired' => 1]);
             $agree = $repository->findBy(['offers' => $offers, 'agree' => 1]);
@@ -107,7 +107,7 @@ class ApplyActionsController extends AbstractController
             $this->addFlash('success', 'Postulation enregistrée !');
     
             return $this->redirectToRoute('offers_show', ['id' => $offers->getId(), 'page' => $page]);
-       }
+    //    }
     }
 
     /**
@@ -155,11 +155,11 @@ class ApplyActionsController extends AbstractController
         }
 
         // send notification to student 
-        $email = $apply->getStudent()->getUser()->getEmail();
-        $name = $apply->getStudent()->getName();
-        $offerTitle = $apply->getOffers()->getTitle(); 
+        // $email = $apply->getStudent()->getUser()->getEmail();
+        // $name = $apply->getStudent()->getName();
+        // $offerTitle = $apply->getOffers()->getTitle(); 
         
-        $mailer->sendHireMessage($email, $name, $offerTitle); 
+        // $mailer->sendHireMessage($email, $name, $offerTitle); 
 
         $entityManager = $this->getDoctrine()->getManager();
  
@@ -170,11 +170,11 @@ class ApplyActionsController extends AbstractController
             foreach($others as $others) {
 
                 // send mail to other applies 
-                $offerTitle = $others->getOffers()->getTitle();
-                $name = $others->getStudent()->getName();
-                $email = $others->getStudent()->getUser()->getEmail();
+                // $offerTitle = $others->getOffers()->getTitle();
+                // $name = $others->getStudent()->getName();
+                // $email = $others->getStudent()->getUser()->getEmail();
         
-                $mailer->sendOthersMessage($email, $name, $offerTitle); 
+                // $mailer->sendOthersMessage($email, $name, $offerTitle); 
 
                 // delete other applies 
                 $entityManager->remove($others);   
@@ -193,34 +193,43 @@ class ApplyActionsController extends AbstractController
      * @Route("/agree/{id}", name="agree", methods={"POST"})
      * @IsGranted("ROLE_SUPER_STUDENT")
      */
-    public function agree(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer)
+    public function agree(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer, Request $request, StudentChecker $checker)
     {
-        // set apply state 
-        if(    $apply->getHired() == true 
-            && $apply->getConfirmed() == false 
-            && $apply->getRefused() == false 
-            && $apply->getAgree() == false
-        ) {
-            $apply->setHired(false);
-            $apply->setConfirmed(false);
-            $apply->setRefused(false);
-            $apply->setAgree(true);
-        }
+        // if($checker->applyValid($apply)) 
+        // {
+            // set apply state 
+            if(    $apply->getHired() == true 
+                && $apply->getConfirmed() == false 
+                && $apply->getRefused() == false 
+                && $apply->getAgree() == false
+            ) {
+                $apply->setHired(false);
+                $apply->setConfirmed(false);
+                $apply->setRefused(false);
+                $apply->setAgree(true);
+            }
 
-        // get other applies
-        $student = $apply->getStudent();
-        $offers = $apply->getOffers();
+            // get other applies
+            $student = $apply->getStudent();
+            $offers = $apply->getOffers();
 
-        // send notification to student 
-        $email = $student->getUser()->getEmail();
-        $name = $student->getName();
-        $offerTitle = $offers->getTitle(); 
+            // send notification to student 
+            // $email = $student->getUser()->getEmail();
+            // $name = $student->getName();
+            // $offerTitle = $offers->getTitle(); 
+            
+            // $mailer->sendAgreeMessage($email, $name, $offerTitle); 
+
+            if($this->isCsrfTokenValid('agree'.$apply->getId(), $request->request->get('_token'))) {
+                $this->getDoctrine()->getManager()->flush();
+            }
+            else {
+                throw new \Exception('Candidature Invalide');
+            }
+
+            return $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
         
-        $mailer->sendAgreeMessage($email, $name, $offerTitle); 
-
-        $this->getDoctrine()->getManager()->flush();
-
-        return $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
+        // }
     }
 
     /**
@@ -246,11 +255,11 @@ class ApplyActionsController extends AbstractController
          $offers = $apply->getOffers();
 
          // send notification to student 
-         $email = $student->getUser()->getEmail();
-         $name = $student->getName();
-         $offerTitle = $offers->getTitle(); 
+        //  $email = $student->getUser()->getEmail();
+        //  $name = $student->getName();
+        //  $offerTitle = $offers->getTitle(); 
          
-         $mailer->sendConfirmMessage($email, $name, $offerTitle); 
+        //  $mailer->sendConfirmMessage($email, $name, $offerTitle); 
 
         $student->getUser()->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_HIRED']);
 
@@ -280,11 +289,11 @@ class ApplyActionsController extends AbstractController
         $offers = $apply->getOffers();
 
         // send notification to student 
-        $email = $student->getUser()->getEmail();
-        $name = $student->getName();
-        $offerTitle = $offers->getTitle(); 
+        // $email = $student->getUser()->getEmail();
+        // $name = $student->getName();
+        // $offerTitle = $offers->getTitle(); 
           
-        $mailer->sendFinishMessage($email, $name, $offerTitle); 
+        // $mailer->sendFinishMessage($email, $name, $offerTitle); 
  
 
         // set other student offers to available
@@ -310,7 +319,6 @@ class ApplyActionsController extends AbstractController
      */
     public function refuse(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer, $from)
     {
-
         // get users
         $student = $apply->getStudent();
         $offers = $apply->getOffers();
@@ -333,11 +341,11 @@ class ApplyActionsController extends AbstractController
         $offers->setState(false);
 
         // send notification to student 
-        $email = $student->getUser()->getEmail();
-        $name = $student->getName();
-        $offerTitle = $offers->getTitle(); 
+        // $email = $student->getUser()->getEmail();
+        // $name = $student->getName();
+        // $offerTitle = $offers->getTitle(); 
            
-        $mailer->sendRefuseMessage($email, $name, $offerTitle); 
+        // $mailer->sendRefuseMessage($email, $name, $offerTitle); 
   
         // set other student offers to available
         $unavailables = $repository->setToUnavailables($offers, $student);
@@ -368,8 +376,8 @@ class ApplyActionsController extends AbstractController
      */
     public function delete(Request $request, Apply $apply, ApplyRepository $repository, OffersRepository $offersRepository, CompanyRepository $companyRepository, ApplyMailer $mailer, StudentChecker $checker): Response
     {
-        if($checker->applyValid($apply)) 
-        {
+        // if($checker->applyValid($apply)) 
+        // {
             // get company to render company page 
             $companyId = $apply->getOffers()->getCompany()->getId();
 
@@ -409,11 +417,14 @@ class ApplyActionsController extends AbstractController
                 // delete offer
                 $entityManager->flush();
             }
+            else {
+                throw new \Exception('Candidature Invalide');
+            }
 
             $this->addFlash('success', 'Postulation supprimée !');
 
             return $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
-        }
+        // }
     }
 
     /**
