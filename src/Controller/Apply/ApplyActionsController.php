@@ -335,7 +335,7 @@ class ApplyActionsController extends AbstractController
      * @Route("/refuse/{id}/{from}", name="apply_refuse", methods={"POST"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
-    public function refuse(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer, $from)
+    public function refuse(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer, Request $request, $from)
     {
         // get users
         $student = $apply->getStudent();
@@ -375,7 +375,15 @@ class ApplyActionsController extends AbstractController
             }      
         }
 
-        $this->getDoctrine()->getManager()->flush();
+        // dd($this->isCsrfTokenValid('delete'.$apply->getId(), $request->request->get('_token')));
+
+        if($this->isCsrfTokenValid('delete'.$apply->getId(), $request->request->get('_token'))) {
+
+            $this->getDoctrine()->getManager()->flush();
+        }
+        else {
+            throw new \Exception('Demande Invalide');
+        }
 
         if($from == 'student') {
             $return = $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
