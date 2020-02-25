@@ -377,7 +377,7 @@ class ApplyActionsController extends AbstractController
 
         // dd($this->isCsrfTokenValid('delete'.$apply->getId(), $request->request->get('_token')));
 
-        if($this->isCsrfTokenValid('delete'.$apply->getId(), $request->request->get('_token'))) {
+        if($this->isCsrfTokenValid('refuse'.$apply->getId(), $request->request->get('_token'))) {
 
             $this->getDoctrine()->getManager()->flush();
         }
