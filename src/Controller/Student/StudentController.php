@@ -2,6 +2,7 @@
 
 namespace App\Controller\Student;
 
+use App\Entity\User;
 use App\Entity\IdCard;
 use App\Entity\Resume;
 use App\Entity\Profile;
@@ -20,6 +21,7 @@ use App\Repository\ResumeRepository;
 use App\Form\StudentEditPasswordType;
 use App\Repository\StudentRepository;
 use App\Form\UpdateStudentGeneralType;
+use App\Service\UserChecker\AdminChecker;
 use App\Service\UserChecker\StudentChecker;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -50,17 +52,20 @@ class StudentController extends AbstractController
      */
     public function index(StudentRepository $studentRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $queryBuilder = $studentRepository->findAllPaginated("DESC");
+        // if($checker->adminValid($user)) 
+        // {
+            $queryBuilder = $studentRepository->findAllPaginated("DESC");
 
-        $pagination = $paginator->paginate(
-            $queryBuilder,
-            $request->query->getInt('page', 1),
-            10
-        );
+            $pagination = $paginator->paginate(
+                $queryBuilder,
+                $request->query->getInt('page', 1),
+                10
+            );
 
-        return $this->render('student/index.html.twig', [
-            'students' => $pagination,
-        ]);
+            return $this->render('student/index.html.twig', [
+                'students' => $pagination,
+            ]);
+        // }
     }
 
     /**

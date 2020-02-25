@@ -21,7 +21,7 @@ class AdminConfirmController extends AbstractController
      * @Route("admin/confirm/{id}/{from}", name="admin_confirm", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function confirm($from, User $user, UserRepository $userRepository): Response
+    public function confirm($from, User $user, UserRepository $userRepository, Request $request): Response
     {     
         if($user->getStudent() != null)
         {
@@ -35,8 +35,13 @@ class AdminConfirmController extends AbstractController
         {
             $user->setRoles(['ROLE_SUPER_SCHOOL']); 
         }
-                
-        $this->getDoctrine()->getManager()->flush();
+            
+        if($this->isCsrfTokenValid('confirm'.$user->getId(), $request->request->get('_token'))) {
+            $this->getDoctrine()->getManager()->flush();
+        }
+        else {
+            throw new \Exception('Demande Invalide');
+        }
 
         $this->addFlash('success', 'Compte Confirmé');
 
@@ -109,7 +114,14 @@ class AdminConfirmController extends AbstractController
 
         $parameters['message'] != '' ? $message = $parameters['message'] : $message = '';
 
-        $mailer->sendWarningMessage($name, $email, $array, $message);
+        dd($this->isCsrfTokenValid('warning'.$this->getUser()->getId(), $request->request->get('_token')));
+
+        if($this->isCsrfTokenValid('warning'.$this->getUser()->getId(), $request->request->get('_token'))) {
+            $mailer->sendWarningMessage($name, $email, $array, $message);
+        }
+        else {
+            throw new \Exception('Demande Invalide');
+        }
 
         $this->addFlash('success', 'Message Envoyé');
 

@@ -2,6 +2,7 @@
 
 namespace App\Controller\Company;
 
+use App\Entity\User;
 use App\Entity\Company;
 use App\Form\CompanyType;
 use App\Form\UpdateCompanyType;
@@ -10,6 +11,7 @@ use App\Service\Mailer\ApplyMailer;
 use App\Repository\OffersRepository;
 use App\Form\CompanyEditPasswordType;
 use App\Repository\CompanyRepository;
+use App\Service\UserChecker\AdminChecker;
 use App\Service\UserChecker\CompanyChecker;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,17 +33,20 @@ class CompanyController extends AbstractController
      */
     public function index(CompanyRepository $companyRepository, PaginatorInterface $paginator, Request $request): Response
     {   
-        $queryBuilder = $companyRepository->findAllPaginated("DESC");
+        // if($checker->adminValid($user)) 
+        // {
+            $queryBuilder = $companyRepository->findAllPaginated("DESC");
 
-        $pagination = $paginator->paginate(
-            $queryBuilder, /* query NOT result */
-            $request->query->getInt('page', 1)/*page number*/,
-            10/*limit per page*/
-        );
+            $pagination = $paginator->paginate(
+                $queryBuilder, /* query NOT result */
+                $request->query->getInt('page', 1)/*page number*/,
+                10/*limit per page*/
+            );
 
-        return $this->render('company/index.html.twig', [
-            'companies' => $pagination,
-        ]);
+            return $this->render('company/index.html.twig', [
+                'companies' => $pagination,
+            ]);
+        // }
     }
 
     /**

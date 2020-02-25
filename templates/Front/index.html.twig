@@ -56,7 +56,7 @@
           
             {% if is_granted('ROLE_USER')  %}
                 {% if is_granted('ROLE_ADMIN') %}
-                  <li><a href="/admin">ADMIN</a></li>
+                  <li><a href="{{ path('admin', {id:app.user.id}) }}">ADMIN</a></li>
                 {% elseif  is_granted('ROLE_STUDENT') %}
                   <li><a href="{{ path('student_show', {'id': app.user.student.id}) }}">MON PROFILE</a></li>
                 {% elseif  is_granted('ROLE_COMPANY') %}
