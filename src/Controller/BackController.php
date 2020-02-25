@@ -11,23 +11,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BackController extends AbstractController
 {
-    /**
-     * @Route("/admin", name="admin")
-     * @IsGranted("ROLE_ADMIN")
-     */
-    public function index(UserRepository $userRepository, ApplyRepository $applyRepository)
-    {
-        $students = $userRepository->findByRole('ROLE_STUDENT');
-        $company = $userRepository->findByRole('ROLE_COMPANY');
-        $school = $userRepository->findByRole('ROLE_SCHOOL');
+    // /**
+    //  * @Route("/admin", name="admin")
+    //  * @IsGranted("ROLE_ADMIN")
+    //  */
+    // public function index(UserRepository $userRepository, ApplyRepository $applyRepository)
+    // {
+    //     $students = $userRepository->findByRole('ROLE_STUDENT');
+    //     $company = $userRepository->findByRole('ROLE_COMPANY');
+    //     $school = $userRepository->findByRole('ROLE_SCHOOL');
 
-        $applies = $applyRepository->getHired();
+    //     $applies = $applyRepository->getHired();
         
-        return $this->render('back/index.html.twig', [
-            'students' => $students,
-            'company' => $company,
-            'school' => $school,
-            'applies' => $applies
-        ]);
-    }
+    //     return $this->render('back/index.html.twig', [
+    //         'students' => $students,
+    //         'company' => $company,
+    //         'school' => $school,
+    //         'applies' => $applies
+    //     ]);
+    // }
 }

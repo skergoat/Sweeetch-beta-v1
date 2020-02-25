@@ -2,6 +2,7 @@
 
 namespace App\Controller\University;
 
+use App\Entity\User;
 use App\Entity\School;
 use App\Entity\Student;
 use App\Form\SchoolType;
@@ -9,6 +10,7 @@ use App\Form\UpdateSchoolType;
 use App\Repository\ApplyRepository;
 use App\Form\SchoolEditPasswordType;
 use App\Repository\SchoolRepository;
+use App\Service\UserChecker\AdminChecker;
 use App\Service\UserChecker\SchoolChecker;
 use App\Service\UserChecker\StudentChecker;
 use Knp\Component\Pager\PaginatorInterface;
@@ -29,19 +31,22 @@ class SchoolActionsController extends AbstractController
      * @Route("/", name="school_index", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function index(SchoolRepository $schoolRepository, PaginatorInterface $paginator, Request $request): Response
+    public function index(SchoolRepository $schoolRepository, PaginatorInterface $paginator, Request $request, AdminChecker $checker): Response
     {
-        $queryBuilder = $schoolRepository->findAllPaginated("DESC");
+        // if($checker->adminValid($user)) 
+        // {
+            $queryBuilder = $schoolRepository->findAllPaginated("DESC");
 
-        $pagination = $paginator->paginate(
-            $queryBuilder, /* query NOT result */
-            $request->query->getInt('page', 1)/*page number*/,
-            10/*limit per page*/
-        );
+            $pagination = $paginator->paginate(
+                $queryBuilder, /* query NOT result */
+                $request->query->getInt('page', 1)/*page number*/,
+                10/*limit per page*/
+            );
 
-        return $this->render('school/index.html.twig', [
-            'schools' => $pagination,
-        ]);
+            return $this->render('school/index.html.twig', [
+                'schools' => $pagination,
+            ]);
+        // }
     }
 
     /**
