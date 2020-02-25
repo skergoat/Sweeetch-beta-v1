@@ -36,6 +36,15 @@ class ApplyRepository extends ServiceEntityRepository
 
 
 
+    public function applyExists($student, $offers) { 
+        return (boolean)$this->createQueryBuilder('u')
+        ->andWhere('u.offers = :offers AND u.student = :student')
+        ->setParameter('offers', $offers->getId())
+        ->setParameter('student', $student->getId())
+        ->getQuery()
+        ->getOneOrNullResult();
+    }
+
 
 
     public function findAppliedIfExists($student, $offer)

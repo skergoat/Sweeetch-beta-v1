@@ -8,7 +8,6 @@ use App\Entity\Profile;
 use App\Entity\Student;
 use App\Form\StudentType;
 use App\Entity\StudentCard;
-use App\Service\UserChecker;
 use App\Entity\ProofHabitation;
 use App\Form\UpdateStudentType;
 use App\Service\UploaderHelper;
@@ -21,6 +20,7 @@ use App\Repository\ResumeRepository;
 use App\Form\StudentEditPasswordType;
 use App\Repository\StudentRepository;
 use App\Form\UpdateStudentGeneralType;
+use App\Service\UserChecker\StudentChecker;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -132,7 +132,7 @@ class StudentController extends AbstractController
      * @Route("/{id}", name="student_show", methods={"GET"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function show(Student $student, ApplyRepository $applyRepository, UserChecker $checker): Response
+    public function show(Student $student, ApplyRepository $applyRepository, StudentChecker $checker): Response
     {
         if ($checker->studentValid($student)) {
 
@@ -150,7 +150,7 @@ class StudentController extends AbstractController
      * @Route("/{id}/edit", name="student_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function edit(Request $request, Student $student, UserPasswordEncoderInterface $passwordEncoder, UploaderHelper $uploaderHelper, ApplyRepository $applyRepository, UserChecker $checker): Response
+    public function edit(Request $request, Student $student, UserPasswordEncoderInterface $passwordEncoder, UploaderHelper $uploaderHelper, ApplyRepository $applyRepository, StudentChecker $checker): Response
     {
         if ($checker->studentValid($student)) {
 
@@ -250,7 +250,7 @@ class StudentController extends AbstractController
      * @Route("/{id}/{from}", name="student_delete", methods={"DELETE"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function delete(Request $request, Student $student, UploaderHelper $uploaderHelper, ApplyRepository $applyRepository, UserChecker $checker, $from): Response
+    public function delete(Request $request, Student $student, UploaderHelper $uploaderHelper, ApplyRepository $applyRepository, StudentChecker $checker, $from): Response
     {
         if ($checker->studentValid($student)) {
 

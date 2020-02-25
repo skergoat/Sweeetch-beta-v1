@@ -5,9 +5,9 @@ namespace App\Controller\Student;
 use App\Entity\IdCard;
 use App\Entity\Resume;
 use App\Entity\StudentCard;
-use App\Service\UserChecker;
 use App\Entity\ProofHabitation;
 use App\Service\UploaderHelper;
+use App\Service\UserChecker\StudentChecker;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
@@ -44,7 +44,7 @@ class DownloadController extends AbstractController
      * @Route("/resume/{id}/download", name="student_download_resume", methods={"GET"})
      * @IsGranted("ROLE_USER")
      */
-    public function downloadResume(Resume $resume, UploaderHelper $uploaderHelper, UserChecker $checker)
+    public function downloadResume(Resume $resume, UploaderHelper $uploaderHelper, StudentChecker $checker)
     {
        if($checker->documentValid($resume))
        {
@@ -57,7 +57,7 @@ class DownloadController extends AbstractController
      * @Route("/idcard/{id}/download", name="student_download_idcard", methods={"GET"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function downloadIdCard(IdCard $idcard, UploaderHelper $uploaderHelper, UserChecker $checker)
+    public function downloadIdCard(IdCard $idcard, UploaderHelper $uploaderHelper, StudentChecker $checker)
     {
         if($checker->documentValid($idcard))
        {
@@ -70,7 +70,7 @@ class DownloadController extends AbstractController
      * @Route("/studentcard/{id}/download", name="student_download_studentcard", methods={"GET"})
      * @IsGranted("ROLE_USER")
      */
-    public function downloadStudentCard(StudentCard $studentcard, UploaderHelper $uploaderHelper, UserChecker $checker)
+    public function downloadStudentCard(StudentCard $studentcard, UploaderHelper $uploaderHelper, StudentChecker $checker)
     {
         if($checker->documentValid($studentcard))
         {
@@ -83,7 +83,7 @@ class DownloadController extends AbstractController
      * @Route("/proofhabitation/{id}/download", name="student_download_proofhabitation", methods={"GET"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function downloadProofHabitation(ProofHabitation $proofHabitation, UploaderHelper $uploaderHelper, UserChecker $checker)
+    public function downloadProofHabitation(ProofHabitation $proofHabitation, UploaderHelper $uploaderHelper, StudentChecker $checker)
     {
         if($checker->documentValid($proofHabitation))
         {
