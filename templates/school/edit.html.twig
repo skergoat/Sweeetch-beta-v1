@@ -12,6 +12,12 @@
   </div>
 {% endfor %}
 
+{% for message in app.flashes('error') %}
+  <div class="alert alert-danger">
+      {{ message }}
+  </div>
+{% endfor %}
+
 <div class="card card-primary">
   <div class="card-body body-row">
 
@@ -25,23 +31,16 @@
           <li class="nav-item">
             <a class="nav-link edit-items" id="custom-content-below-profile-tab" data-toggle="pill" href="#custom-content-below-profile" role="tab" aria-controls="custom-content-below-profile" aria-selected="false">Mot de Passe</a>
           </li>
-         {#<li class="nav-item">
-            <a class="nav-link edit-items" id="custom-content-below-messages-tab" data-toggle="pill" href="#custom-content-below-messages" role="tab" aria-controls="custom-content-below-messages" aria-selected="false">Mot de Passe</a>
-          </li> #}
         </ul>
 
         <div class="tab-content" id="custom-content-below-tabContent">
             <div class="tab-pane fade" id="custom-content-below-home" role="tabpanel" aria-labelledby="custom-content-below-home-tab">
-           {# {{ include('student/_form-edit.html.twig', {'button_label': 'Update'}) }} #}
            {{ include('school/_form-edit.html.twig', {'button_label': 'Update'}) }} 
             <div style="display:flex;justify-content:flex-end;">{{ include('school/_delete_form.html.twig') }}</div>
           </div>
           <div class="tab-pane fade" id="custom-content-below-profile" role="tabpanel" aria-labelledby="custom-content-below-profile-tab">
             {{ include('school/_form-password.html.twig', {'button_label': 'Update'}) }} 
           </div>
-          {# <div class="tab-pane fade" id="custom-content-below-messages" role="tabpanel" aria-labelledby="custom-content-below-messages-tab">
-            {{ include('student/_form-password.html.twig', {'button_label': 'Update'}) }} 
-          </div>#}
         </div>
 
       </div>

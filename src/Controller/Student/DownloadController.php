@@ -9,10 +9,11 @@ use App\Entity\ProofHabitation;
 use App\Service\UploaderHelper;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DownloadController extends AbstractController
-{
+{   
     public function downloadDocuments($resume, UploaderHelper $uploaderHelper) 
     {
         // $resume = $reference->getArticle();
@@ -38,6 +39,7 @@ class DownloadController extends AbstractController
 
     /**
      * @Route("/resume/{id}/download", name="student_download_resume", methods={"GET"})
+     * @IsGranted("ROLE_USER")
      */
     public function downloadResume(Resume $resume, UploaderHelper $uploaderHelper)
     {
@@ -48,6 +50,7 @@ class DownloadController extends AbstractController
 
     /**
      * @Route("/idcard/{id}/download", name="student_download_idcard", methods={"GET"})
+     * @IsGranted("ROLE_STUDENT")
      */
     public function downloadIdCard(IdCard $idcard, UploaderHelper $uploaderHelper)
     {
@@ -58,6 +61,7 @@ class DownloadController extends AbstractController
 
      /**
      * @Route("/studentcard/{id}/download", name="student_download_studentcard", methods={"GET"})
+     * @IsGranted("ROLE_USER")
      */
     public function downloadStudentCard(StudentCard $studentcard, UploaderHelper $uploaderHelper)
     {
@@ -68,6 +72,7 @@ class DownloadController extends AbstractController
 
      /**
      * @Route("/proofhabitation/{id}/download", name="student_download_proofhabitation", methods={"GET"})
+     * @IsGranted("ROLE_STUDENT")
      */
     public function downloadProofHabitation(ProofHabitation $proofHabitation, UploaderHelper $uploaderHelper)
     {
