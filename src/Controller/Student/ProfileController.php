@@ -14,6 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * @Route("/profile")
@@ -25,26 +27,43 @@ class ProfileController extends AbstractController
      * @IsGranted("ROLE_STUDENT")
      * @ParamConverter("student", options={"id" = "student_id"})
      */
-    public function edit(Request $request, Profile $profile, Student $student, ApplyRepository $applyRepository): Response
+    public function edit(Request $request, Profile $profile, Student $student, ApplyRepository $applyRepository, AuthorizationCheckerInterface $authorizationChecker): Response
     {
-        $form = $this->createForm(ProfileType::class, $profile);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($authorizationChecker->isGranted('ROLE_ADMIN') || $this->userValid($student) && $this->profileValid($profile)) {
 
-            $this->getDoctrine()->getManager()->flush();
+            $form = $this->createForm(ProfileType::class, $profile);
+            $form->handleRequest($request);
 
-            $this->addFlash('success', 'Mise à jour réussie');
+            if ($form->isSubmitted() && $form->isValid()) {
 
-            return $this->redirectToRoute('profile_edit', ['id' => $profile->getId(), 'student_id' => $student->getId()]);
-        }
+                $this->getDoctrine()->getManager()->flush();
 
-        return $this->render('profile/edit.html.twig', [
-            'profile' => $profile,
-            'form' => $form->createView(),
-            'student' => $student,
-            'fresh' =>  $applyRepository->findByStudentByFresh($student),
-            'hired' => $applyRepository->checkIfHired($student)
-        ]);
+                $this->addFlash('success', 'Mise à jour réussie');
+
+                return $this->redirectToRoute('profile_edit', ['id' => $profile->getId(), 'student_id' => $student->getId()]);
+            }
+
+            return $this->render('profile/edit.html.twig', [
+                'profile' => $profile,
+                'form' => $form->createView(),
+                'student' => $student,
+                'fresh' =>  $applyRepository->findByStudentByFresh($student),
+                'hired' => $applyRepository->checkIfHired($student)
+            ]);
+        } 
+        else {
+            throw new AccessDeniedException('Accès refusé');
+        } 
+    }
+
+    public function userValid(Student $student) : bool  
+    {
+        return  $this->getUser()->getId() == $userRequired = $student->getUser()->getId();
+    }
+
+    public function profileValid(Profile $profile) : bool  
+    {
+        return  $this->getUser()->getStudent()->getProfile()->getId() == $profile->getId();
     }
 }
