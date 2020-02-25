@@ -162,7 +162,7 @@ class ApplyActionsController extends AbstractController
         // $mailer->sendHireMessage($email, $name, $offerTitle); 
 
         // dd($this->isCsrfTokenValid('hire'.$apply->getId(), $request->request->get('_token')));
-
+        dd($this->isCsrfTokenValid('hire'.$apply->getId(), $request->request->get('_token')));
 
         if($this->isCsrfTokenValid('hire'.$apply->getId(), $request->request->get('_token'))) {
 
