@@ -5,6 +5,7 @@ namespace App\Controller\University;
 use App\Entity\School;
 use App\Entity\Student;
 use App\Entity\Studies;
+use App\Service\UserChecker;
 use App\Repository\ApplyRepository;
 use App\Repository\SchoolRepository;
 use App\Repository\StudiesRepository;
@@ -13,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
  /**
  * @Route("/school")
@@ -35,13 +37,16 @@ class SchoolRenderController extends AbstractController
      * @Route("/student/{id}", name="school_student_index", methods={"GET"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function indexByStudent(Student $student, SchoolRepository $schoolRepository, ApplyRepository $applyRepository): Response
+    public function indexByStudent(Student $student, SchoolRepository $schoolRepository, ApplyRepository $applyRepository, UserChecker $checker): Response
     {
-        return $this->render('school/index_student.html.twig', [
-            'student' => $student,
-            'fresh' => $applyRepository->findByStudentByFresh($student),
-            'hired' => $applyRepository->checkIfHired($student)
-        ]);
+        if ($checker->studentValid($student)) {
+
+            return $this->render('school/index_student.html.twig', [
+                'student' => $student,
+                'fresh' => $applyRepository->findByStudentByFresh($student),
+                'hired' => $applyRepository->checkIfHired($student)
+            ]);
+        } 
     }
 
     //  /**
