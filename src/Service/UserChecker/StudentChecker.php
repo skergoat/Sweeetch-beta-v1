@@ -48,8 +48,8 @@ class StudentChecker
         $userRequired = $student->getUser()->getId();
 
         if($this->isAdmin() 
-        || $this->user->getId() == $userRequired 
-        AND $this->user->getStudent()->getProfile()->getId() == $profile->getId()) {
+        || ($this->user->getId() == $userRequired 
+        AND $this->user->getStudent()->getProfile()->getId() == $profile->getId())) {
             return true;
         }
         else {
@@ -101,8 +101,4 @@ class StudentChecker
         return $this->isAdmin() or $this->user->getStudent()->$get()->getId() == $document->getId() ? true : $this->Exception();
        
     }
-
-
-
-
 }

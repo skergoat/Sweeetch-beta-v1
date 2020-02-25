@@ -11,6 +11,7 @@ use App\Service\Mailer\ApplyMailer;
 use App\Repository\OffersRepository;
 use App\Repository\CompanyRepository;
 use App\Repository\StudentRepository;
+use App\Service\UserChecker\CompanyChecker;
 use App\Service\UserChecker\StudentChecker;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -71,50 +72,56 @@ class ApplyRenderController extends AbstractController
      * @Route("/index/company/{id}", name="offers_company_index", methods={"GET"})
      * @IsGranted("ROLE_COMPANY")
      */
-    public function indexByCompany(Company $company, OffersRepository $offersRepository, ApplyRepository $applyRepository, PaginatorInterface $paginator, Request $request): Response
-    {       
-        $queryBuilder = $offersRepository->findAllPaginatedByCompany("DESC", $company);
-        
-        $pagination = $paginator->paginate(
-            $queryBuilder,
-            $request->query->getInt('page', 1),
-            10
-        );
+    public function indexByCompany(Company $company, OffersRepository $offersRepository, ApplyRepository $applyRepository, PaginatorInterface $paginator, Request $request, CompanyChecker $checker): Response
+    {     
+        if($checker->companyValid($company)) {
 
-        return $this->render('apply/index_company.html.twig', [
-            'offers' => $pagination,
-            'company' => $company,
-            'hired' => $applyRepository->findBy(['offers' => $queryBuilder, 'hired' => 1]),
-            'agree' => $applyRepository->findBy(['offers' => $queryBuilder, 'agree' => 1]),
-            'applies' => $applyRepository->findBy(['offers' => $queryBuilder, 'finished' => 1]),
-            'applyc' => $applyRepository->findBy(['offers' => $queryBuilder, 'refused' => 0, 'unavailable' => 0, 'confirmed' => 0, 'finished' => 0])
-        ]);
+            $queryBuilder = $offersRepository->findAllPaginatedByCompany("DESC", $company);
+            
+            $pagination = $paginator->paginate(
+                $queryBuilder,
+                $request->query->getInt('page', 1),
+                10
+            );
+
+            return $this->render('apply/index_company.html.twig', [
+                'offers' => $pagination,
+                'company' => $company,
+                'hired' => $applyRepository->findBy(['offers' => $queryBuilder, 'hired' => 1]),
+                'agree' => $applyRepository->findBy(['offers' => $queryBuilder, 'agree' => 1]),
+                'applies' => $applyRepository->findBy(['offers' => $queryBuilder, 'finished' => 1]),
+                'applyc' => $applyRepository->findBy(['offers' => $queryBuilder, 'refused' => 0, 'unavailable' => 0, 'confirmed' => 0, 'finished' => 0])
+            ]);
+        }
     }
 
      /**
      * @Route("/finished/company/{id}", name="offers_company_finished", methods={"GET"})
      * @IsGranted("ROLE_COMPANY")
      */
-    public function finishedByCompany(Company $company, OffersRepository $offersRepository, ApplyRepository $applyRepository, PaginatorInterface $paginator, Request $request): Response
-    {       
-        $queryBuilder = $offersRepository->findAllPaginatedByCompany("DESC", $company);
-        $test = $applyRepository->findBy(['offers' => $queryBuilder, 'finished' => 1]);
+    public function finishedByCompany(Company $company, OffersRepository $offersRepository, ApplyRepository $applyRepository, PaginatorInterface $paginator, Request $request, CompanyChecker $checker): Response
+    {     
+        if($checker->companyValid($company)) {
 
-        $pagination = $paginator->paginate(
-            $test,
-            $request->query->getInt('page', 1),
-            10
-        );
+            $queryBuilder = $offersRepository->findAllPaginatedByCompany("DESC", $company);
+            $test = $applyRepository->findBy(['offers' => $queryBuilder, 'finished' => 1]);
 
-        return $this->render('apply/finished_company.html.twig', [
-            'offers' => $queryBuilder,
-            'company' => $company,
-            'applies' => $pagination,
-            'hired' => $applyRepository->findBy(['offers' => $queryBuilder, 'hired' => 1]),
-            'agree' => $applyRepository->findBy(['offers' => $queryBuilder, 'agree' => 1]),
-            'applyc' => $applyRepository->findBy(['offers' => $queryBuilder, 'refused' => 0, 'unavailable' => 0, 'confirmed' => 0, 'finished' => 0])
+            $pagination = $paginator->paginate(
+                $test,
+                $request->query->getInt('page', 1),
+                10
+            );
 
-        ]);
+            return $this->render('apply/finished_company.html.twig', [
+                'offers' => $queryBuilder,
+                'company' => $company,
+                'applies' => $pagination,
+                'hired' => $applyRepository->findBy(['offers' => $queryBuilder, 'hired' => 1]),
+                'agree' => $applyRepository->findBy(['offers' => $queryBuilder, 'agree' => 1]),
+                'applyc' => $applyRepository->findBy(['offers' => $queryBuilder, 'refused' => 0, 'unavailable' => 0, 'confirmed' => 0, 'finished' => 0])
+
+            ]);
+        }
     }
 
     /**
@@ -122,23 +129,26 @@ class ApplyRenderController extends AbstractController
      * @IsGranted("ROLE_SUPER_COMPANY")
      * @ParamConverter("company", options={"id" = "company"})
      */
-    public function showByCompany(ApplyRepository $applyRepository, Offers $offer, Company $company, OffersRepository $offersRepository): Response
+    public function showByCompany(ApplyRepository $applyRepository, Offers $offer, Company $company, OffersRepository $offersRepository, CompanyChecker $checker): Response
     {   
-        $applies = $applyRepository->findByOffer($offer);
-        $finished = $applyRepository->findByOfferByFinished($offer);
+        if($checker->companyOffersValid($company, $offer)) {
 
-        $offers = $offersRepository->findBy(['company' => $company]);
-       
-        return $this->render('apply/show_preview.html.twig', [
-            'offers' => $offer,
-            'applies' => $applies,
-            'finished' => $finished,
-            'company' => $company,
-            'hired' => $applyRepository->findBy(['offers' => $offers, 'hired' => 1]),
-            'agree' => $applyRepository->findBy(['offers' => $offers, 'agree' => 1]),
-            'appliesf' => $applyRepository->findBy(['offers' => $offers, 'finished' => 1]),
-            'applyc' => $applyRepository->findBy(['offers' => $offers, 'refused' => 0, 'unavailable' => 0, 'confirmed' => 0, 'finished' => 0])
-        ]);
+            $applies = $applyRepository->findByOffer($offer);
+            $finished = $applyRepository->findByOfferByFinished($offer);
+
+            $offers = $offersRepository->findBy(['company' => $company]);
+        
+            return $this->render('apply/show_preview.html.twig', [
+                'offers' => $offer,
+                'applies' => $applies,
+                'finished' => $finished,
+                'company' => $company,
+                'hired' => $applyRepository->findBy(['offers' => $offers, 'hired' => 1]),
+                'agree' => $applyRepository->findBy(['offers' => $offers, 'agree' => 1]),
+                'appliesf' => $applyRepository->findBy(['offers' => $offers, 'finished' => 1]),
+                'applyc' => $applyRepository->findBy(['offers' => $offers, 'refused' => 0, 'unavailable' => 0, 'confirmed' => 0, 'finished' => 0])
+            ]);
+        }
     }
 
     /**
