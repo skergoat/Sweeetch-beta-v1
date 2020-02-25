@@ -40,19 +40,6 @@ class SchoolActionsController extends AbstractController
     }
 
     /**
-     * @Route("/student/{id}", name="school_student_index", methods={"GET"})
-     * @IsGranted("ROLE_STUDENT")
-     */
-    public function indexByStudent(Student $student, SchoolRepository $schoolRepository, ApplyRepository $applyRepository): Response
-    {
-        return $this->render('school/index_student.html.twig', [
-            'student' => $student,
-            'fresh' => $applyRepository->findByStudentByFresh($student),
-            'hired' => $applyRepository->checkIfHired($student)
-        ]);
-    }
-
-    /**
      * @Route("/new", name="school_new", methods={"GET","POST"})
      */
     public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
