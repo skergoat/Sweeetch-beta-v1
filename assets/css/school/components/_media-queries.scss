@@ -1,0 +1,62 @@
+@media all and (max-width: 900px) {
+
+    .table-scroll-card-width {
+        width:100vw;
+    }
+}
+
+@media all and (max-width: 700px) {
+    .body-row {
+        padding:0px;
+        border:0px;
+    }
+
+    .language-card {
+        padding:20px;
+    }
+
+    .col-lg-6.js-profile-wrapper {
+        padding:0px;
+    }
+
+    .btn-profile {
+       display:flex;
+       justify-content:center;
+       margin-bottom:20px;
+    }
+
+    .btn-edit-form {
+        display:block;
+        margin:auto;
+        margin-top:20px;
+        padding:10px;
+    }
+
+    .form-delete {
+        margin:auto;
+        margin-top:50px;
+    }
+
+    .card-responsive {
+        & textarea {
+            text-align:justify;
+        }
+        padding:0px;
+    }
+
+    .card.description, .Password.card {
+        border:0px;
+    }
+
+    .pl-3-responsive {
+        padding-left:0px;
+    }
+
+    .info-box .info-box-icon {
+        min-width:50px;
+    }
+
+    .overflow-box {
+        overflow:scroll;
+    }
+}
