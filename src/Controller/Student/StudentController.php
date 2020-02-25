@@ -8,6 +8,7 @@ use App\Entity\Profile;
 use App\Entity\Student;
 use App\Form\StudentType;
 use App\Entity\StudentCard;
+use App\Service\UserChecker;
 use App\Entity\ProofHabitation;
 use App\Form\UpdateStudentType;
 use App\Service\UploaderHelper;
@@ -131,9 +132,9 @@ class StudentController extends AbstractController
      * @Route("/{id}", name="student_show", methods={"GET"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function show(Student $student, ApplyRepository $applyRepository, AuthorizationCheckerInterface $authorizationChecker): Response
+    public function show(Student $student, ApplyRepository $applyRepository, UserChecker $checker): Response
     {
-        if ($authorizationChecker->isGranted('ROLE_ADMIN') || $this->userValid($student)) {
+        if ($checker->studentValid($student)) {
 
             return $this->render('student/show.html.twig', [
                 'student' => $student,
@@ -142,9 +143,6 @@ class StudentController extends AbstractController
                 'fresh' => $applyRepository->findByStudentByFresh($student),
                 'hired' => $applyRepository->checkIfHired($student)
             ]);
-        } 
-        else {
-            throw new AccessDeniedException('Accès refusé');
         }  
     }
 
@@ -152,9 +150,9 @@ class StudentController extends AbstractController
      * @Route("/{id}/edit", name="student_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function edit(Request $request, Student $student, UserPasswordEncoderInterface $passwordEncoder, UploaderHelper $uploaderHelper, ApplyRepository $applyRepository, AuthorizationCheckerInterface $authorizationChecker): Response
+    public function edit(Request $request, Student $student, UserPasswordEncoderInterface $passwordEncoder, UploaderHelper $uploaderHelper, ApplyRepository $applyRepository, UserChecker $checker): Response
     {
-        if ($authorizationChecker->isGranted('ROLE_ADMIN') || $this->userValid($student)) {
+        if ($checker->studentValid($student)) {
 
             $form = $this->createForm(UpdateStudentGeneralType::class, $student);
             $formDoc = $this->createForm(UpdateStudentDocType::class, $student);
@@ -245,71 +243,66 @@ class StudentController extends AbstractController
                 'hired' => $applyRepository->checkIfHired($student)
             ]);
 
-        } 
-        else {
-            throw new AccessDeniedException('Accès refusé');
-        }  
+        }   
     }
 
     /**
      * @Route("/{id}/{from}", name="student_delete", methods={"DELETE"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function delete(Request $request, Student $student, UploaderHelper $uploaderHelper, ApplyRepository $applyRepository, $from): Response
+    public function delete(Request $request, Student $student, UploaderHelper $uploaderHelper, ApplyRepository $applyRepository, UserChecker $checker, $from): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$student->getId(), $request->request->get('_token'))) {
+        if ($checker->studentValid($student)) {
 
-            // delete private files when delete entity
-            foreach($this->entities as $entity)
-            {
-                $get = 'get' . $entity;
-                $fileName = $student->$get()->getFileName();
-                if($fileName) {
-                    $uploaderHelper->deleteFile($fileName);
-                } 
-            }
+            if ($this->isCsrfTokenValid('delete'.$student->getId(), $request->request->get('_token'))) {
 
-            $entityManager = $this->getDoctrine()->getManager();
-
-            $applies = $student->getApplies();
-            
-            foreach($applies as $applies) {
-
-                // send mail 
-                // $email = $student->getUser()->getEmail();
-                // $name = $student->getName();
-                // $offerTitle = $offers->getTitle();
-
-                // $mailer->sendDeleteCompanyMessage($email, $name, $offerTitle); 
-
-                if($applies->getFinished() == false) {
-                    $entityManager->remove($applies);
+                // delete private files when delete entity
+                foreach($this->entities as $entity)
+                {
+                    $get = 'get' . $entity;
+                    $fileName = $student->$get()->getFileName();
+                    if($fileName) {
+                        $uploaderHelper->deleteFile($fileName);
+                    } 
                 }
-                else {
-                    $applies->setStudent(NULL);
-                } 
+
+                $entityManager = $this->getDoctrine()->getManager();
+
+                $applies = $student->getApplies();
+                
+                foreach($applies as $applies) {
+
+                    // send mail 
+                    // $email = $student->getUser()->getEmail();
+                    // $name = $student->getName();
+                    // $offerTitle = $offers->getTitle();
+
+                    // $mailer->sendDeleteCompanyMessage($email, $name, $offerTitle); 
+
+                    if($applies->getFinished() == false) {
+                        $entityManager->remove($applies);
+                    }
+                    else {
+                        $applies->setStudent(NULL);
+                    } 
+                }
+
+                // delete session
+                $currentUserId = $this->getUser()->getId();
+                if ($currentUserId == $student->getUser()->getId())
+                {
+                $session = $this->get('session');
+                $session = new Session();
+                $session->invalidate();
+                }
+
+                $entityManager->remove($student);
+                $entityManager->flush();
             }
 
-            // delete session
-            $currentUserId = $this->getUser()->getId();
-            if ($currentUserId == $student->getUser()->getId())
-            {
-              $session = $this->get('session');
-              $session = new Session();
-              $session->invalidate();
-            }
+            $this->addFlash('success', 'Compte Supprimé');
 
-            $entityManager->remove($student);
-            $entityManager->flush();
+            return $this->redirectToRoute($from);
         }
-
-        $this->addFlash('success', 'Compte Supprimé');
-
-        return $this->redirectToRoute($from);
-    }
-
-    public function userValid(Student $student) : bool  
-    {
-        return  $userConnected = $this->getUser()->getId() == $userRequired = $student->getUser()->getId();
     }
 }
