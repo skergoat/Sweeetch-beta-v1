@@ -161,9 +161,6 @@ class ApplyActionsController extends AbstractController
         
         // $mailer->sendHireMessage($email, $name, $offerTitle); 
 
-        // dd($this->isCsrfTokenValid('hire'.$apply->getId(), $request->request->get('_token')));
-        dd($this->isCsrfTokenValid('hire'.$apply->getId(), $request->request->get('_token')));
-
         if($this->isCsrfTokenValid('hire'.$apply->getId(), $request->request->get('_token'))) {
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -245,7 +242,7 @@ class ApplyActionsController extends AbstractController
      * @Route("/confirm/{id}", name="confirm", methods={"POST"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
-    public function confirm(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer)
+    public function confirm(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer, Request $request)
     {
         // set apply state 
         if(    $apply->getHired() == false 
@@ -272,7 +269,13 @@ class ApplyActionsController extends AbstractController
 
         $student->getUser()->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_HIRED']);
 
-        $this->getDoctrine()->getManager()->flush();
+        if($this->isCsrfTokenValid('confirm'.$apply->getId(), $request->request->get('_token'))) {
+
+            $this->getDoctrine()->getManager()->flush();
+        }
+        else {
+            throw new \Exception('Candidature Invalide');
+        }
 
         $this->addFlash('success', 'Mission Commencée. Bon travail !');
 
