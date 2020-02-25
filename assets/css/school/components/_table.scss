@@ -1,0 +1,15 @@
+.table {
+    
+    &-scroll {
+        overflow:scroll;
+        padding:0px;
+
+        &-card-width {
+            width:50vw;
+        }
+    }
+}
+
+.th-centered {
+    text-align:center;
+}
