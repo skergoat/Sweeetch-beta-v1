@@ -38,14 +38,14 @@
                 <ol>
                     <li>Vous postulez à une offre sur la page dediée</li><br>
                     <li>Des qu'une entreprise retient votre profil, vous en etes averti sur votre tableau de bord et dans le menu latteral par l'icone <span class="badge badge-warning">!</span>
-                    <br>Sur cette page, seul reste votre embauche. Toutes vos autres postulations ont disparues ! Mais rassurez-vous : elles reviendront des votre mission terminee <i class="far fa-smile"></i> 
+                    <br>Sur cette page, seul reste votre embauche. Toutes vos autres candidatures ont disparues ! Mais rassurez-vous : elles reviendront des votre mission terminee <i class="far fa-smile"></i> 
                     </li><br>
                     <li>Vous devez ensuite accepter ou refuser la mission</li><br>
                     <li>Puis viennent les formalites d'embauche. <br>Votre profil affiche alors : <span class="badge bg-warning">Dossier en traitement</span></li><br>
                     <li>Lorsque la mission commence, votre profil affiche : <span class="badge bg-success">En cours</span>. 
                     <br>A partir de ce moment, vous pouvez recevoir des propositions d'ecoles en alternance. 
                     </i></li><br>
-                    <li>Quand la mission est terminée, allez voir dans l'onglet Postulations > Terminees : la mission que vous venez de finir vient d'apparaitre !
+                    <li>Quand la mission est terminée, allez voir dans l'onglet Candidatures > Terminees : la mission que vous venez de finir vient d'apparaitre !
                     <br>Vous pouvez de nouveau postuler a une offre d'emploi et recommencer tout le processus <i class="far fa-smile"></i>
                     </i></li><br>
                 </ol>
@@ -137,9 +137,9 @@
                                 <a class="nav-link" href="{{ path('student_apply', { id:student.id }) }}">
                                     <i class="nav-icon fa fa-bookmark"></i>
                                     <p>
-                                        Postulations 
+                                        Candidatures 
                                         {% if fresh > 0 %}
-                                        <span class="badge badge-info right" title="postulations">{{ fresh }}</span>                                         
+                                        <span class="badge badge-info right" title="candidatures">{{ fresh }}</span>                                         
                                         {% elseif hired == true %}
                                         <span class="right badge badge-warning" title="mission à confirmer">!</span>
                                         {% endif %} 

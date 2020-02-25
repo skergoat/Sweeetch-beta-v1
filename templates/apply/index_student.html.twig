@@ -10,7 +10,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-6">
-            <h1 class="m-0">Postulations</h1> <br>
+            <h1 class="m-0">Candidatures</h1> <br>
         </div>
     </div>
 </div> <br>
@@ -85,7 +85,7 @@
                                     <i class="fas fa-check"></i>
                                 </button>
                             </form>
-                            <form method="post" class="btn-icon-form" action="{{ path('apply_delete', {'id': applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette postulation ?');">
+                            <form method="post" class="btn-icon-form" action="{{ path('apply_delete', {'id': applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette candidature ?');">
                                 <input type="hidden" name="_method" value="DELETE">
                                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
                                 <button class="btn-icon btn-danger" title="Supprimer">
@@ -106,7 +106,7 @@
 
                 {% else %}
                 <tr class="border-top">
-                    <td colspan="8" class="border-top-td">Aucune postulation en cours</td>
+                    <td colspan="8" class="border-top-td">Aucune candidature en cours</td>
                 </tr> 
             {% endfor %}
             </tbody>
