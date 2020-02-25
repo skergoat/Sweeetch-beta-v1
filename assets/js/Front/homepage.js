@@ -28,6 +28,4 @@ import 'animate.css';
 import './components/contactform.js';
 import './components/message.js';
 
-alert('sdfsdfsdfdsfdsfsdf');
-
 
