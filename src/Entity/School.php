@@ -53,6 +53,10 @@ class School
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Champ requis")
+     * @Assert\Regex(
+     *     pattern="/^\d{5}(?:[-\s]\d{4})?$/",
+     *     message="Entrez un code postal valide svp"
+     * )
      */
     private $zipCode;
 
@@ -67,10 +71,14 @@ class School
      * )
      */
     private $city;
-
+    
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Champ requis")
+     * @Assert\Regex(
+     *     pattern="/^0[1-68]([-. ]?[0-9]{2}){4}$/",
+     *     message="Entrez un code postal valide svp"
+     * )
      */
     private $telNumber;
 
