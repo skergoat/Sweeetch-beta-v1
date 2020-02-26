@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -18,8 +19,8 @@ class UserEditPasswordType extends UserType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $passwordConstraints = [
-            new NotBlank([
-                'message' => 'veuillez entrer un password, svp'
+            new NotNull([
+                'message' => 'veuillez entrer un mot de passe, svp'
             ]),
             new Length([
                 'min' => '2',

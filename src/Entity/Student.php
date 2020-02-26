@@ -121,24 +121,28 @@ class Student
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Resume", inversedBy="student", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message="Champ requis")
      */
     private $resume;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\IdCard", inversedBy="student", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message="Champ requis")
      */
     private $idCard;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\StudentCard", inversedBy="student", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message="Champ requis")
      */
     private $studentCard;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\ProofHabitation", inversedBy="student", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message="Champ requis")
      */
     private $proofHabitation;
 
