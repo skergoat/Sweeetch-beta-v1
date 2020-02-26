@@ -7,12 +7,14 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Unique;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
 class UserType extends AbstractType
@@ -53,7 +55,7 @@ class UserType extends AbstractType
             new Regex([
                 'pattern' => '/^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/',
                 'message' => 'email non valide'
-            ])
+            ]),
         ];
         $builder
         ->add('email', EmailType::class, [
@@ -65,6 +67,9 @@ class UserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            'constraints' => [
+                new UniqueEntity(['fields' => ['email'], 'entityClass' => User::class, 'message' => 'Email déjà utilisé'])
+            ],
             'data_class' => User::class,
         ]);
     }
