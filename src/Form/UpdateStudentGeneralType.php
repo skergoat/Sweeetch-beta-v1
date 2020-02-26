@@ -22,20 +22,13 @@ class UpdateStudentGeneralType extends AbstractType
             ->add('zipCode', TextType::class)
             ->add('city', TextType::class)
             ->add('telNumber', TextType::class)
-            // ->add('email', TextType::class, [
-            //     'mapped' => false
-            // ])
             ->add('user', UserEditFormType::class)
             ->add('driving_license', RadioType::class, [
                 'required' => false
             ])
             ->add('disabled', RadioType::class, [
                 'required' => false
-            ])
-            // ->add('resume', ResumeType::class)
-            // ->add('idCard', IdCardType::class)
-            // ->add('studentCard', StudentCardType::class)
-            // ->add('proofHabitation', ProofHabitationType::class)
+            ])        
         ;   
     }
 
