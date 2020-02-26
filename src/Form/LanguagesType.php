@@ -9,13 +9,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 
-class LanguageType extends AbstractType
+class LanguagesType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {   
         $builder
-            ->add('languageName', TextType::class)
+            ->add('languageName', LanguageType::class)
             ->add('level', ChoiceType::class, [
                 'choices' => [
                     'A0 : Débutant' => 'A0 : Débutant',

@@ -15,7 +15,9 @@ class UpdateSchoolType extends AbstractType
     {
         $builder
             ->add('companyName', TextType::class)
-            ->add('firstname', TextType::class)
+            ->add('firstname', TextType::class, [
+                'required' => true
+            ])
             ->add('lastname', TextType::class)
             ->add('address', TextType::class)
             ->add('zipCode', TextType::class)
