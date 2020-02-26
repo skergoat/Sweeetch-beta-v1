@@ -33,6 +33,9 @@ class UserEditFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            'constraints' => [
+                new UniqueEntity(['fields' => ['email'], 'entityClass' => User::class, 'message' => 'Email déjà utilisé'])
+            ],
             'data_class' => User::class,
         ]);
     }

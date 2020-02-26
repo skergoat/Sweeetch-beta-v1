@@ -16,7 +16,6 @@ class StudiesType extends AbstractType
         $builder
             ->add('title', TextType::class)
             ->add('description', TextareaType::class)
-            // ->add('school')
         ;
     }
 
