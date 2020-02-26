@@ -123,7 +123,7 @@
                             <tr>
                                 <td>
                                     <span>
-                                        <a href="{{ path('student_download_resume', { id: student.resume.id }) }}"><span class="fa fa-download">{{ student.resume.originalFilename }}</span></a>
+                                        <a href="{{ path('company_download_resume', { id: student.resume.id, offers:offers.id, company:company.id, student:student.id }) }}"><span class="fa fa-download">{{ student.resume.originalFilename }}</span></a>
                                     </span>
                                 </td>
                             </tr>

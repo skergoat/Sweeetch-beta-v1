@@ -177,42 +177,19 @@ class ApplyRenderController extends AbstractController
      */
     public function showStudentProfile(Student $student, Company $company, Offers $offers, ApplyRepository $applyRepository, AuthorizationCheckerInterface $authorizationChecker, OffersRepository $offersRepository, CompanyChecker $checker): Response
     {   
-        // if (!$authorizationChecker->isGranted('ROLE_ADMIN')) {
-
-        //     $checkApply = $applyRepository->findBy(['offers' => $offers, 'student' => $student]);
-        
-        //     if ($checkApply) {
         if($checker->studentProfileValid($company, $offers, $student)) {
 
-                $offer = $offersRepository->findBy(['company' => $company]);
+            $offer = $offersRepository->findBy(['company' => $company]);
 
-                return $this->render('apply/show_applied.html.twig', [
-                    'student' => $student,
-                    'company' => $company,
-                    'offers' => $offers,
-                    'hired' => $applyRepository->findBy(['offers' => $offer, 'hired' => 1]),
-                    'agree' => $applyRepository->findBy(['offers' => $offer, 'agree' => 1]),
-                    'applies' => $applyRepository->findBy(['offers' => $offer, 'finished' => 1]),
-                    'applyc' => $applyRepository->findBy(['offers' => $offer, 'refused' => 0, 'unavailable' => 0, 'confirmed' => 0, 'finished' => 0])
-                ]);
+            return $this->render('apply/show_applied.html.twig', [
+                'student' => $student,
+                'company' => $company,
+                'offers' => $offers,
+                'hired' => $applyRepository->findBy(['offers' => $offer, 'hired' => 1]),
+                'agree' => $applyRepository->findBy(['offers' => $offer, 'agree' => 1]),
+                'applies' => $applyRepository->findBy(['offers' => $offer, 'finished' => 1]),
+                'applyc' => $applyRepository->findBy(['offers' => $offer, 'refused' => 0, 'unavailable' => 0, 'confirmed' => 0, 'finished' => 0])
+            ]);
         }
-            // }  
-            // else {
-            //     $this->addFlash('error', 'Vous n\'êtes pas autorisé à voir cette candidature');
-            //     return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
-            // }
-    //     }
-
-    //     return $this->render('apply/show_applied.html.twig', [
-    //         'student' => $student,
-    //         'company' => $company,
-    //         'offers' => $offers,
-    //         'hired' => $applyRepository->findBy(['offers' => $offer, 'hired' => 1]),
-    //         'agree' => $applyRepository->findBy(['offers' => $offer, 'agree' => 1]),
-    //         'applies' => $applyRepository->findBy(['offers' => $offer, 'finished' => 1]),
-    //         'applyc' => $applyRepository->findBy(['offers' => $offers, 'refused' => 0, 'unavailable' => 0, 'confirmed' => 0, 'finished' => 0])
-    //     ]);
-    // }
     }
-
 }
