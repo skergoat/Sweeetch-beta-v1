@@ -6,6 +6,7 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -23,16 +24,17 @@ class UserType extends AbstractType
             new NotBlank([
                 'message' => 'veuillez entrer un password, svp'
             ]),
+            new Length([
+                'min' => '2',
+                'max' => '25',
+                'minMessage' => "{{ limit }} caractères minimum",
+                'maxMessage' => "{{ limit }} caractères maximum"
+            ]),
             new Regex([
                 'pattern' => '/^(?=.*[A-Z]+)(?=.*[a-z]+)(?=.*[0-9]+)\S{8,30}$/',
                 'message' => 'Le mot de passe doit contenir au moins 1 majuscule, 1 caractère spécial et 1 chiffre'
             ])
         ];
-        // $builder
-        // ->add('password', PasswordType::class, [
-        //     'required' => true,
-        //     'constraints' => $passwordConstraints
-        // ]);
         $builder
         ->add('password', RepeatedType::class, [
             'type' => PasswordType::class,
@@ -48,6 +50,10 @@ class UserType extends AbstractType
             new NotBlank([
                 'message' => 'veuillez entrer un email, svp'
             ]),
+            new Regex([
+                'pattern' => '/^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/',
+                'message' => 'email non valide'
+            ])
         ];
         $builder
         ->add('email', EmailType::class, [
