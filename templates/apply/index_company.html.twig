@@ -93,6 +93,10 @@
                     <tr class="border-top">
                       <td colspan="8" class="border-top-td">Aucun emploi pour le moment</td>
                     </tr> 
+                    {% elseif offers.applies[0].finished == true and offers.applies | length > 0 %}
+                    <tr class="border-top">
+                      <td colspan="8" class="border-top-td">Aucun emploi pour le moment</td>
+                    </tr> 
                     {% endif %}
 
                   {% endif %}
@@ -110,121 +114,7 @@
         <div class="pagination-bottom mt-5">{{ knp_pagination_render(offers) }}</div>
 
     </div>      
-</div>
-    
-{#
-
-<div class="col-md-6">
-    <div class="card">
-     
-      <div class="card-body p-0">
-        <table class="table">
-          <thead>
-            <tr>
-              <th style="width: 10px">#</th>
-              <th>Task</th>
-              <th>Progress</th>
-              <th style="width: 40px">Label</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1.</td>
-              <td>Update software</td>
-              <td>
-                <div class="progress progress-xs">
-                  <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                </div>
-              </td>
-              <td><span class="badge bg-danger">55%</span></td>
-            </tr>
-            <tr>
-              <td>2.</td>
-              <td>Clean database</td>
-              <td>
-                <div class="progress progress-xs">
-                  <div class="progress-bar bg-warning" style="width: 70%"></div>
-                </div>
-              </td>
-              <td><span class="badge bg-warning">70%</span></td>
-            </tr>
-            <tr>
-              <td>3.</td>
-              <td>Cron job running</td>
-              <td>
-                <div class="progress progress-xs progress-striped active">
-                  <div class="progress-bar bg-primary" style="width: 30%"></div>
-                </div>
-              </td>
-              <td><span class="badge bg-primary">30%</span></td>
-            </tr>
-            <tr>
-              <td>4.</td>
-              <td>Fix and squish bugs</td>
-              <td>
-                <div class="progress progress-xs progress-striped active">
-                  <div class="progress-bar bg-success" style="width: 90%"></div>
-                </div>
-              </td>
-              <td><span class="badge bg-success">90%</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <!-- /.card-body -->
-    </div>
-    <!-- /.card -->
-#}
-{# 
-    <br><br>
-
-    <h3>Finished</h3>
-     
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Location</th>
-                <th>Domain</th>
-                <th>DateStart</th>
-                <th>DateEnd</th>
-                <th>State</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-
-   {% for offers in offers %}
-
-        {% for applies in offers.applies %}
-
-            {% if applies.finished == true %}
-        
-                <tr>
-                    <td>{{ applies.offers.id }}</td>
-                    <td>{{ applies.offers.title }}</td>
-                    <td>{{ applies.offers.location }}</td>
-                    <td>{{ applies.offers.domain }}</td>
-                    <td>{{ applies.offers.dateStart ? applies.offers.dateStart|date('Y-m-d H:i:s') : '' }}</td>
-                    <td>{{ applies.offers.dateEnd ? applies.offers.dateEnd|date('Y-m-d H:i:s') : '' }}</td>
-                    <td> finished </td>
-                    <td>
-                        <a href="{{ path('offers_preview', {'id': applies.offers.id}) }}">show</a>
-                        {# <a href="{{ path('offers_edit', {'id': applies.offers.id}) }}">edit</a> #}
-                {#    </td>
-                </tr>
-
-            {% endif %}
-
-        {% endfor %}
-
-   {% endfor %}
-
-    </tbody>
-</table> 
-
-#}
+  </div>
 
 {% else %}
 

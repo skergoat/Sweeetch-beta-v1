@@ -467,14 +467,14 @@ class ApplyActionsController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
+        return $this->redirectToRoute('student_finished', ['id' => $student->getId()]);
     }
 
     /**
      * @Route("/delete/empty/company/{id}", name="delete_empty_companySide", methods={"DELETE"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
-    public function deleteEmptyCompanySide(Request $request, Offers $offer): Response 
+    public function deleteEmptyCompanySide(Offers $offer, Request $request): Response 
     {
         $companyId = $offer->getCompany()->getId();
 
@@ -492,7 +492,7 @@ class ApplyActionsController extends AbstractController
             $entityManager->remove($offer);
             $entityManager->flush();
 
-            return $this->redirectToRoute('offers_company_index', ['id' =>  $companyId]);
+            return $this->redirectToRoute('offers_company_finished', ['id' =>  $companyId]);
         }
     }
 }

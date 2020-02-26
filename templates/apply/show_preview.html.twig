@@ -156,10 +156,23 @@
                         {% for finished in finished %}
                             
                         <tr>
-                            {% if is_granted('ROLE_ADMIN') %}
-                            <td style="padding-top: 18px;" colspan="8"><a href="{{ path('student_show', { "id":finished.student.id }) }}">{{ finished.student.name }} {{ finished.student.lastname }}</a></td>
+                            {% if finished.student.id is defined %}
+                                {% if is_granted('ROLE_ADMIN') %}
+                                <td style="padding-top: 18px;" colspan="8"><a href="{{ path('student_show', { "id":finished.student.id }) }}">{{ finished.student.name }} {{ finished.student.lastname }}</a></td>
+                                {% else %}
+                                <td style="padding-top: 18px;" colspan="8"><a href="{{ path('show_applied_profile', { "id":finished.student.id, "company_id": offers.company.id, "offers":offers.id }) }}">{{ finished.student.name }} {{ finished.student.lastname }}</a></td>
+                                {% endif %}
                             {% else %}
-                            <td style="padding-top: 18px;" colspan="8"><a href="{{ path('show_applied_profile', { "id":finished.student.id, "company_id": offers.company.id, "offers":offers.id }) }}">{{ finished.student.name }} {{ finished.student.lastname }}</a></td>
+                                <td>
+                                    <p style="color:red;">Le profil de l'étudiant a été détruit</p>
+                                </td>
+                                <td colspan="2">
+                                    <form method="post" action="{{ path('delete_empty_companySide', {'id': finished.offers.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette mission ?');">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ finished.offers.id) }}">
+                                        <button class="btn btn-danger">Supprimer</button>
+                                    </form>
+                                </td>
                             {% endif %}
                         </tr>
 
