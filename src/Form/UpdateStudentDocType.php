@@ -11,6 +11,7 @@ use App\Form\ProofHabitationType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
@@ -20,6 +21,9 @@ class UpdateStudentDocType extends StudentType
     {
 
         $imageConstraints = [
+            new NotBlank([
+                'message' => 'veuillez uploader un fichier, svp'
+            ]),
             new File([
                 'maxSize' => '5M',
                 'mimeTypes' => [
