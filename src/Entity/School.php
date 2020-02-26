@@ -28,12 +28,15 @@ class School
      *      minMessage = "{{ limit }} caractères minimum",
      *      maxMessage = "{{ limit }} caractères maximum"
      * )
+     * @Assert\Regex(
+     *     pattern="/[a-zA-Z- ]/",
+     *     message="Entrez un prénom valide svp"
+     * )
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="Champ requis")
      * @Assert\NotBlank(message="Champ requis")
      * @Assert\Length(
      *      min = 2,
@@ -41,12 +44,20 @@ class School
      *      minMessage = "{{ limit }} caractères minimum",
      *      maxMessage = "{{ limit }} caractères maximum"
      * )
+     * @Assert\Regex(
+     *     pattern="/[a-zA-Z- ]/",
+     *     message="Entrez un nom valide svp"
+     * )
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Champ requis")
+     * @Assert\Regex(
+     *     pattern="/[a-zA-Z0-9- ]/",
+     *     message="Entrez une adresse valide svp"
+     * )
      */
     private $address;
 
@@ -69,6 +80,10 @@ class School
      *      minMessage = "{{ limit }} caractères minimum",
      *      maxMessage = "{{ limit }} caractères maximum"
      * )
+     * @Assert\Regex(
+     *     pattern="/[a-zA-Z- ]/",
+     *     message="Entrez une ville valide svp"
+     * )
      */
     private $city;
     
@@ -77,14 +92,18 @@ class School
      * @Assert\NotBlank(message="Champ requis")
      * @Assert\Regex(
      *     pattern="/^0[1-68]([-. ]?[0-9]{2}){4}$/",
-     *     message="Entrez un code postal valide svp"
+     *     message="Entrez un numéro valide svp"
      * )
      */
     private $telNumber;
-
+    
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Champ requis")
+     * @Assert\Regex(
+     *     pattern="/^(([-. ]?[0-9]{3}){3})([-. ]?[0-9]{5})$/",
+     *     message="Entrez un numéro de siret valide svp"
+     * )
      */
     private $siret;
 
@@ -98,6 +117,10 @@ class School
      *      max = 100,
      *      minMessage = "{{ limit }} caractères minimum",
      *      maxMessage = "{{ limit }} caractères maximum"
+     * )
+     * @Assert\Regex(
+     *     pattern="/[a-zA-Z0-9- ]/",
+     *     message="Entrez un nom valide svp"
      * )
      */
     private $companyName;

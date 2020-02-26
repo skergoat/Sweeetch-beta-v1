@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StudentRepository")
@@ -20,16 +21,43 @@ class Student
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Champ requis")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 30,
+     *      minMessage = "{{ limit }} caractères minimum",
+     *      maxMessage = "{{ limit }} caractères maximum"
+     * )
+     * @Assert\Regex(
+     *     pattern="/[a-zA-Z- ]/",
+     *     message="Entrez un prénom valide svp"
+     * )
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Champ requis")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 30,
+     *      minMessage = "{{ limit }} caractères minimum",
+     *      maxMessage = "{{ limit }} caractères maximum"
+     * )
+     * @Assert\Regex(
+     *     pattern="/[a-zA-Z- ]/",
+     *     message="Entrez un nom valide svp"
+     * )
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Champ requis")
+     * @Assert\Regex(
+     *     pattern="/[a-zA-Z0-9- ]/",
+     *     message="Entrez une adresse valide svp"
+     * )
      */
     private $adress;
 
@@ -41,16 +69,37 @@ class Student
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Champ requis")
+     * @Assert\Regex(
+     *     pattern="/^\d{5}(?:[-\s]\d{4})?$/",
+     *     message="Entrez un code postal valide svp"
+     * )
      */
     private $zipCode;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Champ requis")
+     * @Assert\Regex(
+     *     pattern="/^0[1-68]([-. ]?[0-9]{2}){4}$/",
+     *     message="Entrez un numéro valide svp"
+     * )
      */
     private $telNumber;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Champ requis")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 30,
+     *      minMessage = "{{ limit }} caractères minimum",
+     *      maxMessage = "{{ limit }} caractères maximum"
+     * )
+     * @Assert\Regex(
+     *     pattern="/[a-zA-Z- ]/",
+     *     message="Entrez une ville valide svp"
+     * )
      */
     private $city;
 
@@ -69,7 +118,7 @@ class Student
      */
     private $profile;
 
-      /**
+    /**
      * @ORM\OneToOne(targetEntity="App\Entity\Resume", inversedBy="student", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
