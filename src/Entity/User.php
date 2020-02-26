@@ -21,6 +21,10 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true) 
      * @Assert\NotBlank(message="Champ requis")
+     * @Assert\Regex(
+     *     pattern="/^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/",
+     *     message="email non valide"
+     * )
      */
     private $email;
 
