@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EducationRepository")
@@ -18,23 +19,15 @@ class Education
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Champ requis")
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Champ requis")
      */
     private $school;
-
-    // /**
-    //  * @ORM\Column(type="datetime")
-    //  */
-    // private $date_start;
-
-    // /**
-    //  * @ORM\Column(type="datetime", nullable=true)
-    //  */
-    // private $date_end;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
