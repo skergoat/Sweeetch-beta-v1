@@ -29,9 +29,16 @@ class StudentChecker
 
     // general 
 
-    public function isAdmin() 
-    {
+    public function isAdmin() {
         return $this->authorizationChecker->isGranted('ROLE_ADMIN'); 
+    }
+
+    public function isCompany() {
+        return $this->authorizationChecker->isGranted('ROLE_SUPER_COMPANY'); 
+    }
+
+    public function isStudent() {
+        return $this->authorizationChecker->isGranted('ROLE_SUPER_STUDENT'); 
     }
 
     public function Exception(){
@@ -83,26 +90,35 @@ class StudentChecker
     // student documents 
     public function documentValid($document)
     {
-        switch($document) {
-            case $document instanceof Resume : 
-                $get = 'getResume';
-            break;
+        if($this->isStudent()) {
 
-            case $document instanceof IdCard : 
-                $get = 'getIdCard';
-            break;
+            switch($document) {
+                case $document instanceof Resume : 
+                    $get = 'getResume';
+                break;
 
-            case $document instanceof StudentCard : 
-                $get = 'getStudentCard';
-            break;
+                case $document instanceof IdCard : 
+                    $get = 'getIdCard';
+                break;
 
-            case $document instanceof ProofHabitation : 
-                $get = 'getProofHabitation';
-            break;
-        }
+                case $document instanceof StudentCard : 
+                    $get = 'getStudentCard';
+                break;
 
-        return $this->isAdmin() or $this->user->getStudent()->$get()->getId() == $document->getId() ? true : $this->Exception(); 
+                case $document instanceof ProofHabitation : 
+                    $get = 'getProofHabitation';
+                break;
+            }
+
+            return $this->isAdmin() or $this->user->getStudent()->$get()->getId() == $document->getId() ? true : $this->Exception(); 
     
-        //
+        }
+        else if($this->isCompany())
+        {
+            return $this->isAdmin() ? true : $this->Exception(); 
+        }
+        else {
+            return $this->Exception(); 
+        }
     }
 }

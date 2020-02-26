@@ -3,16 +3,21 @@
 namespace App\Controller\Student;
 
 use App\Entity\IdCard;
+use App\Entity\Offers;
 use App\Entity\Resume;
+use App\Entity\Company;
+use App\Entity\Student;
 use App\Entity\StudentCard;
 use App\Entity\ProofHabitation;
 use App\Service\UploaderHelper;
+use App\Service\UserChecker\CompanyChecker;
 use App\Service\UserChecker\StudentChecker;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class DownloadController extends AbstractController
@@ -41,11 +46,27 @@ class DownloadController extends AbstractController
 
     /**
      * @Route("/resume/{id}/download", name="student_download_resume", methods={"GET"})
-     * @IsGranted("ROLE_USER")
+     * @IsGranted("ROLE_STUDENT")
      */
     public function downloadResume(Resume $resume, UploaderHelper $uploaderHelper, StudentChecker $checker)
     {
        if($checker->documentValid($resume))
+       {
+            $response = $this->downloadDocuments($resume, $uploaderHelper); 
+            return $response; 
+       }
+    }
+
+    /**
+     * @Route("/resume/{id}/offers/{offers}/company/{company}/student/{student}/download", name="company_download_resume", methods={"GET"})
+     * @IsGranted("ROLE_SUPER_COMPANY")
+     * @ParamConverter("offers", options={"id" = "offers"})
+     * @ParamConverter("company", options={"id" = "company"})
+     * @ParamConverter("student", options={"id" = "student"})
+     */
+    public function downloadResumeCompany(Resume $resume, Offers $offers, Company $company, Student $student, UploaderHelper $uploaderHelper, CompanyChecker $checker)
+    {
+       if($checker->documentValid($resume, $offers, $company, $student))
        {
             $response = $this->downloadDocuments($resume, $uploaderHelper); 
             return $response; 

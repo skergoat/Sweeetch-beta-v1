@@ -25,8 +25,7 @@ class CompanyChecker
 
     // general 
 
-    public function isAdmin() 
-    {
+    public function isAdmin() {
         return $this->authorizationChecker->isGranted('ROLE_ADMIN'); 
     }
 
@@ -72,6 +71,25 @@ class CompanyChecker
             $this->Exception() ;
         }
 
+    }
+
+    //student documents 
+    public function documentValid($resume, $offers, $company, $student)
+    {
+        $userRequired = $company->getUser()->getId();  
+        if($this->isAdmin()
+        || $this->user->getId() == $userRequired
+        AND $this->offersRepository->offerExists($company, $offers)
+        AND $check = $this->applyRepository->findOneBy(['offers' => $offers, 'student' => $student])
+        AND $student->getResume() == $resume
+        ) 
+        {
+            return true;
+        }
+        else {
+            $this->Exception() ;
+        }
+     
     }
 
 }
