@@ -22,12 +22,25 @@ class School
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Champ requis")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 30,
+     *      minMessage = "{{ limit }} caractères minimum",
+     *      maxMessage = "{{ limit }} caractères maximum"
+     * )
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Champ requis")
+     * @Assert\NotBlank(message="Champ requis")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 30,
+     *      minMessage = "{{ limit }} caractères minimum",
+     *      maxMessage = "{{ limit }} caractères maximum"
+     * )
      */
     private $lastname;
 
@@ -46,6 +59,12 @@ class School
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Champ requis")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 30,
+     *      minMessage = "{{ limit }} caractères minimum",
+     *      maxMessage = "{{ limit }} caractères maximum"
+     * )
      */
     private $city;
 
@@ -64,6 +83,14 @@ class School
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Champ requis")
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Champ requis")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 100,
+     *      minMessage = "{{ limit }} caractères minimum",
+     *      maxMessage = "{{ limit }} caractères maximum"
+     * )
      */
     private $companyName;
 
