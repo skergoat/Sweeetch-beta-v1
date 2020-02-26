@@ -63,7 +63,7 @@ class ProfileType extends AbstractType
             ])
 
             ->add('languages', CollectionType::class, array(
-                'entry_type' => LanguageType::class,
+                'entry_type' => LanguagesType::class,
                 'allow_delete' => true,
                 'allow_add' => true,
                 'by_reference' => false,
