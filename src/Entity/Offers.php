@@ -5,6 +5,8 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\OffersRepository")
@@ -20,21 +22,35 @@ class Offers
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Champ requis")
+     * @Assert\Regex(
+     *     pattern="/[a-zA-Z0-9 !.,_-]+/",
+     *     message="Entrez un titre valide svp"
+     * )
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 100,
+     *      minMessage = "{{ limit }} caractères minimum",
+     *      maxMessage = "{{ limit }} caractères maximum"
+     * )
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Champ requis")
      */
     private $location;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Champ requis")
      */
     private $domain;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank(message="Champ requis")
      */
     private $dateStart;
 
@@ -45,6 +61,7 @@ class Offers
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="Champ requis")
      */
     private $description;
 

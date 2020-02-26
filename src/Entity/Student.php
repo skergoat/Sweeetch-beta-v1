@@ -21,7 +21,7 @@ class Student
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="Champ requis")
+     * @Assert\NotNull(message="Champ requis")
      * @Assert\Length(
      *      min = 2,
      *      max = 30,

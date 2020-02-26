@@ -6,10 +6,13 @@ use App\Entity\Student;
 use App\Form\UserEditFormType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class UpdateStudentGeneralType extends AbstractType
 {
@@ -23,10 +26,10 @@ class UpdateStudentGeneralType extends AbstractType
             ->add('city', TextType::class)
             ->add('telNumber', TextType::class)
             ->add('user', UserEditFormType::class)
-            ->add('driving_license', RadioType::class, [
+            ->add('driving_license', CheckboxType::class, [
                 'required' => false
             ])
-            ->add('disabled', RadioType::class, [
+            ->add('disabled', CheckboxType::class, [
                 'required' => false
             ])        
         ;   
