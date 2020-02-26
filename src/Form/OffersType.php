@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Offers;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -59,18 +60,28 @@ class OffersType extends AbstractType
                 'choice_attr' => function($choice, $key, $value) {
                     return ['class' => 'attending_'.strtolower($key)];
                 },
-            ])
+            ]);
+            // $dateConstraints = [
+            //     new NotNull([
+            //         'message' => 'veuillez entrer un mot de passe, svp'
+            //     ]), 
+            // ];
+            $builder
             ->add('dateStart', DateType::Class, [
+                'required' => true,
                 'widget' => 'single_text',
                 'format' => 'dd-MM-yyyy',
                 'html5' => false,
                 'attr' => ['class' => 'js-datepicker'],
+                // 'constraints' => $dateConstraints
             ])
             ->add('dateEnd', DateType::Class, [
+                'required' => true,
                 'widget' => 'single_text',
                 'format' => 'dd-MM-yyyy',
                 'html5' => false,
                 'attr' => ['class' => 'js-datepicker'],
+                // 'constraints' => $dateConstraints
             ])
             ->add('description', TextareaType::class, [
                 'required' => false

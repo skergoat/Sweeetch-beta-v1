@@ -9,7 +9,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity("email", message="email non disponible")
  */
 class User implements UserInterface
 {
@@ -22,12 +21,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true) 
-     * @Assert\Email
-     * @Assert\NotBlank(message="Champ requis")
-     * @Assert\Regex(
-     *     pattern="/^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/",
-     *     message="email non valide"
-     * )
+     * @Assert\NotNull(message="Champ requis")
      */
     private $email;
 
@@ -39,17 +33,7 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Assert\NotBlank(message="Champ requis")
-     * @Assert\Length(
-     *      min = 2,
-     *      max = 25,
-     *      minMessage = "{{ limit }} caractères minimum",
-     *      maxMessage = "{{ limit }} caractères maximum"
-     * )
-     * @Assert\Regex(
-     *     pattern="/^(?=.*[A-Z]+)(?=.*[a-z]+)(?=.*[0-9]+)\S{8,30}$/",
-     *     message="Le mot de passe doit contenir au moins 1 majuscule, 1 caractère spécial et 1 chiffre"
-     * )
+     * @Assert\NotNull(message="Champ requis")
      */
     private $password;
 
