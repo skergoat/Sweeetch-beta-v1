@@ -177,16 +177,16 @@ class CompanyController extends AbstractController
                     $student = $applies->getStudent();
 
                     // set roles 
-                    $student->getUser()->setRoles([
-                        "ROLE_SUPER_COMPANY"
-                    ]);
+                    // $student->getUser()->setRoles([
+                    //     "ROLE_SUPER_STUDENT"
+                    // ]);
 
                     // send mail 
-                    $email = $student->getUser()->getEmail();
-                    $name = $student->getName();
-                    $offerTitle = $offers->getTitle();
+                    // $email = $student->getUser()->getEmail();
+                    // $name = $student->getName();
+                    // $offerTitle = $offers->getTitle();
 
-                    $mailer->sendDeleteCompanyMessage($email, $name, $offerTitle); 
+                    // $mailer->sendDeleteCompanyMessage($email, $name, $offerTitle); 
 
                     if($applies->getFinished() == false) {
                         $entityManager->remove($applies);
