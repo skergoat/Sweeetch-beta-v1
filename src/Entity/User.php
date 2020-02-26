@@ -20,6 +20,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true) 
+     * @Assert\NotBlank(message="Champ requis")
      */
     private $email;
 
@@ -31,6 +32,17 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Champ requis")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 25,
+     *      minMessage = "{{ limit }} caractères minimum",
+     *      maxMessage = "{{ limit }} caractères maximum"
+     * )
+     * @Assert\Regex(
+     *     pattern="/^(?=.*[A-Z]+)(?=.*[a-z]+)(?=.*[0-9]+)\S{8,30}$/",
+     *     message="Le mot de passe doit contenir au moins 1 majuscule, 1 caractère spécial et 1 chiffre"
+     * )
      */
     private $password;
 

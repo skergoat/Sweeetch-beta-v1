@@ -23,7 +23,9 @@ class ResumeType extends AbstractType
             // new Image([
             //     'maxSize' => '5M'
             // ])
-            new NotBlank(),
+            new NotBlank([
+                'message' => 'veuillez uploader un fichier, svp'
+            ]),
             new File([
                 'maxSize' => '5M',
                 'mimeTypes' => [
