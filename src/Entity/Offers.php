@@ -61,7 +61,7 @@ class Offers
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\NotBlank(message="Champ requis")
+     * @Assert\NotNull(message="Champ requis")
      */
     private $description;
 
