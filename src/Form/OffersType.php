@@ -83,9 +83,7 @@ class OffersType extends AbstractType
                 'attr' => ['class' => 'js-datepicker'],
                 // 'constraints' => $dateConstraints
             ])
-            ->add('description', TextareaType::class, [
-                'required' => false
-            ])
+            ->add('description', TextareaType::class)
         ;
     }
 

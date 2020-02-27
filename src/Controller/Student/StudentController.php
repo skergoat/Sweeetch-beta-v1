@@ -70,7 +70,7 @@ class StudentController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="student_new", methods={"GET","POST"})
+     * @Route("/new/", name="student_new", methods={"GET","POST"})
      */
     public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder, UploaderHelper $uploaderHelper, ValidatorInterface $validator): Response
     {
