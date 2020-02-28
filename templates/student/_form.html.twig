@@ -5,36 +5,107 @@
     <div class="col-lg-5 col-sm-12 margin-right">
         <div class="row">
             <div class="col-lg-6 form-group">
-                {{ form_row(form.name, {'label': 'Prénom', 'attr' : { class: 'form-control' }} ) }}
+                {{ form_label(form.name, 'Prénom') }}
+                {% if form.name.vars.errors | length == 0 %}
+                {{ form_widget(form.name, {'label': 'Prénom', 'attr' : { class: 'form-control' }} ) }}
+                {% else %}
+                {{ form_widget(form.name, {'label': 'Prénom', 'attr' : { class: 'form-control is-invalid' }} ) }}
+                {% endif %}
+                <div class="form-error">
+                    {{ form_errors(form.name) }}
+                </div>
             </div>
             <div class="col-lg-6 form-group">
-                {{ form_row(form.lastname, {'label': 'Nom', 'attr' : { class: 'form-control' }} ) }}
+                {{ form_label(form.lastname, 'Nom') }}
+                {% if form.lastname.vars.errors | length == 0 %}
+                {{ form_widget(form.lastname, {'label':'Entreprise', 'attr' : { class: 'form-control' }} ) }}
+                {% else %}
+                {{ form_widget(form.lastname, {'label':'Entreprise', 'attr' : { class: 'form-control is-invalid' }} ) }}
+                {% endif %}
+                <div class="form-error">
+                    {{ form_errors(form.lastname) }}
+                </div>
             </div>
             <div class="form-group col-lg-12">
-                {{ form_row(form.user.email, {'label' : 'Email', 'attr' : { class: 'form-control' }} ) }}
+                {{ form_label(form.user.email, 'Email') }}
+                {% if form.user.email.vars.errors | length == 0 %}
+                {{ form_widget(form.user.email, {'label':'Entreprise', 'attr' : { class: 'form-control' }} ) }}
+                {% else %}
+                {{ form_widget(form.user.email, {'label':'Entreprise', 'attr' : { class: 'form-control is-invalid' }} ) }}
+                {% endif %}
+                <div class="form-error">
+                    {{ form_errors(form.user.email) }}
+                </div>
             </div>
             <div class="form-group col-lg-12">
-            {# {{ form_row(form.user.password, { 'label' : 'Mot de Passe', 'attr' : { class: 'form-control' }} ) }} #}
-            {{ form_row(form.user.password.first, { 'label' : 'Mot de Passe', 'attr' : { class: 'form-control' }} ) }}
+                {{ form_label(form.user.password.first, 'Mot de passe') }}
+                {% if form.user.password.first.vars.errors | length == 0 %}
+                {{ form_widget(form.user.password.first, {'label':'Entreprise', 'attr' : { class: 'form-control' }} ) }}
+                {% else %}
+                {{ form_widget(form.user.password.first, {'label':'Entreprise', 'attr' : { class: 'form-control is-invalid' }} ) }}
+                {% endif %}
+                <div class="form-error">
+                    {{ form_errors(form.user.password.first) }}
+                </div>
             </div>
             <div class="form-group col-lg-12">
-            {{ form_row(form.user.password.second, { 'label' : 'Répéter le mot de Passe', 'attr' : { class: 'form-control' }} ) }} 
+                {{ form_label(form.user.password.second, 'Repeter le mot de passe') }}
+                {% if form.user.password.second.vars.errors | length == 0 %}
+                {{ form_widget(form.user.password.second, {'label':'Entreprise', 'attr' : { class: 'form-control' }} ) }}
+                {% else %}
+                {{ form_widget(form.user.password.second, {'label':'Entreprise', 'attr' : { class: 'form-control is-invalid' }} ) }}
+                {% endif %}
+                <div class="form-error">
+                    {{ form_errors(form.user.password.second) }}
+                </div> 
             </div>
         </div>
         <div class="row" style="margin-top:30px;">
             <div class="col-lg-12 form-group">
-                {{ form_row(form.adress, {'label': 'Adresse', 'attr' : { class: 'form-control' }} ) }}
+                {{ form_label(form.adress, 'Adresse') }}
+                {% if form.adress.vars.errors | length == 0 %}
+                {{ form_widget(form.adress, {'label':'Entreprise', 'attr' : { class: 'form-control' }} ) }}
+                {% else %}
+                {{ form_widget(form.adress, {'label':'Entreprise', 'attr' : { class: 'form-control is-invalid' }} ) }}
+                {% endif %}
+                <div class="form-error">
+                    {{ form_errors(form.adress) }}
+                </div> 
             </div>
             <div class="col-lg-6 form-group">
-                {{ form_row(form.zipCode, {'label': 'Code Postal', 'attr' : { class: 'form-control' }} ) }}
+                {{ form_label(form.zipCode, 'Code Postal') }}
+                {% if form.zipCode.vars.errors | length == 0 %}
+                {{ form_widget(form.zipCode, {'label':'Entreprise', 'attr' : { class: 'form-control' }} ) }}
+                {% else %}
+                {{ form_widget(form.zipCode, {'label':'Entreprise', 'attr' : { class: 'form-control is-invalid' }} ) }}
+                {% endif %}
+                <div class="form-error">
+                    {{ form_errors(form.zipCode) }}
+                </div> 
             </div>
             <div class="col-lg-6 form-group">
-                {{ form_row(form.city, {'label': 'Ville', 'attr' : { class: 'form-control' }} ) }}
+                {{ form_label(form.city, 'Ville') }}
+                {% if form.city.vars.errors | length == 0 %}
+                {{ form_widget(form.city, {'label':'Entreprise', 'attr' : { class: 'form-control' }} ) }}
+                {% else %}
+                {{ form_widget(form.city, {'label':'Entreprise', 'attr' : { class: 'form-control is-invalid' }} ) }}
+                {% endif %}
+                <div class="form-error">
+                    {{ form_errors(form.city) }}
+                </div> 
             </div>
         </div>
         <div class="row">
             <div class="col-lg-6 form-group">
-                {{ form_row(form.telNumber, {'label': 'Numéro de Téléphone', 'attr' : { class: 'form-control' }} ) }}
+                {{ form_label(form.telNumber, 'Téléphone') }}
+                {% if form.telNumber.vars.errors | length == 0 %}
+                {{ form_widget(form.telNumber, {'label':'Entreprise', 'attr' : { class: 'form-control' }} ) }}
+                {% else %}
+                {{ form_widget(form.telNumber, {'label':'Entreprise', 'attr' : { class: 'form-control is-invalid' }} ) }}
+                {% endif %}
+                <div class="form-error">
+                    {{ form_errors(form.telNumber) }}
+                </div> 
             </div> 
         </div>
     </div>
@@ -42,34 +113,60 @@
     <div class="col-lg-5 col-md-12 col-sm-12 margin-left">
         <div class="form-group">
             <div class="custom-file">
-                <label class="custom-file-label browse" for="customFileLang" style="position:absolute;top:32px;" data-url="student_resume_file" id="browse-student_resume_file"></label>
-                {{ form_row(form.resume, {'label': 'CV', 'attr' : { class: 'form-control' }} ) }}
+                <div class="form-group">
+                    {{ form_label(form.resume, 'CV', {'class':'file-align'}) }}
+                    <label class="custom-file-label browse" for="customFileLang" style="position:absolute;top:32px;" data-url="student_resume_file" id="browse-student_resume_file"></label>
+                    {{ form_widget(form.resume, {'label': 'CV', 'attr' : { class: 'form-control' }} ) }}
+                </div>
+                <div class="form-error">
+                    {{ form_errors(form.resume) }}
+                </div> 
             </div>
         </div>
         <div class="form-group">
             <div class="custom-file">
+                {{ form_label(form.idCard, 'Carte d\'identité', {'class':'file-align'}) }}
                 <label class="custom-file-label browse" for="customFileLang" style="position:absolute;top:32px;" data-url="student_idCard_file" id="browse-student_idCard_file"></label>
-                {{ form_row(form.idCard, {'label': 'Carte d\'identité', 'attr' : { class: 'form-control' }} ) }}
+                {{ form_widget(form.idCard, {'label': 'Carte d\'identité', 'attr' : { class: 'form-control' }} ) }}
             </div>
+            <div class="form-error">
+                {{ form_errors(form.idCard) }}
+            </div>    
         </div> 
         <div class="form-group">
             <div class="custom-file">
+                {{ form_label(form.studentCard, 'Carte d\'étudiant', {'class':'file-align'}) }}
                 <label class="custom-file-label browse" for="customFileLang" style="position:absolute;top:32px;" data-url="student_studentCard_file" id="browse-student_studentCard_file"></label>
-                {{ form_row(form.studentCard, {'label': 'Carte d\'étudiant', 'attr' : { class: 'form-control' }} ) }}
+                {{ form_widget(form.studentCard, {'label': 'Carte d\'étudiant', 'attr' : { class: 'form-control' }} ) }}
+                <div class="form-error">
+                    {{ form_errors(form.studentCard) }}
+                </div> 
             </div>
         </div>
         <div class="form-group">
             <div class="custom-file">
+                {{ form_label(form.proofHabitation, 'Justificatif de Domicile', {'class':'file-align'}) }}
                 <label class="custom-file-label browse" for="customFileLang" style="position:absolute;top:32px;" data-url="student_proofHabitation_file" id="browse-student_proofHabitation_file"></label>
-                {{ form_row(form.proofHabitation, {'label': 'Justificatif de Domicile', 'attr' : { class: 'form-control' }} ) }}
+                {{ form_widget(form.proofHabitation, {'label': 'Justificatif de Domicile', 'attr' : { class: 'form-control' }} ) }}
+                <div class="form-error">
+                    {{ form_errors(form.proofHabitation) }}
+                </div> 
             </div>
         </div> 
         <div class="row" id="row-radio">
             <div class="col-lg-6 form-group col-lg-button">
-                {{ form_row(form.driving_license, {'label': 'Permis de Conduire', 'attr' : { class: 'form-check' }} ) }}
+                {{ form_label(form.driving_license, 'Permis B') }}
+                {{ form_widget(form.driving_license, {'label': 'Permis de Conduire', 'attr' : { class: 'form-check' }} ) }}
+                <div class="form-error">
+                    {{ form_errors(form.driving_license) }}
+                </div> 
             </div>
             <div class="col-lg-6 form-group col-lg-button">
-                {{ form_row(form.disabled, {'label': 'Handicap', 'attr' : { class: 'form-check' }} ) }}
+                {{ form_label(form.disabled, 'Handicap') }}
+                {{ form_widget(form.disabled, {'label': 'Handicap', 'attr' : { class: 'form-check' }} ) }}
+                <div class="form-error">
+                    {{ form_errors(form.disabled) }}
+                </div> 
             </div>
         </div>
         <div class="row">
@@ -82,12 +179,3 @@
 
 {{ form_end(form) }}
 
-{# <input type="file" id="student_proofHabitation_file" name="student[proofHabitation][file]" required="required" class="form-control"> #}
-        {# {{ form_row(form.resume.file2, {'attr' : { class: 'form-control' }} ) }} #}
-{# <div class="col-sm-3">
-    {% if form.vars.data.resume.fileName|default %}
-    <a href="{{ uploaded_asset(form.vars.data.resume.fileName) }}" target="_blank">
-        <img class="show-article-img" src="{{ form.vars.data.resume.fileName|imagine_filter('squared_thumbnail_x_small') }}" alt=""/>
-    </a>
-</div>
-    {% endif %} #}
