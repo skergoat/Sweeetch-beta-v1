@@ -35,7 +35,9 @@ class StudentCardType extends AbstractType
                     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                     'application/vnd.openxmlformats-officedocument.presentationml.presentation',
                     'text/plain'
-                ]
+                ],
+                'mimeTypesMessage' => 'Document invalide',
+                'maxSizeMessage' => 'poids max : 5M',
             ])
         ];
         $builder

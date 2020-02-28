@@ -21,9 +21,6 @@ class UpdateStudentDocType extends StudentType
     {
 
         $imageConstraints = [
-            new NotBlank([
-                'message' => 'veuillez uploader un fichier, svp'
-            ]),
             new File([
                 'maxSize' => '5M',
                 'mimeTypes' => [
@@ -34,8 +31,10 @@ class UpdateStudentDocType extends StudentType
                     'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
                     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                     'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-                    'text/plain'
-                ]
+                    'text/plain',
+                ],
+                'mimeTypesMessage' => 'Document invalide',
+                'maxSizeMessage' => 'poids max : 5M',
             ])
         ];
 

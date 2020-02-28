@@ -38,7 +38,7 @@ class StudentChecker
     }
 
     public function isStudent() {
-        return $this->authorizationChecker->isGranted('ROLE_SUPER_STUDENT'); 
+        return $this->authorizationChecker->isGranted('ROLE_SUPER_STUDENT') || $this->authorizationChecker->isGranted('ROLE_STUDENT'); 
     }
 
     public function Exception(){

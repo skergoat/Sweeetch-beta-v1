@@ -19,13 +19,11 @@ class Education
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="Champ requis")
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="Champ requis")
      */
     private $school;
 

@@ -4,27 +4,83 @@
 
     <div class="col-lg-6">   
         <div class="form-group">
-           {{ form_row(form.user.email, {'attr' : { class: 'form-control' }} ) }}
+            {{ form_label(form.user.email, 'Email') }}
+            {% if form.user.email.vars.errors | length == 0 %}
+            {{ form_widget(form.user.email, {'label':'Entreprise', 'attr' : { class: 'form-control' }} ) }}
+            {% else %}
+            {{ form_widget(form.user.email, {'label':'Entreprise', 'attr' : { class: 'form-control is-invalid' }} ) }}
+            {% endif %}
+            <div class="form-error">
+                {{ form_errors(form.user.email) }}
+            </div>
         </div>        
         <div class="form-group">
-            {{ form_row(form.name, {'label': 'Prénom', 'attr' : { class: 'form-control' }} ) }}
+            {{ form_label(form.name, 'Prénom') }}
+            {% if form.name.vars.errors | length == 0 %}
+            {{ form_widget(form.name, {'label': 'Prénom', 'attr' : { class: 'form-control' }} ) }}
+            {% else %}
+            {{ form_widget(form.name, {'label': 'Prénom', 'attr' : { class: 'form-control is-invalid' }} ) }}
+            {% endif %}
+            <div class="form-error">
+                {{ form_errors(form.name) }}
+            </div>
         </div>
         <div class="form-group">
-            {{ form_row(form.lastname, {'label': 'Nom', 'attr' : { class: 'form-control' }} ) }}
+            {{ form_label(form.lastname, 'Nom') }}
+            {% if form.lastname.vars.errors | length == 0 %}
+            {{ form_widget(form.lastname, {'label':'Entreprise', 'attr' : { class: 'form-control' }} ) }}
+            {% else %}
+            {{ form_widget(form.lastname, {'label':'Entreprise', 'attr' : { class: 'form-control is-invalid' }} ) }}
+            {% endif %}
+            <div class="form-error">
+                {{ form_errors(form.lastname) }}
+            </div>
         </div>
         <div class="form-group">
-            {{ form_row(form.adress, {'label': 'Adresse', 'attr' : { class: 'form-control' }} ) }}
+            {{ form_label(form.adress, 'Adresse') }}
+            {% if form.adress.vars.errors | length == 0 %}
+            {{ form_widget(form.adress, {'label':'Entreprise', 'attr' : { class: 'form-control' }} ) }}
+            {% else %}
+            {{ form_widget(form.adress, {'label':'Entreprise', 'attr' : { class: 'form-control is-invalid' }} ) }}
+            {% endif %}
+            <div class="form-error">
+                {{ form_errors(form.adress) }}
+            </div>
         </div>
     </div>
     <div class="col-lg-6">
         <div class="form-group">
-            {{ form_row(form.zipCode, {'label': 'Code Postal', 'attr' : { class: 'form-control' }} ) }}
+            {{ form_label(form.zipCode, 'Code Postal') }}
+            {% if form.zipCode.vars.errors | length == 0 %}
+            {{ form_widget(form.zipCode, {'label':'Entreprise', 'attr' : { class: 'form-control' }} ) }}
+            {% else %}
+            {{ form_widget(form.zipCode, {'label':'Entreprise', 'attr' : { class: 'form-control is-invalid' }} ) }}
+            {% endif %}
+            <div class="form-error">
+                {{ form_errors(form.zipCode) }}
+            </div> 
         </div>
         <div class="form-group">
-            {{ form_row(form.city, {'label': 'Ville', 'attr' : { class: 'form-control' }} ) }}
+            {{ form_label(form.city, 'Ville') }}
+            {% if form.city.vars.errors | length == 0 %}
+            {{ form_widget(form.city, {'label':'Entreprise', 'attr' : { class: 'form-control' }} ) }}
+            {% else %}
+            {{ form_widget(form.city, {'label':'Entreprise', 'attr' : { class: 'form-control is-invalid' }} ) }}
+            {% endif %}
+            <div class="form-error">
+                {{ form_errors(form.city) }}
+            </div>
         </div>
         <div class="form-group">
-            {{ form_row(form.telNumber, {'label': 'Numéro de Téléphone', 'attr' : { class: 'form-control' }} ) }}
+            {{ form_label(form.telNumber, 'Téléphone') }}
+            {% if form.telNumber.vars.errors | length == 0 %}
+            {{ form_widget(form.telNumber, {'label':'Entreprise', 'attr' : { class: 'form-control' }} ) }}
+            {% else %}
+            {{ form_widget(form.telNumber, {'label':'Entreprise', 'attr' : { class: 'form-control is-invalid' }} ) }}
+            {% endif %}
+            <div class="form-error">
+                {{ form_errors(form.telNumber) }}
+            </div>
         </div>
         <div class="row" id="row-radio">
             <div class="col-lg-6 form-group">

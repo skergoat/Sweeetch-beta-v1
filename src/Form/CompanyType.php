@@ -14,7 +14,21 @@ class CompanyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('companyName', TextType::class)
+            ->add('companyName', TextType::class, [
+                'constraints' => [ 
+                    new NotBlank(['message' => "Champ requis"]), 
+                    new Length([
+                        'min' => '2',
+                        'max' => '100',
+                        'minMessage' => "{{ limit }} caractères minimum",
+                        'maxMessage' => "{{ limit }} caractères maximum"
+                    ]),
+                    new Regex([
+                    'pattern' => "/[a-zA-Z0-9- ]/",
+                    'message' => "Entrez un nom valide svp"
+                    ])
+                ],
+            ])
             ->add('firstname', TextType::class)
             ->add('lastname', TextType::class)
             ->add('address', TextType::class)
