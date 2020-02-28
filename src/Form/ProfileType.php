@@ -67,6 +67,7 @@ class ProfileType extends AbstractType
                 'allow_delete' => true,
                 'allow_add' => true,
                 'by_reference' => false,
+                'label' => false
             ))
             
             ->add('education', CollectionType::class, array(
@@ -74,6 +75,7 @@ class ProfileType extends AbstractType
                 'allow_delete' => true,
                 'allow_add' => true,
                 'by_reference' => false,
+                'label' => false
             ))
         ;
     }

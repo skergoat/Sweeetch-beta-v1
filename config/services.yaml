@@ -10,7 +10,7 @@ parameters:
         
     maintenance:
         statut: true
-        ipAuthorized: ["::1","192.168.1.101"]
+        ipAuthorized: ["::1","192.168.1.101", "127.0.0.1"]
 
 services:
     # default configuration for services in *this* file
