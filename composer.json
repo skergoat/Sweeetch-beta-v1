@@ -23,6 +23,7 @@
         "symfony/maker-bundle": "^1.14",
         "symfony/orm-pack": "^1.0",
         "symfony/security-bundle": "5.0.*",
+        "symfony/templating": "5.0.*",
         "symfony/twig-pack": "^1.0",
         "symfony/validator": "5.0.*",
         "symfony/webpack-encore-bundle": "^1.7",

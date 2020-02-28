@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "75b07521259674af831077d0ee5ea6aa",
+    "content-hash": "58d37e2bbdb301c47d988118c2560aaf",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -50,53 +50,6 @@
                 "transliterator"
             ],
             "time": "2020-01-14T16:39:13+00:00"
-        },
-        {
-            "name": "corley/maintenance-bundle",
-            "version": "0.3.1",
-            "target-dir": "Corley/MaintenanceBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/matatirosolutions/CorleyMaintenanceBundle.git",
-                "reference": "910f85f66a27f3c1d352d914b0ef22722147185d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/matatirosolutions/CorleyMaintenanceBundle/zipball/910f85f66a27f3c1d352d914b0ef22722147185d",
-                "reference": "910f85f66a27f3c1d352d914b0ef22722147185d",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.2",
-                "symfony/console": "^3.4|^4.2|^5.0",
-                "symfony/dependency-injection": "^3.4|^4.2|^5.0",
-                "symfony/framework-bundle": "^3.4|^4.2|^5.0",
-                "symfony/security-bundle": "^3.4|^4.2|^5.0"
-            },
-            "require-dev": {
-                "mikey179/vfsstream": "1.*",
-                "phpunit/phpunit": "^8.0"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-0": {
-                    "Corley\\MaintenanceBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Corley Maintenance Bundle",
-            "keywords": [
-                "503",
-                "Maintenance management",
-                "apache",
-                "apache2",
-                "maintenance",
-                "nginx"
-            ],
-            "time": "2020-01-02T13:13:19+00:00"
         },
         {
             "name": "doctrine/annotations",
