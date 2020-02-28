@@ -7,6 +7,10 @@ parameters:
 
     uploads_dir_name: 'uploads'
     uploads_base_url: '%env(SITE_BASE_URL)%/%uploads_dir_name%'
+        
+    maintenance:
+        statut: true
+        ipAuthorized: ["::1","192.168.1.101"]
 
 services:
     # default configuration for services in *this* file
@@ -41,3 +45,8 @@ services:
     #     tags:
     #         - { name: kernel.event_listener, event: security.authentication.success }
 
+    App\EventListener\MaintenanceListener:
+        arguments: ['%maintenance%'] 
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }
+        

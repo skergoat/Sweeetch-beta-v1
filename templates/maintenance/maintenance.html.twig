@@ -1,0 +1,84 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %} {{ parent() }} - home {% endblock %}
+
+{% block stylesheets %}
+    <!-- import assets from assets/js/app.js -->
+    {{ parent() }}
+
+    <link href="{{ asset('lib/ionicons/css/ionicons.min.css') }}" rel="stylesheet">
+    <!-- Main Stylesheet File -->
+     <style>
+      .sf-toolbar.sf-error-toolbar { display:none;} */
+    </style>
+{% endblock %}
+
+{% block body %}
+
+<body>
+
+    <header id="header">
+  
+      <div id="topbar">
+        <div class="container">
+          <div class="social-links">
+            <a href="https://twitter.com/SweeetchA" target="_blank" class="twitter"><i class="fa fa-twitter"></i></a>
+            <a href="https://www.facebook.com/sweeetch.ton.alternance/" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a>
+            <a href="https://fr.linkedin.com/company/sweetchmontpellier?trk=public_profile_topcard_current_company" target="_blank" class="linkedin"><i class="fa fa-linkedin"></i></a>
+            <a href="https://www.instagram.com/sweeetch_alternance/" target="_blank" class="instagram"><i class="fa fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+  
+      <div class="container">
+  
+        <div class="logo float-left"> 
+          <!-- LOGO HOME IMAGE -->
+         <h1 class="text-light"><a href="#intro" class="scrollto"><span>SWEEETCH</span></a></h1>
+  
+        </div> 
+        
+      </div>
+    </header> 
+  
+    <section id="intro" class="clearfix">
+      <div class="container d-flex h-100">
+        <div class="row justify-content-center align-self-center">
+          <div class="col-md-6 intro-info order-md-first order-last">
+            <h2><span class="couleurB">Site</span><br><span class="couleurR">en maintenance</span></h2>
+          </div>
+  
+          <div class="col-md-6">
+  
+              <p>Une alternance en quelques clics. Grâce à Sweeetch, tu peux désormais trouver ton école et ton entreprise simplement.</p>
+              <a class="twitter-timeline" href="https://twitter.com/SweeetchA?ref_src=twsrc%5Etfw" height="450">Tweets by SweeetchA</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  
+          </div>
+  
+        </div>
+  
+      </div>
+    </section>
+  
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script>
+            
+        
+      $(window).scroll(function (event) {
+          var scroll = $(window).scrollTop();
+         
+          if(scroll > 0) {
+              $('#header').css('background', 'white');
+          }
+          else if(scroll <= 0) {
+              $('#header').css('background', 'transparent');
+          }
+  
+      });
+  
+    </script>
+  
+  </body>
+
+
+{% endblock %}
