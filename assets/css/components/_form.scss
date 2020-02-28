@@ -76,6 +76,18 @@ input[type="file"] {
     }
 }
 
+.message-red {
+    & ul {
+        padding-left:0px;
+    }
+
+    & ul li {
+        list-style-type:none;
+        font-size:12px;
+        color:#EE153E;
+    }
+}
+
 .form-control div {
     position:relative;
     left:-10px;

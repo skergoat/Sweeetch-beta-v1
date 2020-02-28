@@ -22,17 +22,6 @@ class Offers
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="Champ requis")
-     * @Assert\Regex(
-     *     pattern="/[a-zA-Z0-9 !.,_-]+/",
-     *     message="Entrez un titre valide svp"
-     * )
-     * @Assert\Length(
-     *      min = 2,
-     *      max = 100,
-     *      minMessage = "{{ limit }} caractères minimum",
-     *      maxMessage = "{{ limit }} caractères maximum"
-     * )
      */
     private $title;
 
@@ -61,7 +50,6 @@ class Offers
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\NotNull(message="Champ requis")
      */
     private $description;
 

@@ -5,7 +5,10 @@ namespace App\Form;
 use App\Entity\Offers;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -17,8 +20,33 @@ class OffersType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $titleConstraints = [
+            new NotBlank([
+                'message' => 'Veuillez entrer un titre, svp',
+            ]),
+            new Length([
+                'min' => '2',
+                'max' => '50',
+                'minMessage' => "{{ limit }} caractères minimum",
+                'maxMessage' => "{{ limit }} caractères maximum"
+            ]),
+            new Regex([
+                'pattern' => "/[a-zA-Z0-9 !.,_-]+/",
+                'message' => "Entrez un nom valide svp"
+            ]),
+        ];
+
+        $descConstraints = [
+            new NotBlank([
+                'message' => 'Veuillez entrer une description, svp',
+            ]),
+        ];
+
+
         $builder
-            ->add('title', TextType::class)
+            ->add('title', TextType::class, [
+                'constraints' => $titleConstraints
+            ])
             ->add('location', ChoiceType::class, [
                 'choices' => [
                     'Auvergne-Rhône-Alpes' => 'Auvergne-Rhône-Alpes',
@@ -78,7 +106,10 @@ class OffersType extends AbstractType
                 'attr' => ['class' => 'js-datepicker'],
                 // 'constraints' => $dateConstraints
             ])
-            ->add('description', TextareaType::class)
+            ->add('description', TextareaType::class, [
+                'required' => false,
+                'constraints' => $descConstraints
+            ])
         ;
     }
 
