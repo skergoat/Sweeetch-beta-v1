@@ -61,11 +61,6 @@ class OffersType extends AbstractType
                     return ['class' => 'attending_'.strtolower($key)];
                 },
             ]);
-            // $dateConstraints = [
-            //     new NotNull([
-            //         'message' => 'veuillez entrer un mot de passe, svp'
-            //     ]), 
-            // ];
             $builder
             ->add('dateStart', DateType::Class, [
                 'required' => true,
