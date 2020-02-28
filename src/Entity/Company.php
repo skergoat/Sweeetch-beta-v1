@@ -116,17 +116,6 @@ class Company
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="Champ requis")
-     * @Assert\Length(
-     *      min = 2,
-     *      max = 100,
-     *      minMessage = "{{ limit }} caractères minimum",
-     *      maxMessage = "{{ limit }} caractères maximum"
-     * )
-     * @Assert\Regex(
-     *     pattern="/[a-zA-Z0-9- ]/",
-     *     message="Entrez un nom valide svp"
-     * )
      */
     private $companyName;
 

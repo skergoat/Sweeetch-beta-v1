@@ -3,33 +3,51 @@
 <div class="row">
     <div class="col-lg-6">
         <div class="form-group">
+            {{ form_label(formDoc.resumes, 'CV', {'class':'file-align'}) }}
             <div class="custom-file">
-                <label class="custom-file-label browse" for="customFileLang" style="position:absolute;top:32px;" data-url="update_student_doc_resumes" id="browse-update_student_doc_resumes"></label>
-                {{ form_row(formDoc.resumes, {'label': 'CV', 'attr' : { class: 'form-control' }} ) }}
+                <div class="form-group">
+                    <label class="custom-file-label browse" for="customFileLang" data-url="update_student_doc_resumes" id="browse-update_student_doc_resumes"></label>
+                    {{ form_widget(formDoc.resumes, {'attr' : { class: 'form-control' }} ) }}
+                </div>
             </div>
+            <div class="form-error">
+                {{ form_errors(formDoc.resumes) }}
+            </div> 
         </div>
         <div class="form-group">
+            {{ form_label(formDoc.idCards, 'Carte d\'identité', {'class':'file-align'}) }}
             <div class="custom-file">
-                <label class="custom-file-label browse" for="customFileLang" style="position:absolute;top:32px;" data-url="update_student_doc_idCards" id="browse-update_student_doc_idCards"></label>
-                {{ form_row(formDoc.idCards, {'label': 'Carte d\'identité', 'attr' : { class: 'form-control' }} ) }}
-            </div>
-        </div> 
+                <label class="custom-file-label browse" for="customFileLang" data-url="update_student_doc_idCards" id="browse-update_student_doc_idCards"></label>
+                {{ form_widget(formDoc.idCards, {'attr' : { class: 'form-control' }} ) }}
+            </div>   
+            <div class="form-error">
+                {{ form_errors(formDoc.idCards) }}
+            </div> 
+        </div>  
     </div>
     <div class="col-lg-6">
         <div class="form-group">
+            {{ form_label(formDoc.studentCards, 'Carte d\'étudiant', {'class':'file-align'}) }}
             <div class="custom-file">
-                <label class="custom-file-label browse" for="customFileLang" style="position:absolute;top:32px;" data-url="update_student_doc_studentCards" id="browse-update_student_doc_studentCards"></label>
-                {{ form_row(formDoc.studentCards, {'label': 'Carte d\'étudiant', 'attr' : { class: 'form-control' }} ) }}
+                <label class="custom-file-label browse" for="customFileLang" data-url="update_student_doc_studentCards" id="browse-update_student_doc_studentCards"></label>
+                {{ form_widget(formDoc.studentCards, {'attr' : { class: 'form-control' }} ) }} 
+            </div>
+            <div class="form-error">
+                {{ form_errors(formDoc.studentCards) }}
             </div>
         </div>
         <div class="form-group">
+            {{ form_label(formDoc.proofHabitations, 'Justificatif de Domicile', {'class':'file-align'}) }}
             <div class="custom-file">
-                <label class="custom-file-label browse" for="customFileLang" style="position:absolute;top:32px;" data-url="update_student_doc_proofHabitations" id="browse-update_student_doc_proofHabitations"></label>
-                {{ form_row(formDoc.proofHabitations, {'label': 'Justificatif de Domicile', 'attr' : { class: 'form-control' }} ) }}
+                <label class="custom-file-label browse" for="customFileLang" data-url="update_student_doc_proofHabitations" id="browse-update_student_doc_proofHabitations"></label>
+                {{ form_widget(formDoc.proofHabitations, {'attr' : { class: 'form-control' }} ) }} 
             </div>
-        </div> 
+            <div class="form-error">
+                {{ form_errors(formDoc.proofHabitations) }}
+            </div>
+        </div>  
     </div> 
-</div>
+</div><br>
 <div class="row">
     <div class="col-lg-12">
         <button class="btn btn-primary">Mettre à jour</button>

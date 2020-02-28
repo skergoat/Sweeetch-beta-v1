@@ -18,9 +18,6 @@ class ProofHabitationType extends AbstractType
         $isEdit = $card && $card->getId(); 
 
         $imageConstraints = [
-            // new Image([
-            //     'maxSize' => '5M'
-            // ])
             new NotBlank([
                 'message' => 'Veuillez uploader un fichier, svp'
             ]),
@@ -35,7 +32,9 @@ class ProofHabitationType extends AbstractType
                     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                     'application/vnd.openxmlformats-officedocument.presentationml.presentation',
                     'text/plain'
-                ]
+                ],
+                'mimeTypesMessage' => 'Document invalide',
+                'maxSizeMessage' => 'poids max : 5M',
             ])
         ];
         $builder
