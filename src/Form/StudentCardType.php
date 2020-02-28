@@ -22,7 +22,7 @@ class StudentCardType extends AbstractType
             //     'maxSize' => '5M'
             // ])
             new NotBlank([
-                'message' => 'veuillez uploader un fichier, svp'
+                'message' => 'Veuillez uploader un fichier, svp'
             ]),
             new File([
                 'maxSize' => '5M',
