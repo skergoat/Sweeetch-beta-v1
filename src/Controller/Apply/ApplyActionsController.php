@@ -78,12 +78,12 @@ class ApplyActionsController extends AbstractController
                 return $this->redirectToRoute('offers_show', ['id' => $offers->getId(), 'page' => $page]);
             }
 
-            //  send notification to company 
-            // $email = $offers->getCompany()->getUser()->getEmail();
-            // $name = $offers->getCompany()->getFirstname();
-            // $offerTitle = $offers->getTitle();
+            // send notification to company 
+            $email = $offers->getCompany()->getUser()->getEmail();
+            $name = $offers->getCompany()->getFirstname();
+            $offerTitle = $offers->getTitle();
 
-            // $mailer->sendApplyMessage($email, $name, $offerTitle);
+            $mailer->sendApplyMessage($email, $name, $offerTitle);
 
             $apply = new Apply; 
             $apply->setHired(false);
