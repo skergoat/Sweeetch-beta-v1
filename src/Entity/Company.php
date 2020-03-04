@@ -25,7 +25,7 @@ class Company
      * @Assert\NotBlank(message="Champ requis")
      * @Assert\Length(
      *      min = 2,
-     *      max = 30,
+     *      max = 14,
      *      minMessage = "{{ limit }} caractères minimum",
      *      maxMessage = "{{ limit }} caractères maximum"
      * )
@@ -41,7 +41,7 @@ class Company
      * @Assert\NotBlank(message="Champ requis")
      * @Assert\Length(
      *      min = 2,
-     *      max = 30,
+     *      max = 14,
      *      minMessage = "{{ limit }} caractères minimum",
      *      maxMessage = "{{ limit }} caractères maximum"
      * )

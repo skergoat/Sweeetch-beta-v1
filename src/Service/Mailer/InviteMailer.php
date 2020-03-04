@@ -21,7 +21,7 @@ class InviteMailer
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
             ->to(new Address($email))
-            ->subject('Problems with docs')
+            ->subject('Sweeetch')
             ->htmlTemplate('email/invite.html.twig');
         
         $this->mailer->send($mail);

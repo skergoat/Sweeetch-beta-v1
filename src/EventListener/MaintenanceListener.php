@@ -19,7 +19,7 @@ class MaintenanceListener
     }
     public function onKernelRequest(RequestEvent $event)
     {
-        // This will get the value of our maintenance parameter
+       // This will get the value of our maintenance parameter
         $maintenance = $this->maintenance ? $this->maintenance : false;
         $currentIP = $_SERVER['REMOTE_ADDR'];
         // This will detect if we are in dev environment (app_dev.php)
