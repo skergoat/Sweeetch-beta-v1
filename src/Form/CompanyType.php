@@ -6,6 +6,9 @@ use App\Form\UserType;
 use App\Entity\Company;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
@@ -19,7 +22,7 @@ class CompanyType extends AbstractType
                     new NotBlank(['message' => "Champ requis"]), 
                     new Length([
                         'min' => '2',
-                        'max' => '100',
+                        'max' => '30',
                         'minMessage' => "{{ limit }} caractères minimum",
                         'maxMessage' => "{{ limit }} caractères maximum"
                     ]),

@@ -7,6 +7,7 @@ use App\Service\Mailer\InviteMailer;
 use App\Service\Mailer\ContactMailer;
 use App\Repository\InvitationRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -22,21 +23,21 @@ class FrontController extends AbstractController
     public function index()
     {
         return $this->render("Front/index.html.twig");
+    
     }
-
     /**
      * @Route("/contact", name="contact")
      */
-    public function contact(Request $request,  ContactMailer $mailer) 
+    public function contact(Request $request,  ContactMailer $mailer)
     {
         $email = $request->request->get('email');
         $name = $request->request->get('name');
         $subject = $request->request->get('subject');
         $message = $request->request->get('message');
-    
+            
         $mailer->send($email, $name, $subject, $message);
 
-        return $this->redirectToRoute('homepage');
+        return new Response('OK');
     }
 
     //  /**
@@ -61,10 +62,11 @@ class FrontController extends AbstractController
      * @Route("/invite", name="invite")
      * @IsGranted("ROLE_ADMIN")
      */
-    public function invite(MessageBusInterface $bus)
+    public function invite(MessageBusInterface $bus, InviteMailer $mailer)
     {
         // or use the shortcut
-        $this->dispatchMessage(new SendInviteMail('sfsfsdfs'));
+        // $this->dispatchMessage(new SendInviteMail('sfsfsdfs'));
+        $mailer->invite('infos-dev@sweeetch.com');
 
         $this->addFlash('success', 'Invitations envoyées');
 

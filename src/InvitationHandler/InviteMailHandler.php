@@ -21,18 +21,19 @@ class InviteMailHandler implements MessageHandlerInterface
 
     public function __invoke(SendInviteMail $message)
     {
-        $mail = $this->repository->findBy(
-            array(),                 // Pas de critère
-            array('id' => 'asc'), // On trie par date décroissante
-            5,                  // On sélectionne $limit annonces
-            6                        // À partir du premier
-          );
+        // $mail = $this->repository->findBy(
+        //     array(),                 // Pas de critère
+        //     array('id' => 'asc'), // On trie par date décroissante
+        //     5,                  // On sélectionne $limit annonces
+        //     6                        // À partir du premier
+        //   );
         
         //   dd($mail);
 
-        foreach($mail as $mail)
-        {
-            $this->mailer->invite($mail->getEmails());
-        }
+        // foreach($mail as $mail)
+        // {
+            // $this->mailer->invite($mail->getEmails());
+        // }
+        $this->mailer->invite('kergoane@gmail.com');
     }
 }

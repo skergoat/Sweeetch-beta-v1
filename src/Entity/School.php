@@ -24,7 +24,7 @@ class School
      * @Assert\NotBlank(message="Champ requis")
      * @Assert\Length(
      *      min = 2,
-     *      max = 30,
+     *      max = 14,
      *      minMessage = "{{ limit }} caractères minimum",
      *      maxMessage = "{{ limit }} caractères maximum"
      * )
@@ -40,7 +40,7 @@ class School
      * @Assert\NotBlank(message="Champ requis")
      * @Assert\Length(
      *      min = 2,
-     *      max = 30,
+     *      max = 14,
      *      minMessage = "{{ limit }} caractères minimum",
      *      maxMessage = "{{ limit }} caractères maximum"
      * )
@@ -110,11 +110,9 @@ class School
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Champ requis")
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="Champ requis")
      * @Assert\Length(
      *      min = 2,
-     *      max = 100,
+     *      max = 30,
      *      minMessage = "{{ limit }} caractères minimum",
      *      maxMessage = "{{ limit }} caractères maximum"
      * )
