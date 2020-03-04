@@ -313,7 +313,7 @@
     <!--==========================
       Features section APPP
     ============================-->
-    <section id="features">
+    <section class="section-bg" id="features">
       <div class="container">
 
         <div class="row feature-item">
@@ -359,6 +359,37 @@
       Témoin
     ============================-->
 
+     <!--==========================
+      Features section APPP
+    ============================-->
+    <section id="features">
+      <div class="container">
+
+        <div class="section-header">
+          <h3>Nos Partenaires</h3>
+          <!-- <p>Notre équipe est en cours des recrutements, nous tarderons pas à vous présenter les membres de SWEEETCH dans les plus brefs délais</p> -->
+        </div>
+
+        <div class="col-lg-3 col-md-6 wow fadeInUp">
+          <div class="member">
+            <img src="{{ asset('build/occitanie.jpg') }}" class="img-fluid" alt="">
+            {# <div class="member-info">
+              <div class="member-info-content">
+                <h4>Noam BERKANI</h4>
+                <span>CEO Sweeetch</span>
+                <div class="social">
+                  <a href="https://twitter.com/BerkaniNoam" target="_blank"><i class="fa fa-twitter"></i></a>
+                  <a href="https://www.facebook.com/noam.berkani" target="_blank"><i class="fa fa-facebook"></i></a>
+                  <a href="https://www.linkedin.com/in/noam-berkani-17156818a/" target="_blank"><i class="fa fa-linkedin"></i></a>
+                </div>
+              </div>
+            </div> #}
+          </div>
+        </div>
+
+
+      </div>
+    </section>
 
     <!--==========================
       Team Section
@@ -567,7 +598,7 @@
                       <li><a href="#">Acceuil</a></li>
                       <li><a href="#">À propos de nous</a></li>
                       <li><a href="#">Services</a></li>
-                      <li><a href="#">Conditions d'utilisation</a></li>
+                      <li><a href="{{ path('conditions') }}">Conditions d'utilisation</a></li>
                       <li><a href="#">Politique de confidentialité</a></li>
                     </ul>
                   </div>
