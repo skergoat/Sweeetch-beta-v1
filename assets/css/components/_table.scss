@@ -13,7 +13,25 @@
 }
 
 table {
+
     & tr td a, & tr td a:hover  {
         color:#20A9DA;
     } 
+
+    & tr td a:first-child:hover {
+        text-decoration: none;
+        border:0px;
+    }
+}
+
+table tr td:first-child:hover, tr td:first-child:hover {
+    cursor:pointer;
+    animation-name: example;
+    animation-duration: 0.2s;
+    animation-fill-mode: forwards; 
+}
+
+@keyframes example {
+    from {transform:scale(1);}
+    to {transform:scale(1.05);}
 }
