@@ -28,4 +28,37 @@ import 'animate.css';
 import './components/contactform.js';
 import './components/message.js';
 
+// url = window.location.pathname;
 
+// switch(url) {
+//     case '/student/new/':
+//     $('#student').prop("checked", true);
+//     break;
+
+//     case '/company/new':
+//     $('#company').prop("checked", true);
+//     break;
+
+//     case '/school/new':
+//     $('#school').prop("checked", true);
+//     break;
+// }
+
+// $('.signup').on('change', function() {
+
+//     var id = $(this).attr('id');
+
+//     switch(id) {
+//         case 'student':
+//         window.location.href = '/student/new';
+//         break;
+
+//         case 'company':
+//         window.location.href = '/company/new';
+//         break;
+
+//         case 'school':
+//         window.location.href = '/school/new';
+//         break;
+//     }
+// });

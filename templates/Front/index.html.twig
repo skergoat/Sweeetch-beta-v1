@@ -66,12 +66,13 @@
                 {% endif %}
                 <li><a href="/logout">DECONNEXION</a></li>
             {% else %}
-              <li class="drop-down"><a>S'INSCRIRE</a>
-                <ul>
+              <li><a href="{{ path('student_new') }}">S'INSCRIRE</a>
+              {# <li class="drop-down"><a>S'INSCRIRE</a> #}
+                {# <ul>
                     <li><a href="/student/new">Etudiants</a></li>
                     <li><a href="/company/new">Entreprises</a></li>
                     <li><a href="/school/new">Ecoles</a></li>
-                </ul>
+                </ul>#} 
               </li>
               <li><a href="/login">CONNEXION</a></li>
             {% endif %}   
@@ -91,7 +92,7 @@
         <div class="col-md-6 intro-info order-md-first order-last">
           <h2><span class="couleurR">Les</span><span class="couleurB"> fonctionnalités</span><span class="couleurJ"> De Sweetch</span><br>des solutions innovantes<span> Commencez dès maintenant !</span></h2>
           <div>
-            <a href="#about" class="btn-get-started scrollto">Inscrivez-vous</a>
+            <a href="{{ path('student_new') }}" class="btn-get-started scrollto">Inscrivez-vous</a>
           </div>
         </div>
   
