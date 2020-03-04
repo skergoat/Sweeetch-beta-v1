@@ -40,7 +40,7 @@ class Student
      * @Assert\NotBlank(message="Champ requis")
      * @Assert\Length(
      *      min = 2,
-     *      max = 3140,
+     *      max = 14,
      *      minMessage = "{{ limit }} caractères minimum",
      *      maxMessage = "{{ limit }} caractères maximum"
      * )
@@ -81,7 +81,7 @@ class Student
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(
      *      min = 2,
-     *      max = 5,
+     *      max = 14,
      *      minMessage = "{{ limit }} caractères minimum",
      *      maxMessage = "{{ limit }} caractères maximum"
      * )
