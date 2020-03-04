@@ -5,6 +5,7 @@
 {% block body %}
 
 <div class="background">
+    
     <div class="container container-jobs">
 
         <header id="header">
@@ -25,13 +26,13 @@
                     <ul>
                         <li class="active"><a href="/">Acceuil</a></li>
                         <li><a href="{{ path('offers_index') }}">EMPLOIS</a></li>
-                        <li class="drop-down"><a>S'INSCRIRE</a>
+                        {# <li class="drop-down"><a>S'INSCRIRE</a>
                             <ul>
                                 <li><a href="/student/new">Etudiants</a></li>
                                 <li><a href="/company/new">Entreprises</a></li>
                                 <li><a href="/school/new">Ecoles</a></li>
                             </ul>
-                        </li> 
+                        </li>#} 
                         <li><a href="/login/">CONNEXION</a></li>
                     </ul>
                 </nav>
@@ -39,7 +40,7 @@
             </div>
         </header>
 
-        <h1 class="titles-front">Devenir alternant</h1>
+        {# <h1 class="titles-front">Devenir alternant</h1>#}
         {{ include('student/_form.html.twig') }}
 
     </div>
@@ -57,4 +58,5 @@
 </footer>
 
 {% endblock %}
+
 

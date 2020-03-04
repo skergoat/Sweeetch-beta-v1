@@ -28,6 +28,45 @@
         {{ encore_entry_script_tags('front') }}
 
         <script>
+
+            url = window.location.pathname;
+
+            switch(url) {
+                case '/student/new/':
+                $('#student').prop("checked", true);
+                break;
+
+                case '/company/new':
+                $('#company').prop("checked", true);
+                break;
+
+                case '/school/new':
+                $('#school').prop("checked", true);
+                break;
+            }
+        
+            $('.signup').on('change', function() {
+
+                var id = $(this).attr('id');
+
+                switch(id) {
+                    case 'student':
+                    window.location.href = '/student/new';
+                    break;
+
+                    case 'company':
+                    window.location.href = '/company/new';
+                    break;
+
+                    case 'school':
+                    window.location.href = '/school/new';
+                    break;
+                }
+            });
+
+        </script>
+
+        <script>
             // redirect if no offers on undex page 
             var pathname = window.location.pathname;
 

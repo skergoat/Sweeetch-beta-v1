@@ -6,7 +6,7 @@
 
 <div class="background-jobs">
 
-    <div class="container container-jobs">
+    <div class="container-fluid container-jobs">
 
         <header id="header">
 
@@ -69,7 +69,7 @@
         {% for offer in offers %}
             {% if offer.applies[0] is not defined or offer.applies[0] is defined and offer.applies[0].hired == false and offer.applies[0].confirmed == false and offer.applies[0].finished == false %}
 
-            <div class="card col-lg-4 mr-2 ml-2 mt-2 mb-2">
+            <div class="card col-lg-5 mr-2 ml-2 mt-2 mb-2">
                 <div class="card-body">
                     <div class="card-body-1">
                         <div><h5 class="card-title">{{ offer.title }}</h5> </div> <br>
