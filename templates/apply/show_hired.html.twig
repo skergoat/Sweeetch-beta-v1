@@ -51,6 +51,21 @@
                     <table class="table offers-show col-lg-5 col-md-5 col-sm-12 col-xs-12">
                         <tbody>
                             <tr>
+                                <th>Entreprise</th>
+                                <td style="display:flex;">
+                                    {% if offers.company.pictures.fileName is defined %}
+                                    <div class="image" style="margin-right:15px;">
+                                        <img src="{{ uploaded_asset(offers.company.pictures.fileName) }}" class="profile_picture elevation-2" alt="User Image">
+                                    </div>
+                                    {% else %}
+                                    <div style="margin-right:15px;">
+                                        <img src="https://via.placeholder.com/30" />                        
+                                    </div>
+                                    {% endif %}
+                                     {{ offers.company.companyName }}
+                                </td>
+                            </tr>
+                            <tr>
                                 <th>Location</th>
                                 <td>{{ offers.location }}</td>
                             </tr>

@@ -88,7 +88,7 @@
                     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                         {% if company.pictures.fileName is defined %}
                         <div class="image">
-                          <img src="{{ company.pictures.fileName|imagine_filter('squared_thumbnail_small') }}" class="elevation-2" alt="User Image">
+                          <img src="{{ uploaded_asset(company.pictures.fileName) }}" class="elevation-2" alt="User Image">
                         </div>
                         {% else %}
                         <div>
