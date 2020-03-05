@@ -467,3 +467,10 @@ usr/bin/php7.3-cli bin/console make:migration
 /usr/bin/php7.3-cli bin/console doctrine:migrations:migrate
                          /usr/bin/php7.3-cli bin/console doctrine:migrations:migrate
 /usr/bin/php7.3-cli bin/console doctrine:fixtures:load
+npm run 
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+nvm run node
+nvm use --delete-prefix v13.10.1
+npm run watch 
