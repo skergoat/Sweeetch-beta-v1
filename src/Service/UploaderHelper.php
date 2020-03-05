@@ -59,6 +59,7 @@ class UploaderHelper
         // dd($existingFilename);
 
         if ($existingFilename) {
+
             try {
                $result = $this->privateFilesystem->delete($existingFilename);
 
@@ -70,22 +71,6 @@ class UploaderHelper
 
         return $newFilename;
     }
-
-    // public function uploadPictures(UploadedFile $uploadedFile, ?string $existingFilename): string
-    // {
-    //     $newFilename = $this->uploads($uploadedFile, self::PROFILE_PICTURES, true);
-
-    //     if ($existingFilename) {
-    //         try {
-    //             $this->filesystem->delete($existingFilename);
-
-    //         } catch (FileNotFoundException $e) {
-    //             $this->logger->alert(sprintf('Old uploaded file "%s" was missing when trying to delete', $existingFilename));
-    //         }
-    //     }
-
-    //     return $newFilename;
-    // }
 
     private function uploads(UploadedFile $uploadedFile, string $directory, bool $isPublic)
     {

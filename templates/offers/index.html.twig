@@ -74,7 +74,7 @@
                     <div class="card-header" style="display:flex;">
                         {% if offer.company.pictures.fileName is defined %}
                         <div class="image" style="margin-right:15px;">
-                            <img src="{{ offer.company.pictures.fileName|imagine_filter('squared_thumbnail_x_small') }}" class="elevation-2" alt="User Image">
+                            <img src="{{ uploaded_asset(offer.company.pictures.fileName) }}" class="profile_picture elevation-2" alt="User Image">
                         </div>
                         {% else %}
                         <div style="margin-right:15px;">
