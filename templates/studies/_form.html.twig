@@ -1,32 +1,144 @@
+{% macro printSessionFormRow(sess) %}
+    <div href="#" class="js-remove-profile-item language-card">
+        <a href="#" class="js-remove-data pull-right">
+            <span class="fa fa-close js-remove-data" style="color:red;font-size:20px;"></span>
+        </a>
+        <div class="form-group">
+            {{ form_label(sess.title, 'Nom du diplome') }} 
+            {% if sess.title.vars.errors | length == 0 %}
+            {{ form_widget(sess.title, {'label': 'Nom du diplome', 'attr' : { class: 'form-control' }} ) }}
+            {% else %}
+            {{ form_widget(sess.title, {'label': 'Nom du diplome', 'attr' : { class: 'form-control is-invalid' }} ) }}
+            {% endif %}
+            <div class="form-error">
+                {{ form_errors(sess.title) }}
+            </div>
+        </div> {% if sess.title.vars.errors | length == 0 %}<br>{% endif %}
+       {# <div class="form-group">
+            {{ form_label(educ.school, 'Ecole') }} 
+            {% if educ.school.vars.errors | length == 0 %}
+            {{ form_widget(educ.school, {'label': 'Ecole', 'attr' : { class: 'form-control' }} ) }}
+            {% else %}
+            {{ form_widget(educ.school, {'label': 'Ecole', 'attr' : { class: 'form-control is-invalid' }} ) }}
+            {% endif %}
+            <div class="form-error">
+                {{ form_errors(educ.school) }}
+            </div>
+        </div>{% if educ.school.vars.errors | length == 0 %}<br>{% endif %}
+        <div class="form-group">
+        {{ form_row(educ.date_start, {'label':'Début'}) }}
+        </div><br>
+        <div class="form-group date-finish" >
+            {{ form_row(educ.date_end, {'label':'Fin'}) }}
+        </div><br>
+        <div class="form-group">
+            {{ form_row(educ.current, {'label':'En cours', 'attr' : { class: 'form-control put-test'}} ) }}
+        </div>#}
+        
+    </div>
+{% endmacro %}
+
+{% import _self as formSessionMacros %}
+
 {{ form_start(form) }}
 
-<div class="col-md-12">
-    <div class="card-responsive card">
+<div class="card card-primary">
+    <div class="card-body body-row">
 
-        <div class="card-body mt-2 mb-5">
+        <div class="card card-outline body-row"> 
+            <div class="col-lg-12 btn-profile" style="padding:10px;">
+                <button class="btn btn-primary" style="width:150px;">Mettre à jour</button>
+            </div>
+           
+            <div class="card-body body-row">
+  
+                <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link edit-items" id="custom-content-below-home-tab" data-toggle="pill" href="#custom-content-below-home" role="tab" aria-controls="custom-content-below-home" aria-selected="true">Général</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link edit-items" id="custom-content-below-profile-tab" data-toggle="pill" href="#custom-content-below-profile" role="tab" aria-controls="custom-content-below-profile" aria-selected="false">Sessions</a>
+                    </li>
+                    {# <li class="nav-item">
+                    <a class="nav-link edit-items" id="custom-content-below-messages-tab" data-toggle="pill" href="#custom-content-below-messages" role="tab" aria-controls="custom-content-below-messages" aria-selected="false">Formations</a>
+                    </li>#}
+                </ul>
+  
+                <div class="tab-content" id="custom-content-below-tabContent">
+                    <div class="tab-pane fade" id="custom-content-below-home" role="tabpanel" aria-labelledby="custom-content-below-home-tab">
+            
+                        <div class="col-md-12">
+                        
+                            <div class="card-body mt-2 mb-5">
+                    
+                                <div class="row">
+                                    <div class="form-group col-lg-12">
+                                        {{ form_row(form.title, {'attr' : { class: 'form-control' }} ) }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-lg-12">
+                                        {{ form_row(form.domain, {'attr' : { class: 'form-control' }} ) }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-lg-12">
+                                        {{ form_row(form.description, {'attr' : { class: 'form-control', 'rows':15 }} ) }}
+                                    </div>
+                                </div>
+                               {#<div class="row">
+                                    <div class="col-lg-12 mt-2">
+                                        <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+                                    </div>
+                                </div>#}
+                            </div>
+                        
+                        </div>
+                       
+                    </div>
+                    <div class="tab-pane fade" id="custom-content-below-profile" role="tabpanel" aria-labelledby="custom-content-below-profile-tab">
+                        
+                        <div class="col-lg-6 js-profile-wrapper" id="languages-wrapper" data-prototype="{{ formSessionMacros.printSessionFormRow(form.sessions.vars.prototype)|e('html_attr') }}"  data-index="{{ form.sessions|length }}" style="margin:auto;">
+                        
+                            <div>
+                                <h5>Créer une année scolaire :</h5><br>
 
-            <div class="row">
-                <div class="form-group col-lg-12">
-                    {{ form_row(form.title, {'attr' : { class: 'form-control' }} ) }}
+                                {% for sess in form.sessions %}
+                                {{ formLanguageMacros.printSessionFormRow(sess) }} 
+                                {% endfor %}
+                            </div>
+
+                            <a href="#" class="js-profile-add" data-url="languages-wrapper">
+                                <span class="btn btn-success">Ajouter une session</span>
+                            </a>
+
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="custom-content-below-messages" role="tabpanel" aria-labelledby="custom-content-below-messages-tab">
+                     
+                        {#<div class="col-lg-6 js-profile-wrapper" id="education-wrapper" data-prototype="{{ formEducationMacros.printEducationFormRow(form.education.vars.prototype)|e('html_attr') }}"  data-index="{{ form.education|length }}" style="margin:auto;">#}
+
+                            {# <div clqss="col-lg-6">
+                                <h5>Indiquez votre formation :</h5><br><br>
+                                
+                                {% for educ in form.education %}
+                                {{ formEducationMacros.printEducationFormRow(educ) }}
+                                {% endfor %}
+                            </div>
+
+                            <a href="#" class="js-profile-add" data-url="education-wrapper">
+                                <span class="btn btn-success">Ajouter une formation</span>
+                            </a>#}
+                        
+                       {# </div>#}
+
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-lg-12">
-                    {{ form_row(form.domain, {'attr' : { class: 'form-control' }} ) }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-lg-12">
-                    {{ form_row(form.description, {'attr' : { class: 'form-control', 'rows':15 }} ) }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12 mt-2">
-                    <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
-                </div>
+
             </div>
         </div>
-
+  
     </div>
 </div>
 
