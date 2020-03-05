@@ -71,9 +71,23 @@
 
             <div class="offers-index card col-lg-5 mr-2 ml-2 mt-2 mb-2">
                 <a  href="{{ path('offers_show', {'id': offer.id, 'page':page}) }}" class="card-link">
+                    <div class="card-header" style="display:flex;">
+                        {% if offer.company.pictures.fileName is defined %}
+                        <div class="image" style="margin-right:15px;">
+                            <img src="{{ offer.company.pictures.fileName|imagine_filter('squared_thumbnail_x_small') }}" class="elevation-2" alt="User Image">
+                        </div>
+                        {% else %}
+                        <div style="margin-right:15px;">
+                            <img src="https://via.placeholder.com/30" />                        
+                        </div>
+                        {% endif %}
+                        <div><h6 style="color: #6c757d !important">{{ offer.company.companyName }}</h6></div>
+                    </div>
                     <div class="card-body">
-                        <div class="card-text">
-                            <div><h3>{{ offer.title }}</h3> </div> 
+                        <div class="card-text"> 
+                            <div style="margin-right:20px;">
+                                <h3>{{ offer.title }}</h3>
+                            </div> 
                             <div><h5 class="card-subtitle mb-2 text-muted">{{ offer.location }}</h5></div>
                         </div>
                         {# <p class="card-text">{{ offer.description|u.truncate(200)|raw }}...</p>
