@@ -3,15 +3,35 @@
 {% block title %} {{ parent() }} - students {% endblock %}
 
 {% block body %}
-<br>
-<div class="btn-group">
-    <a href="{{ path('school_studies_index', {'id' : school.id}) }}" class="btn btn-secondary">back to list</a>
-    {{ include('studies/_delete_form.html.twig') }} 
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6">
+            <h1 class="m-0 text-dark">Modifier un Cursus</h1> <br>
+            <a href="{{ path('school_studies_index', {'id' : school.id}) }}" class="btn btn-sm btn-sm-1 btn-labeled btn-default">
+                <span class="btn-label"><i class="fa fa-chevron-left"></i></span>
+                Revenir 
+            </a>
+        </div>
+        <form class="delete-offers-form col-lg-6 " method="post" action="{{ path('studies_delete', {'id': study.id, 'school_id' : school.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ study.id) }}">
+            <button class="btn btn-danger" style="display:block;">Supprimer</button>
+        </form>
+
+        {# <form method="post" action="{{ path('studies_delete', {'id': study.id, 'school_id' : school.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ study.id) }}">
+            <button class="btn btn-danger">Delete</button>
+        </form>#}
+    </div>
+</div> <br>
+
+{% for message in app.flashes('success') %}
+<div class="alert alert-success">
+    {{ message }}
 </div>
-
-<br><br>
-
-    <h1>Edit Studies</h1>
+{% endfor %}
 
     {{ include('studies/_form.html.twig', {'button_label': 'Update'}) }}
 
