@@ -38,7 +38,7 @@ class UserFixture extends Fixture
         $superAdmin->setRoles(['ROLE_SUPER_ADMIN']);
         $superAdmin->setPassword($this->passwordEncoder->encodePassword(
             $superAdmin,
-            'ker'
+            'malaysia333?'
         ));
 
         $manager->persist($superAdmin);

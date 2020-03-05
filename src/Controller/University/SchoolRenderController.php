@@ -53,17 +53,17 @@ class SchoolRenderController extends AbstractController
         } 
     }
 
-    //  /**
-    //  * @Route("/studies/show/{id}/{school_id}", name="school_studies_show", methods={"GET"})
-    //  * @ParamConverter("school", options={"id" = "school_id"})
-    //  * @IsGranted("ROLE_SCHOOL")
-    //  */
-    // public function show(Studies $study, School $school): Response
-    // {
-    //     return $this->render('studies/show.html.twig', [
-    //         'study' => $study,
-    //         'school' => $school
-    //     ]);
-    // }
+     /**
+     * @Route("/studies/show/{id}/{school_id}", name="school_studies_show", methods={"GET"})
+     * @ParamConverter("school", options={"id" = "school_id"})
+     * @IsGranted("ROLE_SCHOOL")
+     */
+    public function show(Studies $study, School $school): Response
+    {
+        return $this->render('studies/show.html.twig', [
+            'study' => $study,
+            'school' => $school
+        ]);
+    }
 
 }
