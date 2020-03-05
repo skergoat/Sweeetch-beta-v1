@@ -1,38 +1,3 @@
-/usr/bin/php7.3-cli composer.phar require captcha-com/symfony-captcha-bundle
- /usr/bin/php7.3-cli composer.phar remove captcha-com/symfony-captcha-bundle
- /usr/bin/php7.3-cli doctrine:fixtures:load 
-/usr/bin/php7.3-cli bin/console doctrine:fixtures:load
-/usr/bin/php7.3-cli bin/console doctrine:fixtures:load
-/node_modules/.bin/encore production
-./node_modules/.bin/encore production
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
- /usr/bin/php7.3-cli bin/console doctrine:fixtures:load
-/usr/bin/php7.3-cli bin/console doctrine:fixtures:load
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-nvm use --delete-prefix v13.9.0 --silent
-nvm install node
-node 
-nvm use --delete-prefix v13.9.
-node 
-npm run build
-exit 
-./node_modules/.bin/encore production
- ./node_modules/.bin/encore production
-./node_modules/.bin/encore production
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
-nvm install node
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-nvm use --delete-prefix v13.9.0 --silent
-nvm install node
-nvm use --delete-prefix v13.9.0
-npm run build
- /usr/bin/php7.3-cli bin/console cache:clear
- /usr/bin/php7.3-cli bin/console cache:clear --env=prod
-/usr/bin/php7.3-cli bin/console cache:clear
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
  /usr/bin/php7.3-cli bin/console cache:clear
 /usr/bin/php7.3-cli bin/console cache:clear --env=prod
  /usr/bin/php7.3-cli bin/console cache:clear
@@ -498,3 +463,38 @@ nvm use --delete-prefix v13.10.1
 npm run watch
 npm run wtch
 npm run watch
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+git status 
+git add assets/js/School/components/edit-profile.js
+git add src/Entity/Session.php
+git add src/Form/SessionType.php
+git add src/Repository/SessionRepository.php
+git status 
+git commit -am 'edit and new page studies almost ok'
+git push origin master 
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console make:migration
+ /usr/bin/php7.3-cli bin/console doctrine:migrations:migrate
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console make:entity
+/usr/bin/php7.3-cli bin/consol make:migration
+/usr/bin/php7.3-cli bin/console make:migration
+/usr/bin/php7.3-cli bin/console doctrine:migration:migrate
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+git status 
+git commit -am 'sessions create ok'
+git push origin master 
+git commit -am 'session create ok'
+git push origin matser 
+git push origin master 
+/usr/bin/php7.3-cli bin/console doctrine:migration:migrate
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+git status 
+git commit -am 'aucune session poiur le moment'
+git push origin master 
+git commit -am 'cursus and session proto ok '
+git push origin master 

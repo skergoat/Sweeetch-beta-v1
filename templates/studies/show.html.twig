@@ -80,7 +80,7 @@
             </div>
 
             <div class="col-lg-12">
-                <h3 class="mb-3 mt-3 ml-1 titles-front">Sessions en cours / à venir</h3>
+                <h3 class="mb-3 mt-3 ml-1 titles-front">Candidatures</h3>
             </div>
 
             <div class="card-responsive card-body">
@@ -176,20 +176,20 @@
 
                     {% else %} #}
 
-                    {% for session in study.sessions %}
+                    {# {% for session in study.sessions %}
 
                     <tr>
                         <td>{{ session.title }}</th>
                         <td>Du {{ session.dateFrom|date("d/m/Y") }} au {{ session.dateTo|date("d/m/Y") }}</th>
                     </tr>
                     
-                    {% else %}
+                    {% else %} #}
 
                     <tr class="border-top">
-                        <td colspan="8" class="border-top-td">Aucune session pour le moment</td>
+                        <td colspan="8" class="border-top-td">Aucune candidature pour le moment</td>
                     </tr>   
                     
-                    {% endfor %}
+                    {# {% endfor %} #}
                     
                     {# {% endif %} #}
 
