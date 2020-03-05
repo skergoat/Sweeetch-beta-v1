@@ -119,51 +119,25 @@
                                     <p>
                                         Cursus
                                     </p>
-                                    {# {% if agree is defined or hired is defined or applyc is defined %}
-                                        {% if agree | length > 0 %}
-                                        <span class="badge badge-warning right" title="candidatures">A valider : {{ agree | length }}</span>
-                                        {% elseif hired | length > 0 %}
-                                        <span class="badge badge-warning right" title="candidatures">En attente : {{ hired | length }}</span>
-                                        {% elseif applyc| length > 0 %}
-                                        <span class="badge badge-primary right" title="candidatures">Candidats : {{ applyc | length }}</span>
-                                        {% endif %}
-                                    {% endif %}#}
-                                    </a>
-                               {# {% if is_granted('ROLE_SUPER_COMPANY') %}
-                                    {% if app.request.get('_route') == 'offers_company_index' or app.request.get('_route') == 'offers_new' or app.request.get('_route') == 'offers_preview' or app.request.get('_route') == 'offers_edit' or app.request.get('_route') == 'offers_company_finished' or app.request.get('_route') == 'show_applied_profile' %}
-
+                                </a>
+                                {% if is_granted('ROLE_SUPER_SCHOOL') %}
+                                    {% if app.request.get('_route') == 'school_studies_index' or app.request.get('_route') == 'studies_new' or app.request.get('_route') == 'studies_edit' or app.request.get('_route') == 'school_studies_show' %}
                                 <li class="nav nav-tree">
                                     <li class="nav-item">
-                                        <a href="{{ path('offers_company_index', {id:company.id}) }}" class="nav-link">
+                                        <a href="{{ path('school_studies_index', {id:school.id}) }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Tous</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{ path('offers_new', {id:company.id}) }}" class="nav-link">
+                                        <a href="{{ path('studies_new', {school:school.id}) }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Nouveau</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a  href="{{ path('offers_company_finished', {id:company.id}) }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Terminés</p>
-                                        {% if appliesf is defined %}
-                                            {% if appliesf | length > 0 %}
-                                            <span class="badge badge-warning right" title="candidatures">{{ appliesf | length }}</span>
-                                            {% endif %}
-                                        {% elseif applies is defined %}
-                                            {% if applies | length > 0 %}
-                                            <span class="badge badge-warning right" title="candidatures">{{ applies | length }}</span>
-                                            {% endif %}
-                                        {% endif %}
-                                        </a>
-                                    </li>
-                                </li> 
-
-                                    {% endif %} 
-                                {% endif %} #}
+                                </li>
+                                    {% endif %}
+                                {% endif %}
                             </li>
                         </ul>
                     </nav>
