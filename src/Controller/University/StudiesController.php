@@ -82,7 +82,7 @@ class StudiesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('school_studies_index', [ 'id' => $school->getId() ]);
+            // return $this->redirectToRoute('school_studies_index', [ 'id' => $school->getId() ]);
         }
 
         return $this->render('studies/edit.html.twig', [
