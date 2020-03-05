@@ -18,12 +18,6 @@
             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ study.id) }}">
             <button class="btn btn-danger" style="display:block;">Supprimer</button>
         </form>
-
-        {# <form method="post" action="{{ path('studies_delete', {'id': study.id, 'school_id' : school.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-            <input type="hidden" name="_method" value="DELETE">
-            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ study.id) }}">
-            <button class="btn btn-danger">Delete</button>
-        </form>#}
     </div>
 </div> <br>
 
@@ -33,6 +27,6 @@
 </div>
 {% endfor %}
 
-    {{ include('studies/_form.html.twig', {'button_label': 'Update'}) }}
+{{ include('studies/_form.html.twig', {'button_label': 'Enregistrer'}) }}
 
 {% endblock %}
