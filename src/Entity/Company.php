@@ -124,6 +124,11 @@ class Company
      */
     private $offers;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Pictures", inversedBy="company", cascade={"persist", "remove"})
+     */
+    private $pictures;
+
     public function __construct()
     {
         $this->offers = new ArrayCollection();
@@ -269,6 +274,18 @@ class Company
                 $offer->setCompany(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPictures(): ?Pictures
+    {
+        return $this->pictures;
+    }
+
+    public function setPictures(?Pictures $pictures): self
+    {
+        $this->pictures = $pictures;
 
         return $this;
     }

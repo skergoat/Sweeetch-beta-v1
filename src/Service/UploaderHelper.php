@@ -17,8 +17,9 @@ class UploaderHelper
     private $publicAssetBaseUrl; 
     private $privateFilesystem; #
 
-    const STUDENT_IMAGE = 'student_image';
+    // const STUDENT_IMAGE = 'student_image';
     const STUDENT_DOCUMENT = 'student_document';
+    const PROFILE_PICTURES = 'profile_pictures';
 
     public function __construct(FilesystemInterface $publicUploadsFilesystem, FilesystemInterface $privateUploadsFilesystem, RequestStackContext $requestStackContext, LoggerInterface $logger, string $uploadedAssetsBaseUrl)
     {
@@ -37,7 +38,7 @@ class UploaderHelper
 
     public function uploadFile(UploadedFile $uploadedFile, ?string $existingFilename): string
     {
-        $newFilename = $this->uploads($uploadedFile, self::STUDENT_IMAGE, true);
+        $newFilename = $this->uploads($uploadedFile, '', true);
 
         if ($existingFilename) {
             try {
@@ -69,6 +70,22 @@ class UploaderHelper
 
         return $newFilename;
     }
+
+    // public function uploadPictures(UploadedFile $uploadedFile, ?string $existingFilename): string
+    // {
+    //     $newFilename = $this->uploads($uploadedFile, self::PROFILE_PICTURES, true);
+
+    //     if ($existingFilename) {
+    //         try {
+    //             $this->filesystem->delete($existingFilename);
+
+    //         } catch (FileNotFoundException $e) {
+    //             $this->logger->alert(sprintf('Old uploaded file "%s" was missing when trying to delete', $existingFilename));
+    //         }
+    //     }
+
+    //     return $newFilename;
+    // }
 
     private function uploads(UploadedFile $uploadedFile, string $directory, bool $isPublic)
     {

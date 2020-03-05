@@ -35,7 +35,15 @@ class CompanyType extends AbstractType
             ->add('firstname', TextType::class)
             ->add('lastname', TextType::class)
             ->add('address', TextType::class)
-            ->add('zipCode', TextType::class)
+            ->add('zipCode', TextType::class, [
+                'constraints' => [ 
+                    new NotBlank(['message' => "Champ requis"]), 
+                    new Regex([
+                    'pattern' => "/^\d{5}(?:[-\s]\d{4})?$/",
+                    'message' => "Entrez un code postal valide svp"
+                    ])
+                ],
+            ])
             ->add('city', TextType::class)
             ->add('telNumber', TextType::class)
             ->add('siret', TextType::class)
