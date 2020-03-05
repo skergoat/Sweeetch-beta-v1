@@ -24,14 +24,14 @@
             <div class="form-error">
                 {{ form_errors(educ.school) }}
             </div>
-        </div>{% if educ.school.vars.errors | length == 0 %}<br>{% endif %}
+        </div>{% if educ.school.vars.errors | length == 0 %}<br>{% endif %} #}
         <div class="form-group">
-        {{ form_row(educ.date_start, {'label':'Début'}) }}
+        {{ form_row(sess.date_from, {'label':'Début'}) }}
         </div><br>
         <div class="form-group date-finish" >
-            {{ form_row(educ.date_end, {'label':'Fin'}) }}
+            {{ form_row(sess.date_to, {'label':'Fin'}) }}
         </div><br>
-        <div class="form-group">
+        {# <div class="form-group">
             {{ form_row(educ.current, {'label':'En cours', 'attr' : { class: 'form-control put-test'}} ) }}
         </div>#}
         
@@ -104,7 +104,7 @@
                                 <h5>Créer une année scolaire :</h5><br>
 
                                 {% for sess in form.sessions %}
-                                {{ formLanguageMacros.printSessionFormRow(sess) }} 
+                                {{ formSessionMacros.printSessionFormRow(sess) }} 
                                 {% endfor %}
                             </div>
 

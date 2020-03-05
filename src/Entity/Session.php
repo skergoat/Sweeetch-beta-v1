@@ -36,6 +36,11 @@ class Session
      */
     private $studies;
 
+    // /**
+    //  * @ORM\ManyToOne(targetEntity="App\Entity\Studies", inversedBy="sessions")
+    //  */
+    // private $studies;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -88,4 +93,16 @@ class Session
 
         return $this;
     }
+
+    // public function getStudies(): ?Studies
+    // {
+    //     return $this->studies;
+    // }
+
+    // public function setStudies(?Studies $studies): self
+    // {
+    //     $this->studies = $studies;
+
+    //     return $this;
+    // }
 }
