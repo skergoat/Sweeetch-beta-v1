@@ -4,8 +4,10 @@ namespace App\Controller\Company;
 
 use App\Entity\User;
 use App\Entity\Company;
+use App\Entity\Pictures;
 use App\Form\CompanyType;
 use App\Form\UpdateCompanyType;
+use App\Service\UploaderHelper;
 use App\Repository\ApplyRepository;
 use App\Service\Mailer\ApplyMailer;
 use App\Repository\OffersRepository;
@@ -102,14 +104,13 @@ class CompanyController extends AbstractController
                 'applyc' => $applyRepository->findBy(['offers' => $offers, 'refused' => 0, 'unavailable' => 0, 'confirmed' => 0, 'finished' => 0])
             ]);
         }
-
     }
 
     /**
      * @Route("/{id}/edit", name="company_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_COMPANY")
      */
-    public function edit(Request $request, Company $company, UserPasswordEncoderInterface $passwordEncoder, OffersRepository $offersRepository, ApplyRepository $applyRepository, CompanyChecker $checker): Response
+    public function edit(Request $request, Company $company, UserPasswordEncoderInterface $passwordEncoder, OffersRepository $offersRepository, ApplyRepository $applyRepository, CompanyChecker $checker, UploaderHelper $uploaderHelper): Response
     {
         if($checker->companyValid($company)) {
 
@@ -122,7 +123,28 @@ class CompanyController extends AbstractController
             $form->handleRequest($request);
             $formPassword->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid() || $formPassword->isSubmitted() && $formPassword->isValid()) {
+            if($form->isSubmitted() && $form->isValid() || $formPassword->isSubmitted() && $formPassword->isValid()) {
+
+                // dd($form['pictures']->getData());
+
+                $uploadedFile = $form['pictures']->getData();
+
+                if($uploadedFile) {
+
+                    if($company->getPictures() != null) {
+                        $newFilename = $uploaderHelper->uploadFile($uploadedFile, $company->getPictures()->getFileName());
+                    }
+                    else {
+                        $newFilename = $uploaderHelper->uploadFile($uploadedFile, null);
+                    }
+
+                    $document = new Pictures;
+                    $document->setFileName($newFilename);
+                    $document->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $newFilename);
+                    $document->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');                    
+                } 
+                
+                $company->setPictures($document);
 
                 // edit password 
                 $user = $formPassword->getData()->getUser();
