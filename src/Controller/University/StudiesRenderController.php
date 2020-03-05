@@ -17,17 +17,23 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
  * @Route("/studies")
  * @IsGranted("ROLE_SUPER_ADMIN")
  */
-class StudiesController extends AbstractController
+class StudiesRenderController extends AbstractController
 {
     // /**
     //  * @Route("/", name="studies_index", methods={"GET"})
     //  */
     // public function index(StudiesRepository $studiesRepository): Response
     // {
-    //     return $this->render('studies/index.html.twig', [
-    //         'studies' => $studiesRepository->findAll(),
-    //     ]);
+    //     return $this->render('studies/index-student.html.twig');
     // }
+
+    /**
+     * @Route("/candidate", name="studies_candidate_index", methods={"GET"})
+     */
+    public function indexCandidate(StudiesRepository $studiesRepository): Response
+    {
+        return $this->render('studies/index-student.html.twig');
+    }
 
     /**
      * @Route("/new/{school}", name="studies_new", methods={"GET","POST"})

@@ -1,22 +1,3 @@
- /usr/bin/php7.3-cli bin/console cache:clear
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
- /usr/bin/php7.3-cli bin/console cache:clear
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
-/usr/bin/php7.3-cli bin/console cache:clear
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
-/usr/bin/php7.3-cli bin/console cache:clear
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
-/usr/bin/php7.3-cli bin/console cache:clear
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
-/usr/bin/php7.3-cli bin/console cache:clear
- /usr/bin/php7.3-cli bin/console cache:clear --env=prod
- /usr/bin/php7.3-cli bin/console cache:clear
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
-/usr/bin/php7.3-cli bin/console cache:clear
- /usr/bin/php7.3-cli bin/console cache:clear --env=prod
-/usr/bin/php7.3-cli bin/console cache:clear
-/usr/bin/php7.3-cli bin/console cache:clear
- /usr/bin/php7.3-cli bin/console cache:clear --env=prod
 /usr/bin/php7.3-cli bin/console cache:clear
 /usr/bin/php7.3-cli bin/console cache:clear --env=prod
 git 
@@ -497,4 +478,23 @@ git status
 git commit -am 'aucune session poiur le moment'
 git push origin master 
 git commit -am 'cursus and session proto ok '
+git push origin master 
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+git status 
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+git status 
+git commit -am 'return before session'
+git commit -am 'before session'
+git push origin master 
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console doctrine:fixtures:load 
+ /usr/bin/php7.3-cli bin/console doctrine:fixtures:load 
+ /usr/bin/php7.3-cli bin/console doctrine:fixtures:load 
+ /usr/bin/php7.3-cli bin/console doctrine:fixtures:load 
+git status 
+git commit -am 'role student hired'
+git commit -am 'role student hired'
 git push origin master 
