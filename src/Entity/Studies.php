@@ -2,9 +2,9 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StudiesRepository")
@@ -40,7 +40,7 @@ class Studies
     private $domain;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Session", mappedBy="studies")
+     * @ORM\OneToMany(targetEntity="App\Entity\Session", mappedBy="studies", orphanRemoval=true, cascade={"persist"})
      */
     private $sessions;
 
@@ -48,6 +48,16 @@ class Studies
     {
         $this->sessions = new ArrayCollection();
     }
+
+    //  /**
+    //  * @ORM\OneToMany(targetEntity="App\Entity\Session", mappedBy="profile", orphanRemoval=true, cascade={"persist"})
+    //  */
+    // private $sessions;
+
+    // public function __construct()
+    // {
+    //     $this->sessions = new ArrayCollection();
+    // }
 
     public function getId(): ?int
     {
@@ -132,5 +142,36 @@ class Studies
 
         return $this;
     }
+
+    // /**
+    //  * @return Collection|Session[]
+    //  */
+    // public function getSessions(): Collection
+    // {
+    //     return $this->sessions;
+    // }
+
+    // public function addSession(Language $session): self
+    // {
+    //     if (!$this->sessions->contains($session)) {
+    //         $this->sessions[] = $session;
+    //         $session->setStudies($this);
+    //     }
+
+    //     return $this;
+    // }
+
+    // public function removeSession(Session $session): self
+    // {
+    //     if ($this->sessions->contains($session)) {
+    //         $this->sessions->removeElement($session);
+    //         // set the owning side to null (unless already changed)
+    //         if ($session->getStudies() === $this) {
+    //             $session->setStudies(null);
+    //         }
+    //     }
+
+    //     return $this;
+    // }
 
 }
