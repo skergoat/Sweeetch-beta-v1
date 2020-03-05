@@ -20,7 +20,7 @@ class ContactMailer
     {
         $mail = (new TemplatedEmail())
             ->from(new Address('berkani.noam@sweeetch.com', 'Sweeetch.com'))
-            ->to(new Address('infos-dev@sweeetch.com'))
+            ->to(new Address('infos-contacts@sweeetch.com'))
             ->subject('Prise de Contact')
             ->htmlTemplate('email/contact.html.twig')
             ->context([
