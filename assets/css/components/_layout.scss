@@ -109,9 +109,21 @@ h1.titles-front {
     }
 }
 
-.offers-index a {
-    display:block;
-    padding:50px;
+.offers-index {
+
+    & a {
+        display:block;
+        padding:30px;
+        padding-top:20px;
+    }
+
+    & .card-header {
+        padding:0px;
+    }
+
+    & .card-body {
+        padding-top:40px;
+    }
 }
 
 .blur {
