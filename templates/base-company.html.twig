@@ -86,9 +86,15 @@
                 <div class="sidebar">
 
                     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                        {% if company.pictures.fileName is defined %}
                         <div class="image">
                           <img src="{{ company.pictures.fileName|imagine_filter('squared_thumbnail_small') }}" class="elevation-2" alt="User Image">
                         </div>
+                        {% else %}
+                        <div>
+                            <img src="https://via.placeholder.com/50" />                        
+                        </div>
+                        {% endif %}
                         <div class="info">
                           <a href="{{ path('company_show', {'id' : company.id }) }}" class="d-block">{{ app.user.email }}</a>
                         </div>
