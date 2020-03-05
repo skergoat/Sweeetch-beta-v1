@@ -80,10 +80,10 @@
             </div>
 
             <div class="col-lg-12">
-                <h3 class="mb-3 mt-3 ml-1 titles-front">Candidatures</h3>
+                <h3 class="mb-3 mt-3 ml-1 titles-front">Sessions en cours / à venir</h3>
             </div>
 
-           {# } <div class="card-responsive card-body">
+            <div class="card-responsive card-body">
             
                 <table class="table">
                     <tbody>
@@ -92,7 +92,7 @@
                             <th>Actions</th>
                         </tr>
                     
-                    {% if applies[0] is defined %}
+                    {# {% if applies[0] is defined %}
 
                         {% for applies in applies %}
                         
@@ -174,18 +174,18 @@
 
                         {% endfor %}
 
-                    {% else %}
+                    {% else %} #}
 
                     <tr class="border-top">
-                        <td colspan="8" class="border-top-td">Aucune candidature en cours</td>
+                        <td colspan="8" class="border-top-td">Aucune session pour le moment</td>
                     </tr>    
                     
-                    {% endif %}
+                    {# {% endif %} #}
 
                     </tbody>
                 </table>
                 
-            </div> #}
+            </div> 
         </div>
     </div>
 </div>
