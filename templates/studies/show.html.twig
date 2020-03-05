@@ -88,8 +88,8 @@
                 <table class="table">
                     <tbody>
                         <tr>
-                            <th>Nom</th>
-                            <th>Actions</th>
+                            <th>Titre</th>
+                            <th>Dates</th>
                         </tr>
                     
                     {# {% if applies[0] is defined %}
@@ -176,9 +176,20 @@
 
                     {% else %} #}
 
+                    {% for session in study.sessions %}
+
+                    <tr>
+                        <td>{{ session.title }}</th>
+                        <td>Du {{ session.dateFrom|date("d/m/Y") }} au {{ session.dateTo|date("d/m/Y") }}</th>
+                    </tr>
+                    
+                    {% else %}
+
                     <tr class="border-top">
                         <td colspan="8" class="border-top-td">Aucune session pour le moment</td>
-                    </tr>    
+                    </tr>   
+                    
+                    {% endfor %}
                     
                     {# {% endif %} #}
 
