@@ -41,7 +41,7 @@
                     <thead>
                         <tr>
                             <th>Title</th>
-                            <th>Description</th>
+                            <th>Domaine</th>
                             <th>actions</th>
                         </tr>
                     </thead>
@@ -49,7 +49,7 @@
                     {% for study in studies %}
                         <tr>
                             <td><a href="{{ path('school_studies_show', {'id': study.id, school_id: study.school.id }) }}">{{ study.title }}</a></td>
-                            <td>{{ study.Description }}</td>
+                            <td>{{ study.domain }}</td>
                             <td>
                                 <a href="{{ path('studies_edit', {'id': study.id, school_id: study.school.id }) }}"><i class="fas fa-edit"></i></a>
                             </td>
