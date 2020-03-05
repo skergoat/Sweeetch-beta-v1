@@ -19,8 +19,8 @@ class ContactMailer
     public function send($mail, $name, $subject, $message)
     {
         $mail = (new TemplatedEmail())
-            ->from(new Address('berkani.noam@sweeetch.com'))
-            ->to(new Address('kergoane@gmail.com'))
+            ->from(new Address('berkani.noam@sweeetch.com', 'Sweeetch.com'))
+            ->to(new Address('infos-dev@sweeetch.com'))
             ->subject('Prise de Contact')
             ->htmlTemplate('email/contact.html.twig')
             ->context([
