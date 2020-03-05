@@ -1,8 +1,10 @@
-<form method="post" class="{{ app.request.get('_route') == 'school_index' or app.request.get('_route') == 'admin' ? 'form-icon' : '' }} form-delete" action="{% if app.request.get('_route') == 'admin' %} {{ path('school_delete', {'id': school.school.id, 'from' : 'admin'}) }} {% elseif app.request.get('_route') == 'school_edit' %} {{ path('school_delete', {'id': school.id, 'from' : 'homepage'})  }} {% endif %}" onsubmit="return confirm('Etes-vous certain de vous supprimer ce compte ?');">
+<form method="post" class="{{ app.request.get('_route') == 'school_index' or app.request.get('_route') == 'admin' ? 'form-icon' : '' }} form-delete" action="{% if app.request.get('_route') == 'admin' %} {{ path('school_delete', {'id': school.school.id, 'from' : 'admin'}) }} {% elseif app.request.get('_route') == 'school_edit' %} {{ path('school_delete', {'id': school.id, 'from' : 'homepage'})  }} {% else %} {{ path('school_delete', {'id': school.id, 'from' : 'school_index' }) }} {% endif %}" onsubmit="return confirm('Etes-vous certain de vous supprimer ce compte ?');">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ app.request.get('_route') == 'admin' ? csrf_token('delete' ~ school.school.id) : csrf_token('delete' ~ school.id) }}">
     <button class="{% if app.request.get('_route') == 'school_index' or app.request.get('_route') == 'admin' %} btn-icon {% else %} btn {% endif %} btn-danger btn-edit-form">
         {% if app.request.get('_route') == 'school_index' or app.request.get('_route') == 'admin' %} <i class="far fa-trash-alt" title="supprimer"></i> {% else %} Supprimer le compte {% endif %}
     </button>
 </form>
+
+
 
