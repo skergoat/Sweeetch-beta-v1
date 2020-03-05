@@ -8,51 +8,80 @@
 
 {% if is_granted('ROLE_SUPER_ADMIN') %} 
 
-<br>
-    <h1>Studies index</h1>
-<br>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for study in studies %}
-            <tr>
-                <td>{{ study.id }}</td>
-                <td>{{ study.title }}</td>
-                <td>{{ study.Description }}</td>
-                <td>
-                    <a href="{{ path('school_studies_show', {'id': study.id, school_id: study.school.id }) }}">show</a>
-                    <a href="{{ path('studies_edit', {'id': study.id, school_id: study.school.id }) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('studies_new', {school: school.id}) }}" class="btn btn-success">Create new</a>
-
-{% else %}
-    <br><br>
-    <div class="col-lg-8 col-sm-12 col-md-12">
-        <div class="info-box mb-3 overflow-box">
-        <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-hourglass-start"></i></span>
-
-            <div class="info-box-nopage info-box-content">
-                <span class="info-box-text">Votre compte doit être comfirmé pour vous permettre de poster des annonces</span>            
-            </div>
-            
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6">
+            <h1 class="m-0">Parcours scolaires</h1> <br>
+            <a href="{{ path('studies_new', {school: school.id}) }}" class="btn btn-success">Nouveau parcours</a>
         </div>
-    </div> 
-{% endif %}
+    </div>
+</div> <br>
+
+{% for message in app.flashes('success') %}
+<div class="alert alert-success">
+    {{ message }}
+</div>
+{% endfor %}
+
+{% for message in app.flashes('error') %}
+<div class="alert alert-danger">
+    {{ message }}
+</div>
+{% endfor %}
+
+<div class="col-md-12">
+
+    <div class="card card-responsive-table">
+
+        <div class="pagination-bottom mb-4 mt-4"></div>
+
+            <div class="card-body p-0">
+
+                <table class="table-offers table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for study in studies %}
+                        <tr>
+                            <td><a href="{{ path('school_studies_show', {'id': study.id, school_id: study.school.id }) }}">{{ study.title }}</a></td>
+                            <td>{{ study.Description }}</td>
+                            <td>
+                                <a href="{{ path('studies_edit', {'id': study.id, school_id: study.school.id }) }}"><i class="fas fa-edit"></i></a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+            {% else %}
+                <br><br>
+                <div class="col-lg-8 col-sm-12 col-md-12">
+                    <div class="info-box mb-3 overflow-box">
+                    <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-hourglass-start"></i></span>
+
+                        <div class="info-box-nopage info-box-content">
+                            <span class="info-box-text">Votre compte doit être comfirmé pour vous permettre de poster des annonces</span>            
+                        </div>
+                        
+                    </div>
+                </div> 
+            {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock %}
