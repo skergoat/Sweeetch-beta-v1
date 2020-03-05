@@ -119,10 +119,16 @@ h1.titles-front {
 
     & .card-header {
         padding:0px;
+
+        & h6 {
+            padding-top: 5px;
+            padding-bottom: 5px;
+            margin-bottom:15px;
+        }
     }
 
     & .card-body {
-        padding-top:40px;
+        padding-top:50px;
     }
 }
 
