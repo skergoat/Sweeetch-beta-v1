@@ -1,41 +1,3 @@
-/usr/bin/php7.3-cli ../composer.phar require sensiolabs/security-checker
-/usr/bin/php7.3-cli ../composer.phar require sensiolabs/security-checker
-/usr/bin/php7.3-cli ../composer.phar symfony/requirements-checker
-/usr/bin/php7.3-cli ../composer.phar  require symfony/requirements-checker
- /usr/bin/php7.3-cli ../composer.phar remove symfony/requirements-checker
-ssh u100184406@access819313697.webspace-data.io
-ssh u100184406@access819313697.webspace-data.io
-git clone https://github.com/skergoat/Sweeetch.git
-/usr/bin/php7.3-cli composer.phar update
-php bin/console cache:clear
-php bin/console cache:clear --env=prod
-nvm
-/usr/bin/php7.3-cli composer.phar require symfony/requirements-checker
-cd /etc/php7.3/
-ls 
-nano php.ini
-nano php.ini
-cd /etc/php7.3/
-nano php.ini
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
-cd /etc/
-ls 
-nano profile
-nano profile
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-node
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-nvm
-nvm install node
-nvm use --delete-prefix v13.9.0
-node 
-ls 
-exit 
-ls 
-node 
 nvm
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
 export NVM_DIR="$HOME/.nvm"
@@ -498,3 +460,41 @@ git status
 git commit -am 'header studies pages'
 git push origin master 
 /usr/bin/php7.3-cli bin/console cache:clear --env=prod/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+git status 
+git commit -am 'studies layout'
+git commit -am 'studies layout'
+git push origin master 
+ /usr/bin/php7.3-cli bin/console make:entity
+ /usr/bin/php7.3-cli bin/console make:migration
+/usr/bin/php7.3-cli bin/console doctrine:migrations:migrate
+ /usr/bin/php7.3-cli bin/console make:migration
+/usr/bin/php7.3-cli bin/console doctrine:migrations:migrate
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+git status 
+git commit -am 'edit studies form ok'
+git puh origin master 
+git push origin master
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+git status 
+git commit -am 'some modifs on scholls form'
+git push origin master 
+git status 
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+it status 
+git status 
+git commit -am 'final styles studies'
+git push origin master 
+/usr/bin/php7.3-cli bin/console make:entity
+/usr/bin/php7.3-cli bin/console make:migration
+/usr/bin/php7.3-cli bin/console doctrine:migrations:migrate
+/usr/bin/php7.3-cli bin/console make:form 
+bin/console make:entity
+/usr/bin/php7.3-cli bin/console make:entity
+/usr/bin/php7.3-cli bin/console make:entity
+/usr/bin/php7.3-cli bin/console make:entity
+/usr/bin/php7.3-cli bin/console make:migration
+/usr/bin/php7.3-cli bin/console doctrine:migrations:migrate

@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Studies;
+use App\Form\SessionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -12,15 +13,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class StudiesType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $titleConstraints = [
-            new NotBlank([
-                'message' => 'Veuillez entrer un titre, svp',
-            ]),
+            // new NotBlank([
+            //     'message' => 'Veuillez entrer un titre, svp',
+            // ]),
             new Length([
                 'min' => '2',
                 'max' => '50',
@@ -33,14 +35,15 @@ class StudiesType extends AbstractType
             ]),
         ];
 
-        $descConstraints = [
-            new NotBlank([
-                'message' => 'Veuillez entrer une description, svp',
-            ]),
-        ];
+        // $descConstraints = [
+        //     new NotBlank([
+        //         'message' => 'Veuillez entrer une description, svp',
+        //     ]),
+        // ];
 
         $builder
             ->add('title', TextType::class, [
+                'required' => false,
                 'constraints' => $titleConstraints
             ])
             ->add('domain', ChoiceType::class, [
@@ -68,8 +71,15 @@ class StudiesType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => '',
                 'required' => false,
-                'constraints' => $descConstraints
+                // 'constraints' => $descConstraints
             ])
+            ->add('sessions', CollectionType::class, array(
+                'entry_type' => SessionType::class,
+                'allow_delete' => true,
+                'allow_add' => true,
+                'by_reference' => false,
+                'label' => false
+            ))
         ;
     }
 
