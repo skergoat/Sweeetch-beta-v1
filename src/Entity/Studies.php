@@ -39,15 +39,15 @@ class Studies
      */
     private $domain;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Session", mappedBy="studies", orphanRemoval=true, cascade={"persist"})
-     */
-    private $sessions;
+    // /**
+    //  * @ORM\OneToMany(targetEntity="App\Entity\Session", mappedBy="studies", orphanRemoval=true, cascade={"persist"})
+    //  */
+    // private $sessions;
 
-    public function __construct()
-    {
-        $this->sessions = new ArrayCollection();
-    }
+    // public function __construct()
+    // {
+    //     $this->sessions = new ArrayCollection();
+    // }
 
     //  /**
     //  * @ORM\OneToMany(targetEntity="App\Entity\Session", mappedBy="profile", orphanRemoval=true, cascade={"persist"})
@@ -112,36 +112,36 @@ class Studies
         return $this;
     }
 
-    /**
-     * @return Collection|Session[]
-     */
-    public function getSessions(): Collection
-    {
-        return $this->sessions;
-    }
+    // /**
+    //  * @return Collection|Session[]
+    //  */
+    // public function getSessions(): Collection
+    // {
+    //     return $this->sessions;
+    // }
 
-    public function addSession(Session $session): self
-    {
-        if (!$this->sessions->contains($session)) {
-            $this->sessions[] = $session;
-            $session->setStudies($this);
-        }
+    // public function addSession(Session $session): self
+    // {
+    //     if (!$this->sessions->contains($session)) {
+    //         $this->sessions[] = $session;
+    //         $session->setStudies($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeSession(Session $session): self
-    {
-        if ($this->sessions->contains($session)) {
-            $this->sessions->removeElement($session);
-            // set the owning side to null (unless already changed)
-            if ($session->getStudies() === $this) {
-                $session->setStudies(null);
-            }
-        }
+    // public function removeSession(Session $session): self
+    // {
+    //     if ($this->sessions->contains($session)) {
+    //         $this->sessions->removeElement($session);
+    //         // set the owning side to null (unless already changed)
+    //         if ($session->getStudies() === $this) {
+    //             $session->setStudies(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     // /**
     //  * @return Collection|Session[]

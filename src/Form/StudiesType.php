@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Studies;
-use App\Form\SessionType;
+// use App\Form\SessionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -73,13 +73,13 @@ class StudiesType extends AbstractType
                 'required' => false,
                 // 'constraints' => $descConstraints
             ])
-            ->add('sessions', CollectionType::class, array(
-                'entry_type' => SessionType::class,
-                'allow_delete' => true,
-                'allow_add' => true,
-                'by_reference' => false,
-                'label' => false
-            ))
+            // ->add('sessions', CollectionType::class, array(
+            //     'entry_type' => SessionType::class,
+            //     'allow_delete' => true,
+            //     'allow_add' => true,
+            //     'by_reference' => false,
+            //     'label' => false
+            // ))
         ;
     }
 
