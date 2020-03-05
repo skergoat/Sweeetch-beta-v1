@@ -56,7 +56,7 @@ class StudiesController extends AbstractController
         return $this->render('studies/new.html.twig', [
             'study' => $study,
             'form' => $form->createView(),
-            'school' => $school->getId()
+            'school' => $school
         ]);
     }
 
