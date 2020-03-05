@@ -12,9 +12,9 @@
         <link href="{{ asset('build/favicon.png') }}" rel="icon">
         <link href="{{ asset('build/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
-        {#<script src="https://cdn.tiny.cloud/1/wscb7rdrlan56zedv3ooukb16xb5136jcxtqv1u85x1lfu9f/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+        {#<script src="https://cdn.tiny.cloud/1/wscb7rdrlan56zedv3ooukb16xb5136jcxtqv1u85x1lfu9f/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>#}
 
-        <!-- <script src="https://cdn.ckeditor.com/ckeditor5/17.0.0/classic/ckeditor.js"></script> -->
+        <script src="https://cdn.ckeditor.com/ckeditor5/17.0.0/classic/ckeditor.js"></script>
     
        <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script> 
         <!-- // <script src="//cdn.ckeditor.com/4.13.1/full/ckeditor.js"></script> -->#}
@@ -158,24 +158,12 @@
 
             {{ encore_entry_script_tags('school') }}
 
-           {# <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-
            <script>
                 tinymce.init({
                     selector: 'textarea'
                 });
             </script>
 
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-
-            <script>
-                $(document).ready(function() {
-                    $('.js-datepicker').datepicker({
-                        format: 'dd-mm-yyyy'
-                    });
-                });
-            </script> #}
-            
         {% endblock %}
 
     </body>

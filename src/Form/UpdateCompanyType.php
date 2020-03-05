@@ -67,6 +67,7 @@ class UpdateCompanyType extends AbstractType
                 ->add('pictures', FileType::class, [
                     'required' => false,
                     'mapped' => false,
+                    'label' => '',
                     'constraints' => $imageConstraints
                 ])
         ;

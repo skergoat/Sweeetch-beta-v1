@@ -12,7 +12,7 @@
         <link href="{{ asset('build/favicon.png') }}" rel="icon">
         <link href="{{ asset('build/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
-        <script src="https://cdn.tiny.cloud/1/wscb7rdrlan56zedv3ooukb16xb5136jcxtqv1u85x1lfu9f/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+        {# <script src="https://cdn.tiny.cloud/1/wscb7rdrlan56zedv3ooukb16xb5136jcxtqv1u85x1lfu9f/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>#}
 
         <!-- <script src="https://cdn.ckeditor.com/ckeditor5/17.0.0/classic/ckeditor.js"></script> -->
     
@@ -134,7 +134,7 @@
                                         <span class="badge badge-primary right" title="candidatures">Candidats : {{ applyc | length }}</span>
                                         {% endif %}
                                     {% endif %}
-                                    </a>
+                                </a>
                                 {% if is_granted('ROLE_SUPER_COMPANY') %}
                                     {% if app.request.get('_route') == 'offers_company_index' or app.request.get('_route') == 'offers_new' or app.request.get('_route') == 'offers_preview' or app.request.get('_route') == 'offers_edit' or app.request.get('_route') == 'offers_company_finished' or app.request.get('_route') == 'show_applied_profile' %}
 

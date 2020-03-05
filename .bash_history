@@ -1,44 +1,3 @@
-npm run build
-nvm install node
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-node 
-nvm
-nvm install node
-node 
-nvm use node
-node 
-nvm use --delete-prefix v13.9.0
-node 
-npm run build
-npm run build
-npm run build
-npm install yarn
-yarn 
-npm build
-npm run build
-kjhkh
-exit 
-git clone https://github.com/skergoat/Sweeetch.git
-curl -sS https://getcomposer.org/installer | /usr/bin/php7.3-cli
-cd sweeetch
-cd Sweeetch
-/usr/bin/php7.3-cli ../composer.phar update
-/usr/bin/php7.3-cli ../composer.phar update
-exit 
-git clone 21aed7cbdbbb6303351acb16be5cda79f1b8e836
-git clone https://github.com/skergoat/Sweeetch.git
-cd Sweeetch
-/usr/bin/php7.3-cli ../composer.phar update
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
-touch .bash_profile
- ~/.bash_profile
-exit 
-git clone https://github.com/skergoat/Sweeetch.git
-cd Sweeetch
-/usr/bin/php7.3-cli composer.phar update
-/usr/bin/php7.3-cli ../composer.phar update
 /usr/bin/php7.3-cli ../composer.phar require sensiolabs/security-checker
 /usr/bin/php7.3-cli ../composer.phar require sensiolabs/security-checker
 /usr/bin/php7.3-cli ../composer.phar symfony/requirements-checker
@@ -474,3 +433,68 @@ export NVM_DIR="$HOME/.nvm"
 nvm run node
 nvm use --delete-prefix v13.10.1
 npm run watch 
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/consol doctrine:fixtures:load 
+ /usr/bin/php7.3-cli bin/console doctrine:fixtures:load 
+/usr/bin/php7.3-cli bin/console doctrine:fixtures:load 
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console doctrine:fixtures:load 
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+git status 
+git add .
+git add .bash_history
+git commit -am 'begin school'
+git push origin master 
+git pull
+git push origin master 
+git branch 
+git branch test
+git push origin test 
+git branch save 
+git push orgin save 
+git push origin save 
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+git status 
+git commit -am 'index school table'
+git push origin master 
+git branch 
+git push origin mater 
+git push origin master 
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+git status 
+git commit -am 'menu base school'
+git push origin master 
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod/usr/bin/php7.3-cli bin/console cache:clear --env=prod /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+git status 
+git commit -am 'header studies pages'
+git push origin master 
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod/usr/bin/php7.3-cli bin/console cache:clear --env=prod

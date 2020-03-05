@@ -32,6 +32,11 @@ class Studies
      */
     private $school;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $domain;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -72,4 +77,17 @@ class Studies
 
         return $this;
     }
+
+    public function getDomain(): ?string
+    {
+        return $this->domain;
+    }
+
+    public function setDomain(string $domain): self
+    {
+        $this->domain = $domain;
+
+        return $this;
+    }
+
 }
