@@ -45,10 +45,12 @@ class SchoolFixtures extends Fixture
 
                 $offer1 = new Studies;
                 $offer1->setTitle('developpeur web'); 
+                $offer1->setDomain('domaine 1'); 
                 $offer1->setDescription('developpeur web'); 
             
                 $offer2 = new Studies;
-                $offer2->setTitle('developpeur php'); 
+                $offer2->setTitle('developpeur php');
+                $offer2->setDomain('domaine 2');  
                 $offer2->setDescription('developpeur web'); 
 
                 $offer1->setSchool($ca);

@@ -267,7 +267,7 @@ class ApplyActionsController extends AbstractController
          
         //  $mailer->sendConfirmMessage($email, $name, $offerTitle); 
 
-        $student->getUser()->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_HIRED']);
+        $student->getUser()->setRoles(['ROLE_STUDENT_HIRED']);
 
         if($this->isCsrfTokenValid('confirm'.$apply->getId(), $request->request->get('_token'))) {
 
