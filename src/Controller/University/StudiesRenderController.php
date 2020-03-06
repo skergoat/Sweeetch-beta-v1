@@ -3,8 +3,10 @@
 namespace App\Controller\University;
 
 use App\Entity\School;
+use App\Entity\Student;
 use App\Entity\Studies;
 use App\Form\StudiesType;
+use App\Repository\ApplyRepository;
 use App\Repository\StudiesRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -62,13 +64,17 @@ class StudiesRenderController extends AbstractController
     }
 
     /**
-    * @Route("/show/hired/{id}", name="show_student_hired", methods={"GET"})
+    * @Route("/show/hired/{id}/student/{student}", name="show_student_hired", methods={"GET"})
     * @IsGranted("ROLE_STUDENT_HIRED")
+    * @ParamConverter("student", options={"id" = "student"})
     */
-    public function showHired(Studies $studies)
+    public function showHired(Studies $studies, Student $student, ApplyRepository $applyRepository)
     {
         return $this->render('studies/show_hired.html.twig', [
             'studies' => $studies,
+            'student' => $student,
+            'fresh' => $applyRepository->findByStudentByFresh($student),
+            'hired' => $applyRepository->checkIfHired($student)
         ]);  
     }
 
