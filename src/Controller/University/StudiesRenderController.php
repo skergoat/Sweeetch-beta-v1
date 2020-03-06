@@ -79,6 +79,21 @@ class StudiesRenderController extends AbstractController
     }
 
     /**
+    * @Route("/show/applied/{id}/{school}/{study}", name="show_student_applied", methods={"GET"})
+    * @IsGranted("ROLE_SUPER_SCHOOL")
+    * @ParamConverter("school", options={"id" = "school"})
+    * @ParamConverter("study", options={"id" = "study"})
+    */
+    public function showApplied(Student $student, School $school, Studies $study)
+    {
+        return $this->render('studies/show-applied.html.twig', [
+            'student' => $student,
+            'school' => $school,
+            'study' => $study
+        ]);
+    }
+
+    /**
      * @Route("/new/{school}", name="studies_new", methods={"GET","POST"})
      */
     public function new(Request $request, School $school): Response

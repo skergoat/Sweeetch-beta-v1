@@ -1,19 +1,3 @@
-npm run build
-npm run build
-npm run build
-npm run build
-npm run build
-/usr/bin/php7.3-cli bin/console doctrine:fixtures:load 
- /usr/bin/php7.3-cli bin/console doctrine:fixtures:load 
-/usr/bin/php7.3-cli bin/console cache:clear
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
-/usr/bin/php7.3-cli bin/console cache:clear
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
-/usr/bin/php7.3-cli bin/console cache:clear
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
-/usr/bin/php7.3-cli bin/console cache:clear
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
-usr/bin/php7.3-cli bin/console cache:clear
 ssh u100184406@access819313697.webspace-data.io
 /usr/bin/php7.3-cli bin/console cache:clear
 /usr/bin/php7.3-cli bin/console cache:clear --env=prod
@@ -498,3 +482,19 @@ git add templates/studies/show_hired.html.twig
 git commit -am 'display studies profile to student'
 git push origin master 
   /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console cache:clear
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+git status 
+git add templates/studies/index_student.html.twig
+git commit -am 'at last'
+git push origin master 

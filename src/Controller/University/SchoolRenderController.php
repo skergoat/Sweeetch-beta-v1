@@ -62,11 +62,12 @@ class SchoolRenderController extends AbstractController
      * @ParamConverter("school", options={"id" = "school_id"})
      * @IsGranted("ROLE_SUPER_SCHOOL")
      */
-    public function show(Studies $study, School $school): Response
+    public function show(Studies $study, School $school, RecruitRepository $recruitRepository): Response
     {
         return $this->render('studies/show.html.twig', [
             'study' => $study,
-            'school' => $school
+            'school' => $school,
+            'recruit' => $recruitRepository->findBy(['studies' => $study])
         ]);
     }
 
