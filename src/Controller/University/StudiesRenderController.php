@@ -28,11 +28,14 @@ class StudiesRenderController extends AbstractController
     // }
 
     /**
-     * @Route("/candidate", name="studies_candidate_index", methods={"GET"})
+     * @Route("/candidate/{from}/{id}", name="studies_candidate_index", methods={"GET"})
      */
-    public function indexCandidate(StudiesRepository $studiesRepository): Response
+    public function indexCandidate(StudiesRepository $studiesRepository, $from, $id): Response
     {
-        return $this->render('studies/index-student.html.twig');
+        return $this->render('studies/index-student.html.twig', [
+            'from' => $from,
+            'id' => $id
+        ]);
     }
 
     /**

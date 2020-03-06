@@ -1,21 +1,5 @@
 /usr/bin/php7.3-cli bin/console cache:clear
 /usr/bin/php7.3-cli bin/console cache:clear --env=prod
-git 
-git branch 
-git branch prod 
-git checkout prod
-git branch 
-git add .
-git commit -am 'prod'
-git config --global user.name skergoatweb@gmail.com
-git config --global user.email 
- git config --global user.name skergoat
-git config --global user.email skergoatweb@gmail.com
- git commit --amend --reset-author
-git add .
-git status 
-/usr/bin/php7.3-cli bin/console cache:clear
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
 /usr/bin/php7.3-cli bin/console cache:clear
 /usr/bin/php7.3-cli bin/console cache:clear --env=prod
 /usr/bin/php7.3-cli bin/console cache:clear
@@ -497,4 +481,20 @@ git push origin master
 git status 
 git commit -am 'role student hired'
 git commit -am 'role student hired'
+git push origin master 
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+git status 
+git add src/Controller/University/StudiesActionController.php
+git addsrc/Controller/University/StudiesRenderController.php
+git add src/Controller/University/StudiesRenderController.php
+git status 
+git commit -am 'index studies candidate'
 git push origin master 
