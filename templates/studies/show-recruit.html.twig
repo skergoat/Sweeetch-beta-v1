@@ -103,22 +103,8 @@
                     {# {% if is_granted('ROLE_USER') %}
                     <p>{{ offers.description|raw }}</p>
                     {% else %} #}
-                    <div class="blur">
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean mattis posuere nisl, vel fermentum mauris semper id. Cras nec fermentum nibh. Maecenas hendrerit fringilla lacinia. Morbi interdum interdum mi, eleifend suscipit quam efficitur quis. In ultrices nibh vel neque viverra, ut dignissim ante aliquam. Etiam iaculis orci ac tellus sodales efficitur. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed congue sapien quis nulla maximus pharetra. Morbi gravida ac orci vel lobortis. Vivamus molestie pretium felis, gravida vulputate turpis interdum eget. Nam tincidunt gravida eros, ac placerat eros posuere vitae. Proin suscipit eu lectus eget tempor. Fusce et volutpat libero, id vestibulum mi. Nunc at mauris eros.
-                        </p>
-                        <p>
-                            Praesent quis risus eget mauris dapibus aliquet. Nulla volutpat egestas ligula ut congue. Quisque eu aliquet lacus. Donec nec dolor nec libero interdum malesuada vel sed ex. Nullam mattis diam sed massa egestas, ac venenatis lorem tristique. Etiam consectetur augue sed odio maximus tristique. Sed sit amet aliquam eros. Donec imperdiet purus quis lectus dictum, ut fringilla tellus consectetur. Fusce efficitur risus vitae tempus mollis. Etiam sit amet convallis ipsum, eu ullamcorper lectus. Sed ut nulla quam. Etiam viverra magna nec pulvinar tempus. Donec eu metus eu nunc mattis malesuada. Morbi laoreet gravida tortor, eget volutpat sem vestibulum vel. Pellentesque convallis, massa eget cursus lacinia, metus orci tincidunt erat, vitae mollis lorem nisl vitae nibh.
-                        </p>
-                        <p>
-                            Donec ultrices dapibus nibh, eu dignissim dui elementum eu. Morbi mi quam, iaculis malesuada enim id, semper eleifend est. Sed id maximus nisl. Proin laoreet neque sed molestie malesuada. Integer eros felis, tristique ut viverra pellentesque, aliquet eu tellus. Donec fermentum elit at ipsum pretium, vitae ornare arcu consequat. Nullam a sapien maximus, mollis leo pellentesque, faucibus risus. Praesent venenatis, libero sit amet mollis pharetra, tellus massa mattis leo, eget mattis odio purus eget augue. Praesent ac ex et lectus tempor sagittis. Duis mauris nisi, dapibus in hendrerit in, blandit et augue. Nunc pellentesque ipsum sit amet semper auctor. Vivamus mollis velit et turpis tempor, nec elementum urna convallis. Ut ut nibh quis metus congue pretium non semper nibh.
-                        </p>
-                        <p>
-                            Nunc urna leo, placerat finibus tortor sit amet, finibus tempus odio. Integer eu fermentum lectus. Morbi et auctor nibh, eget fringilla ligula. Nullam finibus finibus diam ac aliquam. Maecenas pulvinar risus nec nisi rhoncus, et sollicitudin diam aliquet. Sed ac purus sed nisl dapibus pretium eget id eros. Aliquam arcu leo, vestibulum eu fringilla sit amet, egestas at lacus.
-                        </p>
-                        <p>
-                            Proin mollis egestas justo, vel interdum leo vestibulum in. Sed pretium mi dolor, dapibus tempus tortor ullamcorper sit amet. Suspendisse potenti. Nunc consectetur vel felis vitae efficitur. Sed a velit pharetra, gravida eros sit amet, consequat purus. Sed ut nunc eget nisi suscipit auctor vestibulum eu nisi. Morbi sed dolor at ante hendrerit venenatis pellentesque vitae erat. Aliquam tincidunt velit non ligula posuere congue non venenatis velit. In arcu purus, vehicula et finibus at, mattis vel tortor. Morbi sit amet rutrum metus. Curabitur lacinia posuere magna, quis volutpat justo efficitur nec. Vestibulum tristique mollis sapien sit amet maximus. Donec lectus turpis, fringilla in metus sed, cursus hendrerit enim. Nunc aliquet porttitor sollicitudin. Phasellus quis felis erat.
-                        </p>
+                    <div>
+                        <p>{{ study.description | raw }}</p>
                     </div>
                    {# {% endif %} #}
                 </div>
@@ -162,7 +148,7 @@
                     {% endif %}
                     
                 {% else %} #}
-                    <a href="{{ path('student_new') }}" class="btn btn-success">S'inscrire pour voir l'annonce</a>
+                    <a href="{{ path('student_new') }}" class="btn btn-success">Postuler</a>
                 {# {% endif %} #}
             </div>
         </div>
