@@ -1,14 +1,4 @@
 /usr/bin/php7.3-cli bin/console cache:clear --env=prod
- /usr/bin/php7.3-cli bin/console cache:clear
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
- /usr/bin/php7.3-cli bin/console cache:clear
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
- /usr/bin/php7.3-cli bin/console cache:clear
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
-sudo apt-get install curl software-properties-common
-node 
- /usr/bin/php7.3-cli bin/console cache:clear
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
 npm run build
  /usr/bin/php7.3-cli bin/console cache:clear
 /usr/bin/php7.3-cli bin/console cache:clear --env=prod
@@ -498,3 +488,13 @@ git push origin master
 /usr/bin/php7.3-cli bin/console cache:clear --env=prod
 /usr/bin/php7.3-cli bin/console make:entity
 ssh u100184406@access819313697.webspace-data.io
+/usr/bin/php7.3-cli bin/console make:entity
+/usr/bin/php7.3-cli bin/console make:entity
+/usr/bin/php7.3-cli bin/console make:migration
+bin/console doctrine:migrations:migrate
+/usr/bin/php7.3-cli bin/console doctrine:migrations:migrate
+git status 
+git add src/Entity/Recruit.php
+git commit -am 'recruit entity'
+git push origin master 
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod/usr/bin/php7.3-cli bin/console cache:clear --env=prod

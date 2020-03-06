@@ -5,8 +5,7 @@
 
 {% block body %}
 
-    {# {% if is_granted('ROLE_HIRED') %} #}
-    {% if is_granted('ROLE_SUPER_ADMIN') %}
+    {% if is_granted('ROLE_STUDENT_HIRED') %}
 
     <div class="container-fluid">
         <div class="row">
