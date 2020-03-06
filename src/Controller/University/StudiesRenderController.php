@@ -62,6 +62,17 @@ class StudiesRenderController extends AbstractController
     }
 
     /**
+    * @Route("/show/hired/{id}", name="show_student_hired", methods={"GET"})
+    * @IsGranted("ROLE_STUDENT_HIRED")
+    */
+    public function showHired(Studies $studies)
+    {
+        return $this->render('studies/show_hired.html.twig', [
+            'studies' => $studies,
+        ]);  
+    }
+
+    /**
      * @Route("/new/{school}", name="studies_new", methods={"GET","POST"})
      */
     public function new(Request $request, School $school): Response
