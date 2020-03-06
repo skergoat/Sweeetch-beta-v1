@@ -43,6 +43,7 @@
                     </ul>
                 </nav>
             </div>
+
         </header>
 
         <h1 class="titles-front">{{ study.title }}</h1>
@@ -84,6 +85,14 @@
                             <td>{{ offers.location }}</td>
                         </tr>#}
                         <tr>
+                            <th>Ecole</th>
+                            <td>{{ study.school.companyName }}</td>
+                        </tr>
+                        <tr>
+                            <th>Titre</th>
+                            <td>{{ study.title }}</td>
+                        </tr>
+                        <tr>
                             <th>Domaine</th>
                             <td>{{ study.domain }}</td>
                         </tr>
@@ -107,8 +116,7 @@
                         <p>{{ study.description | raw }}</p>
                     </div>
                    {# {% endif %} #}
-                </div>
-        
+
                 {# {% if is_granted('ROLE_USER') %}
 
                     {% if app.user.student.id is defined %}
@@ -149,6 +157,7 @@
                     
                 {% else %} #}
                     <a href="{{ path('student_new') }}" class="btn btn-success">Postuler</a>
+                </div>
                 {# {% endif %} #}
             </div>
         </div>
