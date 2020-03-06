@@ -7,6 +7,7 @@ use App\Entity\Recruit;
 use App\Entity\Student;
 use App\Entity\Studies;
 use App\Form\StudiesType;
+use App\Repository\RecruitRepository;
 use App\Repository\StudiesRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +26,7 @@ class StudiesActionController extends AbstractController
      * @IsGranted("ROLE_STUDENT_HIRED")
      * @ParamConverter("student", options={"id" = "student_id"})
      */
-    public function recruit(Studies $studies, Student $student, Request $request)
+    public function recruit(Studies $studies, Student $student, Request $request, RecruitRepository $recruitRepository)
     {
         // check if apply is open to current offer
         // $hired = $repository->findBy(['offers' => $offers, 'hired' => 1]);
@@ -49,10 +50,10 @@ class StudiesActionController extends AbstractController
         //     return $this->redirectToRoute('offers_show', ['id' => $offers->getId(), 'page' => $page]);
         // }
 
-        // check if student have already applied to current offer 
-        // $applies = $repository->checkIfRowExsists($offers, $student);
+        // check if student have already applied to current studies 
+        $recruit = $recruitRepository->findBy(['studies' => $studies, 'student' => $student]);
 
-        // if($applies) {  
+        if($recruit) {  
 
         //     $refused = $repository->checkIfrefusedExsists($offers, $student);
             
@@ -61,10 +62,10 @@ class StudiesActionController extends AbstractController
         //         return $this->redirectToRoute('offers_show', ['id' => $offers->getId(), 'page' => $page]);
         //     }
         //     else {
-        //         $this->addFlash('error', 'Vous avez déjà postulé');
-        //         return $this->redirectToRoute('offers_show', ['id' => $offers->getId(), 'page' => $page]);
+                $this->addFlash('error', 'Vous avez déjà postulé');
+                return $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'from' => 'student', 'from_id' => $student->getId()]);
         //     }  
-        // }
+        }
 
         // if($applies) {
         //     $this->addFlash('error', 'Offre Indisponible');
