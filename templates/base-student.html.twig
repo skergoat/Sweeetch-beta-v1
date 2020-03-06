@@ -178,6 +178,32 @@
                                         Formations 
                                     </p>
                                 </a>
+
+                                {% if is_granted('ROLE_SUPER_STUDENT') %}
+                                    {% if app.request.get('_route') == 'school_student_index' %}
+
+                                <li class="nav nav-tree">
+                                    <li class="nav-item">
+                                        <a href="{{ path('school_student_index', { id:student.id }) }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Toutes</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Terminées</p>
+                                        {% if finished is defined %}
+                                            {% if finished | length > 0 %}
+                                        <span class="right badge badge-warning">{{ finished | length }}</span>
+                                            {% endif %}
+                                        {% endif %}
+                                        </a>
+                                    </li>
+                                </li>
+
+                                    {% endif %} 
+                                {% endif %}
                             </li>
                         </ul>
                     </nav>

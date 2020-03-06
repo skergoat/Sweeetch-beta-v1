@@ -1,10 +1,3 @@
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
-/usr/bin/php7.3-cli bin/console doctrine:fixtures:load 
-/usr/bin/php7.3-cli bin/console doctrine:fixtures:load
-/usr/bin/php7.3-cli bin/console cache:clear
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
-/usr/bin/php7.3-cli bin/console cache:clear
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
 /usr/bin/php7.3-cli bin/console cache:clear
 /usr/bin/php7.3-cli bin/console cache:clear --env=prod
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
@@ -498,3 +491,10 @@ git push origin master
 /usr/bin/php7.3-cli bin/console doctrine:fixtures:load
 $ /usr/bin/php7.3-cli bin/console doctrine:fixtures:load
 /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+usr/bin/php7.3-cli bin/console cache:clear --env=prod
+usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console doctrine:fixtures:load
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+git sttaus 
