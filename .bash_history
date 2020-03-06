@@ -1,26 +1,4 @@
 npm run build
- /usr/bin/php7.3-cli bin/console cache:clear --env=prod
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod/usr/bin/php7.3-cli bin/console cache:clear --env=prod
-ssh u100184406@access819313697.webspace-data.io
- /usr/bin/php7.3-cli bin/console cache:clear --env=prod
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
-/usr/bin/php7.3-cli bin/console cache:clear
- /usr/bin/php7.3-cli bin/console cache:clear --env=prod
-npm
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-nvm use --delete-prefix v13.9.0 --silen
-npm run build
-npm run build
-npm run build
-npm run build
-npm run build
 npm run build
 npm run build
 npm run build
@@ -498,3 +476,25 @@ git add src/Repository/RecruitRepository.php
 git status 
 git commit -am 'recruit action base'
 git push origin master 
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+git status 
+git commit -am 'already recruit ok'
+git push origin master 
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+git status 
+git add templates/studies/show_hired.html.twig
+git commit -am 'display studies profile to student'
+git push origin master 
+  /usr/bin/php7.3-cli bin/console cache:clear --env=prod

@@ -180,7 +180,7 @@
                                 </a>
 
                                 {% if is_granted('ROLE_STUDENT_HIRED') %}
-                                    {% if app.request.get('_route') == 'school_student_index' %}
+                                    {% if app.request.get('_route') == 'school_student_index' or app.request.get('_route') == 'show_student_hired' %}
 
                                 <li class="nav nav-tree">
                                     <li class="nav-item">
