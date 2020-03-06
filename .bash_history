@@ -1,13 +1,3 @@
-/usr/bin/php7.3-cli bin/console cache:clear
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
-/usr/bin/php7.3-cli bin/console cache:clear
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
-/usr/bin/php7.3-cli bin/console cache:clear
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
-/usr/bin/php7.3-cli bin/console doctrine:fixtures:load 
-/usr/bin/php7.3-cli bin/console cache:clear
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
-/usr/bin/php7.3-cli bin/console cache:clear
 /usr/bin/php7.3-cli bin/console cache:clear --env=prod
 /usr/bin/php7.3-cli bin/console doctrine:fixtures:load 
 /usr/bin/php7.3-cli bin/console doctrine:fixtures:load
@@ -498,3 +488,13 @@ git add src/Controller/University/StudiesRenderController.php
 git status 
 git commit -am 'index studies candidate'
 git push origin master 
+git status 
+git commit -am 'display sudies page ok'
+git push origin master 
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console doctrine:fixtures:load 
+/usr/bin/php7.3-cli bin/console doctrine:fixtures:load
+/usr/bin/php7.3-cli bin/console doctrine:fixtures:load
+$ /usr/bin/php7.3-cli bin/console doctrine:fixtures:load
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod

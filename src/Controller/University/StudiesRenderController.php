@@ -6,6 +6,7 @@ use App\Entity\School;
 use App\Entity\Studies;
 use App\Form\StudiesType;
 use App\Repository\StudiesRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,11 +31,32 @@ class StudiesRenderController extends AbstractController
     /**
      * @Route("/candidate/{from}/{id}", name="studies_candidate_index", methods={"GET"})
      */
-    public function indexCandidate(StudiesRepository $studiesRepository, $from, $id): Response
+    public function indexCandidate(StudiesRepository $studiesRepository, PaginatorInterface $paginator, Request $request, $from, $id): Response
     {
+        $queryBuilder = $studiesRepository->findAll();
+
+        $pagination = $paginator->paginate(
+            $queryBuilder, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            6/*limit per page*/
+        );
+
         return $this->render('studies/index-student.html.twig', [
+            'studies' => $pagination,
             'from' => $from,
             'id' => $id
+        ]);
+    } 
+
+    /**
+    * @Route("/show/recruit/{id}/{from}/{from_id}", name="studies_show_recruit", methods={"GET"})
+    */
+    public function showRecruit(Studies $study, $from, $from_id) 
+    {
+        return $this->render('studies/show-recruit.html.twig', [
+            'study' => $study,
+            'from' => $from,
+            'from_id' => $from_id
         ]);
     }
 
@@ -107,7 +129,6 @@ class StudiesRenderController extends AbstractController
      */
     public function delete(Request $request, Studies $study, School $school): Response
     {
-
         if ($this->isCsrfTokenValid('delete'.$study->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($study);
