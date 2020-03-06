@@ -127,25 +127,6 @@ ul.pagination {
     }
 }
 
-td a.btn-modal {
-    padding:7px;
-
-    & i {
-        background:#6C757D;
-        color:white;
-        position:relative;
-        top:-3px;
-    } 
-
-    &-warning {
-        color:#FFC756;
-    }
-}
-
-.jquery-modal.blocker.current {
-    z-index:9999;
-}
-
 .alert.alert-success {
     background:#76C381;
     border:1px solid #76C381;

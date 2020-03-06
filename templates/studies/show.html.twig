@@ -98,7 +98,11 @@
                         <tr>
                             <td><a href="{{ path('show_student_applied', {id:recruit.student.id, school:school.id, study:study.id}) }}">{{ recruit.student.Name }} {{ recruit.student.lastName }}</a></td>
                             <td>Ouvert</td>
-                            <td>Action</td>
+                            <td>
+                                <a href="#help-1" rel="modal:open" class="btn-modal btn-icon-form btn-icon btn-secondary" title="aide">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </td>
                         </tr>
 
                     {% else %}

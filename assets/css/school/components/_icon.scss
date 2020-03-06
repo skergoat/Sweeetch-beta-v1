@@ -84,6 +84,7 @@
 /* admin */
 
 .btn-icon {
+    display:block;
     height:30px;
     width:30px;
     border-radius:100px;
@@ -108,4 +109,24 @@
         display:flex;
         justify-content:center;
     }
+}
+
+
+td a.btn-modal {
+    padding:7px;
+
+    & i {
+        background:#6C757D;
+        color:white;
+        position:relative;
+        top:-3px;
+    } 
+
+    &-warning {
+        color:#FFC756;
+    }
+}
+
+.jquery-modal.blocker.current {
+    z-index:9999;
 }

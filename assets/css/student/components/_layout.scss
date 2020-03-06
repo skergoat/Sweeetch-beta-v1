@@ -103,41 +103,6 @@ td.border-top-td {
     font-style:italic;
 }
 
-
-/* modal */
-
-.modal {
-    position:relative;
-    overflow:scroll;
-    padding-top:40px;
-    padding-bottom:40px;
-    height:auto;
-
-    & a.close-modal {
-        top:5px;
-        right:5px;
-    }
-}
-
-td a.btn-modal {
-    padding:7px;
-
-    & i {
-        background:#6C757D;
-        color:white;
-        position:relative;
-        top:-3px;
-    } 
-
-    &-warning {
-        color:#FFC756;
-    }
-}
-
-.jquery-modal.blocker.current {
-    z-index:9999;
-}
-
 // label.required {
 //     display:none;
 // }
