@@ -121,7 +121,7 @@
                                     </p>
                                 </a>
                                 {% if is_granted('ROLE_SUPER_SCHOOL') %}
-                                    {% if app.request.get('_route') == 'school_studies_index' or app.request.get('_route') == 'studies_new' or app.request.get('_route') == 'studies_edit' or app.request.get('_route') == 'school_studies_show' %}
+                                    {% if app.request.get('_route') == 'school_studies_index' or app.request.get('_route') == 'studies_new' or app.request.get('_route') == 'studies_edit' or app.request.get('_route') == 'school_studies_show' or app.request.get('_route') == 'show_student_applied' %}
                                 <li class="nav nav-tree">
                                     <li class="nav-item">
                                         <a href="{{ path('school_studies_index', {id:school.id}) }}" class="nav-link">

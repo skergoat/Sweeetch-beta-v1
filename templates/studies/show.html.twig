@@ -88,10 +88,26 @@
                 <table class="table">
                     <tbody>
                         <tr>
-                            <th>Titre</th>
-                            <th>Dates</th>
+                            <th>Nom</th>
+                            <th>Etat</th>
+                            <th>Actions</th>
                         </tr>
                     
+                    {% for recruit in recruit %}
+
+                        <tr>
+                            <td><a href="{{ path('show_student_applied', {id:recruit.student.id, school:school.id, study:study.id}) }}">{{ recruit.student.Name }} {{ recruit.student.lastName }}</a></td>
+                            <td>Ouvert</td>
+                            <td>Action</td>
+                        </tr>
+
+                    {% else %}
+
+                        <tr class="border-top">
+                            <td colspan="8" class="border-top-td">Aucune candidature pour le moment</td>
+                        </tr>  
+
+                    {% endfor %}
                     {# {% if applies[0] is defined %}
 
                         {% for applies in applies %}
@@ -183,11 +199,7 @@
                         <td>Du {{ session.dateFrom|date("d/m/Y") }} au {{ session.dateTo|date("d/m/Y") }}</th>
                     </tr>
                     
-                    {% else %} #}
-
-                    <tr class="border-top">
-                        <td colspan="8" class="border-top-td">Aucune candidature pour le moment</td>
-                    </tr>   
+                    {% else %} #} 
                     
                     {# {% endfor %} #}
                     
