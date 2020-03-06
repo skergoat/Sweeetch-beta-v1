@@ -7,6 +7,7 @@ use App\Entity\Student;
 use App\Entity\Studies;
 use App\Repository\ApplyRepository;
 use App\Repository\SchoolRepository;
+use App\Repository\RecruitRepository;
 use App\Repository\StudiesRepository;
 use App\Service\UserChecker\SchoolChecker;
 use App\Service\UserChecker\StudentChecker;
@@ -24,7 +25,7 @@ class SchoolRenderController extends AbstractController
 {
      /**
      * @Route("/studies/index/{id}", name="school_studies_index", methods={"GET"})
-     * @IsGranted("ROLE_SCHOOL")
+     * @IsGranted("ROLE_SUPER_SCHOOL")
      */
     public function index(StudiesRepository $studiesRepository, School $school, SchoolChecker $checker): Response
     {
@@ -39,14 +40,17 @@ class SchoolRenderController extends AbstractController
 
     /**
      * @Route("/student/{id}", name="school_student_index", methods={"GET"})
-     * @IsGranted("ROLE_STUDENT")
+     * @IsGranted("ROLE_SUPER_STUDENT")
      */
-    public function indexByStudent(Student $student, SchoolRepository $schoolRepository, ApplyRepository $applyRepository, StudentChecker $checker): Response
+    public function indexByStudent(Student $student, RecruitRepository $recruitRepository, SchoolRepository $schoolRepository, ApplyRepository $applyRepository, StudentChecker $checker): Response
     {
+        $recruit = $recruitRepository->findBy(['student' => $student]);
+
         if ($checker->studentValid($student)) {
 
             return $this->render('school/index_student.html.twig', [
                 'student' => $student,
+                'recruit' => $recruit,
                 'fresh' => $applyRepository->findByStudentByFresh($student),
                 'hired' => $applyRepository->checkIfHired($student)
             ]);
@@ -56,7 +60,7 @@ class SchoolRenderController extends AbstractController
      /**
      * @Route("/studies/show/{id}/{school_id}", name="school_studies_show", methods={"GET"})
      * @ParamConverter("school", options={"id" = "school_id"})
-     * @IsGranted("ROLE_SCHOOL")
+     * @IsGranted("ROLE_SUPER_SCHOOL")
      */
     public function show(Studies $study, School $school): Response
     {

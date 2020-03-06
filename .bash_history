@@ -1,24 +1,3 @@
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
-npm run build
- /usr/bin/php7.3-cli bin/console cache:clear
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
-/usr/bin/php7.3-cli bin/console cache:clear
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
-/usr/bin/php7.3-cli bin/console cache:clear
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
-/usr/bin/php7.3-cli bin/console cache:clear
- /usr/bin/php7.3-cli bin/console cache:clear --env=prod
-/usr/bin/php7.3-cli bin/console cache:clear
- // Clearing the cache for the prod environment with debug false                                                        
-                          /usr/bin/php7.3-cli bin/console cache:clear --env=prod
-npm run build 
-/usr/bin/php7.3-cli bin/console cache:clear
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
- /usr/bin/php7.3-cli bin/console cache:clear
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
-npm run build
-/usr/bin/php7.3-cli bin/console cache:clear
- /usr/bin/php7.3-cli bin/console cache:clear --env=prod
 npm run build
  /usr/bin/php7.3-cli bin/console cache:clear --env=prod
 /usr/bin/php7.3-cli bin/console cache:clear --env=prod
@@ -498,3 +477,24 @@ git add src/Entity/Recruit.php
 git commit -am 'recruit entity'
 git push origin master 
 /usr/bin/php7.3-cli bin/console cache:clear --env=prod/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console cache:clear --env=prod
+ /usr/bin/php7.3-cli bin/console cache:clear
+/usr/bin/php7.3-cli bin/console cache:clear
+/usr/bin/php7.3-cli bin/console doctrine:fixtures:load 
+ /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+/usr/bin/php7.3-cli bin/console doctrine:fixtures:load 
+git status 
+git add src/Repository/RecruitRepository.php
+git status 
+git commit -am 'recruit action base'
+git push origin master 
