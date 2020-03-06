@@ -157,11 +157,17 @@ class Student
      */
     private $applies;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Recruit", mappedBy="student", orphanRemoval=true)
+     */
+    private $recruits;
+
 
     public function __construct()
     {
         $this->offers = new ArrayCollection();
         $this->applies = new ArrayCollection();
+        $this->recruits = new ArrayCollection();
     }
 
 
@@ -369,6 +375,37 @@ class Student
             // set the owning side to null (unless already changed)
             if ($apply->getStudent() === $this) {
                 $apply->setStudent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Recruit[]
+     */
+    public function getRecruits(): Collection
+    {
+        return $this->recruits;
+    }
+
+    public function addRecruit(Recruit $recruit): self
+    {
+        if (!$this->recruits->contains($recruit)) {
+            $this->recruits[] = $recruit;
+            $recruit->setStudent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecruit(Recruit $recruit): self
+    {
+        if ($this->recruits->contains($recruit)) {
+            $this->recruits->removeElement($recruit);
+            // set the owning side to null (unless already changed)
+            if ($recruit->getStudent() === $this) {
+                $recruit->setStudent(null);
             }
         }
 

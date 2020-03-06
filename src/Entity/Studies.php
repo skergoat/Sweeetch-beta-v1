@@ -39,6 +39,16 @@ class Studies
      */
     private $domain;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Recruit", mappedBy="studies", orphanRemoval=true)
+     */
+    private $recruits;
+
+    public function __construct()
+    {
+        $this->recruits = new ArrayCollection();
+    }
+
     // /**
     //  * @ORM\OneToMany(targetEntity="App\Entity\Session", mappedBy="studies", orphanRemoval=true, cascade={"persist"})
     //  */
@@ -108,6 +118,37 @@ class Studies
     public function setDomain(string $domain): self
     {
         $this->domain = $domain;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Recruit[]
+     */
+    public function getRecruits(): Collection
+    {
+        return $this->recruits;
+    }
+
+    public function addRecruit(Recruit $recruit): self
+    {
+        if (!$this->recruits->contains($recruit)) {
+            $this->recruits[] = $recruit;
+            $recruit->setStudies($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecruit(Recruit $recruit): self
+    {
+        if ($this->recruits->contains($recruit)) {
+            $this->recruits->removeElement($recruit);
+            // set the owning side to null (unless already changed)
+            if ($recruit->getStudies() === $this) {
+                $recruit->setStudies(null);
+            }
+        }
 
         return $this;
     }
