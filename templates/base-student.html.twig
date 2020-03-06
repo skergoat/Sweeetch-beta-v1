@@ -179,7 +179,7 @@
                                     </p>
                                 </a>
 
-                                {% if is_granted('ROLE_SUPER_STUDENT') %}
+                                {% if is_granted('ROLE_STUDENT_HIRED') %}
                                     {% if app.request.get('_route') == 'school_student_index' %}
 
                                 <li class="nav nav-tree">

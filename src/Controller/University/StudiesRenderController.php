@@ -16,7 +16,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * @Route("/studies")
- * @IsGranted("ROLE_SUPER_ADMIN")
  */
 class StudiesRenderController extends AbstractController
 {
@@ -30,6 +29,7 @@ class StudiesRenderController extends AbstractController
 
     /**
      * @Route("/candidate/{from}/{id}", name="studies_candidate_index", methods={"GET"})
+     * @IsGranted("ROLE_RECRUIT")
      */
     public function indexCandidate(StudiesRepository $studiesRepository, PaginatorInterface $paginator, Request $request, $from, $id): Response
     {
@@ -50,6 +50,7 @@ class StudiesRenderController extends AbstractController
 
     /**
     * @Route("/show/recruit/{id}/{from}/{from_id}", name="studies_show_recruit", methods={"GET"})
+    * @IsGranted("ROLE_RECRUIT")
     */
     public function showRecruit(Studies $study, $from, $from_id) 
     {
