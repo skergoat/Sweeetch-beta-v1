@@ -31,84 +31,62 @@ class ApplyActionsController extends AbstractController
      * @IsGranted("ROLE_SUPER_STUDENT")
      * @ParamConverter("student", options={"id" = "student_id"})
      */
-    public function apply(ApplyRepository $repository, Offers $offers, Student $student, ApplyMailer $mailer, StudentChecker $checker, Request $request, $page)
+    public function apply(ApplyRepository $repository, Offers $offers, Student $student, ApplyMailer $mailer, StudentChecker $checker, Request $request, ApplyHelper $helper, $page)
     {
-        // if($checker->studentValid($student)) 
-        // {
-            // check if apply is open to current offer
-            $hired = $repository->findBy(['offers' => $offers, 'hired' => 1]);
-            $agree = $repository->findBy(['offers' => $offers, 'agree' => 1]);
-            $confirmed = $repository->findBy(['offers' => $offers, 'confirmed' => 1]);
-            $finished = $repository->findBy(['offers' => $offers, 'finished' => 1]);
+        // check if apply is open to current offer
+        $hired = $repository->findBy(['offers' => $offers, 'hired' => 1]);
+        $agree = $repository->findBy(['offers' => $offers, 'agree' => 1]);
+        $confirmed = $repository->findBy(['offers' => $offers, 'confirmed' => 1]);
+        $finished = $repository->findBy(['offers' => $offers, 'finished' => 1]);
 
-            if($hired || $agree || $confirmed || $finished) {  
-                $this->addFlash('error', 'Offre Indisponible');
-                return $this->redirectToRoute('offers_index');
-            }
+        if($hired || $agree || $confirmed || $finished) {  
+            $this->addFlash('error', 'Offre Indisponible');
+            return $this->redirectToRoute('offers_index');
+        }
 
-            // check if student is available
-            $hired2 = $repository->findBy(['student' => $student, 'hired' => 1]);
-            $agree2 = $repository->findBy(['student' => $student, 'agree' => 1]);
-            $confirmed2 = $repository->findBy(['student' => $student, 'confirmed' => 1]);
-            // $finished2 = $repository->findBy(['student' => $student, 'finished' => 1]);
-
-            if($hired2 || $agree2 || $confirmed2) {
-                $this->addFlash('error', 'Vous êtes déjà embauché ailleurs. Rendez-vous sur votre profil.');
-                return $this->redirectToRoute('offers_show', ['id' => $offers->getId(), 'page' => $page]);
-            }
-
-            // check if student have already applied to current offer 
-            $applies = $repository->checkIfRowExsists($offers, $student);
-
-            if($applies) {  
-
-                $refused = $repository->checkIfrefusedExsists($offers, $student);
-                
-                if($refused) {
-                    $this->addFlash('error', 'Offre Indisponible');
-                    return $this->redirectToRoute('offers_show', ['id' => $offers->getId(), 'page' => $page]);
-                }
-                else {
-                    $this->addFlash('error', 'Vous avez déjà postulé');
-                    return $this->redirectToRoute('offers_show', ['id' => $offers->getId(), 'page' => $page]);
-                }  
-            }
-
-            if($applies) {
-                $this->addFlash('error', 'Offre Indisponible');
-                return $this->redirectToRoute('offers_show', ['id' => $offers->getId(), 'page' => $page]);
-            }
-
-            // send notification to company 
-            // $email = $offers->getCompany()->getUser()->getEmail();
-            // $name = $offers->getCompany()->getFirstname();
-            // $offerTitle = $offers->getTitle();
-
-            // $mailer->sendApplyMessage($email, $name, $offerTitle);
-
-            $apply = new Apply; 
-            $apply->setHired(false);
-            $apply->setConfirmed(false);
-            $apply->setRefused(false);
-            $apply->setUnavailable(false);
-            $apply->setFinished(false);
-            $apply->setAgree(false);
-            $apply->setOffers($offers);
-            $apply->setStudent($student);
-
-            if($this->isCsrfTokenValid('apply'.$student->getId(), $request->request->get('_token'))) {
-                $manager = $this->getDoctrine()->getManager();
-                $manager->persist($apply);
-                $manager->flush();
-            }
-            else {
-                throw new \Exception('Utilisateur Invalide');
-            }
-
-            $this->addFlash('success', 'Postulation enregistrée !');
-    
+        // check if student is already hired
+        if($helper->checkAgree($student) || $helper->checkConfirmed($student)) {
+            $this->addFlash('error', 'Vous êtes déjà embauché ailleurs. Rendez-vous sur votre profil.');
             return $this->redirectToRoute('offers_show', ['id' => $offers->getId(), 'page' => $page]);
-    //    }
+
+        }
+
+        // check if student have already applied to current offer 
+        if($helper->checkRecruit($offers, $student) || $helper->checkRefused($offers, $student)) {  
+            $this->addFlash('error', 'Vous avez déjà postulé');
+            return $this->redirectToRoute('offers_show', ['id' => $offers->getId(), 'page' => $page]);
+        }
+
+        // send notification to company 
+        // $email = $offers->getCompany()->getUser()->getEmail();
+        // $name = $offers->getCompany()->getFirstname();
+        // $offerTitle = $offers->getTitle();
+
+        // $mailer->sendApplyMessage($email, $name, $offerTitle);
+
+        $apply = new Apply; 
+        $apply->setHired(false);
+        $apply->setConfirmed(false);
+        $apply->setRefused(false);
+        $apply->setUnavailable(false);
+        $apply->setFinished(false);
+        $apply->setAgree(false);
+        $apply->setOffers($offers);
+        $apply->setStudent($student);
+
+        if($this->isCsrfTokenValid('apply'.$student->getId(), $request->request->get('_token'))) {
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($apply);
+            $manager->flush();
+        }
+        else {
+            throw new \Exception('Utilisateur Invalide');
+        }
+
+        $this->addFlash('success', 'Postulation enregistrée !');
+
+        return $this->redirectToRoute('offers_show', ['id' => $offers->getId(), 'page' => $page]);
+ 
     }
 
     /**
@@ -122,34 +100,27 @@ class ApplyActionsController extends AbstractController
         $offers = $apply->getOffers();
 
         // check if student is available
-        $hired2 = $repository->findBy(['student' => $student, 'hired' => 1]);
-        $agree2 = $repository->findBy(['student' => $student, 'agree' => 1]);
-        $confirmed2 = $repository->findBy(['student' => $student, 'confirmed' => 1]);
-        // $finished2 = $repository->findBy(['student' => $student, 'finished' => 1]);
-
-        if($hired2 || $agree2 || $confirmed2) {
-            $this->addFlash('error', 'Cet étudiant n\'est plus disponile');
-            return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
+        if($helper->checkAgree($student) || $helper->checkConfirmed($student)) {
+            $this->addFlash('error', 'Cet étudiant n\'est plus disponible.');
+            return $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
         }
+
+        // // check if student is available
+        // $hired2 = $repository->findBy(['student' => $student, 'hired' => 1]);
+        // $agree2 = $repository->findBy(['student' => $student, 'agree' => 1]);
+        // $confirmed2 = $repository->findBy(['student' => $student, 'confirmed' => 1]);
+        // // $finished2 = $repository->findBy(['student' => $student, 'finished' => 1]);
+
+        // if($hired2 || $agree2 || $confirmed2) {
+        //     $this->addFlash('error', 'Cet étudiant n\'est plus disponile');
+        //     return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
+        // }
 
         // hire
         $helper->hire($apply);
 
         // close offer 
         $offers->setState(true);
-
-        // prevent student from applying 
-        // $student->getUser()->setRoles(['ROLE_SUPER_STUDENT']);
-
-        // set other student offers to unavailable
-        $unavailables = $repository->setToUnavailables($offers, $student);
-
-        foreach($unavailables as $unavailables) {
-
-            if($unavailables->getRefused() != true && $unavailables->getFinished() != true) {
-                $unavailables->setUnavailable(true);
-            }  
-        }
 
         // send notification to student 
         // $email = $apply->getStudent()->getUser()->getEmail();
@@ -177,8 +148,7 @@ class ApplyActionsController extends AbstractController
 
                     // delete other applies 
                     $entityManager->remove($others);   
-                }
-        
+                }   
             }
               // save 
               $entityManager->flush();
@@ -198,45 +168,33 @@ class ApplyActionsController extends AbstractController
      */
     public function agree(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer, Request $request, StudentChecker $checker, ApplyHelper $helper)
     {
-        // if($checker->applyValid($apply)) 
-        // {
-            // set apply state 
-            // if(    $apply->getHired() == true 
-            //     && $apply->getConfirmed() == false 
-            //     && $apply->getRefused() == false 
-            //     && $apply->getAgree() == false
-            // ) {
-            //     $apply->setHired(false);
-            //     $apply->setConfirmed(false);
-            //     $apply->setRefused(false);
-            //     $apply->setAgree(true);
-            // }
-
-            $helper->agree($apply);
-
-            // get other applies
-            $student = $apply->getStudent();
-            $offers = $apply->getOffers();
-
-            // send notification to student 
-            // $email = $student->getUser()->getEmail();
-            // $name = $student->getName();
-            // $offerTitle = $offers->getTitle(); 
-            
-            // $mailer->sendAgreeMessage($email, $name, $offerTitle); 
-
-            if($this->isCsrfTokenValid('agree'.$apply->getId(), $request->request->get('_token'))) {
-                $this->getDoctrine()->getManager()->flush();
-            }
-            else {
-                throw new \Exception('Demande Invalide');
-            }
-
-            $this->addFlash('success', 'offre acceptée');
-
-            return $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
+        // get entities
+        $student = $apply->getStudent();
+        $offers = $apply->getOffers();
         
-        // }
+        // agree
+        $helper->agree($apply);
+
+        // set to unavailable
+        $helper->unavailables($offers, $student);
+
+        // send notification to student 
+        // $email = $student->getUser()->getEmail();
+        // $name = $student->getName();
+        // $offerTitle = $offers->getTitle(); 
+        
+        // $mailer->sendAgreeMessage($email, $name, $offerTitle); 
+
+        if($this->isCsrfTokenValid('agree'.$apply->getId(), $request->request->get('_token'))) {
+            $this->getDoctrine()->getManager()->flush();
+        }
+        else {
+            throw new \Exception('Demande Invalide');
+        }
+
+        $this->addFlash('success', 'offre acceptée');
+
+        return $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
     }
 
     /**
@@ -248,9 +206,9 @@ class ApplyActionsController extends AbstractController
         // confirm 
         $helper->confirm($apply);
 
-         // get other applies
-         $student = $apply->getStudent();
-         $offers = $apply->getOffers();
+        // get other applies
+        $student = $apply->getStudent();
+        $offers = $apply->getOffers();
 
          // send notification to student 
         //  $email = $student->getUser()->getEmail();

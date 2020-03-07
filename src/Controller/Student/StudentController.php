@@ -146,7 +146,7 @@ class StudentController extends AbstractController
             return $this->render('student/show.html.twig', [
                 'student' => $student,
                 'applies' => $applyRepository->findByStudent($student),
-                'finished' => $applyRepository->findByStudentByFinished($student),
+                'finished' => $applyRepository->findBy(['student' => $student, 'finished' => true]),
                 'fresh' => $applyRepository->findByStudentByFresh($student),
                 'hired' => $applyRepository->checkIfHired($student)
             ]);

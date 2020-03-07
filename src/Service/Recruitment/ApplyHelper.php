@@ -17,13 +17,28 @@ class ApplyHelper extends CommonHelper
         $this->session = $session;
     }
 
-    public function checkIfAlreadyRecruit($offers, $student)
+    public function checkRecruit($offers, $student)
     {
         return $this->applyRepository->findBy(['offers' => $offers, 'student' => $student]);
 
         // if($already) {
         //     $this->session->getFlashBag()->add('error', 'Vous avez déjà postulé');
         // }
+    }
+
+    public function checkRefused($offers, $student)
+    {
+        return $this->applyRepository->findBy(['offers' => $offers, 'student' => $student, 'refused' => true]);
+    }
+
+    public function checkAgree($student)
+    {
+        return $this->applyRepository->findBy(['student' => $student, 'agree' => 1]);
+    }
+
+    public function checkConfirmed($student)
+    {
+        return  $this->applyRepository->findBy(['student' => $student, 'confirmed' => 1]);
     }
 
     public function unavailables($offers, $student)

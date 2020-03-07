@@ -34,14 +34,11 @@ class ApplyRenderController extends AbstractController
      */
     public function indexByStudent(StudentRepository $repository, applyRepository $applyRepository, Student $student, StudentChecker $checker)
     {   
-        if ($checker->studentValid($student)) {
-            $applies = $applyRepository->findByStudent($student);
-            $finished = $applyRepository->findByStudentByFinished($student);
-        
+        if ($checker->studentValid($student)) {    
             return $this->render('apply/index_student.html.twig', [
                 'student' => $student,
-                'applies' => $applies,
-                'finished' => $finished,
+                'applies' => $applyRepository->findBy(['student' => $student, 'refused' => false, 'unavailable' => false], ['hired' => 'desc']),
+                'finished' => $applyRepository->findBy(['student' => $student, 'finished' => true]),
                 'fresh' =>  $applyRepository->findByStudentByFresh($student),
                 'hired' => $applyRepository->checkIfHired($student)
             ]);
