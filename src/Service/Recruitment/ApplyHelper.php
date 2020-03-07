@@ -49,6 +49,11 @@ class ApplyHelper extends CommonHelper
 
             if($unavailables->getRefused() != true) {
                 $unavailables->setUnavailable(true);
+                
+                if($unavailables->getHired() == true) {
+                    $unavailables->setHired(false);
+                }
+                
             }  
         }
     }
