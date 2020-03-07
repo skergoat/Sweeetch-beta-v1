@@ -11,6 +11,7 @@ use App\Service\Mailer\ApplyMailer;
 use App\Repository\OffersRepository;
 use App\Repository\CompanyRepository;
 use App\Repository\StudentRepository;
+use App\Service\Recruitment\ApplyHelper;
 use App\Service\UserChecker\StudentChecker;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -114,7 +115,7 @@ class ApplyActionsController extends AbstractController
      * @Route("/hire/{id}", name="hire", methods={"POST"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
-    public function hire(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer, Request $request)
+    public function hire(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer, Request $request, ApplyHelper $helper)
     {   
         // get users
         $student = $apply->getStudent();
@@ -131,12 +132,8 @@ class ApplyActionsController extends AbstractController
             return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
         }
 
-        // set apply state 
-        if($apply->getHired() == false && $apply->getConfirmed() == false) {
-            $apply->setHired(true);
-            $apply->setConfirmed(false);
-            $apply->setRefused(false);
-        }
+        // hire
+        $helper->hire($apply);
 
         // close offer 
         $offers->setState(true);
@@ -199,21 +196,23 @@ class ApplyActionsController extends AbstractController
      * @Route("/agree/{id}", name="agree", methods={"POST"})
      * @IsGranted("ROLE_SUPER_STUDENT")
      */
-    public function agree(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer, Request $request, StudentChecker $checker)
+    public function agree(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer, Request $request, StudentChecker $checker, ApplyHelper $helper)
     {
         // if($checker->applyValid($apply)) 
         // {
             // set apply state 
-            if(    $apply->getHired() == true 
-                && $apply->getConfirmed() == false 
-                && $apply->getRefused() == false 
-                && $apply->getAgree() == false
-            ) {
-                $apply->setHired(false);
-                $apply->setConfirmed(false);
-                $apply->setRefused(false);
-                $apply->setAgree(true);
-            }
+            // if(    $apply->getHired() == true 
+            //     && $apply->getConfirmed() == false 
+            //     && $apply->getRefused() == false 
+            //     && $apply->getAgree() == false
+            // ) {
+            //     $apply->setHired(false);
+            //     $apply->setConfirmed(false);
+            //     $apply->setRefused(false);
+            //     $apply->setAgree(true);
+            // }
+
+            $helper->agree($apply);
 
             // get other applies
             $student = $apply->getStudent();
@@ -233,6 +232,8 @@ class ApplyActionsController extends AbstractController
                 throw new \Exception('Demande Invalide');
             }
 
+            $this->addFlash('success', 'offre acceptée');
+
             return $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
         
         // }
@@ -242,19 +243,10 @@ class ApplyActionsController extends AbstractController
      * @Route("/confirm/{id}", name="confirm", methods={"POST"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
-    public function confirm(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer, Request $request)
+    public function confirm(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer, Request $request, ApplyHelper $helper)
     {
-        // set apply state 
-        if(    $apply->getHired() == false 
-            && $apply->getConfirmed() == false 
-            && $apply->getRefused() == false 
-            &&  $apply->getAgree() == true 
-        ) {
-            $apply->setHired(false);
-            $apply->setConfirmed(true);
-            $apply->setRefused(false);
-            $apply->setAgree(false);
-        }
+        // confirm 
+        $helper->confirm($apply);
 
          // get other applies
          $student = $apply->getStudent();
@@ -332,10 +324,10 @@ class ApplyActionsController extends AbstractController
     }
 
      /**
-     * @Route("/refuse/{id}/{from}", name="apply_refuse", methods={"POST"})
+     * @Route("/refuse/{id}", name="apply_refuse", methods={"POST"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
-    public function refuse(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer, Request $request, $from)
+    public function refuse(ApplyRepository $repository, Apply $apply, ApplyMailer $mailer, Request $request, ApplyHelper $helper)
     {
         // get users
         $student = $apply->getStudent();
@@ -346,9 +338,8 @@ class ApplyActionsController extends AbstractController
             return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
         }
 
-        $apply->setHired(false);
-        $apply->setConfirmed(false);
-        $apply->setRefused(true);
+        // refuse
+        $helper->refuse($apply);
 
         // set appliant roles 
         $user = $apply->getStudent()->getUser();
@@ -385,14 +376,15 @@ class ApplyActionsController extends AbstractController
             throw new \Exception('Demande Invalide');
         }
 
-        if($from == 'student') {
-            $return = $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
-        }
-        else if($from == 'company') {
-            $return = $this->redirectToRoute('offers_company_index', ['id' => $apply->getOffers()->getCompany()->getId()]);
-        }
+        $this->addFlash('success', 'Candidat refusée');
+        // if($from == 'student') {
+        //     $return = $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
+        // }
+        // else if($from == 'company') {
+        return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
+        // }
 
-        return $return;
+     
     }
 
     /**
@@ -447,7 +439,7 @@ class ApplyActionsController extends AbstractController
                 throw new \Exception('Candidature Invalide');
             }
 
-            $this->addFlash('success', 'Postulation supprimée !');
+            $this->addFlash('success', 'Candidature supprimée !');
 
             return $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
         // }

@@ -3,12 +3,13 @@
 namespace App\Service\Recruitment;
 
 use App\Repository\RecruitRepository;
+use App\Service\Recruitment\CommonHelper;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 // use Symfony\Component\Security\Core\Security;
 // use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 // use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-class RecruitHelper
+class RecruitHelper extends CommonHelper
 {
     private $recruitRepository; 
     private $session;
@@ -26,5 +27,17 @@ class RecruitHelper
         // if($already) {
         //     $this->session->getFlashBag()->add('error', 'Vous avez déjà postulé');
         // }
+    }
+
+    public function unavailables($studies, $student)
+    {
+        $unavailables = $this->recruitRepository->setToUnavailables($studies, $student);
+
+        foreach($unavailables as $unavailables) {
+
+            if($unavailables->getRefused() != true) {
+                $unavailables->setUnavailable(true);
+            }  
+        }
     }
 }

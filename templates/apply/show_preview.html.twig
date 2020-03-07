@@ -116,7 +116,7 @@
                                         <button class="btn-icon btn-success"><i class="fas fa-user-check" title="Embaucher"></i></button>
                                     </form>
 
-                                    <form method="post" action="{{ path('apply_refuse', {'id': applies.id, 'from' : 'company'}) }}" class="btn-icon-form" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette candidature ?');">
+                                    <form method="post" action="{{ path('apply_refuse', {'id': applies.id }) }}" class="btn-icon-form" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette candidature ?');">
                                         <input type="hidden" name="_token" value="{{ csrf_token('refuse' ~ applies.id) }}">
                                         <button class="btn-icon btn-danger" title="Refuser">
                                             <i class="fas fa-times"></i>

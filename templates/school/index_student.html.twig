@@ -75,7 +75,7 @@
                         </td>
                         <td>
                             <div class="btn-group">
-                                {% if recruit.hired == false and recruit.confirm == false and recruit.agree == false %}
+                                {% if recruit.hired == false and recruit.confirmed == false and recruit.agree == false %}
                                 <form method="post" class="btn-icon-form" action="{{ path('delete_recruit', {'id': recruit.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette candidature ?');">
                                     <input type="hidden" name="_method" value="DELETE">
                                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ recruit.id) }}">

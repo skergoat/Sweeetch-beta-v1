@@ -91,7 +91,7 @@ class StudiesActionController extends AbstractController
 
         $recruit = new Recruit; 
         $recruit->setHired(false);
-        $recruit->setConfirm(false);
+        $recruit->setConfirmed(false);
         $recruit->setRefused(false);
         $recruit->setUnavailable(false);
         // $apply->setFinished(false);
@@ -118,7 +118,7 @@ class StudiesActionController extends AbstractController
      * @Route("/hire/{id}", name="recruit_hire", methods={"POST"})
      * @IsGranted("ROLE_SUPER_SCHOOL")
      */
-    public function hire(RecruitRepository $repository, Recruit $recruit, Request $request)
+    public function hire(RecruitRepository $repository, Recruit $recruit, Request $request, RecruitHelper $helper)
     {   
         // get users
         $student = $recruit->getStudent();
@@ -136,12 +136,11 @@ class StudiesActionController extends AbstractController
         // }
 
         // set apply state 
-        if($recruit->getHired() == false) {
-            $recruit->setHired(true);
-            // $apply->setConfirmed(false);
-            $recruit->setRefused(false);
-        }
-
+        // if($recruit->getHired() == false) {
+        //     $recruit->setHired(true);
+        //     // $apply->setConfirmed(false);
+        //     $recruit->setRefused(false);
+        // }        
         // close offer 
         // $offers->setState(true);
 
@@ -163,7 +162,9 @@ class StudiesActionController extends AbstractController
         // $name = $apply->getStudent()->getName();
         // $offerTitle = $apply->getOffers()->getTitle(); 
         
-        // $mailer->sendHireMessage($email, $name, $offerTitle); 
+        // $mailer->sendHireMessage($email, $name, $offerTitle);
+        
+        $helper->hire($recruit);
 
         if($this->isCsrfTokenValid('hire'.$recruit->getId(), $request->request->get('_token'))) {
 
@@ -203,23 +204,17 @@ class StudiesActionController extends AbstractController
      * @Route("/agree/{id}", name="recruit_agree", methods={"POST"})
      * @IsGranted("ROLE_SUPER_STUDENT")
      */
-    public function agree(RecruitRepository $repository, Recruit $recruit, Request $request)
+    public function agree(RecruitRepository $repository, Recruit $recruit, Request $request, RecruitHelper $helper)
     {
-        // set apply state 
-        if(    $recruit->getHired() == true 
-            // && $recruit->getConfirmed() == false 
-            && $recruit->getRefused() == false 
-            && $recruit->getAgree() == false
-        ) {
-            $recruit->setHired(false);
-            // $recruit->setConfirmed(false);
-            $recruit->setRefused(false);
-            $recruit->setAgree(true);
-        }
-
         // get other applies
         $student = $recruit->getStudent();
         $studies = $recruit->getStudies();
+
+        // agree
+        $helper->agree($recruit);
+
+        // set to unavailable
+        $helper->unavailables($studies, $student);
 
         // send notification to student 
         // $email = $student->getUser()->getEmail();
@@ -244,23 +239,14 @@ class StudiesActionController extends AbstractController
      * @Route("/confirm/{id}", name="recruit_confirm", methods={"POST"})
      * @IsGranted("ROLE_SUPER_SCHOOL")
      */
-    public function confirm(RecruitRepository $repository, Recruit $recruit, Request $request)
+    public function confirm(RecruitRepository $repository, Recruit $recruit, Request $request, RecruitHelper $helper)
     {
-        // set apply state 
-        if(    $recruit->getHired() == false 
-            && $recruit->getConfirm() == false 
-            && $recruit->getRefused() == false 
-            &&  $recruit->getAgree() == true 
-        ) {
-            $recruit->setHired(false);
-            $recruit->setConfirm(true);
-            $recruit->setRefused(false);
-            $recruit->setAgree(false);
-        }
+        // get entites
+        $student = $recruit->getStudent();
+        $studies = $recruit->getStudies();
 
-         // get other applies
-         $student = $recruit->getStudent();
-         $studies = $recruit->getStudies();
+        // confirm
+        $helper->confirm($recruit);
 
          // send notification to student 
         //  $email = $student->getUser()->getEmail();
@@ -288,9 +274,9 @@ class StudiesActionController extends AbstractController
      * @Route("/refuse/{id}", name="recruit_refuse", methods={"POST"})
      * @IsGranted("ROLE_SUPER_SCHOOL")
      */
-    public function refuse(RecruitRepository $repository, Recruit $recruit, Request $request)
+    public function refuse(RecruitRepository $repository, Recruit $recruit, Request $request, RecruitHelper $helper)
     {
-        // get users
+        // get entities
         $student = $recruit->getStudent();
         $studies = $recruit->getStudies();
 
@@ -299,9 +285,8 @@ class StudiesActionController extends AbstractController
         //     return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
         // }
 
-        $recruit->setHired(false);
-        $recruit->setConfirm(false);
-        $recruit->setRefused(true);
+        // refuse
+        $helper->refuse($recruit);
 
         // set appliant roles 
         // $user = $apply->getStudent()->getUser();
