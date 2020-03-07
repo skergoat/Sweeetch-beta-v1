@@ -23,74 +23,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
  */
 class StudiesActionController extends AbstractController
 {
-    /**
-     * @Route("/new/{school}", name="studies_new", methods={"GET","POST"})
-     */
-    public function new(Request $request, School $school): Response
-    {
-        $study = new Studies();
-        $form = $this->createForm(StudiesType::class, $study);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $study = $form->getData();
-
-            $study->setSchool($school);
-
-            // dd($study);
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($study);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('school_studies_index', [ 'id' => $school->getId() ]);
-        }
-
-        return $this->render('studies/new.html.twig', [
-            'study' => $study,
-            'form' => $form->createView(),
-            'school' => $school
-        ]);
-    }
-
-    /**
-     * @Route("/{id}/edit/{school_id}", name="studies_edit", methods={"GET","POST"})
-     * @ParamConverter("school", options={"id" = "school_id"})
-     */
-    public function edit(Request $request, Studies $study, School $school): Response
-    {
-        $form = $this->createForm(StudiesType::class, $study);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            // return $this->redirectToRoute('school_studies_index', [ 'id' => $school->getId() ]);
-        }
-
-        return $this->render('studies/edit.html.twig', [
-            'study' => $study,
-            'form' => $form->createView(),
-            'school' => $school
-        ]);
-    }
-
-    /**
-     * @Route("/{id}/{school_id}", name="studies_delete", methods={"DELETE"})
-     * @ParamConverter("school", options={"id" = "school_id"})
-     */
-    public function delete(Request $request, Studies $study, School $school): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$study->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($study);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('school_studies_index', [ 'id' => $school->getId() ]);
-    }
-
    /**
      * @Route("/study/{id}/student/{student_id}/", name="recruit", methods={"POST"})
      * @IsGranted("ROLE_STUDENT_HIRED")
@@ -159,7 +91,7 @@ class StudiesActionController extends AbstractController
 
         $recruit = new Recruit; 
         $recruit->setHired(false);
-        $apply->setConfirmed(false);
+        $recruit->setConfirm(false);
         $recruit->setRefused(false);
         $recruit->setUnavailable(false);
         // $apply->setFinished(false);
@@ -181,60 +113,6 @@ class StudiesActionController extends AbstractController
         return $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'from' => 'student', 'from_id' => $student->getId()]);
     }
 
-     /**
-     * @Route("/delete/recruit/{id}", name="delete_recruit", methods={"DELETE"})
-     * @IsGranted("ROLE_SUPER_STUDENT")
-     * @ParamConverter("recruit", options={"id" = "id"})
-     */
-    public function recruitDelete(Recruit $recruit, Request $request, RecruitRepository $repository, StudentChecker $checker): Response
-    {
-        // // get company to render company page 
-        // $companyId = $apply->getOffers()->getCompany()->getId();
-
-        // // set appliant roles 
-        // $user = $apply->getStudent()->getUser();
-        // $user->setRoles(['ROLE_SUPER_STUDENT']); 
-
-        $student = $recruit->getStudent();
-        $studies = $recruit->getStudies();
-
-        // close offer 
-        // $offers->setState(false);
-
-        // set other student offers to unavailable
-        // $unavailables = $repository->setToUnavailables($offers, $student);
-
-        // foreach($unavailables as $unavailables) {
-
-        //     if($unavailables->getUnavailable() == true) {
-        //         $unavailables->setUnavailable(false);
-        //     } 
-        // }
-
-        // send mail 
-        // $email = $user->getEmail();
-        // $name = $apply->getStudent()->getName();
-        // $offerTitle = $apply->getOffers()->getTitle();
-
-        // $mailer->sendDeleteMessage($email, $name, $offerTitle); 
-    
-        // delete apply 
-        if ($this->isCsrfTokenValid('delete'.$recruit->getId(), $request->request->get('_token'))) {
-
-            $entityManager = $this->getDoctrine()->getManager();
-            // delete relation
-            $entityManager->remove($recruit);
-            // delete offer
-            $entityManager->flush();
-        }
-        else {
-            throw new \Exception('Demande Invalide');
-        }
-
-        $this->addFlash('success', 'Postulation supprimée !');
-
-        return $this->redirectToRoute('school_student_index', ['id' => $student->getId()]);
-    }
 
      /**
      * @Route("/hire/{id}", name="recruit_hire", methods={"POST"})
@@ -318,7 +196,7 @@ class StudiesActionController extends AbstractController
 
         $this->addFlash('success', 'Elève recruté !');
  
-        return $this->redirectToRoute('school_studies_index', ['id' => $studies->getSchool()->getId()]);
+        return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
     }
 
     /**
@@ -370,12 +248,12 @@ class StudiesActionController extends AbstractController
     {
         // set apply state 
         if(    $recruit->getHired() == false 
-            && $recruit->getConfirmed() == false 
+            && $recruit->getConfirm() == false 
             && $recruit->getRefused() == false 
             &&  $recruit->getAgree() == true 
         ) {
             $recruit->setHired(false);
-            $recruit->setConfirmed(true);
+            $recruit->setConfirm(true);
             $recruit->setRefused(false);
             $recruit->setAgree(false);
         }
@@ -403,6 +281,195 @@ class StudiesActionController extends AbstractController
 
         $this->addFlash('success', 'Mission Commencée. Bon travail !');
 
-        return $this->redirectToRoute('school_studies_index', ['id' => $studies->getSchool()->getId()]);
+        return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
     }
+
+    /**
+     * @Route("/refuse/{id}", name="recruit_refuse", methods={"POST"})
+     * @IsGranted("ROLE_SUPER_SCHOOL")
+     */
+    public function refuse(RecruitRepository $repository, Recruit $recruit, Request $request)
+    {
+        // get users
+        $student = $recruit->getStudent();
+        $studies = $recruit->getStudies();
+
+        // if($apply->getRefused() == true) {
+        //     $this->addFlash('error', 'Vous avez déjà refusé cette candidature');
+        //     return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
+        // }
+
+        $recruit->setHired(false);
+        $recruit->setConfirm(false);
+        $recruit->setRefused(true);
+
+        // set appliant roles 
+        // $user = $apply->getStudent()->getUser();
+        // // $user->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_TO_APPLY']);
+        // $user->setRoles(['ROLE_SUPER_STUDENT']);
+
+        // close offer 
+        // $offers->setState(false);
+
+        // send notification to student 
+        // $email = $student->getUser()->getEmail();
+        // $name = $student->getName();
+        // $offerTitle = $offers->getTitle(); 
+           
+        // $mailer->sendRefuseMessage($email, $name, $offerTitle); 
+  
+        // set other student offers to available
+        // $unavailables = $repository->setToUnavailables($offers, $student);
+
+        // foreach($unavailables as $unavailables) {
+
+        //     if($unavailables->getUnavailable() == true) {
+        //         $unavailables->setUnavailable(false);
+        //     }      
+        // }
+
+        // dd($this->isCsrfTokenValid('delete'.$apply->getId(), $request->request->get('_token')));
+
+        if($this->isCsrfTokenValid('refuse'.$recruit->getId(), $request->request->get('_token'))) {
+
+            $this->getDoctrine()->getManager()->flush();
+        }
+        else {
+            throw new \Exception('Demande Invalide');
+        }
+
+        $this->addFlash('success', 'Candidature refusée');
+        // if($from == 'student') {
+        //     $return = $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
+        // }
+        // else if($from == 'company') {
+        return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
+        // }
+
+        return $return;
+    }
+
+    /**
+     * @Route("/delete/recruit/{id}", name="delete_recruit", methods={"DELETE"})
+     * @IsGranted("ROLE_SUPER_STUDENT")
+     * @ParamConverter("recruit", options={"id" = "id"})
+     */
+    public function recruitDelete(Recruit $recruit, Request $request, RecruitRepository $repository, StudentChecker $checker): Response
+    {
+        // // get company to render company page 
+        // $companyId = $apply->getOffers()->getCompany()->getId();
+
+        // // set appliant roles 
+        // $user = $apply->getStudent()->getUser();
+        // $user->setRoles(['ROLE_SUPER_STUDENT']); 
+
+        $student = $recruit->getStudent();
+        $studies = $recruit->getStudies();
+
+        // close offer 
+        // $offers->setState(false);
+
+        // set other student offers to unavailable
+        // $unavailables = $repository->setToUnavailables($offers, $student);
+
+        // foreach($unavailables as $unavailables) {
+
+        //     if($unavailables->getUnavailable() == true) {
+        //         $unavailables->setUnavailable(false);
+        //     } 
+        // }
+
+        // send mail 
+        // $email = $user->getEmail();
+        // $name = $apply->getStudent()->getName();
+        // $offerTitle = $apply->getOffers()->getTitle();
+
+        // $mailer->sendDeleteMessage($email, $name, $offerTitle); 
+    
+        // delete apply 
+        if ($this->isCsrfTokenValid('delete'.$recruit->getId(), $request->request->get('_token'))) {
+
+            $entityManager = $this->getDoctrine()->getManager();
+            // delete relation
+            $entityManager->remove($recruit);
+            // delete offer
+            $entityManager->flush();
+        }
+        else {
+            throw new \Exception('Demande Invalide');
+        }
+
+        $this->addFlash('success', 'Postulation supprimée !');
+
+        return $this->redirectToRoute('school_student_index', ['id' => $student->getId()]);
+    }
+
+     /**
+     * @Route("/new/{school}", name="studies_new", methods={"GET","POST"})
+     */
+    public function new(Request $request, School $school): Response
+    {
+        $study = new Studies();
+        $form = $this->createForm(StudiesType::class, $study);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $study = $form->getData();
+
+            $study->setSchool($school);
+
+            // dd($study);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($study);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('school_studies_index', [ 'id' => $school->getId() ]);
+        }
+
+        return $this->render('studies/new.html.twig', [
+            'study' => $study,
+            'form' => $form->createView(),
+            'school' => $school
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/edit/{school_id}", name="studies_edit", methods={"GET","POST"})
+     * @ParamConverter("school", options={"id" = "school_id"})
+     */
+    public function edit(Request $request, Studies $study, School $school): Response
+    {
+        $form = $this->createForm(StudiesType::class, $study);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            // return $this->redirectToRoute('school_studies_index', [ 'id' => $school->getId() ]);
+        }
+
+        return $this->render('studies/edit.html.twig', [
+            'study' => $study,
+            'form' => $form->createView(),
+            'school' => $school
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/{school_id}", name="studies_delete", methods={"DELETE"})
+     * @ParamConverter("school", options={"id" = "school_id"})
+     */
+    public function delete(Request $request, Studies $study, School $school): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$study->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($study);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('school_studies_index', [ 'id' => $school->getId() ]);
+    }
+
 }

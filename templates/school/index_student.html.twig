@@ -75,7 +75,7 @@
                         </td>
                         <td>
                             <div class="btn-group">
-                                {% if recruit.hired == false and recruit.agree == false %}
+                                {% if recruit.hired == false and recruit.confirm == false and recruit.agree == false %}
                                 <form method="post" class="btn-icon-form" action="{{ path('delete_recruit', {'id': recruit.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette candidature ?');">
                                     <input type="hidden" name="_method" value="DELETE">
                                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ recruit.id) }}">
@@ -97,6 +97,10 @@
                                         <i class="fas fa-times"></i>
                                     </button>
                                 </form>
+                                {% elseif recruit.agree == true %}
+                                <button class="btn-icon-form btn-icon btn-warning" title="Dossier en cours de traitement">
+                                    <i class="fas fa-hourglass-start"></i>
+                                </button>
                                 {% endif %}
                             {# <div class="btn-group">
                                 {% if applies.hired == false and applies.confirmed == false and applies.agree == false %}
