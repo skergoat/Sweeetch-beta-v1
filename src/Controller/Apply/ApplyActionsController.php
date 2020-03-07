@@ -139,7 +139,7 @@ class ApplyActionsController extends AbstractController
         $offers->setState(true);
 
         // prevent student from applying 
-        $student->getUser()->setRoles(['ROLE_SUPER_STUDENT']);
+        // $student->getUser()->setRoles(['ROLE_SUPER_STUDENT']);
 
         // set other student offers to unavailable
         $unavailables = $repository->setToUnavailables($offers, $student);

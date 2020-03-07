@@ -30,19 +30,17 @@ class StudiesActionController extends AbstractController
      */
     public function recruit(Studies $studies, Student $student, RecruitRepository $repository, Request $request, RecruitHelper $helper)
     {
-        
+        // check if study is available --> nombre max de place atteint
 
-        // check if already hired
+        // check if student is already hired
         if($helper->checkAgree($student) || $helper->checkConfirmed($student)) {
             $this->addFlash('error', 'Vous êtes déjà embauché ailleurs. Rendez-vous sur votre profil.');
             return  $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'from' => 'student', 'from_id' => $student->getId()]);
         }
 
-        // check if already applied
-        $already = $helper->checkIfAlreadyRecruit($studies, $student);
-
-        if($already) {  
-             $this->addFlash('error', 'Vous avez déjà postulé');
+        // check if student has already applied to current study
+        if($helper->checkRecruit($studies, $student) || $helper->checkRefused($studies, $student)) {  
+             $this->addFlash('error', 'Formation indisponible');
              return  $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'from' => 'student', 'from_id' => $student->getId()]);
         }
 
@@ -83,40 +81,14 @@ class StudiesActionController extends AbstractController
         // get users
         $student = $recruit->getStudent();
         $studies = $recruit->getstudies();
-
-        // // check if student is available
-        // $hired2 = $repository->findBy(['student' => $student, 'hired' => 1]);
-        // $agree2 = $repository->findBy(['student' => $student, 'agree' => 1]);
-        // $confirmed2 = $repository->findBy(['student' => $student, 'confirmed' => 1]);
-        // // $finished2 = $repository->findBy(['student' => $student, 'finished' => 1]);
-
-        // if($hired2 || $agree2 || $confirmed2) {
-        //     $this->addFlash('error', 'Cet étudiant n\'est plus disponile');
-        //     return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
-        // }
-
-        // set apply state 
-        // if($recruit->getHired() == false) {
-        //     $recruit->setHired(true);
-        //     // $apply->setConfirmed(false);
-        //     $recruit->setRefused(false);
-        // }        
+   
         // close offer 
-        // $offers->setState(true);
+        // $offers->setState(true);                                                                         for features 
 
         // prevent student from applying 
-        // $student->getUser()->setRoles(['ROLE_SUPER_STUDENT']);
+        // $student->getUser()->setRoles(['ROLE_SUPER_STUDENT']);                                           ?
 
-        // set other student offers to unavailable
-        // $unavailables = $repository->setToUnavailables($offers, $student);
-
-        // foreach($unavailables as $unavailables) {
-
-        //     if($unavailables->getRefused() != true && $unavailables->getFinished() != true) {
-        //         $unavailables->setUnavailable(true);
-        //     }  
-        // }
-
+                                                                                                            // unavailables not now
         // send notification to student 
         // $email = $apply->getStudent()->getUser()->getEmail();
         // $name = $apply->getStudent()->getName();
@@ -126,30 +98,10 @@ class StudiesActionController extends AbstractController
         
         $helper->hire($recruit);
 
-        if($this->isCsrfTokenValid('hire'.$recruit->getId(), $request->request->get('_token'))) {
+        if($this->isCsrfTokenValid('hire'.$recruit->getId(), $request->request->get('_token'))) {           // not usefull to delete others 
 
             $entityManager = $this->getDoctrine()->getManager();
-    
-            // $others = $repository->getOtherApplies($student->getId(), $studies->getId());
-
-            // if($others) {
-
-            //     foreach($others as $others) {
-
-            //         // send mail to other applies 
-            //         // $offerTitle = $others->getOffers()->getTitle();
-            //         // $name = $others->getStudent()->getName();
-            //         // $email = $others->getStudent()->getUser()->getEmail();
-            
-            //         // $mailer->sendOthersMessage($email, $name, $offerTitle); 
-
-            //         // delete other applies 
-            //         $entityManager->remove($others);   
-            //     }
-        
-            // }
-              // save 
-              $entityManager->flush();
+            $entityManager->flush();
         }
         else {
             throw new \Exception('Candidature Invalide');
@@ -169,6 +121,12 @@ class StudiesActionController extends AbstractController
         // get other applies
         $student = $recruit->getStudent();
         $studies = $recruit->getStudies();
+
+        // check if student is available
+        if($helper->checkAgree($student) || $helper->checkConfirmed($student)) {
+            $this->addFlash('error', 'Cet étudiant n\'est plus disponible.');
+            return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
+        }
 
         // agree
         $helper->agree($recruit);
@@ -240,18 +198,15 @@ class StudiesActionController extends AbstractController
         $student = $recruit->getStudent();
         $studies = $recruit->getStudies();
 
-        // if($apply->getRefused() == true) {
-        //     $this->addFlash('error', 'Vous avez déjà refusé cette candidature');
-        //     return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
-        // }
+        if($recruit->getRefused() == true) {
+            $this->addFlash('error', 'Vous avez déjà refusé cette candidature');
+            return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
+        }
 
         // refuse
         $helper->refuse($recruit);
 
-        // set appliant roles 
-        // $user = $apply->getStudent()->getUser();
-        // // $user->setRoles(['ROLE_SUPER_STUDENT', 'ROLE_TO_APPLY']);
-        // $user->setRoles(['ROLE_SUPER_STUDENT']);
+        // set roles not usefull
 
         // close offer 
         // $offers->setState(false);
@@ -263,20 +218,9 @@ class StudiesActionController extends AbstractController
            
         // $mailer->sendRefuseMessage($email, $name, $offerTitle); 
   
-        // set other student offers to available
-        // $unavailables = $repository->setToUnavailables($offers, $student);
-
-        // foreach($unavailables as $unavailables) {
-
-        //     if($unavailables->getUnavailable() == true) {
-        //         $unavailables->setUnavailable(false);
-        //     }      
-        // }
-
-        // dd($this->isCsrfTokenValid('delete'.$apply->getId(), $request->request->get('_token')));
+        // set to availables not usefull because cannot refuse after agree
 
         if($this->isCsrfTokenValid('refuse'.$recruit->getId(), $request->request->get('_token'))) {
-
             $this->getDoctrine()->getManager()->flush();
         }
         else {
@@ -284,14 +228,8 @@ class StudiesActionController extends AbstractController
         }
 
         $this->addFlash('success', 'Candidature refusée');
-        // if($from == 'student') {
-        //     $return = $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
-        // }
-        // else if($from == 'company') {
+    
         return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
-        // }
-
-        return $return;
     }
 
     /**
@@ -301,12 +239,7 @@ class StudiesActionController extends AbstractController
      */
     public function recruitDelete(Recruit $recruit, Request $request, RecruitRepository $repository, StudentChecker $checker): Response
     {
-        // // get company to render company page 
-        // $companyId = $apply->getOffers()->getCompany()->getId();
-
-        // // set appliant roles 
-        // $user = $apply->getStudent()->getUser();
-        // $user->setRoles(['ROLE_SUPER_STUDENT']); 
+        // set role not usefull 
 
         $student = $recruit->getStudent();
         $studies = $recruit->getStudies();
@@ -314,15 +247,7 @@ class StudiesActionController extends AbstractController
         // close offer 
         // $offers->setState(false);
 
-        // set other student offers to unavailable
-        // $unavailables = $repository->setToUnavailables($offers, $student);
-
-        // foreach($unavailables as $unavailables) {
-
-        //     if($unavailables->getUnavailable() == true) {
-        //         $unavailables->setUnavailable(false);
-        //     } 
-        // }
+        // set to available not usefull because cannot delete after agree
 
         // send mail 
         // $email = $user->getEmail();
