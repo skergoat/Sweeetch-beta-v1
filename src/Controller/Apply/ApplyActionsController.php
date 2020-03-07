@@ -79,11 +79,11 @@ class ApplyActionsController extends AbstractController
             }
 
             // send notification to company 
-            $email = $offers->getCompany()->getUser()->getEmail();
-            $name = $offers->getCompany()->getFirstname();
-            $offerTitle = $offers->getTitle();
+            // $email = $offers->getCompany()->getUser()->getEmail();
+            // $name = $offers->getCompany()->getFirstname();
+            // $offerTitle = $offers->getTitle();
 
-            $mailer->sendApplyMessage($email, $name, $offerTitle);
+            // $mailer->sendApplyMessage($email, $name, $offerTitle);
 
             $apply = new Apply; 
             $apply->setHired(false);
