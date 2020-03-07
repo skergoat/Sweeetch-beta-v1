@@ -1,6 +1,6 @@
 {% extends 'base-school.html.twig' %}
 
-{% block title %} {{ parent() }} - students {% endblock %}
+{% block title %} {{ parent() }} - Ecoles {% endblock %}
 
 {% block body %}
 
@@ -104,6 +104,12 @@
                                     <form method="post" action="{{ path('recruit_hire', { id:recruit.id }) }}" class="btn-icon-form" onsubmit="return confirm('Etes-vous certain de vouloir embaucher cet étudiant ?');">
                                         <input type="hidden" name="_token" value="{{ csrf_token('hire' ~ recruit.id) }}">
                                         <button class="btn-icon btn-success"><i class="fas fa-user-check" title="Embaucher"></i></button>
+                                    </form>
+                                    <form method="post" action="{{ path('recruit_refuse', {'id': recruit.id }) }}" class="btn-icon-form" onsubmit="return confirm('Etes-vous certain de vouloir refuser cette candidature ?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('refuse' ~ recruit.id) }}">
+                                        <button class="btn-icon btn-danger" title="Refuser">
+                                            <i class="fas fa-times"></i>
+                                        </button>
                                     </form>
                                     {% elseif recruit.hired == true %}
                                     <button class="btn-icon-form btn-icon btn-warning" title="En attente d'acceptation de l'étudiant">
