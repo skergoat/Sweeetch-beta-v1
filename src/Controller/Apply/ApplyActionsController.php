@@ -102,7 +102,8 @@ class ApplyActionsController extends AbstractController
         // check if student is available
         if($helper->checkAgree($student) || $helper->checkConfirmed($student)) {
             $this->addFlash('error', 'Cet étudiant n\'est plus disponible.');
-            return $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
+            return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
+
         }
 
         // // check if student is available
