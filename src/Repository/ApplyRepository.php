@@ -156,28 +156,28 @@ class ApplyRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findByStudentByFinished($student) // 
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.student = :student AND u.finished = :finished')
-            ->setParameter('student', $student)
-            ->setParameter('finished', true)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
+    // public function findByStudentByFinished($student) // 
+    // {
+    //     return $this->createQueryBuilder('u')
+    //         ->andWhere('u.student = :student AND u.finished = :finished')
+    //         ->setParameter('student', $student)
+    //         ->setParameter('finished', true)
+    //         ->getQuery()
+    //         ->getResult()
+    //     ;
+    // }
 
-    public function findByStudent($student) { // 
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.student = :student AND u.refused = :refused AND u.unavailable = :unavailable AND u.finished = :finished')
-            ->setParameter('student', $student)
-            ->setParameter('refused', false)
-            ->setParameter('unavailable', false)
-            ->setParameter('finished', false)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
+    // public function findByStudent($student) { // 
+    //     return $this->createQueryBuilder('u')
+    //         ->andWhere('u.student = :student AND u.refused = :refused AND u.unavailable = :unavailable AND u.finished = :finished')
+    //         ->setParameter('student', $student)
+    //         ->setParameter('refused', false)
+    //         ->setParameter('unavailable', false)
+    //         ->setParameter('finished', false)
+    //         ->getQuery()
+    //         ->getResult()
+    //     ;
+    // }
 
     public function setToUnavailables($offers, $student) { //
         return $this->createQueryBuilder('u')

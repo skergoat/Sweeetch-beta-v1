@@ -81,6 +81,12 @@ class StudiesActionController extends AbstractController
         // get users
         $student = $recruit->getStudent();
         $studies = $recruit->getstudies();
+
+        // check if student is available
+        if($helper->checkAgree($student) || $helper->checkConfirmed($student)) {
+            $this->addFlash('error', 'Cet étudiant n\'est plus disponible.');
+            return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
+        }
    
         // close offer 
         // $offers->setState(true);                                                                         for features 
@@ -121,12 +127,6 @@ class StudiesActionController extends AbstractController
         // get other applies
         $student = $recruit->getStudent();
         $studies = $recruit->getStudies();
-
-        // check if student is available
-        if($helper->checkAgree($student) || $helper->checkConfirmed($student)) {
-            $this->addFlash('error', 'Cet étudiant n\'est plus disponible.');
-            return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
-        }
 
         // agree
         $helper->agree($recruit);
