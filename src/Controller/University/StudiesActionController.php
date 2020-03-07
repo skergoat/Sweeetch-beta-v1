@@ -80,12 +80,12 @@ class StudiesActionController extends AbstractController
         // $mailer->sendApplyMessage($email, $name, $offerTitle);
 
         $recruit = new Recruit; 
-        // $apply->setHired(false);
+        $recruit->setHired(false);
         // $apply->setConfirmed(false);
-        // $apply->setRefused(false);
-        // $apply->setUnavailable(false);
+        $recruit->setRefused(false);
+        $recruit->setUnavailable(false);
         // $apply->setFinished(false);
-        // $apply->setAgree(false);
+        $recruit->setAgree(false);
         $recruit->setStudies($studies);
         $recruit->setStudent($student);
 
