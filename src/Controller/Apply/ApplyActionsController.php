@@ -405,7 +405,7 @@ class ApplyActionsController extends AbstractController
         // if($checker->applyValid($apply)) 
         // {
             // get company to render company page 
-            $companyId = $apply->getOffers()->getCompany()->getId();
+            // $companyId = $apply->getOffers()->getCompany()->getId();
 
             // set appliant roles 
             $user = $apply->getStudent()->getUser();

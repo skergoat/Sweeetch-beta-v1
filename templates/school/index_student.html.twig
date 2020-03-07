@@ -74,6 +74,16 @@
                             open
                         </td>
                         <td>
+                            <div class="btn-group">
+                                {% if recruit.hired == false and recruit.agree == false %}
+                                <form method="post" class="btn-icon-form" action="{{ path('delete_recruit', {'id': recruit.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette candidature ?');">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ recruit.id) }}">
+                                    <button class="btn-icon btn-danger" title="Supprimer">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </form>
+                                {% endif %}
                             {# <div class="btn-group">
                                 {% if applies.hired == false and applies.confirmed == false and applies.agree == false %}
                                 <form method="post" class="btn-icon-form" action="{{ path('apply_delete', {'id': applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette candidature ?');">
@@ -102,9 +112,10 @@
                                     <i class="fas fa-hourglass-start"></i>
                                 </button>
                                 {% endif %} #}
-                            <a href="#help-1" rel="modal:open" class="btn-modal btn-icon-form btn-icon btn-secondary" title="aide">
-                                <i class="fas fa-question-circle"></i>
-                            </a>
+                                <a href="#help-1" rel="modal:open" class="btn-modal btn-icon-form btn-icon btn-secondary" title="aide">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </div>
                             {#</div> #}
                         </td>
                     </tr>
