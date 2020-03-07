@@ -1,7 +1,3 @@
-npm run build
-/usr/bin/php7.3-cli bin/console cache:clear --env=prod
-npm run watch 
- /usr/bin/php7.3-cli bin/console cache:clear --env=prod
 npm run watch 
 /usr/bin/php7.3-cli bin/console cache:clear --env=prod
 npm run wtch 
@@ -498,3 +494,7 @@ ssh u100184406@access819313697.webspace-data.io
 /usr/bin/php7.3-cli bin/console cache:clear --env=prod
 /usr/bin/php7.3-cli bin/console cache:clear --env=prod
 /usr/bin/php7.3-cli bin/console cache:clear --env=prod
+git status 
+git add assets/img/Alternance.jpg
+git commit -am 'index'
+git push origin master 

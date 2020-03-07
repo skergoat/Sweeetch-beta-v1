@@ -28,6 +28,26 @@ class Recruit
      */
     private $student;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $hired;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $agree;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $refused;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $unavailable;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -53,6 +73,54 @@ class Recruit
     public function setStudent(?Student $student): self
     {
         $this->student = $student;
+
+        return $this;
+    }
+
+    public function getHired(): ?bool
+    {
+        return $this->hired;
+    }
+
+    public function setHired(bool $hired): self
+    {
+        $this->hired = $hired;
+
+        return $this;
+    }
+
+    public function getAgree(): ?bool
+    {
+        return $this->agree;
+    }
+
+    public function setAgree(bool $agree): self
+    {
+        $this->agree = $agree;
+
+        return $this;
+    }
+
+    public function getRefused(): ?bool
+    {
+        return $this->refused;
+    }
+
+    public function setRefused(bool $refused): self
+    {
+        $this->refused = $refused;
+
+        return $this;
+    }
+
+    public function getUnavailable(): ?bool
+    {
+        return $this->unavailable;
+    }
+
+    public function setUnavailable(bool $unavailable): self
+    {
+        $this->unavailable = $unavailable;
 
         return $this;
     }
