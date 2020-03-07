@@ -20,31 +20,19 @@ class RecruitHelper extends CommonHelper
         $this->session = $session;
     }
 
-    public function checkIfAlreadyRecruit($studies, $student)
+    public function checkRecruit($studies, $student)
     {
         return $this->recruitRepository->findBy(['studies' => $studies, 'student' => $student]);
 
         // if($already) {
         //     $this->session->getFlashBag()->add('error', 'Vous avez déjà postulé');
         // }
-    }  
-
-    public function unavailables($studies, $student)
-    {
-        $unavailables = $this->recruitRepository->setToUnavailables($studies, $student);
-
-        foreach($unavailables as $unavailables) {
-
-            if($unavailables->getRefused() != true) {
-                $unavailables->setUnavailable(true);
-            }  
-        }
     }
-
-    // public function checkHired($student)
-    // {
-    //     return $this->recruitRepository->findBy(['student' => $student, 'hired' => 1]);
-    // }
+    
+    public function checkRefused($studies, $student)
+    {
+        return $this->recruitRepository->findBy(['studies' => $studies, 'student' => $student, 'refused' => true]);
+    }
 
     public function checkAgree($student)
     {
@@ -54,5 +42,26 @@ class RecruitHelper extends CommonHelper
     public function checkConfirmed($student)
     {
         return  $this->recruitRepository->findBy(['student' => $student, 'confirmed' => 1]);
-    }  
+    }
+    
+    // tel other recruiters that student is unavailable 
+    public function unavailables($studies, $student)
+    {
+        $unavailables = $this->recruitRepository->setToUnavailables($studies, $student);
+
+        foreach($unavailables as $unavailables) {
+
+            // if($bool == true) {
+                if($unavailables->getRefused() != true) {
+                    $unavailables->setUnavailable(true);
+                } 
+            // }
+            // elseif($bool == false) {
+            //     if($unavailables->getUnavailable() == true) {
+            //         $unavailables->setUnavailable(false);
+            //     }
+            // }
+             
+        }
+    }
 }
