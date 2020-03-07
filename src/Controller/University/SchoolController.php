@@ -25,7 +25,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 /**
  * @Route("/school")
  */
-class SchoolActionsController extends AbstractController
+class SchoolController extends AbstractController
 {
     /**
      * @Route("/", name="school_index", methods={"GET"})
