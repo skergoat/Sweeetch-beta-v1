@@ -159,7 +159,7 @@ class StudiesActionController extends AbstractController
 
         $recruit = new Recruit; 
         $recruit->setHired(false);
-        // $apply->setConfirmed(false);
+        $apply->setConfirmed(false);
         $recruit->setRefused(false);
         $recruit->setUnavailable(false);
         // $apply->setFinished(false);
@@ -234,7 +234,175 @@ class StudiesActionController extends AbstractController
         $this->addFlash('success', 'Postulation supprimée !');
 
         return $this->redirectToRoute('school_student_index', ['id' => $student->getId()]);
-
     }
+
+     /**
+     * @Route("/hire/{id}", name="recruit_hire", methods={"POST"})
+     * @IsGranted("ROLE_SUPER_SCHOOL")
+     */
+    public function hire(RecruitRepository $repository, Recruit $recruit, Request $request)
+    {   
+        // get users
+        $student = $recruit->getStudent();
+        $studies = $recruit->getstudies();
+
+        // // check if student is available
+        // $hired2 = $repository->findBy(['student' => $student, 'hired' => 1]);
+        // $agree2 = $repository->findBy(['student' => $student, 'agree' => 1]);
+        // $confirmed2 = $repository->findBy(['student' => $student, 'confirmed' => 1]);
+        // // $finished2 = $repository->findBy(['student' => $student, 'finished' => 1]);
+
+        // if($hired2 || $agree2 || $confirmed2) {
+        //     $this->addFlash('error', 'Cet étudiant n\'est plus disponile');
+        //     return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
+        // }
+
+        // set apply state 
+        if($recruit->getHired() == false) {
+            $recruit->setHired(true);
+            // $apply->setConfirmed(false);
+            $recruit->setRefused(false);
+        }
+
+        // close offer 
+        // $offers->setState(true);
+
+        // prevent student from applying 
+        // $student->getUser()->setRoles(['ROLE_SUPER_STUDENT']);
+
+        // set other student offers to unavailable
+        // $unavailables = $repository->setToUnavailables($offers, $student);
+
+        // foreach($unavailables as $unavailables) {
+
+        //     if($unavailables->getRefused() != true && $unavailables->getFinished() != true) {
+        //         $unavailables->setUnavailable(true);
+        //     }  
+        // }
+
+        // send notification to student 
+        // $email = $apply->getStudent()->getUser()->getEmail();
+        // $name = $apply->getStudent()->getName();
+        // $offerTitle = $apply->getOffers()->getTitle(); 
+        
+        // $mailer->sendHireMessage($email, $name, $offerTitle); 
+
+        if($this->isCsrfTokenValid('hire'.$recruit->getId(), $request->request->get('_token'))) {
+
+            $entityManager = $this->getDoctrine()->getManager();
     
+            // $others = $repository->getOtherApplies($student->getId(), $studies->getId());
+
+            // if($others) {
+
+            //     foreach($others as $others) {
+
+            //         // send mail to other applies 
+            //         // $offerTitle = $others->getOffers()->getTitle();
+            //         // $name = $others->getStudent()->getName();
+            //         // $email = $others->getStudent()->getUser()->getEmail();
+            
+            //         // $mailer->sendOthersMessage($email, $name, $offerTitle); 
+
+            //         // delete other applies 
+            //         $entityManager->remove($others);   
+            //     }
+        
+            // }
+              // save 
+              $entityManager->flush();
+        }
+        else {
+            throw new \Exception('Candidature Invalide');
+        }
+
+        $this->addFlash('success', 'Elève recruté !');
+ 
+        return $this->redirectToRoute('school_studies_index', ['id' => $studies->getSchool()->getId()]);
+    }
+
+    /**
+     * @Route("/agree/{id}", name="recruit_agree", methods={"POST"})
+     * @IsGranted("ROLE_SUPER_STUDENT")
+     */
+    public function agree(RecruitRepository $repository, Recruit $recruit, Request $request)
+    {
+        // set apply state 
+        if(    $recruit->getHired() == true 
+            // && $recruit->getConfirmed() == false 
+            && $recruit->getRefused() == false 
+            && $recruit->getAgree() == false
+        ) {
+            $recruit->setHired(false);
+            // $recruit->setConfirmed(false);
+            $recruit->setRefused(false);
+            $recruit->setAgree(true);
+        }
+
+        // get other applies
+        $student = $recruit->getStudent();
+        $studies = $recruit->getStudies();
+
+        // send notification to student 
+        // $email = $student->getUser()->getEmail();
+        // $name = $student->getName();
+        // $offerTitle = $offers->getTitle(); 
+        
+        // $mailer->sendAgreeMessage($email, $name, $offerTitle); 
+
+        if($this->isCsrfTokenValid('agree'.$recruit->getId(), $request->request->get('_token'))) {
+            $this->getDoctrine()->getManager()->flush();
+        }
+        else {
+            throw new \Exception('Demande Invalide');
+        }
+
+        $this->addFlash('success', 'Cursus accepté !');
+
+        return $this->redirectToRoute('school_student_index', ['id' => $student->getId()]);
+    }
+
+    /**
+     * @Route("/confirm/{id}", name="recruit_confirm", methods={"POST"})
+     * @IsGranted("ROLE_SUPER_SCHOOL")
+     */
+    public function confirm(RecruitRepository $repository, Recruit $recruit, Request $request)
+    {
+        // set apply state 
+        if(    $recruit->getHired() == false 
+            && $recruit->getConfirmed() == false 
+            && $recruit->getRefused() == false 
+            &&  $recruit->getAgree() == true 
+        ) {
+            $recruit->setHired(false);
+            $recruit->setConfirmed(true);
+            $recruit->setRefused(false);
+            $recruit->setAgree(false);
+        }
+
+         // get other applies
+         $student = $recruit->getStudent();
+         $studies = $recruit->getStudies();
+
+         // send notification to student 
+        //  $email = $student->getUser()->getEmail();
+        //  $name = $student->getName();
+        //  $offerTitle = $offers->getTitle(); 
+         
+        //  $mailer->sendConfirmMessage($email, $name, $offerTitle); 
+
+        // $student->getUser()->setRoles(['ROLE_STUDENT_HIRED']);
+
+        if($this->isCsrfTokenValid('confirm'.$recruit->getId(), $request->request->get('_token'))) {
+
+            $this->getDoctrine()->getManager()->flush();
+        }
+        else {
+            throw new \Exception('Demande Invalide');
+        }
+
+        $this->addFlash('success', 'Mission Commencée. Bon travail !');
+
+        return $this->redirectToRoute('school_studies_index', ['id' => $studies->getSchool()->getId()]);
+    }
 }
