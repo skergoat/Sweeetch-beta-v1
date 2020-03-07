@@ -99,9 +99,26 @@
                             <td><a href="{{ path('show_student_applied', {id:recruit.student.id, school:school.id, study:study.id}) }}">{{ recruit.student.Name }} {{ recruit.student.lastName }}</a></td>
                             <td>Ouvert</td>
                             <td>
-                                <a href="#help-1" rel="modal:open" class="btn-modal btn-icon-form btn-icon btn-secondary" title="aide">
-                                    <i class="fas fa-question-circle"></i>
-                                </a>
+                                <div class="btn-group">
+                                    {% if recruit.hired == false and recruit.agree == false %}
+                                    <form method="post" action="{{ path('recruit_hire', { id:recruit.id }) }}" class="btn-icon-form" onsubmit="return confirm('Etes-vous certain de vouloir embaucher cet étudiant ?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('hire' ~ recruit.id) }}">
+                                        <button class="btn-icon btn-success"><i class="fas fa-user-check" title="Embaucher"></i></button>
+                                    </form>
+                                    {% elseif recruit.hired == true %}
+                                    <button class="btn-icon-form btn-icon btn-warning" title="En attente d'acceptation de l'étudiant">
+                                        <i class="fas fa-hourglass-start"></i>
+                                    </button>
+                                    {% elseif recruit.agree == true %}
+                                    <form method="post" class="btn-icon-form" action="{{ path('recruit_confirm', { id:recruit.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir commencer l\'inscription ?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('confirm' ~ recruit.id) }}">
+                                        <button class="btn-icon btn-success" title="Démarrer la mission"><i class="far fa-play-circle"></i></button>
+                                    </form>
+                                    {% endif %}
+                                    <a href="#help-1" rel="modal:open" class="btn-modal btn-icon-form btn-icon btn-secondary" title="aide">
+                                        <i class="fas fa-question-circle"></i>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
 

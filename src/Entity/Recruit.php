@@ -48,6 +48,11 @@ class Recruit
      */
     private $unavailable;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $confirm;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -121,6 +126,18 @@ class Recruit
     public function setUnavailable(bool $unavailable): self
     {
         $this->unavailable = $unavailable;
+
+        return $this;
+    }
+
+    public function getConfirm(): ?bool
+    {
+        return $this->confirm;
+    }
+
+    public function setConfirm(bool $confirm): self
+    {
+        $this->confirm = $confirm;
 
         return $this;
     }

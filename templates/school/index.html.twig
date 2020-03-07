@@ -43,10 +43,7 @@
                 <td class="table-actions">
                   <div class="icon-group">
                   {% if school.user.roles == ['ROLE_SCHOOL'] %}
-                  {# <form method="post" class="form-icon" action="{{ path('admin_confirm', {'id': school.id, 'from':'school_index'}) }}" onsubmit="return confirm('Are you sure you want to confirm this user ?');">
-                      <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ school.id) }}">
-                      <button class="btn-icon btn-success"><i class="fas fa-check" title="confirmer le compte"></i></button>
-                  </form> #}
+        
                   <form method="post" class="form-icon" action="{{ path('admin_confirm', {'id': school.user.id, 'from':'school_index'}) }}" onsubmit="return confirm('Are you sure you want to confirm this user ?');">
                     <input type="hidden" name="_token" value="{{ csrf_token('confirm' ~ school.user.id) }}">
                     <button class="btn-icon btn-success"><i class="fas fa-check" title="confirmer le compte"></i></button>
