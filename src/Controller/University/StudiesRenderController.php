@@ -7,7 +7,11 @@ use App\Entity\Student;
 use App\Entity\Studies;
 use App\Form\StudiesType;
 use App\Repository\ApplyRepository;
+use App\Repository\SchoolRepository;
+use App\Repository\RecruitRepository;
 use App\Repository\StudiesRepository;
+use App\Service\UserChecker\SchoolChecker;
+use App\Service\UserChecker\StudentChecker;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,13 +25,53 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
  */
 class StudiesRenderController extends AbstractController
 {
-    // /**
-    //  * @Route("/", name="studies_index", methods={"GET"})
-    //  */
-    // public function index(StudiesRepository $studiesRepository): Response
-    // {
-    //     return $this->render('studies/index-student.html.twig');
-    // }
+     /**
+     * @Route("/index/{id}", name="school_studies_index", methods={"GET"})
+     * @IsGranted("ROLE_SUPER_SCHOOL")
+     */
+    public function index(StudiesRepository $studiesRepository, School $school, SchoolChecker $checker): Response
+    {
+        if ($checker->schoolValid($school)) {
+
+            return $this->render('studies/index.html.twig', [
+                'studies' => $studiesRepository->findBy(['school' => $school]),
+                'school' => $school
+            ]);
+        }
+    }
+
+    /**
+     * @Route("/student/{id}", name="school_student_index", methods={"GET"})
+     * @IsGranted("ROLE_SUPER_STUDENT")
+     */
+    public function indexByStudent(Student $student, RecruitRepository $recruitRepository, SchoolRepository $schoolRepository, ApplyRepository $applyRepository, StudentChecker $checker): Response
+    {
+        $recruit = $recruitRepository->findBy(['student' => $student]);
+
+        if ($checker->studentValid($student)) {
+
+            return $this->render('school/index_student.html.twig', [
+                'student' => $student,
+                'recruit' => $recruit,
+                'fresh' => $applyRepository->findByStudentByFresh($student),
+                'hired' => $applyRepository->checkIfHired($student)
+            ]);
+        } 
+    }
+
+     /**
+     * @Route("/show/{id}/{school_id}", name="school_studies_show", methods={"GET"})
+     * @ParamConverter("school", options={"id" = "school_id"})
+     * @IsGranted("ROLE_SUPER_SCHOOL")
+     */
+    public function show(Studies $study, School $school, RecruitRepository $recruitRepository): Response
+    {
+        return $this->render('studies/show.html.twig', [
+            'study' => $study,
+            'school' => $school,
+            'recruit' => $recruitRepository->findBy(['studies' => $study])
+        ]);
+    }
 
     /**
      * @Route("/candidate/{from}/{id}", name="studies_candidate_index", methods={"GET"})
@@ -91,83 +135,5 @@ class StudiesRenderController extends AbstractController
             'school' => $school,
             'study' => $study
         ]);
-    }
-
-    /**
-     * @Route("/new/{school}", name="studies_new", methods={"GET","POST"})
-     */
-    public function new(Request $request, School $school): Response
-    {
-        $study = new Studies();
-        $form = $this->createForm(StudiesType::class, $study);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $study = $form->getData();
-
-            $study->setSchool($school);
-
-            // dd($study);
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($study);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('school_studies_index', [ 'id' => $school->getId() ]);
-        }
-
-        return $this->render('studies/new.html.twig', [
-            'study' => $study,
-            'form' => $form->createView(),
-            'school' => $school
-        ]);
-    }
-
-    // /**
-    //  * @Route("/{id}", name="studies_show", methods={"GET"})
-    //  */
-    // public function show(Studies $study): Response
-    // {
-    //     return $this->render('studies/show.html.twig', [
-    //         'study' => $study,
-    //     ]);
-    // }
-
-    /**
-     * @Route("/{id}/edit/{school_id}", name="studies_edit", methods={"GET","POST"})
-     * @ParamConverter("school", options={"id" = "school_id"})
-     */
-    public function edit(Request $request, Studies $study, School $school): Response
-    {
-        $form = $this->createForm(StudiesType::class, $study);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            // return $this->redirectToRoute('school_studies_index', [ 'id' => $school->getId() ]);
-        }
-
-        return $this->render('studies/edit.html.twig', [
-            'study' => $study,
-            'form' => $form->createView(),
-            'school' => $school
-        ]);
-    }
-
-    /**
-     * @Route("/{id}/{school_id}", name="studies_delete", methods={"DELETE"})
-     * @ParamConverter("school", options={"id" = "school_id"})
-     */
-    public function delete(Request $request, Studies $study, School $school): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$study->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($study);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('school_studies_index', [ 'id' => $school->getId() ]);
-    }
+    } 
 }
