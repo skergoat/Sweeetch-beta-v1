@@ -28,67 +28,25 @@ class StudiesActionController extends AbstractController
      * @IsGranted("ROLE_STUDENT_HIRED")
      * @ParamConverter("student", options={"id" = "student_id"})
      */
-    public function recruit(Studies $studies, Student $student, Request $request, RecruitHelper $recruitHelper)
+    public function recruit(Studies $studies, Student $student, RecruitRepository $repository, Request $request, RecruitHelper $helper)
     {
-        // check if apply is open to current offer
-        // $hired = $repository->findBy(['offers' => $offers, 'hired' => 1]);
-        // $agree = $repository->findBy(['offers' => $offers, 'agree' => 1]);
-        // $confirmed = $repository->findBy(['offers' => $offers, 'confirmed' => 1]);
-        // $finished = $repository->findBy(['offers' => $offers, 'finished' => 1]);
-
-        // if($hired || $agree || $confirmed || $finished) {  
-        //     $this->addFlash('error', 'Offre Indisponible');
-        //     return $this->redirectToRoute('offers_index');
-        // }
-
-        // check if student is available
-        // $hired2 = $repository->findBy(['student' => $student, 'hired' => 1]);
-        // $agree2 = $repository->findBy(['student' => $student, 'agree' => 1]);
-        // $confirmed2 = $repository->findBy(['student' => $student, 'confirmed' => 1]);
-        // $finished2 = $repository->findBy(['student' => $student, 'finished' => 1]);
-
-        // if($hired2 || $agree2 || $confirmed2) {
-        //     $this->addFlash('error', 'Vous êtes déjà embauché ailleurs. Rendez-vous sur votre profil.');
-        //     return $this->redirectToRoute('offers_show', ['id' => $offers->getId(), 'page' => $page]);
-        // }
-
-        // check if student have already applied to current studies 
-        //// $recruit = $recruitRepository->findBy(['studies' => $studies, 'student' => $student]);
-
-        // if($recruit) {  
-
-        // //     $refused = $repository->checkIfrefusedExsists($offers, $student);
-            
-        // //     if($refused) {
-        // //         $this->addFlash('error', 'Offre Indisponible');
-        // //         return $this->redirectToRoute('offers_show', ['id' => $offers->getId(), 'page' => $page]);
-        // //     }
-        // //     else {
-        //         $this->addFlash('error', 'Vous avez déjà postulé');
-        //         return $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'from' => 'student', 'from_id' => $student->getId()]);
-        // //     }  
-        // }
-
-        // if($applies) {
-        //     $this->addFlash('error', 'Offre Indisponible');
-        //     return $this->redirectToRoute('offers_show', ['id' => $offers->getId(), 'page' => $page]);
-        // }
-
-        // send notification to company 
-        // $email = $offers->getCompany()->getUser()->getEmail();
-        // $name = $offers->getCompany()->getFirstname();
-        // $offerTitle = $offers->getTitle();
-
-        // $mailer->sendApplyMessage($email, $name, $offerTitle);
         
-        // check if already recruit
-        $already = $recruitHelper->checkIfAlreadyRecruit($studies, $student);
 
-        if($already) {  
-            $this->addFlash('error', 'Vous avez déjà postulé');
+        // check if already hired
+        if($helper->checkAgree($student) || $helper->checkConfirmed($student)) {
+            $this->addFlash('error', 'Vous êtes déjà embauché ailleurs. Rendez-vous sur votre profil.');
             return  $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'from' => 'student', 'from_id' => $student->getId()]);
         }
 
+        // check if already applied
+        $already = $helper->checkIfAlreadyRecruit($studies, $student);
+
+        if($already) {  
+             $this->addFlash('error', 'Vous avez déjà postulé');
+             return  $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'from' => 'student', 'from_id' => $student->getId()]);
+        }
+
+        // create entity
         $recruit = new Recruit; 
         $recruit->setHired(false);
         $recruit->setConfirmed(false);
@@ -99,6 +57,7 @@ class StudiesActionController extends AbstractController
         $recruit->setStudies($studies);
         $recruit->setStudent($student);
 
+        // save 
         if($this->isCsrfTokenValid('recruit'.$student->getId(), $request->request->get('_token'))) {
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($recruit);
@@ -108,6 +67,7 @@ class StudiesActionController extends AbstractController
             throw new \Exception('Demande Invalide');
         }
 
+        // redirect
         $this->addFlash('success', 'Candidature enregistrée !');
 
         return $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'from' => 'student', 'from_id' => $student->getId()]);

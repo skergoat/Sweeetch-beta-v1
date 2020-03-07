@@ -100,7 +100,7 @@
                             <td>Ouvert</td>
                             <td>
                                 <div class="btn-group">
-                                    {% if recruit.hired == false and recruit.agree == false %}
+                                    {% if recruit.hired == false and recruit.agree == false and recruit.confirmed == false %}
                                     <form method="post" action="{{ path('recruit_hire', { id:recruit.id }) }}" class="btn-icon-form" onsubmit="return confirm('Etes-vous certain de vouloir embaucher cet étudiant ?');">
                                         <input type="hidden" name="_token" value="{{ csrf_token('hire' ~ recruit.id) }}">
                                         <button class="btn-icon btn-success"><i class="fas fa-user-check" title="Embaucher"></i></button>
