@@ -46,13 +46,12 @@ class StudiesRenderController extends AbstractController
      */
     public function indexByStudent(Student $student, RecruitRepository $recruitRepository, SchoolRepository $schoolRepository, ApplyRepository $applyRepository, StudentChecker $checker): Response
     {
-        $recruit = $recruitRepository->findBy(['student' => $student]);
 
         if ($checker->studentValid($student)) {
 
             return $this->render('school/index_student.html.twig', [
                 'student' => $student,
-                'recruit' => $recruit,
+                'recruit' => $recruitRepository->findBy(['student' => $student, 'refused' => false, 'unavailable' => false]),
                 'fresh' => $applyRepository->findByStudentByFresh($student),
                 'hired' => $applyRepository->checkIfHired($student)
             ]);

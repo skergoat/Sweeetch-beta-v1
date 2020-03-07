@@ -10,6 +10,7 @@ use App\Form\StudiesType;
 use App\Repository\RecruitRepository;
 use App\Repository\StudiesRepository;
 use App\Service\Recruitment\RecruitHelper;
+use App\Service\UserChecker\StudentChecker;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -178,6 +179,62 @@ class StudiesActionController extends AbstractController
         $this->addFlash('success', 'Candidature enregistrée !');
 
         return $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'from' => 'student', 'from_id' => $student->getId()]);
+    }
+
+     /**
+     * @Route("/delete/recruit/{id}", name="delete_recruit", methods={"DELETE"})
+     * @IsGranted("ROLE_SUPER_STUDENT")
+     * @ParamConverter("recruit", options={"id" = "id"})
+     */
+    public function recruitDelete(Recruit $recruit, Request $request, RecruitRepository $repository, StudentChecker $checker): Response
+    {
+        // // get company to render company page 
+        // $companyId = $apply->getOffers()->getCompany()->getId();
+
+        // // set appliant roles 
+        // $user = $apply->getStudent()->getUser();
+        // $user->setRoles(['ROLE_SUPER_STUDENT']); 
+
+        $student = $recruit->getStudent();
+        $studies = $recruit->getStudies();
+
+        // close offer 
+        // $offers->setState(false);
+
+        // set other student offers to unavailable
+        // $unavailables = $repository->setToUnavailables($offers, $student);
+
+        // foreach($unavailables as $unavailables) {
+
+        //     if($unavailables->getUnavailable() == true) {
+        //         $unavailables->setUnavailable(false);
+        //     } 
+        // }
+
+        // send mail 
+        // $email = $user->getEmail();
+        // $name = $apply->getStudent()->getName();
+        // $offerTitle = $apply->getOffers()->getTitle();
+
+        // $mailer->sendDeleteMessage($email, $name, $offerTitle); 
+    
+        // delete apply 
+        if ($this->isCsrfTokenValid('delete'.$recruit->getId(), $request->request->get('_token'))) {
+
+            $entityManager = $this->getDoctrine()->getManager();
+            // delete relation
+            $entityManager->remove($recruit);
+            // delete offer
+            $entityManager->flush();
+        }
+        else {
+            throw new \Exception('Demande Invalide');
+        }
+
+        $this->addFlash('success', 'Postulation supprimée !');
+
+        return $this->redirectToRoute('school_student_index', ['id' => $student->getId()]);
+
     }
     
 }
