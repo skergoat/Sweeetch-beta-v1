@@ -27,7 +27,7 @@ class RecruitHelper extends CommonHelper
         // if($already) {
         //     $this->session->getFlashBag()->add('error', 'Vous avez déjà postulé');
         // }
-    }
+    }  
 
     public function unavailables($studies, $student)
     {
@@ -40,4 +40,19 @@ class RecruitHelper extends CommonHelper
             }  
         }
     }
+
+    // public function checkHired($student)
+    // {
+    //     return $this->recruitRepository->findBy(['student' => $student, 'hired' => 1]);
+    // }
+
+    public function checkAgree($student)
+    {
+        return $this->recruitRepository->findBy(['student' => $student, 'agree' => 1]);
+    }
+
+    public function checkConfirmed($student)
+    {
+        return  $this->recruitRepository->findBy(['student' => $student, 'confirmed' => 1]);
+    }  
 }

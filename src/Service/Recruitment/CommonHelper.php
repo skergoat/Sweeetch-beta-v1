@@ -10,6 +10,7 @@ namespace App\Service\Recruitment;
 
 class CommonHelper
 {
+
     public function hire($relation)
     {
         // set apply state 
