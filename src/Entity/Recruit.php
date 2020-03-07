@@ -51,7 +51,12 @@ class Recruit
     /**
      * @ORM\Column(type="boolean")
      */
-    private $confirm;
+    private $confirmed;
+
+    // /**
+    //  * @ORM\Column(type="boolean")
+    //  */
+    // private $confirmed;
 
     public function getId(): ?int
     {
@@ -130,15 +135,27 @@ class Recruit
         return $this;
     }
 
-    public function getConfirm(): ?bool
+    public function getConfirmed(): ?bool
     {
-        return $this->confirm;
+        return $this->confirmed;
     }
 
-    public function setConfirm(bool $confirm): self
+    public function setConfirmed(bool $confirmed): self
     {
-        $this->confirm = $confirm;
+        $this->confirmed = $confirmed;
 
         return $this;
     }
+
+    // public function getConfirm(): ?bool
+    // {
+    //     return $this->confirm;
+    // }
+
+    // public function setConfirm(bool $confirm): self
+    // {
+    //     $this->confirm = $confirm;
+
+    //     return $this;
+    // }
 }

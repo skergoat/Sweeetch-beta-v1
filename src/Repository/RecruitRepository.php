@@ -19,32 +19,13 @@ class RecruitRepository extends ServiceEntityRepository
         parent::__construct($registry, Recruit::class);
     }
 
-    // /**
-    //  * @return Recruit[] Returns an array of Recruit objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
+    public function setToUnavailables($studies, $student) { //
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.studies != :studies AND u.student = :student')
+            ->setParameter('studies', $studies)
+            ->setParameter('student', $student)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Recruit
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
