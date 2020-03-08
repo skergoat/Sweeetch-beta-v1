@@ -27,7 +27,7 @@ class StudentFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        for($i = 1 ; $i < 3 ; $i++) {
+        for($i = 1 ; $i < 50 ; $i++) {
 
             $student = new Student;
             $student->setName('Marc' . $i);
@@ -39,7 +39,7 @@ class StudentFixtures extends Fixture
 
             $user = new User; 
             $user->setEmail('crypte' . $i . '@gmail.com');
-            $user->setRoles(['ROLE_STUDENT']);
+            $user->setRoles(['ROLE_STUDENT_HIRED']);
             $user->setPassword($this->passwordEncoder->encodePassword(
                 $user,
                 'crypte'
