@@ -30,8 +30,6 @@ class StudiesActionController extends AbstractController
      */
     public function recruit(Studies $studies, Student $student, RecruitRepository $repository, Request $request, RecruitHelper $helper)
     {
-        // check if study is available --> nombre max de place atteint
-
         // check if student is already hired
         if($helper->checkAgree($student) || $helper->checkConfirmed($student)) {
             $this->addFlash('error', 'Vous êtes déjà embauché ailleurs. Rendez-vous sur votre profil.');
