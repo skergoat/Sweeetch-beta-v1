@@ -42,6 +42,7 @@ class ApplyActionsController extends AbstractController
             return $this->redirectToRoute('offers_index');
         }
 
+        // check if some offers are waiting
         if($helper->checkHired('student', $student)){
             $this->addFlash('error', 'Vous avez des offres en attente. Consultez votre profil');
             return $this->redirectToRoute('offers_show', ['id' => $offers->getId(), 'page' => $page]);
@@ -66,7 +67,7 @@ class ApplyActionsController extends AbstractController
         }
 
         // send notification
-        $mailer->sendApplyNotification($offers);
+        // $mailer->sendApplyNotification($offers);
 
         $apply = new Apply; 
         $apply->setHired(false);
@@ -112,10 +113,10 @@ class ApplyActionsController extends AbstractController
         $helper->hire($apply);
 
         // close offer 
-        $offers->setState(true);        
+        $offers->setState(true); 
         
         // send notification
-        $mailer->sendHireNotification($apply);
+        // $mailer->sendHireNotification($apply);
 
         if($this->isCsrfTokenValid('hire'.$apply->getId(), $request->request->get('_token'))) {
 
@@ -158,11 +159,11 @@ class ApplyActionsController extends AbstractController
         // agree
         $helper->agree($apply);
 
+        // send notification
+        // $mailer->sendAgreeNotification($student, $offers);
+
         // set to unavailable
         $helper->unavailables($offers, $student);
-
-        // send notification
-        $mailer->sendAgreeNotification($student, $offers);
 
         if($this->isCsrfTokenValid('agree'.$apply->getId(), $request->request->get('_token'))) {
             $this->getDoctrine()->getManager()->flush();
@@ -190,7 +191,7 @@ class ApplyActionsController extends AbstractController
         $offers = $apply->getOffers();
 
         // send notification
-        $mailer->sendConfirmNotification($student, $offers);
+        // $mailer->sendConfirmNotification($student, $offers);
 
         $student->getUser()->setRoles(['ROLE_STUDENT_HIRED']);
 
@@ -224,7 +225,7 @@ class ApplyActionsController extends AbstractController
         $offers = $apply->getOffers();
 
         // send notification
-        $mailer->sendFinishNotification($student, $offers);
+        // $mailer->sendFinishNotification($student, $offers);
 
         // set to available
         $helper->available($offers, $student);
@@ -263,7 +264,7 @@ class ApplyActionsController extends AbstractController
         $offers->setState(false);
 
         // send notification
-        $mailer->sendRefuseNotification($student, $offers);
+        // $mailer->sendRefuseNotification($student, $offers);
 
         // set to available
         $helper->available($offers, $student);
@@ -294,7 +295,7 @@ class ApplyActionsController extends AbstractController
         $offers->setState(false);
 
         // set to available
-        $helper->available($offers, $student);
+        // $helper->available($offers, $student);
 
         // send notification
         $mailer->sendDeleteNotification($offers, $apply);

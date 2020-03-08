@@ -36,5 +36,6 @@ import './component/timeline.js';
 import './component/buttons.js';
 import './component/edit.js';
 import './component/message.js';
+import './component/button_disabled.js';
 
 
