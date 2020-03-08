@@ -134,8 +134,7 @@ class ApplyActionsController extends AbstractController
             // save 
             $entityManager->flush();
             $this->addFlash('success', 'Elève Embauché !');
-            return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
-            
+            return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);  
         }
         else {
             $this->addFlash('error', 'requête invalide');
@@ -254,7 +253,7 @@ class ApplyActionsController extends AbstractController
             // send notification
             $mailer->sendRefuseNotification($student, $offers);
             // set to available
-            $helper->available($offers, $student);
+            // $helper->available($offers, $student);
             // save
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Candidat refusée');
@@ -280,9 +279,9 @@ class ApplyActionsController extends AbstractController
             // close offer 
             $offers->setState(false);
             // set to available
-            $helper->available($offers, $student);
+            // $helper->available($offers, $student);
             // send notification
-            $mailer->sendDeleteNotification($offers, $apply);
+            $mailer->sendDeleteNotification($offers);
             // save and delete
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($apply);
