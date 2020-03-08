@@ -40,7 +40,7 @@ class CompanyFixtures extends Fixture
             ));
 
                 $offer1 = new Offers;
-                $offer1->setTitle('Développeur front-end-' . $i); 
+                $offer1->setTitle('Développeur front-end-'.$i.'-1'); 
                 $offer1->setDomain('informatique');
                 $offer1->setLocation('Paris'); 
                 $offer1->setDateStart(new \DateTime('now')); 
@@ -49,7 +49,7 @@ class CompanyFixtures extends Fixture
                 $offer1->setState(false);
 
                 $offer2 = new Offers;
-                $offer2->setTitle('Développeur front-end-' . $i); 
+                $offer2->setTitle('Développeur front-end-'.$i.'-2'); 
                 $offer2->setDomain('informatique');
                 $offer2->setLocation('Paris'); 
                 $offer2->setDateStart(new \DateTime('now')); 

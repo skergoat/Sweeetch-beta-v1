@@ -13,6 +13,6 @@ import 'admin-lte';
 
 import './components/edit.js';
 import './components/message.js';
-// import './components/button_disabled.js';
+import './components/button_disabled.js';
 
   
