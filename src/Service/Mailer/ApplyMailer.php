@@ -52,7 +52,7 @@ class ApplyMailer
         $this->mailer->send($mail);
     }
 
-    public function sendOtherNotification($offers)
+    public function sendOtherNotification($others)
     {   
         $title = $others->getOffers()->getTitle();
         $name = $others->getStudent()->getName();

@@ -42,6 +42,11 @@ class ApplyActionsController extends AbstractController
             return $this->redirectToRoute('offers_index');
         }
 
+        if($helper->checkHired('student', $student)){
+            $this->addFlash('error', 'Vous avez des offres en attente. Consultez votre profil');
+            return $this->redirectToRoute('offers_show', ['id' => $offers->getId(), 'page' => $page]);
+        }
+
         // check if student is already hired
         if($helper->checkAgree('student', $student) || $helper->checkConfirmed('student', $student)) {
             $this->addFlash('error', 'Vous êtes déjà embauché ailleurs. Rendez-vous sur votre profil.');
@@ -122,7 +127,7 @@ class ApplyActionsController extends AbstractController
 
                 foreach($others as $others) {
                     // send notification
-                    $mailer->sendOtherNotification($offers);
+                    $mailer->sendOtherNotification($others);
 
                     // delete other applies 
                     $entityManager->remove($others);   
