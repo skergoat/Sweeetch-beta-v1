@@ -164,17 +164,43 @@
             <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 
             <script>
-            $(function () {
-                $("#example1").DataTable();
-                $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
+                $(function () {
+
+                    $("#example1").DataTable({
+                        "paging": true,
+                        "lengthChange": false,
+                        "searching": false,
+                        "ordering": false,
+                        "info": false,
+                        "autoWidth": false,
+                        "responsive": true,
+                        "language": {
+                        "emptyTable": "Aucun inscrit pour le moment",
+                        "paginate": {
+                            "previous": "Précédent",
+                            'next':'Suivant'
+                            }
+                        }
+                    });
+
+                    $('#example2').DataTable({
+                        "paging": true,
+                        "lengthChange": false,
+                        "searching": false,
+                        "ordering": true,
+                        "info": false,
+                        "autoWidth": false,
+                        "responsive": true,
+                        "language": {
+                        "emptyTable": "Aucun inscrit pour le moment",
+                        "paginate": {
+                            "previous": "Précédent",
+                            'next':'Suivant'
+                            }
+                        }
+                    });
+                    
                 });
-            });
             </script>
             
             <script>
