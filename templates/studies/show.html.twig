@@ -1,15 +1,6 @@
 {% extends 'base-school.html.twig' %}
 
 {% block title %} {{ parent() }} - Ecoles {% endblock %}
-
-{% block stylesheets %}
-
-{{ parent() }}
-
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-
-{% endblock %}
-
 {% block body %}
 
 <div class="container-fluid">
@@ -57,108 +48,65 @@
 </div>
 {% endfor %}
 
-<div class="col-md-12">
-    <div class="card-responsive card">
-
-        <div class="Password card col-lg-12">
-
-            <div class="col-lg-12">
-                <h3 class="mb-3 mt-3 pl-3-responsive titles-front">Détail du Cursus</h3>
-            </div>
-
-            <div class="card-responsive card-body">
-                <table class="table offers-show col-lg-5 col-md-5 col-sm-12 col-xs-12">
-                    <tbody>
-                        <tr>
-                            <th>Domaine</th>
-                            <td>{{ study.domain }}</td>
-                        </tr>
-                        <tr>
-                            <th>Titre</th>
-                            <td>{{ study.title }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div class="card description" style="padding:10px;">
-                    <h5 class="mb-3">Description</h5>
-                    <p>{{ study.description |raw }}</p>
-                </div>
-                
-            </div>
-
-            {# <div class="col-lg-12">
-                <h3 class="mb-3 mt-3 ml-1 titles-front">Candidatures</h3>
-            </div> #}
-
-            {# <div class="card-responsive card-body"> #}
-            
-                {# <table class="table">
-                    <tbody>
-                        <tr>
-                            <th>Nom</th>
-                            <th>Etat</th>
-                            <th>Actions</th>
-                        </tr>
+<section class="col-md-12">
+    <div class="row">
+        <div class="col-12">
+            <div class="Password card col-lg-12" id="card-1">
+                <div class="card-header" style="border-bottom:0px;">
+                    <div class="col-lg-12">
+                        <div class="card-header-color card-header border-transparent">
+                            <div class="card-title">
+                                <h3 class="mb-3 mt-3 pl-3-responsive titles-front">Cursus</h3>
+                            </div>
+                            <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" style="background:#B5B7B9;border-radius:10px;">
+                                <i class="fas fa-minus" title="reduire/agrandir"></i>
+                            </button>
+                            </div>
+                        </div>
                     
-                    {% for recruit in recruit %}
-
-                        <tr>
-                            <td><a href="{{ path('show_student_applied', {id:recruit.student.id, school:school.id, study:study.id}) }}">{{ recruit.student.Name }} {{ recruit.student.lastName }}</a></td>
-                            <td>Ouvert</td>
-                            <td>
-                                <div class="btn-group">
-                                    {% if recruit.hired == false and recruit.agree == false and recruit.confirmed == false %}
-                                    <form method="post" action="{{ path('recruit_hire', { id:recruit.id }) }}" class="btn-icon-form" onsubmit="return confirm('Etes-vous certain de vouloir embaucher cet étudiant ?');">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('hire' ~ recruit.id) }}">
-                                        <button class="btn-icon btn-success"><i class="fas fa-user-check" title="Embaucher"></i></button>
-                                    </form>
-                                    <form method="post" action="{{ path('recruit_refuse', {'id': recruit.id }) }}" class="btn-icon-form" onsubmit="return confirm('Etes-vous certain de vouloir refuser cette candidature ?');">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('refuse' ~ recruit.id) }}">
-                                        <button class="btn-icon btn-danger" title="Refuser">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                    </form>
-                                    {% elseif recruit.hired == true %}
-                                    <button class="btn-icon-form btn-icon btn-warning" title="En attente d'acceptation de l'étudiant">
-                                        <i class="fas fa-hourglass-start"></i>
-                                    </button>
-                                    {% elseif recruit.agree == true %}
-                                    <form method="post" class="btn-icon-form" action="{{ path('recruit_confirm', { id:recruit.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir commencer l\'inscription ?');">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('confirm' ~ recruit.id) }}">
-                                        <button class="btn-icon btn-success" title="Démarrer la mission"><i class="far fa-play-circle"></i></button>
-                                    </form>
-                                    {% endif %}
-                                    <a href="#help-1" rel="modal:open" class="btn-modal btn-icon-form btn-icon btn-secondary" title="aide">
-                                        <i class="fas fa-question-circle"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-
-                    {% else %}
-
-                        <tr class="border-top">
-                            <td colspan="8" class="border-top-td">Aucune candidature pour le moment</td>
-                        </tr>  
-
-                    {% endfor %}
-
-                    </tbody>
-                </table> #}
-                
-            {# </div>  #}
+                    </div>
+                </div>
+                <div class="card-responsive card-body">
+                    <table class="table offers-show col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                        <tbody>
+                            <tr>
+                                <th>Domaine</th>
+                                <td>{{ study.domain }}</td>
+                            </tr>
+                            <tr>
+                                <th>Titre</th>
+                                <td>{{ study.title }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="card description" style="padding:10px;">
+                        <h5 class="mb-3">Description</h5>
+                        <p>{{ study.description |raw }}</p>
+                    </div>     
+                </div>
+            </div>
         </div>
     </div>
-</div>
+</section>
 
 <section class="col-md-12">
     <div class="row">
       <div class="col-12">
-        <div class="card">
-          <div class="card-header">
+        <div class="card" id="card-2">
+          <div class="card-header" style="border-bottom:0px;">
             <div class="col-lg-12">
-                <h3 class="mb-3 mt-3 ml-1 titles-front">Candidatures</h3>
+
+                <div class="card-header-color card-header border-transparent">
+                    <div class="card-title">
+                        <h3 class="mb-3 mt-3 pl-3-responsive titles-front">Candidatures</h3>
+                    </div>
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse" style="background:#B5B7B9;border-radius:10px;">
+                        <i class="fas fa-minus" title="reduire/agrandir"></i>
+                      </button>
+                    </div>
+                </div>
             </div>
           </div>
           <div class="card-body">
@@ -221,26 +169,93 @@
     </div>
 </section>
 
+<section class="col-md-12">
+    <div class="row">
+        <div class="col-12">
+            <div class="card" id="card-3">
+                <div class="card-header" style="border-bottom:0px;">
+                    <div class="col-lg-12">
+
+                        <div class="card-header-color card-header border-transparent">
+                            <div class="card-title">
+                                <h3 class="mb-3 mt-3 pl-3-responsive titles-front">Inscriptions en cours</h3>
+                            </div>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse" style="background:#B5B7B9;border-radius:10px;">
+                                    <i class="fas fa-minus" title="reduire/agrandir"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Etat</th>
+                                <th>Actions</th>
+                            </tr>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       {#  {% for recruit in recruit %}
+                            <tr>
+                                <td><a href="{{ path('show_student_applied', {id:recruit.student.id, school:school.id, study:study.id}) }}">{{ recruit.student.Name }} {{ recruit.student.lastName }}</a></td>
+                                <td>Ouvert</td>
+                                <td>
+                                    <div class="btn-group">
+                                        {% if recruit.hired == false and recruit.agree == false and recruit.confirmed == false %}
+                                        <form method="post" action="{{ path('recruit_hire', { id:recruit.id }) }}" class="btn-icon-form" onsubmit="return confirm('Etes-vous certain de vouloir embaucher cet étudiant ?');">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('hire' ~ recruit.id) }}">
+                                            <button class="btn-icon btn-success"><i class="fas fa-user-check" title="Embaucher"></i></button>
+                                        </form>
+                                        <form method="post" action="{{ path('recruit_refuse', {'id': recruit.id }) }}" class="btn-icon-form" onsubmit="return confirm('Etes-vous certain de vouloir refuser cette candidature ?');">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('refuse' ~ recruit.id) }}">
+                                            <button class="btn-icon btn-danger" title="Refuser">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </form>
+                                        {% elseif recruit.hired == true %}
+                                        <button class="btn-icon-form btn-icon btn-warning" title="En attente d'acceptation de l'étudiant">
+                                            <i class="fas fa-hourglass-start"></i>
+                                        </button>
+                                        {% elseif recruit.agree == true %}
+                                        <form method="post" class="btn-icon-form" action="{{ path('recruit_confirm', { id:recruit.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir commencer l\'inscription ?');">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('confirm' ~ recruit.id) }}">
+                                            <button class="btn-icon btn-success" title="Démarrer la mission"><i class="far fa-play-circle"></i></button>
+                                        </form>
+                                        {% endif %}
+                                        <a href="#help-1" rel="modal:open" class="btn-modal btn-icon-form btn-icon btn-secondary" title="aide">
+                                            <i class="fas fa-question-circle"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            {% else %}
+                                <tr class="border-top">
+                                    <td colspan="8" class="border-top-td">Aucune candidature pour le moment</td>
+                                </tr>  
+                            {% endfor %} #}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
 {% endblock %}
 
 {% block javascripts %}
-
 {{ parent() }}
-
-<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-
 <script>
-  $(function () {
-    $("#example1").DataTable();
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
+    $(document).ready(function() {
+        $('#card-1').CardWidget('toggle');
+        // $('#card-2').CardWidget('toggle');
+        // $('#card-3').CardWidget('toggle');
     });
-  });
 </script>
 
 {% endblock %}
