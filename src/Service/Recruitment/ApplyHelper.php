@@ -25,7 +25,7 @@ class ApplyHelper extends CommonHelper
 
     public function checkAgree($key, $student)
     {
-        return $this->applyRepository->findBy([$key => $student, 'agree' => 1]);
+        $this->applyRepository->findBy([$key => $student, 'agree' => 1]);
     }
  
     public function checkConfirmed($key,$student)
