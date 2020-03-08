@@ -33,9 +33,6 @@ class ApplyRepository extends ServiceEntityRepository
         // ->andWhere('cat.enabled = :enabled')
     }
 
-
-
-
     public function applyExists($student, $offers) { 
         return (boolean)$this->createQueryBuilder('u')
         ->andWhere('u.offers = :offers AND u.student = :student')
@@ -44,8 +41,6 @@ class ApplyRepository extends ServiceEntityRepository
         ->getQuery()
         ->getOneOrNullResult();
     }
-
-
 
     public function findAppliedIfExists($student, $offer)
     {
@@ -75,15 +70,15 @@ class ApplyRepository extends ServiceEntityRepository
         ;
     }
 
-    public function checkIfHired($student) // 
-    { 
-        return (boolean)$this->createQueryBuilder('u')
-        ->andWhere('u.student = :student AND u.hired = :hired')
-        ->setParameter('student', $student->getId())
-        ->setParameter('hired', true)
-        ->getQuery()
-        ->getOneOrNullResult();
-    }
+    // public function checkIfHired($student) // 
+    // { 
+    //     return (boolean)$this->createQueryBuilder('u')
+    //     ->andWhere('u.student = :student AND u.hired = :hired')
+    //     ->setParameter('student', $student->getId())
+    //     ->setParameter('hired', true)
+    //     ->getQuery()
+    //     ->getOneOrNullResult();
+    // }
 
     public function findByStudentByFresh($student) 
     {

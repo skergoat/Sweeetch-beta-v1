@@ -42,7 +42,7 @@ class StudiesRenderController extends AbstractController
 
     /**
      * @Route("/student/{id}", name="school_student_index", methods={"GET"})
-     * @IsGranted("ROLE_SUPER_STUDENT")
+     * @IsGranted("ROLE_STUDENT")
      */
     public function indexByStudent(Student $student, RecruitRepository $recruitRepository, SchoolRepository $schoolRepository, ApplyRepository $applyRepository, StudentChecker $checker): Response
     {
@@ -52,7 +52,7 @@ class StudiesRenderController extends AbstractController
                 'student' => $student,
                 'recruit' => $recruitRepository->findBy(['student' => $student, 'refused' => false, 'unavailable' => false], ['hired' => 'desc']),
                 'fresh' => $applyRepository->findByStudentByFresh($student),
-                'hired' => $applyRepository->checkIfHired($student)
+                'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true])
             ]);
         } 
     }
@@ -116,7 +116,7 @@ class StudiesRenderController extends AbstractController
             'studies' => $studies,
             'student' => $student,
             'fresh' => $applyRepository->findByStudentByFresh($student),
-            'hired' => $applyRepository->checkIfHired($student)
+            'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true])
         ]);  
     }
 

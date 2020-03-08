@@ -148,7 +148,8 @@ class StudentController extends AbstractController
                 'applies' => $applyRepository->findByStudent($student),
                 'finished' => $applyRepository->findBy(['student' => $student, 'finished' => true]),
                 'fresh' => $applyRepository->findByStudentByFresh($student),
-                'hired' => $applyRepository->checkIfHired($student)
+                // 'hired' => $applyRepository->checkIfHired($student)
+                'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true])
             ]);
         }  
     }
@@ -247,7 +248,8 @@ class StudentController extends AbstractController
                 'formDoc' => $formDoc->createView(),
                 'formPassword' => $formPassword->createView(),
                 'fresh' => $applyRepository->findByStudentByFresh($student),
-                'hired' => $applyRepository->checkIfHired($student)
+                // 'hired' => $applyRepository->checkIfHired($student)
+                'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true])
             ]);
 
         }   

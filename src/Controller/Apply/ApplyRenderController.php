@@ -60,7 +60,8 @@ class ApplyRenderController extends AbstractController
                 'applies' => $applies,
                 'finished' => $finished,
                 'fresh' =>  $applyRepository->findByStudentByFresh($student),
-                'hired' => $applyRepository->checkIfHired($student)
+                // 'hired' => $applyRepository->checkIfHired($student)
+                'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true])
             ]);
         }
     }
@@ -160,7 +161,8 @@ class ApplyRenderController extends AbstractController
                 'offers' => $offer,
                 'student' => $student,
                 'fresh' =>  $applyRepository->findByStudentByFresh($student),
-                'hired' => $applyRepository->checkIfHired($student),
+                // 'hired' => $applyRepository->checkIfHired($student),
+                'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true]),
                 'finished' => $applyRepository->findByStudentByFinished($student)
             ]);
         }
