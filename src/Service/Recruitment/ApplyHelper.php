@@ -17,10 +17,10 @@ class ApplyHelper extends CommonHelper
         $this->session = $session;
     }
 
-    public function checkRecruit($offers, $student)
+    // check apply state 
+    public function checkApply($offers, $student)
     {
         return $this->applyRepository->findBy(['offers' => $offers, 'student' => $student]);
-
         // if($already) {
         //     $this->session->getFlashBag()->add('error', 'Vous avez déjà postulé');
         // }
@@ -35,12 +35,13 @@ class ApplyHelper extends CommonHelper
     {
         return $this->applyRepository->findBy(['student' => $student, 'agree' => 1]);
     }
-
+ 
     public function checkConfirmed($student)
     {
         return  $this->applyRepository->findBy(['student' => $student, 'confirmed' => 1]);
     }
 
+    // unavailable
     public function unavailables($offers, $student)
     {
         $unavailables = $this->applyRepository->setToUnavailables($offers, $student);
@@ -53,8 +54,19 @@ class ApplyHelper extends CommonHelper
                 if($unavailables->getHired() == true) {
                     $unavailables->setHired(false);
                 }
-                
             }  
+        }
+    }
+
+    // available
+    public function available($offers, $student)
+    {
+        $unavailables =  $this->applyRepository->setToUnavailables($offers, $student);
+
+        foreach($unavailables as $unavailables) {
+            if($unavailables->getUnavailable() == true) {
+                $unavailables->setUnavailable(false);
+            }      
         }
     }
 }

@@ -28,15 +28,15 @@ class OffersRepository extends ServiceEntityRepository
         ->getOneOrNullResult();
     }
 
-    public function findAllPaginatedAndOpen($order = "DESC") 
-    {
-        return $this->createQueryBuilder('p')
-        ->andWhere('p.state = :state')
-        ->setParameter('state', false)
-        ->orderBy('p.id', $order)
-        ->getQuery()
-        ->getResult();
-    }
+    // public function findAllPaginatedAndOpen($order = "DESC") 
+    // {
+    //     return $this->createQueryBuilder('p')
+    //     ->andWhere('p.state = :state')
+    //     ->setParameter('state', false)
+    //     ->orderBy('p.id', $order)
+    //     ->getQuery()
+    //     ->getResult();
+    // }
 
     public function findAllPaginated($order = "DESC")
     {

@@ -49,7 +49,8 @@ class ProfileController extends AbstractController
                 'form' => $form->createView(),
                 'student' => $student,
                 'fresh' =>  $applyRepository->findByStudentByFresh($student),
-                'hired' => $applyRepository->checkIfHired($student)
+                // 'hired' => $applyRepository->checkIfHired($student)
+                'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true])
             ]);
         }  
     }
