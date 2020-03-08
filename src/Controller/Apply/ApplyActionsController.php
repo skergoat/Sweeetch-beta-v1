@@ -31,7 +31,7 @@ class ApplyActionsController extends AbstractController
      * @IsGranted("ROLE_SUPER_STUDENT")
      * @ParamConverter("student", options={"id" = "student_id"})
      */
-    public function apply(ApplyRepository $repository, Offers $offers, Student $student, StudentChecker $checker, Request $request, ApplyHelper $helper, ApplyMailer $mailer, $page)
+    public function apply(Offers $offers, Student $student, ApplyRepository $repository, StudentChecker $checker, Request $request, ApplyHelper $helper, ApplyMailer $mailer, $page)
     {
         // check if apply is available
         if($helper->checkHired('offers', $offers) 
@@ -66,38 +66,41 @@ class ApplyActionsController extends AbstractController
             return $this->redirectToRoute('offers_show', ['id' => $offers->getId(), 'page' => $page]);
         }
 
-        // send notification
-        // $mailer->sendApplyNotification($offers);
-
-        $apply = new Apply; 
-        $apply->setHired(false);
-        $apply->setConfirmed(false);
-        $apply->setRefused(false);
-        $apply->setUnavailable(false);
-        $apply->setFinished(false);
-        $apply->setAgree(false);
-        $apply->setOffers($offers);
-        $apply->setStudent($student);
-
         if($this->isCsrfTokenValid('apply'.$student->getId(), $request->request->get('_token'))) {
-            $manager = $this->getDoctrine()->getManager();
-            $manager->persist($apply);
-            $manager->flush();
+
+            // send notification
+            $mailer->sendApplyNotification($offers);
+
+            $apply = new Apply; 
+            $apply->setHired(false);
+            $apply->setConfirmed(false);
+            $apply->setRefused(false);
+            $apply->setUnavailable(false);
+            $apply->setFinished(false);
+            $apply->setAgree(false);
+            $apply->setOffers($offers);
+            $apply->setStudent($student);
+
+            // if($this->isCsrfTokenValid('apply'.$student->getId(), $request->request->get('_token'))) {
+                $manager = $this->getDoctrine()->getManager();
+                $manager->persist($apply);
+                $manager->flush();
+            
+            $this->addFlash('success', 'Postulation enregistrée !');
+
+            return $this->redirectToRoute('offers_show', ['id' => $offers->getId(), 'page' => $page]);
         }
         else {
-            throw new \Exception('Utilisateur Invalide');
+            $this->addFlash('error', 'requête invalide');
+            return $this->redirectToRoute('offers_show', ['id' => $offers->getId(), 'page' => $page]);
         }
-
-        $this->addFlash('success', 'Postulation enregistrée !');
-
-        return $this->redirectToRoute('offers_show', ['id' => $offers->getId(), 'page' => $page]);
     }
 
     /**
      * @Route("/hire/{id}", name="hire", methods={"POST"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
-    public function hire(ApplyRepository $repository, Apply $apply, Request $request, ApplyHelper $helper, ApplyMailer $mailer)
+    public function hire(Apply $apply, ApplyRepository $repository, Request $request, ApplyHelper $helper, ApplyMailer $mailer)
     {   
         // get users
         $student = $apply->getStudent();
@@ -105,20 +108,22 @@ class ApplyActionsController extends AbstractController
 
         // check if student is available
         if($helper->checkAgree('student', $student) || $helper->checkConfirmed('student', $student)) {
-            $this->addFlash('error', 'Cet étudiant n\'est plus disponible.');
-            return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
+             $this->addFlash('error', 'Cet étudiant n\'est plus disponible.');
+             return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
         }
 
-        // hire
-        $helper->hire($apply);
+        if($this->isCsrfTokenValid('hire'.$apply->getId(), $request->request->get('_token')))
+        {
+            // hire
+            $helper->hire($apply);
 
-        // close offer 
-        $offers->setState(true); 
-        
-        // send notification
-        // $mailer->sendHireNotification($apply);
+            // close offer 
+            $offers->setState(true); 
+            
+            // send notification
+            $mailer->sendHireNotification($apply);
 
-        if($this->isCsrfTokenValid('hire'.$apply->getId(), $request->request->get('_token'))) {
+            // if($this->isCsrfTokenValid('hire'.$apply->getId(), $request->request->get('_token'))) {
 
             $entityManager = $this->getDoctrine()->getManager();
     
@@ -134,16 +139,18 @@ class ApplyActionsController extends AbstractController
                     $entityManager->remove($others);   
                 }   
             }
-              // save 
-              $entityManager->flush();
+            // save 
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Elève Embauché !');
+
+            return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
+            
         }
         else {
-            throw new \Exception('Candidature Invalide');
+            $this->addFlash('error', 'requête invalide');
+            return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
         }
-
-        $this->addFlash('success', 'Elève Embauché !');
- 
-        return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
     }
 
     /**
@@ -160,21 +167,21 @@ class ApplyActionsController extends AbstractController
         $helper->agree($apply);
 
         // send notification
-        // $mailer->sendAgreeNotification($student, $offers);
+        $mailer->sendAgreeNotification($student, $offers);
 
         // set to unavailable
         $helper->unavailables($offers, $student);
 
         if($this->isCsrfTokenValid('agree'.$apply->getId(), $request->request->get('_token'))) {
             $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('success', 'offre acceptée');
+
+            return $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
         }
         else {
             throw new \Exception('Demande Invalide');
         }
-
-        $this->addFlash('success', 'offre acceptée');
-
-        return $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
     }
 
     /**
@@ -191,20 +198,20 @@ class ApplyActionsController extends AbstractController
         $offers = $apply->getOffers();
 
         // send notification
-        // $mailer->sendConfirmNotification($student, $offers);
+        $mailer->sendConfirmNotification($student, $offers);
 
         $student->getUser()->setRoles(['ROLE_STUDENT_HIRED']);
 
         if($this->isCsrfTokenValid('confirm'.$apply->getId(), $request->request->get('_token'))) {
             $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('success', 'Mission Commencée. Bon travail !');
+
+            return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
         }
         else {
             throw new \Exception('Demande Invalide');
         }
-
-        $this->addFlash('success', 'Mission Commencée. Bon travail !');
-
-        return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
     }
 
      /**
@@ -225,21 +232,21 @@ class ApplyActionsController extends AbstractController
         $offers = $apply->getOffers();
 
         // send notification
-        // $mailer->sendFinishNotification($student, $offers);
+        $mailer->sendFinishNotification($student, $offers);
 
         // set to available
         $helper->available($offers, $student);
 
         if($this->isCsrfTokenValid('stop'.$apply->getId(), $request->request->get('_token'))) {
             $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('success', 'Mission Terminée. Bravo !');
+
+            return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
         }
         else {
             throw new \Exception('Demande Invalide');
         }
-
-        $this->addFlash('success', 'Mission Terminée. Bravo !');
-
-        return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
     }
 
      /**
@@ -264,21 +271,21 @@ class ApplyActionsController extends AbstractController
         $offers->setState(false);
 
         // send notification
-        // $mailer->sendRefuseNotification($student, $offers);
+        $mailer->sendRefuseNotification($student, $offers);
 
         // set to available
         $helper->available($offers, $student);
 
         if($this->isCsrfTokenValid('refuse'.$apply->getId(), $request->request->get('_token'))) {
             $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('success', 'Candidat refusée');
+    
+            return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
         }
         else {
             throw new \Exception('Demande Invalide');
         }
-
-        $this->addFlash('success', 'Candidat refusée');
-    
-        return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
     }
 
     /**
@@ -295,7 +302,7 @@ class ApplyActionsController extends AbstractController
         $offers->setState(false);
 
         // set to available
-        // $helper->available($offers, $student);
+        $helper->available($offers, $student);
 
         // send notification
         $mailer->sendDeleteNotification($offers, $apply);
@@ -307,14 +314,14 @@ class ApplyActionsController extends AbstractController
             $entityManager->remove($apply);
             // delete offer
             $entityManager->flush();
+
+            $this->addFlash('success', 'Candidature supprimée !');
+
+            return $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
         }
         else {
             throw new \Exception('Candidature Invalide');
         }
-
-        $this->addFlash('success', 'Candidature supprimée !');
-
-        return $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
     }
 
     /**
@@ -329,9 +336,9 @@ class ApplyActionsController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($apply);
             $entityManager->flush();
-        }
 
-        return $this->redirectToRoute('student_finished', ['id' => $student->getId()]);
+            return $this->redirectToRoute('student_finished', ['id' => $student->getId()]);
+        }
     }
 
     /**

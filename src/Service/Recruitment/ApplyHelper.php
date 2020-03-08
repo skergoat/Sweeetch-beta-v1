@@ -58,7 +58,7 @@ class ApplyHelper extends CommonHelper
 
         foreach($unavailables as $unavailables) {
 
-            if($unavailables->getRefused() != true) {
+            if($unavailables->getRefused() != true && $unavailables->getAgree() != true) {
                 $unavailables->setUnavailable(true);
                 
                 if($unavailables->getHired() == true && $unavailables->getOffers()->getState() == true) {

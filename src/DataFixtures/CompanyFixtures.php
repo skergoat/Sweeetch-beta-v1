@@ -22,7 +22,7 @@ class CompanyFixtures extends Fixture
     {
         for($i = 1 ; $i < 5 ; $i++) {
             $ca = new Company;
-            $ca->setCompanyName('Company');
+            $ca->setCompanyName('Company'.$i);
             $ca->setFirstname('Stephane');
             $ca->setLastname('Kergoat');
             $ca->setAddress('1 rue du chemin vert');
@@ -40,7 +40,7 @@ class CompanyFixtures extends Fixture
             ));
 
                 $offer1 = new Offers;
-                $offer1->setTitle('Développeur front-end'); 
+                $offer1->setTitle('Développeur front-end-' . $i); 
                 $offer1->setDomain('informatique');
                 $offer1->setLocation('Paris'); 
                 $offer1->setDateStart(new \DateTime('now')); 
@@ -49,7 +49,7 @@ class CompanyFixtures extends Fixture
                 $offer1->setState(false);
 
                 $offer2 = new Offers;
-                $offer2->setTitle('Développeur front-end'); 
+                $offer2->setTitle('Développeur front-end-' . $i); 
                 $offer2->setDomain('informatique');
                 $offer2->setLocation('Paris'); 
                 $offer2->setDateStart(new \DateTime('now')); 

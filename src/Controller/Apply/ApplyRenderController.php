@@ -74,7 +74,7 @@ class ApplyRenderController extends AbstractController
     {     
         if($checker->companyValid($company)) {
 
-            $queryBuilder = $offersRepository->findAllPaginatedByCompany("DESC", $company);
+            $queryBuilder = $offersRepository->findBy(['company' => $company], ['id' => 'desc']);
             
             $pagination = $paginator->paginate(
                 $queryBuilder,
