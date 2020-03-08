@@ -2,6 +2,14 @@
 
 {% block title %} {{ parent() }} - Ecoles {% endblock %}
 
+{% block stylesheets %}
+
+{{ parent() }}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+
+{% endblock %}
+
 {% block body %}
 
 <div class="container-fluid">
@@ -79,13 +87,13 @@
                 
             </div>
 
-            <div class="col-lg-12">
+            {# <div class="col-lg-12">
                 <h3 class="mb-3 mt-3 ml-1 titles-front">Candidatures</h3>
-            </div>
+            </div> #}
 
-            <div class="card-responsive card-body">
+            {# <div class="card-responsive card-body"> #}
             
-                <table class="table">
+                {# <table class="table">
                     <tbody>
                         <tr>
                             <th>Nom</th>
@@ -135,109 +143,104 @@
                         </tr>  
 
                     {% endfor %}
-                    {# {% if applies[0] is defined %}
-
-                        {% for applies in applies %}
-                        
-                        <tr>
-                            {% if is_granted('ROLE_ADMIN') %}
-                            <td style="padding-top: 18px;"><a href="{{ path('student_show', { "id":applies.student.id }) }}">{{ applies.student.name }} {{ applies.student.lastname }}</a></td>
-                            {% else %}
-                            <td style="padding-top: 18px;"><a href="{{ path('show_applied_profile', { "id":applies.student.id, "company_id": offers.company.id, "offers":offers.id }) }}">{{ applies.student.name }} {{ applies.student.lastname }}</a></td>
-                            {% endif %}
-                            <td style="color:white;">
-                            
-                                <div class="btn-group">
-                            {% if applies.hired == false and applies.confirmed == false and applies.agree == false %}
-                                
-                                    <form method="post" action="{{ path('hire', { id:applies.id }) }}" class="btn-icon-form" onsubmit="return confirm('Etes-vous certain de vouloir embaucher cet étudiant ?');">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('hire' ~ applies.id) }}">
-                                        <button class="btn-icon btn-success"><i class="fas fa-user-check" title="Embaucher"></i></button>
-                                    </form>
-
-                                    <form method="post" action="{{ path('apply_refuse', {'id': applies.id, 'from' : 'company'}) }}" class="btn-icon-form" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette candidature ?');">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('refuse' ~ applies.id) }}">
-                                        <button class="btn-icon btn-danger" title="Refuser">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                    </form>
-
-                            {% elseif applies.hired == true %}
-                                    <button class="btn-icon-form btn-icon btn-warning" title="En attente d'acceptation de l'étudiant">
-                                        <i class="fas fa-hourglass-start"></i>
-                                    </button>
-                            {% elseif applies.agree == true %}
-
-                                    <form method="post" class="btn-icon-form" action="{{ path('confirm', { id:applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir commencer la mission ?');">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('confirm' ~ applies.id) }}">
-                                        <button class="btn-icon btn-success" title="Démarrer la mission"><i class="far fa-play-circle"></i></button>
-                                    </form>
-
-                            {% elseif applies.confirmed == true %}
-
-                                    <form method="post" class="btn-icon-form" action="{{ path('apply_finish', {'id': applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir terminer la mission ?');">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('stop' ~ applies.id) }}">
-                                        <button class="btn-icon btn-warning" title="Terminer la mission"><i class="far fa-stop-circle"></i></button>
-                                    </form>
-
-                            {% endif %}
-                                    <a href="#help-1" rel="modal:open" class="btn-modal btn-icon-form btn-icon btn-secondary" title="aide">
-                                        <i class="fas fa-question-circle"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                    
-                        {% endfor %}
-
-                    {% elseif finished | length > 0 %}
-                        
-                        {% for finished in finished %}
-                            
-                        <tr>
-                            {% if finished.student.id is defined %}
-                                {% if is_granted('ROLE_ADMIN') %}
-                                <td style="padding-top: 18px;" colspan="8"><a href="{{ path('student_show', { "id":finished.student.id }) }}">{{ finished.student.name }} {{ finished.student.lastname }}</a></td>
-                                {% else %}
-                                <td style="padding-top: 18px;" colspan="8"><a href="{{ path('show_applied_profile', { "id":finished.student.id, "company_id": offers.company.id, "offers":offers.id }) }}">{{ finished.student.name }} {{ finished.student.lastname }}</a></td>
-                                {% endif %}
-                            {% else %}
-                                <td>
-                                    <p style="color:red;">Le profil de l'étudiant a été détruit</p>
-                                </td>
-                                <td colspan="2">
-                                    <form method="post" action="{{ path('delete_empty_companySide', {'id': finished.offers.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette mission ?');">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ finished.offers.id) }}">
-                                        <button class="btn btn-danger">Supprimer</button>
-                                    </form>
-                                </td>
-                            {% endif %}
-                        </tr>
-
-                        {% endfor %}
-
-                    {% else %} #}
-
-                    {# {% for session in study.sessions %}
-
-                    <tr>
-                        <td>{{ session.title }}</th>
-                        <td>Du {{ session.dateFrom|date("d/m/Y") }} au {{ session.dateTo|date("d/m/Y") }}</th>
-                    </tr>
-                    
-                    {% else %} #} 
-                    
-                    {# {% endfor %} #}
-                    
-                    {# {% endif %} #}
 
                     </tbody>
-                </table>
+                </table> #}
                 
-            </div> 
+            {# </div>  #}
         </div>
     </div>
 </div>
+
+<section class="col-md-12">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="col-lg-12">
+                <h3 class="mb-3 mt-3 ml-1 titles-front">Candidatures</h3>
+            </div>
+          </div>
+          <div class="card-body">
+            <table id="example2" class="table table-bordered table-hover">
+              <thead>
+              <tr>
+                <tr>
+                    <th>Nom</th>
+                    <th>Etat</th>
+                    <th>Actions</th>
+                </tr>
+              </tr>
+              </thead>
+              <tbody>
+
+                {% for recruit in recruit %}
+                <tr>
+                    <td><a href="{{ path('show_student_applied', {id:recruit.student.id, school:school.id, study:study.id}) }}">{{ recruit.student.Name }} {{ recruit.student.lastName }}</a></td>
+                    <td>Ouvert</td>
+                    <td>
+                        <div class="btn-group">
+                            {% if recruit.hired == false and recruit.agree == false and recruit.confirmed == false %}
+                            <form method="post" action="{{ path('recruit_hire', { id:recruit.id }) }}" class="btn-icon-form" onsubmit="return confirm('Etes-vous certain de vouloir embaucher cet étudiant ?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('hire' ~ recruit.id) }}">
+                                <button class="btn-icon btn-success"><i class="fas fa-user-check" title="Embaucher"></i></button>
+                            </form>
+                            <form method="post" action="{{ path('recruit_refuse', {'id': recruit.id }) }}" class="btn-icon-form" onsubmit="return confirm('Etes-vous certain de vouloir refuser cette candidature ?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('refuse' ~ recruit.id) }}">
+                                <button class="btn-icon btn-danger" title="Refuser">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </form>
+                            {% elseif recruit.hired == true %}
+                            <button class="btn-icon-form btn-icon btn-warning" title="En attente d'acceptation de l'étudiant">
+                                <i class="fas fa-hourglass-start"></i>
+                            </button>
+                            {% elseif recruit.agree == true %}
+                            <form method="post" class="btn-icon-form" action="{{ path('recruit_confirm', { id:recruit.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir commencer l\'inscription ?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('confirm' ~ recruit.id) }}">
+                                <button class="btn-icon btn-success" title="Démarrer la mission"><i class="far fa-play-circle"></i></button>
+                            </form>
+                            {% endif %}
+                            <a href="#help-1" rel="modal:open" class="btn-modal btn-icon-form btn-icon btn-secondary" title="aide">
+                                <i class="fas fa-question-circle"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+
+                {% else %}
+                    <tr class="border-top">
+                        <td colspan="8" class="border-top-td">Aucune candidature pour le moment</td>
+                    </tr>  
+                {% endfor %}
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block javascripts %}
+
+{{ parent() }}
+
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
+<script>
+  $(function () {
+    $("#example1").DataTable();
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+    });
+  });
+</script>
 
 {% endblock %}

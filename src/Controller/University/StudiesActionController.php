@@ -84,10 +84,10 @@ class StudiesActionController extends AbstractController
         }
     }
 
-     /**
-     * @Route("/hire/{id}", name="recruit_hire", methods={"POST"})
-     * @IsGranted("ROLE_SUPER_SCHOOL")
-     */
+    /**
+    * @Route("/hire/{id}", name="recruit_hire", methods={"POST"})
+    * @IsGranted("ROLE_SUPER_SCHOOL")
+    */
     public function hire(RecruitRepository $repository, Recruit $recruit, Request $request, RecruitHelper $helper, RecruitMailer $mailer)
     {   
         // separer eleves recrutes et non recrutes 
@@ -121,9 +121,9 @@ class StudiesActionController extends AbstractController
     }
 
     /**
-     * @Route("/agree/{id}", name="recruit_agree", methods={"POST"})
-     * @IsGranted("ROLE_SUPER_STUDENT")
-     */
+    * @Route("/agree/{id}", name="recruit_agree", methods={"POST"})
+    * @IsGranted("ROLE_SUPER_STUDENT")
+    */
     public function agree(RecruitRepository $repository, Recruit $recruit, Request $request, RecruitHelper $helper, RecruitMailer $mailer)
     {
         // get other applies
@@ -255,10 +255,7 @@ class StudiesActionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $study = $form->getData();
-
             $study->setSchool($school);
-
-            // dd($study);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($study);
@@ -285,8 +282,6 @@ class StudiesActionController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
-            // return $this->redirectToRoute('school_studies_index', [ 'id' => $school->getId() ]);
         }
 
         return $this->render('studies/edit.html.twig', [
@@ -307,7 +302,6 @@ class StudiesActionController extends AbstractController
             $entityManager->remove($study);
             $entityManager->flush();
         }
-
         return $this->redirectToRoute('school_studies_index', [ 'id' => $school->getId() ]);
     }
 
