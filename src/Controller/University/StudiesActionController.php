@@ -53,7 +53,7 @@ class StudiesActionController extends AbstractController
 
         // check if student has already applied to current study
         if($helper->checkRecruit($studies, $student)) {  
-            $this->addFlash('error', 'Formation indisponible');
+            $this->addFlash('error', 'Vous avez déjà postulé');
             return  $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'from' => 'student', 'from_id' => $student->getId()]);
         }
 
@@ -187,7 +187,7 @@ class StudiesActionController extends AbstractController
      * @Route("/refuse/{id}", name="recruit_refuse", methods={"POST"})
      * @IsGranted("ROLE_SUPER_SCHOOL")
      */
-    public function refuse(RecruitRepository $repository, Recruit $recruit, Request $request, RecruitHelper $helper)
+    public function refuse(RecruitRepository $repository, Recruit $recruit, Request $request, RecruitHelper $helper, RecruitMailer $mailer)
     {
         // get entities
         $student = $recruit->getStudent();
@@ -198,33 +198,21 @@ class StudiesActionController extends AbstractController
             return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
         }
 
-        // refuse
-        $helper->refuse($recruit);
-
-        // set roles not usefull
-
-        // close offer 
-        // $offers->setState(false);
-
-        // send notification to student 
-        // $email = $student->getUser()->getEmail();
-        // $name = $student->getName();
-        // $offerTitle = $offers->getTitle(); 
-           
-        // $mailer->sendRefuseMessage($email, $name, $offerTitle); 
-  
-        // set to availables not usefull because cannot refuse after agree
-
         if($this->isCsrfTokenValid('refuse'.$recruit->getId(), $request->request->get('_token'))) {
+            // refuse
+            $helper->refuse($recruit);
+            // send notification
+            $mailer->sendRefuseNotification($student, $studies);
+            // set to availables not usefull because cannot refuse after agree
+            // save 
             $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success', 'Candidature refusée');
+            return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
         }
         else {
-            throw new \Exception('Demande Invalide');
-        }
-
-        $this->addFlash('success', 'Candidature refusée');
-    
-        return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
+            $this->addFlash('error', 'Requête Invalide');
+            return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
+        }  
     }
 
     /**
@@ -232,41 +220,27 @@ class StudiesActionController extends AbstractController
      * @IsGranted("ROLE_SUPER_STUDENT")
      * @ParamConverter("recruit", options={"id" = "id"})
      */
-    public function recruitDelete(Recruit $recruit, Request $request, RecruitRepository $repository, StudentChecker $checker): Response
+    public function recruitDelete(Recruit $recruit, Request $request, RecruitRepository $repository, StudentChecker $checker, RecruitMailer $mailer): Response
     {
-        // set role not usefull 
-
-        $student = $recruit->getStudent();
-        $studies = $recruit->getStudies();
-
-        // close offer 
-        // $offers->setState(false);
-
-        // set to available not usefull because cannot delete after agree
-
-        // send mail 
-        // $email = $user->getEmail();
-        // $name = $apply->getStudent()->getName();
-        // $offerTitle = $apply->getOffers()->getTitle();
-
-        // $mailer->sendDeleteMessage($email, $name, $offerTitle); 
-    
-        // delete apply 
         if ($this->isCsrfTokenValid('delete'.$recruit->getId(), $request->request->get('_token'))) {
-
+            // entities 
+            $student = $recruit->getStudent();
+            $studies = $recruit->getStudies();
+            // set to available not usefull because cannot delete after agree 
+            // send notification
+            $mailer->sendDeleteNotification($studies);
+            // save and delete
             $entityManager = $this->getDoctrine()->getManager();
-            // delete relation
             $entityManager->remove($recruit);
-            // delete offer
             $entityManager->flush();
+
+            $this->addFlash('success', 'Postulation supprimée !');
+            return $this->redirectToRoute('school_student_index', ['id' => $student->getId()]);
         }
         else {
-            throw new \Exception('Demande Invalide');
+            $this->addFlash('error', 'Requête Invalide');
+            return $this->redirectToRoute('school_student_index', ['id' => $student->getId()]);
         }
-
-        $this->addFlash('success', 'Postulation supprimée !');
-
-        return $this->redirectToRoute('school_student_index', ['id' => $student->getId()]);
     }
 
      /**

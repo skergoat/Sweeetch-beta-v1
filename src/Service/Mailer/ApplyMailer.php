@@ -142,11 +142,11 @@ class ApplyMailer
         $this->mailer->send($mail);
     }
 
-    public function sendDeleteNotification($offers, $apply)
+    public function sendDeleteNotification($offers)
     {
         $email = $offers->getCompany()->getUser()->getEmail();
         $name =  $offers->getCompany()->getFirstName();
-        $title = $apply->getOffers()->getTitle();
+        $title = $offers->getTitle();
 
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))

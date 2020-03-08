@@ -88,47 +88,47 @@ class RecruitMailer
         $this->mailer->send($mail);
     }
 
-    public function sendConfirmNotification($student, $offers)
-    {
-        $email = $student->getUser()->getEmail();
-        $name = $student->getName();
-        $title = $offers->getTitle(); 
+    // public function sendConfirmNotification($student, $offers)
+    // {
+    //     $email = $student->getUser()->getEmail();
+    //     $name = $student->getName();
+    //     $title = $offers->getTitle(); 
 
-        $mail = (new TemplatedEmail())
-            ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
-            ->to(new Address($email, $name))
-            ->subject('Problems with docs')
-            ->htmlTemplate('email/apply/confirm.html.twig')
-            ->context([
-                'title' => $title,
-            ]); 
+    //     $mail = (new TemplatedEmail())
+    //         ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
+    //         ->to(new Address($email, $name))
+    //         ->subject('Problems with docs')
+    //         ->htmlTemplate('email/apply/confirm.html.twig')
+    //         ->context([
+    //             'title' => $title,
+    //         ]); 
         
-        $this->mailer->send($mail);
-    }
+    //     $this->mailer->send($mail);
+    // }
 
-    public function sendFinishNotification($student, $offers)
-    {
-        $email = $student->getUser()->getEmail();
-        $name = $student->getName();
-        $title = $offers->getTitle(); 
+    // public function sendFinishNotification($student, $offers)
+    // {
+    //     $email = $student->getUser()->getEmail();
+    //     $name = $student->getName();
+    //     $title = $offers->getTitle(); 
 
-        $mail = (new TemplatedEmail())
-            ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
-            ->to(new Address($email, $name))
-            ->subject('Problems with docs')
-            ->htmlTemplate('email/apply/finish.html.twig')
-            ->context([
-                'title' => $title,
-            ]); 
+    //     $mail = (new TemplatedEmail())
+    //         ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
+    //         ->to(new Address($email, $name))
+    //         ->subject('Problems with docs')
+    //         ->htmlTemplate('email/apply/finish.html.twig')
+    //         ->context([
+    //             'title' => $title,
+    //         ]); 
         
-        $this->mailer->send($mail);
-    }
+    //     $this->mailer->send($mail);
+    // }
 
-    public function sendRefuseNotification($student, $offers)
+    public function sendRefuseNotification($student, $studies)
     {
         $email = $student->getUser()->getEmail();
         $name = $student->getName();
-        $title = $offers->getTitle(); 
+        $title = $studies->getTitle(); 
 
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
@@ -142,11 +142,11 @@ class RecruitMailer
         $this->mailer->send($mail);
     }
 
-    public function sendDeleteNotification($offers, $apply)
+    public function sendDeleteNotification($studies)
     {
-        $email = $offers->getCompany()->getUser()->getEmail();
-        $name =  $offers->getCompany()->getFirstName();
-        $title = $apply->getOffers()->getTitle();
+        $email = $studies->getSchool()->getUser()->getEmail();
+        $name =  $studies->getSchool()->getFirstName();
+        $title = $studies->getTitle();
 
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
@@ -160,19 +160,19 @@ class RecruitMailer
         $this->mailer->send($mail);
     }
 
-    //
-    public function sendDeleteCompanyMessage($email, $name, $offerTitle)
-    {
-        $mail = (new TemplatedEmail())
-            ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
-            ->to(new Address($email, $name))
-            ->subject('Problems with docs')
-            ->htmlTemplate('email/apply/delete-company.html.twig')
-            ->context([
-                'title' => $offerTitle,
-            ]); 
+    // //
+    // public function sendDeleteCompanyMessage($email, $name, $offerTitle)
+    // {
+    //     $mail = (new TemplatedEmail())
+    //         ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
+    //         ->to(new Address($email, $name))
+    //         ->subject('Problems with docs')
+    //         ->htmlTemplate('email/apply/delete-company.html.twig')
+    //         ->context([
+    //             'title' => $offerTitle,
+    //         ]); 
         
-        $this->mailer->send($mail);
-    }
+    //     $this->mailer->send($mail);
+    // }
 
 }
