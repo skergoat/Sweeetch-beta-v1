@@ -83,7 +83,7 @@
                             </form>
                             {% elseif applies.hired == true %}
                             <form method="post" class="btn-icon-form" action="{{ path('agree', { id:applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir accepter cette offre ?');">
-                                <input type="hidden" name="_token" value="{{ csrf_token('agree' ~  applies.id) }}">
+                                <input type="hidden" name="_token" value="{{ csrf_token('agree' ~  student.id) }}">
                                 <button class="btn-icon btn-success" title="Accepter">
                                     <i class="fas fa-check"></i>
                                 </button>
