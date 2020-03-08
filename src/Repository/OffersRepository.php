@@ -46,13 +46,13 @@ class OffersRepository extends ServiceEntityRepository
         ->getResult();
     }
 
-    public function findAllPaginatedByCompany($order = "DESC", $company)
-    {
-        return $this->createQueryBuilder('p')
-        ->andWhere('p.company = :company')
-        ->setParameter('company', $company)
-        ->orderBy('p.id', $order)
-        ->getQuery()
-        ->getResult();
-    }
+    // public function findAllPaginatedByCompany($order = "DESC", $company)
+    // {
+    //     return $this->createQueryBuilder('p')
+    //     ->andWhere('p.company = :company')
+    //     ->setParameter('company', $company)
+    //     ->orderBy('p.id', $order)
+    //     ->getQuery()
+    //     ->getResult();
+    // }
 }
