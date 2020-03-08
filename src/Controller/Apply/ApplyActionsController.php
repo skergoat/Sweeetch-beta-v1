@@ -106,8 +106,8 @@ class ApplyActionsController extends AbstractController
 
         // check if student is available
         if($helper->checkAgree('student', $student) || $helper->checkConfirmed('student', $student)) {
-             $this->addFlash('error', 'Cet étudiant n\'est plus disponible.');
-             return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
+            $this->addFlash('error', 'Cet étudiant n\'est plus disponible.');
+            return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
         }
 
         if($this->isCsrfTokenValid('hire'.$apply->getId(), $request->request->get('_token')))

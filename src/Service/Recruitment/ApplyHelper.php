@@ -18,24 +18,29 @@ class ApplyHelper extends CommonHelper
     }
 
     // check apply state 
-    public function checkHired($key, $student)
+    public function checkHired($key, $param)
     {
-        return $this->applyRepository->findBy([$key => $student, 'hired' => 1]);
+        return $this->applyRepository->findBy([$key => $param, 'hired' => 1]);
     }
 
-    public function checkAgree($key, $student)
+    public function checkAgree($key, $param)
     {
-        $this->applyRepository->findBy([$key => $student, 'agree' => 1]);
+        $this->applyRepository->findBy([$key => $param, 'agree' => 1]);
     }
  
-    public function checkConfirmed($key,$student)
+    public function checkConfirmed($key,$param)
     {
-        return  $this->applyRepository->findBy([$key => $student, 'confirmed' => 1]);
+        return  $this->applyRepository->findBy([$key => $param, 'confirmed' => 1]);
     }
 
     public function checkFinished($key, $student)
     {
         return $this->applyRepository->findBy([$key => $student, 'finished' => 1]);
+    }
+
+    public function checkRefused($offers, $student)
+    {
+        return $this->applyRepository->findBy(['offers' => $offers, 'student' => $student, 'refused' => true]);
     }
 
     public function checkApply($offers, $student)
@@ -44,11 +49,6 @@ class ApplyHelper extends CommonHelper
         // if($already) {
         //     $this->session->getFlashBag()->add('error', 'Vous avez déjà postulé');
         // }
-    }
-
-    public function checkRefused($offers, $student)
-    {
-        return $this->applyRepository->findBy(['offers' => $offers, 'student' => $student, 'refused' => true]);
     }
 
     // unavailable
@@ -80,13 +80,4 @@ class ApplyHelper extends CommonHelper
             }      
         }
     }
-
-    // public function sendNotification($offers)
-    // {
-    //     $email = $offers->getCompany()->getUser()->getEmail();
-    //     $name = $offers->getCompany()->getFirstname();
-    //     $title = $offers->getTitle();
-        
-    //     $this->mailer->sendApplyMessage($email, $name, $title);
-    // }
 }

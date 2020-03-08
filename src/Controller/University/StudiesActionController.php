@@ -9,6 +9,7 @@ use App\Entity\Studies;
 use App\Form\StudiesType;
 use App\Repository\RecruitRepository;
 use App\Repository\StudiesRepository;
+use App\Service\Mailer\RecruitMailer;
 use App\Service\Recruitment\RecruitHelper;
 use App\Service\UserChecker\StudentChecker;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,127 +29,123 @@ class StudiesActionController extends AbstractController
      * @IsGranted("ROLE_STUDENT_HIRED")
      * @ParamConverter("student", options={"id" = "student_id"})
      */
-    public function recruit(Studies $studies, Student $student, RecruitRepository $repository, Request $request, RecruitHelper $helper)
+    public function recruit(Studies $studies, Student $student, RecruitRepository $repository, Request $request, RecruitHelper $helper, RecruitMailer $mailer)
     {
+        // enable school to close recruit for a certain time for a certain study
+
         // check if student is already hired
-        if($helper->checkAgree($student) || $helper->checkConfirmed($student)) {
+        if($helper->checkAgree('student', $student) || $helper->checkConfirmed('student', $student)) {
             $this->addFlash('error', 'Vous êtes déjà embauché ailleurs. Rendez-vous sur votre profil.');
             return  $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'from' => 'student', 'from_id' => $student->getId()]);
         }
 
-        // check if student has already applied to current study
-        if($helper->checkRecruit($studies, $student) || $helper->checkRefused($studies, $student)) {  
-             $this->addFlash('error', 'Formation indisponible');
-             return  $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'from' => 'student', 'from_id' => $student->getId()]);
+        // check if some offers are waiting
+        if($helper->checkHired('student', $student)){
+            $this->addFlash('error', 'Vous avez des offres en attente. Consultez votre profil');
+            return  $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'from' => 'student', 'from_id' => $student->getId()]);
         }
 
-        // create entity
-        $recruit = new Recruit; 
-        $recruit->setHired(false);
-        $recruit->setConfirmed(false);
-        $recruit->setRefused(false);
-        $recruit->setUnavailable(false);
-        // $apply->setFinished(false);
-        $recruit->setAgree(false);
-        $recruit->setStudies($studies);
-        $recruit->setStudent($student);
+        // check if student is refused
+        if($helper->checkRefused($studies, $student)) {  
+            $this->addFlash('error', 'Offre non disponible');
+            return  $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'from' => 'student', 'from_id' => $student->getId()]);
+        }
 
-        // save 
+        // check if student has already applied to current study
+        if($helper->checkRecruit($studies, $student)) {  
+            $this->addFlash('error', 'Formation indisponible');
+            return  $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'from' => 'student', 'from_id' => $student->getId()]);
+        }
+
         if($this->isCsrfTokenValid('recruit'.$student->getId(), $request->request->get('_token'))) {
+            // send notification
+            $mailer->sendRecruitNotification($studies);
+            // create entity
+            $recruit = new Recruit; 
+            $recruit->setHired(false);
+            $recruit->setConfirmed(false);
+            $recruit->setRefused(false);
+            $recruit->setUnavailable(false);
+            // $apply->setFinished(false);
+            $recruit->setAgree(false);
+            $recruit->setStudies($studies);
+            $recruit->setStudent($student);
+            // save
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($recruit);
             $manager->flush();
+
+            $this->addFlash('success', 'Candidature enregistrée !');
+            return $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'from' => 'student', 'from_id' => $student->getId()]);
         }
         else {
-            throw new \Exception('Demande Invalide');
+            $this->addFlash('error', 'Requête invalide');
+            return  $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'from' => 'student', 'from_id' => $student->getId()]);
         }
-
-        // redirect
-        $this->addFlash('success', 'Candidature enregistrée !');
-
-        return $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'from' => 'student', 'from_id' => $student->getId()]);
     }
-
 
      /**
      * @Route("/hire/{id}", name="recruit_hire", methods={"POST"})
      * @IsGranted("ROLE_SUPER_SCHOOL")
      */
-    public function hire(RecruitRepository $repository, Recruit $recruit, Request $request, RecruitHelper $helper)
+    public function hire(RecruitRepository $repository, Recruit $recruit, Request $request, RecruitHelper $helper, RecruitMailer $mailer)
     {   
+        // separer eleves recrutes et non recrutes 
+
         // get users
         $student = $recruit->getStudent();
         $studies = $recruit->getstudies();
 
         // check if student is available
-        if($helper->checkAgree($student) || $helper->checkConfirmed($student)) {
+        if($helper->checkAgree('student', $student) || $helper->checkConfirmed('student', $student)) {
             $this->addFlash('error', 'Cet étudiant n\'est plus disponible.');
             return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
         }
-   
-        // close offer 
-        // $offers->setState(true);                                                                         for features 
-
-        // prevent student from applying 
-        // $student->getUser()->setRoles(['ROLE_SUPER_STUDENT']);                                           ?
-
-                                                                                                            // unavailables not now
-        // send notification to student 
-        // $email = $apply->getStudent()->getUser()->getEmail();
-        // $name = $apply->getStudent()->getName();
-        // $offerTitle = $apply->getOffers()->getTitle(); 
         
-        // $mailer->sendHireMessage($email, $name, $offerTitle);
-        
-        $helper->hire($recruit);
-
         if($this->isCsrfTokenValid('hire'.$recruit->getId(), $request->request->get('_token'))) {           // not usefull to delete others 
-
+            // set state
+            $helper->hire($recruit);
+            // send notification
+            $mailer->sendHireNotification($recruit);
+            // save
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
+            
+            $this->addFlash('success', 'Elève recruté !');
+            return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
         }
         else {
-            throw new \Exception('Candidature Invalide');
+            $this->addFlash('error', 'Requête invalide');
+            return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
         }
-
-        $this->addFlash('success', 'Elève recruté !');
- 
-        return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
     }
 
     /**
      * @Route("/agree/{id}", name="recruit_agree", methods={"POST"})
      * @IsGranted("ROLE_SUPER_STUDENT")
      */
-    public function agree(RecruitRepository $repository, Recruit $recruit, Request $request, RecruitHelper $helper)
+    public function agree(RecruitRepository $repository, Recruit $recruit, Request $request, RecruitHelper $helper, RecruitMailer $mailer)
     {
         // get other applies
         $student = $recruit->getStudent();
         $studies = $recruit->getStudies();
 
-        // agree
-        $helper->agree($recruit);
-
-        // set to unavailable
-        $helper->unavailables($studies, $student);
-
-        // send notification to student 
-        // $email = $student->getUser()->getEmail();
-        // $name = $student->getName();
-        // $offerTitle = $offers->getTitle(); 
-        
-        // $mailer->sendAgreeMessage($email, $name, $offerTitle); 
-
         if($this->isCsrfTokenValid('agree'.$recruit->getId(), $request->request->get('_token'))) {
+            // agree
+            $helper->agree($recruit);
+            // set to unavailable
+            $helper->unavailables($studies, $student);
+            // send notification
+            $mailer->sendAgreeNotification($student, $studies);
+            // save
             $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success', 'Cursus accepté !');
+            return $this->redirectToRoute('school_student_index', ['id' => $student->getId()]);
         }
         else {
-            throw new \Exception('Demande Invalide');
-        }
-
-        $this->addFlash('success', 'Cursus accepté !');
-
-        return $this->redirectToRoute('school_student_index', ['id' => $student->getId()]);
+            $this->addFlash('error', 'Requête invalide');
+            return $this->redirectToRoute('school_student_index', ['id' => $student->getId()]);
+        }   
     }
 
     /**

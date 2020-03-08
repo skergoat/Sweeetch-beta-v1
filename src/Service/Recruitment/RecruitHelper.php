@@ -20,28 +20,33 @@ class RecruitHelper extends CommonHelper
         $this->session = $session;
     }
 
-    public function checkRecruit($studies, $student)
+    // recruit state
+    public function checkHired($key, $param)
     {
-        return $this->recruitRepository->findBy(['studies' => $studies, 'student' => $student]);
-
-        // if($already) {
-        //     $this->session->getFlashBag()->add('error', 'Vous avez déjà postulé');
-        // }
+        return $this->recruitRepository->findBy([$key => $param, 'hired' => 1]);
     }
-    
+
+    public function checkAgree($key, $param)
+    {
+        return $this->recruitRepository->findBy([$key => $param, 'agree' => 1]);
+    }
+
+    public function checkConfirmed($key, $param)
+    {
+        return  $this->recruitRepository->findBy([$key => $param, 'confirmed' => 1]);
+    }
+
     public function checkRefused($studies, $student)
     {
         return $this->recruitRepository->findBy(['studies' => $studies, 'student' => $student, 'refused' => true]);
     }
 
-    public function checkAgree($student)
+    public function checkRecruit($studies, $student)
     {
-        return $this->recruitRepository->findBy(['student' => $student, 'agree' => 1]);
-    }
-
-    public function checkConfirmed($student)
-    {
-        return  $this->recruitRepository->findBy(['student' => $student, 'confirmed' => 1]);
+        return $this->recruitRepository->findBy(['studies' => $studies, 'student' => $student]);
+        // if($already) {
+        //     $this->session->getFlashBag()->add('error', 'Vous avez déjà postulé');
+        // }
     }
     
     // tel other recruiters that student is unavailable 
@@ -50,18 +55,13 @@ class RecruitHelper extends CommonHelper
         $unavailables = $this->recruitRepository->setToUnavailables($studies, $student);
 
         foreach($unavailables as $unavailables) {
+            if($unavailables->getRefused() != true && $unavailables->getAgree() != true) {
+                $unavailables->setUnavailable(true);
 
-            // if($bool == true) {
-                if($unavailables->getRefused() != true) {
-                    $unavailables->setUnavailable(true);
-                } 
-            // }
-            // elseif($bool == false) {
-            //     if($unavailables->getUnavailable() == true) {
-            //         $unavailables->setUnavailable(false);
-            //     }
-            // }
-             
+                if($unavailables->getHired() == true) {
+                    $unavailables->setHired(false);
+                }
+            }              
         }
     }
 }
