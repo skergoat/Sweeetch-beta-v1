@@ -48,8 +48,14 @@ class ApplyActionsController extends AbstractController
             return $this->redirectToRoute('offers_show', ['id' => $offers->getId(), 'page' => $page]);
         }
 
+        // check if student is refused
+        if( $helper->checkRefused($offers, $student)) {  
+            $this->addFlash('error', 'Offre non disponible');
+            return $this->redirectToRoute('offers_show', ['id' => $offers->getId(), 'page' => $page]);
+        }
+
         // check if student have already applied to current offer 
-        if($helper->checkApply($offers, $student) || $helper->checkRefused($offers, $student)) {  
+        if($helper->checkApply($offers, $student)) {  
             $this->addFlash('error', 'Vous avez déjà postulé');
             return $this->redirectToRoute('offers_show', ['id' => $offers->getId(), 'page' => $page]);
         }
