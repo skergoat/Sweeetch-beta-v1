@@ -63,7 +63,7 @@ class RecruitHelper extends CommonHelper
                 $unavailables->setUnavailable(true);
 
                 if($unavailables->getHired() == true) {
-                    $unavailables->setHired(false);
+                    $unavailables->setHired(false); 
                 }
             }              
         }
@@ -77,6 +77,18 @@ class RecruitHelper extends CommonHelper
          foreach($unavailables as $unavailables) {
              if($unavailables->getUnavailable() == true) {
                  $unavailables->setUnavailable(false);
+             }      
+         }
+    }
+
+    // delete unavailable
+    public function deleteUnavailable($studies, $student)
+    {
+         $unavailables = $this->recruitRepository->setToUnavailables($studies, $student);
+ 
+         foreach($unavailables as $unavailables) {
+             if($unavailables->getUnavailable() == true) {
+                $this->manager->remove($unavailables);
              }      
          }
     }
@@ -103,6 +115,8 @@ class RecruitHelper extends CommonHelper
     {
          // confirm
          $this->setRecruitFinish($recruit);
+         // delete unavailables
+         $this->deleteUnavailable($studies, $student);
          // set roles 
          $user = $recruit->getStudent()->getUser();
          $user->setRoles(['ROLE_SUPER_STUDENT']);

@@ -85,6 +85,18 @@ class ApplyHelper extends CommonHelper
         }
     }
 
+     // delete unavailable
+     public function deleteUnavailable($offers, $student)
+     {
+          $unavailables = $this->applyRepository->setToUnavailables($offers, $student);
+  
+          foreach($unavailables as $unavailables) {
+              if($unavailables->getUnavailable() == true) {
+                 $this->manager->remove($unavailables);
+              }      
+          }
+     }
+
     public function hire(Apply $apply, Student $student, Offers $offers)
     {
         // hire
@@ -125,10 +137,14 @@ class ApplyHelper extends CommonHelper
         $student->getUser()->setRoles(['ROLE_STUDENT_HIRED']);
     }
 
-    public function finish(Apply $apply, Student $student, Offers $offers)
+    public function finish(Apply $apply, Student $student, Offers $offers, $bool)
     {
         // finish 
         $this->setApplyFinish($apply);
+        // delete unavailables
+        if($bool){
+            $this->deleteUnavailable($offers, $student);
+        }
         // set roles 
         $user = $apply->getStudent()->getUser();
         $user->setRoles(['ROLE_SUPER_STUDENT']); 

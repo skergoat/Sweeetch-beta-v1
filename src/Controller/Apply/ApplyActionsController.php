@@ -217,7 +217,7 @@ class ApplyActionsController extends AbstractController
 
         if($this->isCsrfTokenValid('stop'.$apply->getId(), $request->request->get('_token'))) {
             // finish 
-            $helper->finish($apply, $student, $offers);
+            $helper->finish($apply, $student, $offers, false);
             // $helper->finish($apply);
             // // set roles 
             // $user = $apply->getStudent()->getUser();
