@@ -158,7 +158,8 @@ class StudiesActionController extends AbstractController
         $student = $recruit->getStudent();
         $studies = $recruit->getStudies();
 
-        // $applyHelper->endProcess($applyRepository->findBy(['student' => $student, 'confirmed' => true])[0]);
+        $apply = $applyRepository->findBy(['student' => $student, 'confirmed' => true])[0];
+        $applyHelper->finish($apply, $student, $apply->getOffers());
 
         if($this->isCsrfTokenValid('finish'.$recruit->getId(), $request->request->get('_token'))) {
             // finish
@@ -172,7 +173,7 @@ class StudiesActionController extends AbstractController
             // $helper->available($studies, $student);
             // save
             $this->getDoctrine()->getManager()->flush();
-            $this->addFlash('success', 'Mission Commencée. Bon travail !');
+            $this->addFlash('success', 'Inscription Terminée');
             return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
         }
         else {
