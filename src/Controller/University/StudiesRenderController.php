@@ -35,7 +35,7 @@ class StudiesRenderController extends AbstractController
 
             return $this->render('studies/index.html.twig', [
                 'studies' => $studiesRepository->findBy(['school' => $school]),
-                'school' => $school
+                'school' => $school,
             ]);
         }
     }
@@ -50,7 +50,25 @@ class StudiesRenderController extends AbstractController
 
             return $this->render('school/index_student.html.twig', [
                 'student' => $student,
-                'recruit' => $recruitRepository->findBy(['student' => $student, 'refused' => false, 'unavailable' => false], ['hired' => 'desc']),
+                'recruit' => $recruitRepository->findBy(['student' => $student, 'refused' => false, 'unavailable' => false, 'finished' => false], ['hired' => 'desc']),
+                'fresh' => $applyRepository->findByStudentByFresh($student),
+                'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true]),
+                'finished' => $recruitRepository->findBy(['student' => $student, 'finished' => true]),
+            ]);
+        } 
+    }
+
+    /**
+     * @Route("/student/finished/{id}", name="school_student_finished", methods={"GET"})
+     * @IsGranted("ROLE_STUDENT")
+     */
+    public function indexfinished(Student $student, RecruitRepository $recruitRepository, SchoolRepository $schoolRepository, ApplyRepository $applyRepository, StudentChecker $checker): Response
+    {
+        if ($checker->studentValid($student)) {
+
+            return $this->render('school/index-finished.html.twig', [
+                'student' => $student,
+                'finished' => $recruitRepository->findBy(['student' => $student, 'finished' => true], ['date_finished' => 'desc']),
                 'fresh' => $applyRepository->findByStudentByFresh($student),
                 'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true])
             ]);
@@ -90,7 +108,7 @@ class StudiesRenderController extends AbstractController
         return $this->render('studies/index-student.html.twig', [
             'studies' => $pagination,
             'from' => $from,
-            'id' => $id
+            'id' => $id,
         ]);
     } 
 
