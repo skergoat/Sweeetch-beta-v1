@@ -37,7 +37,7 @@ class ApplyRenderController extends AbstractController
         if ($checker->studentValid($student)) {    
             return $this->render('apply/index_student.html.twig', [
                 'student' => $student,
-                'applies' => $applyRepository->findBy(['student' => $student, 'refused' => false, 'unavailable' => false], ['hired' => 'desc']),
+                'applies' => $applyRepository->findBy(['student' => $student, 'refused' => false, 'unavailable' => false, 'finished' => false], ['hired' => 'desc']),
                 'finished' => $applyRepository->findBy(['student' => $student, 'finished' => true]),
                 'fresh' =>  $applyRepository->findByStudentByFresh($student),
                 'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true]),
@@ -72,14 +72,14 @@ class ApplyRenderController extends AbstractController
 
             $queryBuilder = $offersRepository->findBy(['company' => $company], ['id' => 'desc']);
             
-            $pagination = $paginator->paginate(
-                $queryBuilder,
-                $request->query->getInt('page', 1),
-                10
-            );
+            // $pagination = $paginator->paginate(
+            //     $queryBuilder,
+            //     $request->query->getInt('page', 1),
+            //     10
+            // );
 
             return $this->render('apply/index_company.html.twig', [
-                'offers' => $pagination,
+                'offers' => $queryBuilder,
                 'company' => $company,
                 'hired' => $applyRepository->findBy(['offers' => $queryBuilder, 'hired' => 1]),
                 'agree' => $applyRepository->findBy(['offers' => $queryBuilder, 'agree' => 1]),
@@ -97,19 +97,19 @@ class ApplyRenderController extends AbstractController
     {     
         if($checker->companyValid($company)) {
 
-            $queryBuilder = $offersRepository->findAllPaginatedByCompany("DESC", $company);
-            $test = $applyRepository->findBy(['offers' => $queryBuilder, 'finished' => 1]);
+            $queryBuilder = $offersRepository->findBy(['company' => $company], ['id' => 'desc']);
+            // $test = $applyRepository->findBy(['offers' => $queryBuilder, 'finished' => 1]);
 
-            $pagination = $paginator->paginate(
-                $test,
-                $request->query->getInt('page', 1),
-                10
-            );
+            // $pagination = $paginator->paginate(
+            //     $test,
+            //     $request->query->getInt('page', 1),
+            //     10
+            // );
 
             return $this->render('apply/finished_company.html.twig', [
                 'offers' => $queryBuilder,
                 'company' => $company,
-                'applies' => $pagination,
+                'applies' => $applyRepository->findBy(['offers' => $queryBuilder, 'finished' => 1]),
                 'hired' => $applyRepository->findBy(['offers' => $queryBuilder, 'hired' => 1]),
                 'agree' => $applyRepository->findBy(['offers' => $queryBuilder, 'agree' => 1]),
                 'applyc' => $applyRepository->findBy(['offers' => $queryBuilder, 'refused' => 0, 'unavailable' => 0, 'confirmed' => 0, 'finished' => 0])
@@ -159,7 +159,7 @@ class ApplyRenderController extends AbstractController
                 'fresh' =>  $applyRepository->findByStudentByFresh($student),
                 // 'hired' => $applyRepository->checkIfHired($student),
                 'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true]),
-                'finished' => $applyRepository->findByStudentByFinished($student)
+                'finished' =>  $applyRepository->findBy(['student' => $student, 'finished' => true]),
             ]);
         }
     }
