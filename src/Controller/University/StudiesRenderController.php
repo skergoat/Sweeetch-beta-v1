@@ -67,7 +67,8 @@ class StudiesRenderController extends AbstractController
         return $this->render('studies/show.html.twig', [
             'study' => $study,
             'school' => $school,
-            'recruit' => $recruitRepository->findBy(['studies' => $study, 'hired' => false, 'agree' => false, 'refused' => false, 'unavailable' => false]),
+            'finished' => $recruitRepository->findBy(['studies' => $study, 'finished' => true], ['date_finished' => 'desc']),
+            'recruit' => $recruitRepository->findBy(['studies' => $study, 'hired' => false, 'agree' => false, 'refused' => false, 'unavailable' => false], ['date_recruit' => 'desc']),
             'process' => $recruitRepository->findProcessing($study)
         ]);
     }

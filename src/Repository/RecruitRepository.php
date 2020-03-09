@@ -39,7 +39,8 @@ class RecruitRepository extends ServiceEntityRepository
             ->setParameter('studies', $study)
             ->setParameter('hired', true)
             ->setParameter('agree', true)
-            ->orderBy('f.agree', 'desc')
+            ->addOrderBy('f.agree', 'desc')
+            ->addOrderBy('f.date_recruit', 'desc')
             ->getQuery()
             ->getResult();
     }

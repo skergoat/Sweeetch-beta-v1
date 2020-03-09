@@ -31,9 +31,9 @@ class RecruitHelper extends CommonHelper
         return $this->recruitRepository->findBy([$key => $param, 'agree' => 1]);
     }
 
-    public function checkConfirmed($key, $param)
+    public function checkFinished($key, $param)
     {
-        return  $this->recruitRepository->findBy([$key => $param, 'confirmed' => 1]);
+        return  $this->recruitRepository->findBy([$key => $param, 'finished' => 1]);
     }
 
     public function checkRefused($studies, $student)
@@ -49,7 +49,7 @@ class RecruitHelper extends CommonHelper
         // }
     }
     
-    // tel other recruiters that student is unavailable 
+    // unavailable 
     public function unavailables($studies, $student)
     {
         $unavailables = $this->recruitRepository->setToUnavailables($studies, $student);
@@ -64,4 +64,16 @@ class RecruitHelper extends CommonHelper
             }              
         }
     }
+
+    // available
+    public function available($studies, $student)
+    {
+         $unavailables =  $this->recruitRepository->setToUnavailables($studies, $student);
+ 
+         foreach($unavailables as $unavailables) {
+             if($unavailables->getUnavailable() == true) {
+                 $unavailables->setUnavailable(false);
+             }      
+         }
+     }
 }
