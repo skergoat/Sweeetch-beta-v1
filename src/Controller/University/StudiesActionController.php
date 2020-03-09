@@ -198,10 +198,10 @@ class StudiesActionController extends AbstractController
 
         if($this->isCsrfTokenValid('refuse'.$recruit->getId(), $request->request->get('_token'))) {
             // refuse
-            $helper->refuse($recruit);
-            // send notification
-            $mailer->sendRefuseNotification($student, $studies);
-            // set to availables not usefull because cannot refuse after agree
+            $helper->refuse($recruit, $student, $studies);
+            // // send notification
+            // $mailer->sendRefuseNotification($student, $studies);
+            // // set to availables not usefull because cannot refuse after agree
             // save 
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Candidature refusée');
@@ -224,7 +224,7 @@ class StudiesActionController extends AbstractController
             // entities 
             $student = $recruit->getStudent();
             $studies = $recruit->getStudies();
-            // set to available not usefull because cannot delete after agree 
+            // // set to available not usefull because cannot delete after agree 
             // send notification
             $mailer->sendDeleteNotification($studies);
             // save and delete

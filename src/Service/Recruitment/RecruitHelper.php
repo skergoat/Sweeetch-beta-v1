@@ -112,25 +112,12 @@ class RecruitHelper extends CommonHelper
          $this->available($studies, $student);
     }
 
-    public function refuse(Apply $apply, Student $student, Offers $offers)
+    public function refuse(Recruit $recruit, Student $student, Studies $studies)
     {
-         // refuse
-         $this->setRefuse($apply);
-         // close offer 
-        //  $offers->setState(false);
-         // send notification
-         $this->mailer->sendRefuseNotification($student, $offers);
-         // set to available
-         // $helper->available($offers, $student);
+        // refuse
+        $this->setRefuse($recruit);
+        // send notification
+        $this->mailer->sendRefuseNotification($student, $studies);     
     }
 
-    public function delete(Apply $apply, Student $student, Offers $offers)
-    {
-        // close offer 
-        $offers->setState(false);
-        // set to available
-        // $helper->available($offers, $student);
-        // send notification
-        $this->mailer->sendDeleteNotification($offers);
-    }
 }
