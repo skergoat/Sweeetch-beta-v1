@@ -26,202 +26,204 @@
 
     <div class="col-md-12">
         <div class="card card-responsive-table">
+            <div class="card-body">
 
-            <table class="table-offers table">
+                <table class="table-offers table">
 
-                <thead>
-                    <tr>
-                        <th>Formation</th>
-                        <th>Domaine</th>
-                        <th>Ecole</th>
-                        <th>Situation</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
+                    <thead>
+                        <tr>
+                            <th>Formation</th>
+                            <th>Domaine</th>
+                            <th>Ecole</th>
+                            <th>Situation</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
 
-                {% for recruit in recruit %}
+                    {% for recruit in recruit %}
 
-                <tbody>
-                    <tr>
-                        <td>
-                        {# {% if is_granted('ROLE_ADMIN') %}
-                        <a href="{{ path('offers_preview', {id : applies.offers.id, company:applies.offers.company.id}) }}">{{ applies.offers.title }}</a>  
-                        {% else %}
-                            {% if applies.hired == true or  applies.agree == true or  applies.confirmed == true or  applies.finished == true %}
-                        <a href="{{ path('offers_show_hired', {'id': applies.offers.id, 'student_id' : student.id}) }}">{{ applies.offers.title }}</a>
+                    <tbody>
+                        <tr>
+                            <td>
+                            {# {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('offers_preview', {id : applies.offers.id, company:applies.offers.company.id}) }}">{{ applies.offers.title }}</a>  
                             {% else %}
-                        <a href="{{ path('offers_show', {'id': applies.offers.id}) }}">{{ applies.offers.title }}</a>
-                            {% endif %}
-                        {% endif %}#}
-                        <a href="{{ path('show_student_hired', {id:recruit.studies.id, student:student.id}) }}">{{ recruit.studies.title }}</a>
-                        </td>
-                        <td>{{ recruit.studies.domain }}</td> 
-                        <td> {{ recruit.studies.school.companyName }}</td>
-                        <td> 
-                            {# {% if applies.confirmed == false %}
-                                {% if applies.agree == false %}
-                                    {% if applies.hired == false %}
-                                    <span class="badge bg-primary">Ouverte</span>
-                                    {% else %}
-                                    <span class="badge bg-warning">Vous devez confirmer</span>
-                                    {% endif %}
+                                {% if applies.hired == true or  applies.agree == true or  applies.confirmed == true or  applies.finished == true %}
+                            <a href="{{ path('offers_show_hired', {'id': applies.offers.id, 'student_id' : student.id}) }}">{{ applies.offers.title }}</a>
                                 {% else %}
-                                <span class="badge bg-warning">Dossier en Traitement</span>
+                            <a href="{{ path('offers_show', {'id': applies.offers.id}) }}">{{ applies.offers.title }}</a>
                                 {% endif %}
-                            {% else %}
-                            <span class="badge bg-success">En cours</span>
                             {% endif %}#}
-                            open
-                        </td>
-                        <td>
-                            <div class="btn-group">
-                                {% if recruit.hired == false and recruit.confirmed == false and recruit.agree == false %}
-                                <form method="post" class="btn-icon-form" action="{{ path('delete_recruit', {'id': recruit.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette candidature ?');">
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ recruit.id) }}">
-                                    <button class="btn-icon btn-danger" title="Supprimer">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </form>
-                                {% elseif recruit.hired == true %}
-                                <form method="post" class="btn-icon-form" action="{{ path('recruit_agree', { id:recruit.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir accepter ce cursus ?');">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('agree' ~  recruit.id) }}">
-                                    <button class="btn-icon btn-success" title="Accepter">
-                                        <i class="fas fa-check"></i>
-                                    </button>
-                                </form>
-                                <form method="post" class="btn-icon-form" action="{{ path('delete_recruit', {'id': recruit.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette candidature ?');">
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ recruit.id) }}">
-                                    <button class="btn-icon btn-danger" title="Supprimer">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </form>
-                                {% elseif recruit.agree == true %}
-                                <button class="btn-icon-form btn-icon btn-warning" title="Dossier en cours de traitement">
-                                    <i class="fas fa-hourglass-start"></i>
-                                </button>
-                                {% endif %}
-                            {# <div class="btn-group">
-                                {% if applies.hired == false and applies.confirmed == false and applies.agree == false %}
-                                <form method="post" class="btn-icon-form" action="{{ path('apply_delete', {'id': applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette candidature ?');">
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
-                                    <button class="btn-icon btn-danger" title="Supprimer">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </form>
-                                {% elseif applies.hired == true %}
-                                <form method="post" class="btn-icon-form" action="{{ path('agree', { id:applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir accepter cette offre ?');">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('agree' ~  applies.id) }}">
-                                    <button class="btn-icon btn-success" title="Accepter">
-                                        <i class="fas fa-check"></i>
-                                    </button>
-                                </form>
-                                <form method="post" class="btn-icon-form" action="{{ path('apply_delete', {'id': applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette candidature ?');">
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
-                                    <button class="btn-icon btn-danger" title="Supprimer">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </form>
-                                {% elseif applies.agree == true %}
-                                <button class="btn-icon-form btn-icon btn-warning" title="Dossier en cours de traitement">
-                                    <i class="fas fa-hourglass-start"></i>
-                                </button>
-                                {% endif %} #}
-                                <a href="#help-1" rel="modal:open" class="btn-modal btn-icon-form btn-icon btn-secondary" title="aide">
-                                    <i class="fas fa-question-circle"></i>
-                                </a>
-                            </div>
-                            {#</div> #}
-                        </td>
-                    </tr>
-                </tbody>
-
-                {% else %}
-
-                <tr class="border-top">
-                    <td colspan="8" class="border-top-td">Aucune candidature en cours</td>
-                </tr>
-
-                {% endfor %}
-
-                {# {% for applies in applies %}
-    
-                <tbody>
-                    <tr>
-                        <td>
-                        {% if is_granted('ROLE_ADMIN') %}
-                        <a href="{{ path('offers_preview', {id : applies.offers.id, company:applies.offers.company.id}) }}">{{ applies.offers.title }}</a>  
-                        {% else %}
-                            {% if applies.hired == true or  applies.agree == true or  applies.confirmed == true or  applies.finished == true %}
-                        <a href="{{ path('offers_show_hired', {'id': applies.offers.id, 'student_id' : student.id}) }}">{{ applies.offers.title }}</a>
-                            {% else %}
-                        <a href="{{ path('offers_show', {'id': applies.offers.id}) }}">{{ applies.offers.title }}</a>
-                            {% endif %}
-                        {% endif %}
-                        </td>
-                        <td> {{ applies.offers.company.companyName }}</td>
-                        <td>{{ applies.offers.location }}</td>
-                        <td>{{ applies.offers.domain }}</td> 
-                        <td> 
-                            {% if applies.confirmed == false %}
-                                {% if applies.agree == false %}
-                                    {% if applies.hired == false %}
-                                    <span class="badge bg-primary">Ouverte</span>
+                            <a href="{{ path('show_student_hired', {id:recruit.studies.id, student:student.id}) }}">{{ recruit.studies.title }}</a>
+                            </td>
+                            <td>{{ recruit.studies.domain }}</td> 
+                            <td> {{ recruit.studies.school.companyName }}</td>
+                            <td> 
+                                {# {% if applies.confirmed == false %}
+                                    {% if applies.agree == false %}
+                                        {% if applies.hired == false %}
+                                        <span class="badge bg-primary">Ouverte</span>
+                                        {% else %}
+                                        <span class="badge bg-warning">Vous devez confirmer</span>
+                                        {% endif %}
                                     {% else %}
-                                    <span class="badge bg-warning">Vous devez confirmer</span>
+                                    <span class="badge bg-warning">Dossier en Traitement</span>
                                     {% endif %}
                                 {% else %}
-                                <span class="badge bg-warning">Dossier en Traitement</span>
-                                {% endif %}
-                            {% else %}
-                            <span class="badge bg-success">En cours</span>
-                            {% endif %}
-                        </td>
-                        <td>
-                            <div class="btn-group">
-                                {% if applies.hired == false and applies.confirmed == false and applies.agree == false %}
-                                <form method="post" class="btn-icon-form" action="{{ path('apply_delete', {'id': applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette candidature ?');">
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
-                                    <button class="btn-icon btn-danger" title="Supprimer">
-                                        <i class="fas fa-times"></i>
+                                <span class="badge bg-success">En cours</span>
+                                {% endif %}#}
+                                open
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    {% if recruit.hired == false and recruit.confirmed == false and recruit.agree == false %}
+                                    <form method="post" class="btn-icon-form" action="{{ path('delete_recruit', {'id': recruit.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette candidature ?');">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ recruit.id) }}">
+                                        <button class="btn-icon btn-danger" title="Supprimer">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </form>
+                                    {% elseif recruit.hired == true %}
+                                    <form method="post" class="btn-icon-form" action="{{ path('recruit_agree', { id:recruit.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir accepter ce cursus ?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('agree' ~  recruit.id) }}">
+                                        <button class="btn-icon btn-success" title="Accepter">
+                                            <i class="fas fa-check"></i>
+                                        </button>
+                                    </form>
+                                    <form method="post" class="btn-icon-form" action="{{ path('delete_recruit', {'id': recruit.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette candidature ?');">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ recruit.id) }}">
+                                        <button class="btn-icon btn-danger" title="Supprimer">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </form>
+                                    {% elseif recruit.agree == true %}
+                                    <button class="btn-icon-form btn-icon btn-warning" title="Dossier en cours de traitement">
+                                        <i class="fas fa-hourglass-start"></i>
                                     </button>
-                                </form>
-                                {% elseif applies.hired == true %}
-                                <form method="post" class="btn-icon-form" action="{{ path('agree', { id:applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir accepter cette offre ?');">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('agree' ~  applies.id) }}">
-                                    <button class="btn-icon btn-success" title="Accepter">
-                                        <i class="fas fa-check"></i>
+                                    {% endif %}
+                                {# <div class="btn-group">
+                                    {% if applies.hired == false and applies.confirmed == false and applies.agree == false %}
+                                    <form method="post" class="btn-icon-form" action="{{ path('apply_delete', {'id': applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette candidature ?');">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
+                                        <button class="btn-icon btn-danger" title="Supprimer">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </form>
+                                    {% elseif applies.hired == true %}
+                                    <form method="post" class="btn-icon-form" action="{{ path('agree', { id:applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir accepter cette offre ?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('agree' ~  applies.id) }}">
+                                        <button class="btn-icon btn-success" title="Accepter">
+                                            <i class="fas fa-check"></i>
+                                        </button>
+                                    </form>
+                                    <form method="post" class="btn-icon-form" action="{{ path('apply_delete', {'id': applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette candidature ?');">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
+                                        <button class="btn-icon btn-danger" title="Supprimer">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </form>
+                                    {% elseif applies.agree == true %}
+                                    <button class="btn-icon-form btn-icon btn-warning" title="Dossier en cours de traitement">
+                                        <i class="fas fa-hourglass-start"></i>
                                     </button>
-                                </form>
-                                <form method="post" class="btn-icon-form" action="{{ path('apply_delete', {'id': applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette candidature ?');">
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
-                                    <button class="btn-icon btn-danger" title="Supprimer">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </form>
-                                {% elseif applies.agree == true %}
-                                <button class="btn-icon-form btn-icon btn-warning" title="Dossier en cours de traitement">
-                                    <i class="fas fa-hourglass-start"></i>
-                                </button>
-                                {% endif %}
-                                <a href="#help-1" rel="modal:open" class="btn-modal btn-icon-form btn-icon btn-secondary" title="aide">
-                                    <i class="fas fa-question-circle"></i>
-                                </a>
-                            </div>
-                        </td>
+                                    {% endif %} #}
+                                    <a href="#help-1" rel="modal:open" class="btn-modal btn-icon-form btn-icon btn-secondary" title="aide">
+                                        <i class="fas fa-question-circle"></i>
+                                    </a>
+                                </div>
+                                {#</div> #}
+                            </td>
+                        </tr>
+                    </tbody>
+
+                    {% else %}
+
+                    <tr class="border-top">
+                        <td colspan="8" class="border-top-td">Aucune candidature en cours</td>
                     </tr>
-    
-                    {% else %} #} 
-               {# {% endfor %} #}
-                </tbody>
 
-            </table>
+                    {% endfor %}
 
+                    {# {% for applies in applies %}
+        
+                    <tbody>
+                        <tr>
+                            <td>
+                            {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('offers_preview', {id : applies.offers.id, company:applies.offers.company.id}) }}">{{ applies.offers.title }}</a>  
+                            {% else %}
+                                {% if applies.hired == true or  applies.agree == true or  applies.confirmed == true or  applies.finished == true %}
+                            <a href="{{ path('offers_show_hired', {'id': applies.offers.id, 'student_id' : student.id}) }}">{{ applies.offers.title }}</a>
+                                {% else %}
+                            <a href="{{ path('offers_show', {'id': applies.offers.id}) }}">{{ applies.offers.title }}</a>
+                                {% endif %}
+                            {% endif %}
+                            </td>
+                            <td> {{ applies.offers.company.companyName }}</td>
+                            <td>{{ applies.offers.location }}</td>
+                            <td>{{ applies.offers.domain }}</td> 
+                            <td> 
+                                {% if applies.confirmed == false %}
+                                    {% if applies.agree == false %}
+                                        {% if applies.hired == false %}
+                                        <span class="badge bg-primary">Ouverte</span>
+                                        {% else %}
+                                        <span class="badge bg-warning">Vous devez confirmer</span>
+                                        {% endif %}
+                                    {% else %}
+                                    <span class="badge bg-warning">Dossier en Traitement</span>
+                                    {% endif %}
+                                {% else %}
+                                <span class="badge bg-success">En cours</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    {% if applies.hired == false and applies.confirmed == false and applies.agree == false %}
+                                    <form method="post" class="btn-icon-form" action="{{ path('apply_delete', {'id': applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette candidature ?');">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
+                                        <button class="btn-icon btn-danger" title="Supprimer">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </form>
+                                    {% elseif applies.hired == true %}
+                                    <form method="post" class="btn-icon-form" action="{{ path('agree', { id:applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir accepter cette offre ?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('agree' ~  applies.id) }}">
+                                        <button class="btn-icon btn-success" title="Accepter">
+                                            <i class="fas fa-check"></i>
+                                        </button>
+                                    </form>
+                                    <form method="post" class="btn-icon-form" action="{{ path('apply_delete', {'id': applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette candidature ?');">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
+                                        <button class="btn-icon btn-danger" title="Supprimer">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </form>
+                                    {% elseif applies.agree == true %}
+                                    <button class="btn-icon-form btn-icon btn-warning" title="Dossier en cours de traitement">
+                                        <i class="fas fa-hourglass-start"></i>
+                                    </button>
+                                    {% endif %}
+                                    <a href="#help-1" rel="modal:open" class="btn-modal btn-icon-form btn-icon btn-secondary" title="aide">
+                                        <i class="fas fa-question-circle"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+        
+                        {% else %} #} 
+                {# {% endfor %} #}
+                    </tbody>
+
+                </table>
+
+            </div>
         </div>
     </div>
 
