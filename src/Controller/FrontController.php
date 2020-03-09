@@ -33,6 +33,14 @@ class FrontController extends AbstractController
         return $this->render("Front/conditions.html.twig");
     }
 
+    //  /**
+    //  * @Route("/confidentialite", name="confidentialite")
+    //  */
+    // public function confidentialite()
+    // {
+    //     return $this->render("Front/confidentialite.html.twig");
+    // }
+
     /**
      * @Route("/contact", name="contact")
      */

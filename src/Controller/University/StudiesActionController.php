@@ -34,8 +34,6 @@ class StudiesActionController extends AbstractController
      */
     public function recruit(Studies $studies, Student $student, RecruitRepository $repository, Request $request, RecruitHelper $helper, RecruitMailer $mailer)
     {
-        // enable school to close recruit for a certain time for a certain study
-
         // check if student is already hired
         if($helper->checkAgree('student', $student) || $helper->checkFinished('student', $student)) {
             $this->addFlash('error', 'Vous êtes déjà embauché ailleurs. Rendez-vous sur votre profil.');
@@ -107,8 +105,6 @@ class StudiesActionController extends AbstractController
         if($this->isCsrfTokenValid('hire'.$recruit->getId(), $request->request->get('_token'))) {           // not usefull to delete others 
             // set state
             $helper->hire($recruit, $student, $studies);
-            // // send notification
-            // $mailer->sendHireNotification($recruit);
             // save
             $entityManager = $this->getDoctrine()->getManager()->flush();   
             $this->addFlash('success', 'Elève recruté !');
@@ -133,10 +129,6 @@ class StudiesActionController extends AbstractController
         if($this->isCsrfTokenValid('agree'.$recruit->getId(), $request->request->get('_token'))) {
             // agree
             $helper->agree($recruit, $student, $studies);
-            // // set to unavailable
-            // $helper->unavailables($studies, $student);
-            // // send notification
-            // $mailer->sendAgreeNotification($student, $studies);
             // save
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Cursus accepté !');
@@ -164,13 +156,6 @@ class StudiesActionController extends AbstractController
         if($this->isCsrfTokenValid('finish'.$recruit->getId(), $request->request->get('_token'))) {
             // finish
             $helper->finish($recruit, $student, $studies);
-            // // set roles 
-            // $user = $recruit->getStudent()->getUser();
-            // $user->setRoles(['ROLE_SUPER_STUDENT']);
-            // // send notification
-            // $mailer->sendFinishNotification($student, $studies);
-            // // set to available
-            // $helper->available($studies, $student);
             // save
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Inscription Terminée');
@@ -200,9 +185,6 @@ class StudiesActionController extends AbstractController
         if($this->isCsrfTokenValid('refuse'.$recruit->getId(), $request->request->get('_token'))) {
             // refuse
             $helper->refuse($recruit, $student, $studies);
-            // // send notification
-            // $mailer->sendRefuseNotification($student, $studies);
-            // // set to availables not usefull because cannot refuse after agree
             // save 
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Candidature refusée');
@@ -225,7 +207,6 @@ class StudiesActionController extends AbstractController
             // entities 
             $student = $recruit->getStudent();
             $studies = $recruit->getStudies();
-            // // set to available not usefull because cannot delete after agree 
             // send notification
             $mailer->sendDeleteNotification($studies);
             // save and delete

@@ -52,6 +52,19 @@ class RecruitHelper extends CommonHelper
         //     $this->session->getFlashBag()->add('error', 'Vous avez déjà postulé');
         // }
     }
+
+    // has no job but has school
+    // public function hasRecruit($student)
+    // {
+    //     return $this->recruitRepository->findBy([
+    //         'student' => $student,
+    //         'hired' => false,
+    //         'agree' => false,
+    //         'refused' => false,
+    //         'unavailable' => false,
+    //         'finished' => false
+    //     ]);
+    // }
     
     // unavailable 
     public function unavailables($studies, $student)

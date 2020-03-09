@@ -118,16 +118,16 @@ class ApplyRepository extends ServiceEntityRepository
         ;
     }
 
-    public function checkIfFinished($offers) // 
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.offers = :offers AND u.finished = :finished')
-            ->setParameter('offers', $offers)
-            ->setParameter('finished', true)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
+    // public function checkIfFinished($offers) // 
+    // {
+    //     return $this->createQueryBuilder('u')
+    //         ->andWhere('u.offers = :offers AND u.finished = :finished')
+    //         ->setParameter('offers', $offers)
+    //         ->setParameter('finished', true)
+    //         ->getQuery()
+    //         ->getResult()
+    //     ;
+    // }
 
     public function findByOffer($offer) {  // 
         return $this->createQueryBuilder('u')
