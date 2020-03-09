@@ -18,5 +18,5 @@ import 'admin-lte';
 
 import './components/edit.js';
 import './components/edit-profile.js';
-
+import './components/message.js';
 
