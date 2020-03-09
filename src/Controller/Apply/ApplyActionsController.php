@@ -2,6 +2,7 @@
 
 namespace App\Controller\Apply;
 
+use DateTimeZone;
 use App\Entity\Apply;
 use App\Entity\Offers;
 use App\Entity\Company;
@@ -73,11 +74,13 @@ class ApplyActionsController extends AbstractController
 
             $apply = new Apply; 
             $apply->setHired(false);
+            $apply->setAgree(false);
             $apply->setConfirmed(false);
             $apply->setRefused(false);
             $apply->setUnavailable(false);
             $apply->setFinished(false);
-            $apply->setAgree(false);
+            $apply->setDateRecruit(new \DateTime('now', new DateTimeZone('Europe/Paris')));
+            $apply->setDateFinished(new \DateTime('now', new DateTimeZone('Europe/Paris')));
             $apply->setOffers($offers);
             $apply->setStudent($student);
 
@@ -209,9 +212,8 @@ class ApplyActionsController extends AbstractController
         $offers = $apply->getOffers();
 
         if($this->isCsrfTokenValid('stop'.$apply->getId(), $request->request->get('_token'))) {
-            // set state
-            $apply->setConfirmed(false);
-            $apply->setFinished(true);
+            // finish 
+            $helper->finish($apply);
             // set roles 
             $user = $apply->getStudent()->getUser();
             $user->setRoles(['ROLE_SUPER_STUDENT']); 

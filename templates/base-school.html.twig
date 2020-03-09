@@ -165,7 +165,6 @@
 
             <script>
                 $(function () {
-
                     $("#example1").DataTable({
                         "paging": true,
                         "lengthChange": false,
@@ -199,7 +198,23 @@
                             }
                         }
                     });
-                    
+
+                    $('#example3').DataTable({
+                        "paging": true,
+                        "lengthChange": false,
+                        "searching": false,
+                        "ordering": true,
+                        "info": false,
+                        "autoWidth": false,
+                        "responsive": true,
+                        "language": {
+                        "emptyTable": "Aucun inscrit pour le moment",
+                        "paginate": {
+                            "previous": "Précédent",
+                            'next':'Suivant'
+                            }
+                        }
+                    });   
                 });
             </script>
             

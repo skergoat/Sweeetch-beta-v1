@@ -47,7 +47,7 @@ class SchoolFixtures extends Fixture
                 $offer1->setTitle('study'.$i); 
                 $offer1->setDomain('domaine-'.$i.'-1'); 
                 $offer1->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tincidunt finibus ligula. Proin nec mi nec massa posuere commodo et sed mi. Aliquam varius, quam ut consequat hendrerit, velit dolor ornare tellus, non pharetra lectus turpis et mi. Fusce at lectus non velit accumsan dictum nec vitae ante. Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi nec dictum nisl. Nunc mollis commodo nulla, vel cursus mauris pretium eget. Vestibulum non turpis venenatis, varius massa at, mattis nisi. Aliquam turpis elit, vehicula et consectetur ut, dapibus a dui. Vestibulum sit amet justo bibendum, lacinia augue a, consequat erat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec luctus tincidunt scelerisque. Lorem ipsum dolor sit amet, consectetur adipiscing elit.'); 
-            
+
                 $offer2 = new Studies;
                 $offer2->setTitle('study'.$i);
                 $offer2->setDomain('domaine-'.$i.'-2');  

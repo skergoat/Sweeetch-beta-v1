@@ -106,23 +106,23 @@ class RecruitMailer
     //     $this->mailer->send($mail);
     // }
 
-    // public function sendFinishNotification($student, $offers)
-    // {
-    //     $email = $student->getUser()->getEmail();
-    //     $name = $student->getName();
-    //     $title = $offers->getTitle(); 
+    public function sendFinishNotification($student, $studies)
+    {
+        $email = $student->getUser()->getEmail();
+        $name = $student->getName();
+        $title = $studies->getTitle(); 
 
-    //     $mail = (new TemplatedEmail())
-    //         ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
-    //         ->to(new Address($email, $name))
-    //         ->subject('Problems with docs')
-    //         ->htmlTemplate('email/apply/finish.html.twig')
-    //         ->context([
-    //             'title' => $title,
-    //         ]); 
+        $mail = (new TemplatedEmail())
+            ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
+            ->to(new Address($email, $name))
+            ->subject('Problems with docs')
+            ->htmlTemplate('email/apply/finish.html.twig')
+            ->context([
+                'title' => $title,
+            ]); 
         
-    //     $this->mailer->send($mail);
-    // }
+        $this->mailer->send($mail);
+    }
 
     public function sendRefuseNotification($student, $studies)
     {

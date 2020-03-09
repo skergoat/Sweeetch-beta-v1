@@ -2,6 +2,7 @@
 
 namespace App\Service\Recruitment;
 
+use App\Entity\Apply;
 use App\Repository\ApplyRepository;
 use App\Service\Recruitment\CommonHelper;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -80,4 +81,21 @@ class ApplyHelper extends CommonHelper
             }      
         }
     }
+
+    // end sweeetch process 
+    public function endProcess(Apply $apply)
+    {
+        // finish 
+        $this->finish($apply);
+        // set roles 
+        $user = $apply->getStudent()->getUser();
+        $user->setRoles(['ROLE_SUPER_STUDENT']); 
+        // send notification
+        // $mailer->sendFinishNotification($student, $offers);
+        // set to available
+        $student = $apply->getStudent();
+        $offers = $apply->getOffers();
+        $this->available($offers, $student);
+    }
+
 }

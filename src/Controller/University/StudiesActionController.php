@@ -2,14 +2,17 @@
 
 namespace App\Controller\University;
 
+use DateTimeZone;
 use App\Entity\School;
 use App\Entity\Recruit;
 use App\Entity\Student;
 use App\Entity\Studies;
 use App\Form\StudiesType;
+use App\Repository\ApplyRepository;
 use App\Repository\RecruitRepository;
 use App\Repository\StudiesRepository;
 use App\Service\Mailer\RecruitMailer;
+use App\Service\Recruitment\ApplyHelper;
 use App\Service\Recruitment\RecruitHelper;
 use App\Service\UserChecker\StudentChecker;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,7 +37,7 @@ class StudiesActionController extends AbstractController
         // enable school to close recruit for a certain time for a certain study
 
         // check if student is already hired
-        if($helper->checkAgree('student', $student) || $helper->checkConfirmed('student', $student)) {
+        if($helper->checkAgree('student', $student) || $helper->checkFinished('student', $student)) {
             $this->addFlash('error', 'Vous êtes déjà embauché ailleurs. Rendez-vous sur votre profil.');
             return  $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'from' => 'student', 'from_id' => $student->getId()]);
         }
@@ -63,11 +66,12 @@ class StudiesActionController extends AbstractController
             // create entity
             $recruit = new Recruit; 
             $recruit->setHired(false);
-            $recruit->setConfirmed(false);
+            $recruit->setAgree(false);
+            $recruit->setFinished(false);
+            $recruit->setDateRecruit(new \DateTime('now', new DateTimeZone('Europe/Paris')));
+            $recruit->setDateFinished(new \DateTime('now', new DateTimeZone('Europe/Paris')));
             $recruit->setRefused(false);
             $recruit->setUnavailable(false);
-            // $apply->setFinished(false);
-            $recruit->setAgree(false);
             $recruit->setStudies($studies);
             $recruit->setStudent($student);
             // save
@@ -90,14 +94,12 @@ class StudiesActionController extends AbstractController
     */
     public function hire(RecruitRepository $repository, Recruit $recruit, Request $request, RecruitHelper $helper, RecruitMailer $mailer)
     {   
-        // separer eleves recrutes et non recrutes 
-
         // get users
         $student = $recruit->getStudent();
         $studies = $recruit->getstudies();
 
         // check if student is available
-        if($helper->checkAgree('student', $student) || $helper->checkConfirmed('student', $student)) {
+        if($helper->checkAgree('student', $student) || $helper->checkFinished('student', $student)) {
             $this->addFlash('error', 'Cet étudiant n\'est plus disponible.');
             return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
         }
@@ -149,38 +151,36 @@ class StudiesActionController extends AbstractController
     }
 
     /**
-     * @Route("/confirm/{id}", name="recruit_confirm", methods={"POST"})
+     * @Route("/finish/{id}", name="recruit_finish", methods={"POST"})
      * @IsGranted("ROLE_SUPER_SCHOOL")
      */
-    public function confirm(RecruitRepository $repository, Recruit $recruit, Request $request, RecruitHelper $helper)
+    public function finish(Recruit $recruit, RecruitRepository $repository, ApplyRepository $applyRepository, Request $request, RecruitHelper $helper, ApplyHelper $applyHelper, RecruitMailer $mailer)
     {
         // get entites
         $student = $recruit->getStudent();
         $studies = $recruit->getStudies();
 
-        // confirm
-        $helper->confirm($recruit);
+        $applyHelper->endProcess($applyRepository->findBy(['student' => $student, 'confirmed' => true])[0]);
 
-         // send notification to student 
-        //  $email = $student->getUser()->getEmail();
-        //  $name = $student->getName();
-        //  $offerTitle = $offers->getTitle(); 
-         
-        //  $mailer->sendConfirmMessage($email, $name, $offerTitle); 
-
-        // $student->getUser()->setRoles(['ROLE_STUDENT_HIRED']);
-
-        if($this->isCsrfTokenValid('confirm'.$recruit->getId(), $request->request->get('_token'))) {
-
+        if($this->isCsrfTokenValid('finish'.$recruit->getId(), $request->request->get('_token'))) {
+            // confirm
+            $helper->finish($recruit);
+            // set roles 
+            $user = $recruit->getStudent()->getUser();
+            $user->setRoles(['ROLE_SUPER_STUDENT']);
+            // send notification
+            $mailer->sendFinishNotification($student, $studies);
+            // set to available
+            $helper->available($studies, $student);
+            // save
             $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success', 'Mission Commencée. Bon travail !');
+            return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
         }
         else {
-            throw new \Exception('Demande Invalide');
+            $this->addFlash('success', 'Requête invalide');
+            return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
         }
-
-        $this->addFlash('success', 'Mission Commencée. Bon travail !');
-
-        return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
     }
 
     /**
