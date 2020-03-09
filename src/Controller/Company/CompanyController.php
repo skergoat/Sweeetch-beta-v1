@@ -125,8 +125,6 @@ class CompanyController extends AbstractController
 
             if($form->isSubmitted() && $form->isValid() || $formPassword->isSubmitted() && $formPassword->isValid()) {
 
-                // dd($form['pictures']->getData());
-
                 $uploadedFile = $form['pictures']->getData();
 
                 if($uploadedFile) {
@@ -158,9 +156,7 @@ class CompanyController extends AbstractController
                 }
 
                 $this->getDoctrine()->getManager()->flush();
-
                 $this->addFlash('success', 'Mise à jour réussie');
-
                 return $this->redirectToRoute('company_edit', ['id' => $company->getId() ]);
             }
 
@@ -187,15 +183,13 @@ class CompanyController extends AbstractController
 
             $entityManager = $this->getDoctrine()->getManager();
 
+            // remove applies 
             $offers = $company->getOffers();
 
-            // remove applies 
             foreach($offers as $offers) {
-
                 $applies = $offers->getApplies();
 
                 foreach($applies as $applies) {
-
                     $student = $applies->getStudent();
 
                     // set roles 
@@ -204,11 +198,10 @@ class CompanyController extends AbstractController
                     // ]);
 
                     // send mail 
-                    // $email = $student->getUser()->getEmail();
-                    // $name = $student->getName();
-                    // $offerTitle = $offers->getTitle();
-
-                    // $mailer->sendDeleteCompanyMessage($email, $name, $offerTitle); 
+                    $email = $student->getUser()->getEmail();
+                    $name = $student->getName();
+                    $offerTitle = $offers->getTitle();
+                    $mailer->sendDeleteCompanyMessage($email, $name, $offerTitle); 
 
                     if($applies->getFinished() == false) {
                         $entityManager->remove($applies);
@@ -235,7 +228,6 @@ class CompanyController extends AbstractController
         }
 
         $this->addFlash('success', 'Compte Supprimé');
-
         return $this->redirectToRoute($from);
     }
 }

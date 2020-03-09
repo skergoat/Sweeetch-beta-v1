@@ -10,14 +10,15 @@ use App\Repository\ApplyRepository;
 use App\Service\Mailer\ApplyMailer;
 use App\Repository\OffersRepository;
 use App\Repository\StudentRepository;
+use App\Service\Recruitment\ApplyHelper;
 use App\Controller\Company\ApplyController;
 use App\Service\UserChecker\CompanyChecker;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -168,11 +169,11 @@ class OffersController extends AbstractController
      * @Route("/{id}", name="offers_delete", methods={"DELETE"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
-    public function delete(Request $request, Offers $offer, ApplyRepository $repository, ApplyMailer $mailer): Response
+    public function delete(Request $request, Offers $offer, ApplyRepository $repository, ApplyMailer $mailer, ApplyHelper $helper): Response
     {
         if ($this->isCsrfTokenValid('delete'.$offer->getId(), $request->request->get('_token'))) {
 
-            $finished = $repository->checkIfFinished($offer);
+            $finished = $repository->findBy(['offers' => $offer, 'finished' => $finished]);
 
             if($finished) {
                 $this->addFlash('error', 'Mission terminée');
@@ -186,26 +187,25 @@ class OffersController extends AbstractController
             foreach($applies as $applies) 
             {
                 $student = $applies->getStudent();
-
                 // set roles 
                 $student->getUser()->setRoles([
                     "ROLE_SUPER_STUDENT"
                 ]);
 
                 // set other student offers to unavailable
-                $unavailables = $repository->setToUnavailables($offer, $student);
+                // $unavailables = $repository->setToUnavailables($offer, $student);
 
-                foreach($unavailables as $unavailables) {
+                // foreach($unavailables as $unavailables) {
+                //     if($unavailables->getUnavailable() == true) {
+                //         $unavailables->setUnavailable(false);
+                //     } 
+                // }
+                $helper->available($offer, $studen);
 
-                    if($unavailables->getUnavailable() == true) {
-                        $unavailables->setUnavailable(false);
-                    } 
-                }
-                
                 // send mail 
-                $email = $student->getUser()->getEmail();
-                $name = $student->getName();
-                $mailer->sendDeleteMessage($email, $name, $offer->getTitle());
+                // $email = $student->getUser()->getEmail();
+                // $name = $student->getName();
+                // $mailer->sendDeleteNotification($email, $name, $offer->getTitle());
                 
                 if($applies->getFinished() == false) {
                     $entityManager->remove($applies);
@@ -214,14 +214,12 @@ class OffersController extends AbstractController
                     $applies->setOffers(NULL);
                 }
             }
-            
             // delete offers 
             $entityManager->remove($offer);
             $entityManager->flush();
         }
 
         $this->addFlash('success', 'Offre supprimée !');
-
         return $this->redirectToRoute('offers_company_index', ['id' => $offer->getCompany()->getId()]);
     }
 }

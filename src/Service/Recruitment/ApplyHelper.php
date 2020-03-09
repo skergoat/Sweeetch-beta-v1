@@ -145,13 +145,15 @@ class ApplyHelper extends CommonHelper
         if($bool){
             $this->deleteUnavailable($offers, $student);
         }
+        else {
+            // set to available
+            $this->available($offers, $student);
+        } 
         // set roles 
         $user = $apply->getStudent()->getUser();
         $user->setRoles(['ROLE_SUPER_STUDENT']); 
         // send notification
-        $this->mailer->sendFinishNotification($student, $offers);
-        // set to available
-        $this->available($offers, $student);
+        $this->mailer->sendFinishNotification($student, $offers);  
     }
 
     public function refuse(Apply $apply, Student $student, Offers $offers)
