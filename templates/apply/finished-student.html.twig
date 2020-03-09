@@ -15,63 +15,64 @@
 
 <div class="col-md-12">
     <div class="card card-responsive-table">
-    
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Titre</th>
-                    <th>Lieu</th>
-                    <th>Domaine</th>
-                    <th>Situation</th>
-                </tr>
-            </thead>
-            <tbody>
+        <div class="card-body">
+            <table class="table-offers table">
+                <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Lieu</th>
+                        <th>Domaine</th>
+                        <th>Situation</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-            {% if finished is not empty %}
+                {% if finished is not empty %}
 
-                {% for finished in finished %}
+                    {% for finished in finished %}
 
-                    {% if finished.offers.id is defined %}
-                <tr>
-                    <td>
-                        {% if is_granted('ROLE_ADMIN') %}
-                        <a href="{{ path('offers_preview', {id : finished.offers.id}) }}"> {{ finished.offers.title }} </a> 
-                        {% else %}
-                        <a href="{{ path('offers_show_hired', {'id': finished.offers.id, 'student_id' : student.id}) }}">{{ finished.offers.title }}</a>
+                        {% if finished.offers.id is defined %}
+                    <tr>
+                        <td>
+                            {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('offers_preview', {id : finished.offers.id}) }}"> {{ finished.offers.title }} </a> 
+                            {% else %}
+                            <a href="{{ path('offers_show_hired', {'id': finished.offers.id, 'student_id' : student.id}) }}">{{ finished.offers.title }}</a>
+                            {% endif %}
+                        </td>
+                        <td>{{ finished.offers.location }}</td>
+                        <td>{{ finished.offers.domain }}</td> 
+                        <td> 
+                            <span class="badge bg-warning">Terminée</span>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="2">
+                            <p style="color:red;">Le profil de l'entreprise a été détruit</p>
+                        </td>
+                        <td colspan="2">
+                            <form method="post" action="{{ path('delete_empty_studentSide', {'id': finished.id }) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ finished.id) }}">
+                                <button class="btn btn-danger">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
                         {% endif %}
-                    </td>
-                    <td>{{ finished.offers.location }}</td>
-                    <td>{{ finished.offers.domain }}</td> 
-                    <td> 
-                        <span class="badge bg-warning">Terminée</span>
-                    </td>
-                </tr>
+
+                    {% endfor %}
+                    
                 {% else %}
-                <tr>
-                    <td colspan="2">
-                        <p style="color:red;">Le profil de l'entreprise a été détruit</p>
-                    </td>
-                    <td colspan="2">
-                        <form method="post" action="{{ path('delete_empty_studentSide', {'id': finished.id }) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ finished.id) }}">
-                            <button class="btn btn-danger">Supprimer</button>
-                        </form>
-                    </td>
-                </tr>
-                    {% endif %}
+                <tr class="border-top">
+                    <td colspan="8" class="border-top-td">Aucune candidature en cours</td>
+                </tr>             
+                {% endif %}
 
-                {% endfor %}
-                
-            {% else %}
-            <tr class="border-top">
-                <td colspan="8" class="border-top-td">Aucune candidature en cours</td>
-            </tr>             
-            {% endif %}
-
-            </tbody>
-        </table> 
-
+                </tbody>
+            </table> 
+            
+        </div>
     </div>
 </div>
  
