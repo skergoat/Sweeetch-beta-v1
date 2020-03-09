@@ -68,7 +68,7 @@ class StudiesRenderController extends AbstractController
             'study' => $study,
             'school' => $school,
             'finished' => $recruitRepository->findBy(['studies' => $study, 'finished' => true], ['date_finished' => 'desc']),
-            'recruit' => $recruitRepository->findBy(['studies' => $study, 'hired' => false, 'agree' => false, 'refused' => false, 'unavailable' => false], ['date_recruit' => 'desc']),
+            'recruit' => $recruitRepository->findBy(['studies' => $study, 'hired' => false, 'agree' => false, 'refused' => false, 'unavailable' => false, 'finished' => false], ['date_recruit' => 'desc']),
             'process' => $recruitRepository->findProcessing($study)
         ]);
     }

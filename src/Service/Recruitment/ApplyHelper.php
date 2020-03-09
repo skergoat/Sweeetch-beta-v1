@@ -128,7 +128,7 @@ class ApplyHelper extends CommonHelper
     public function finish(Apply $apply, Student $student, Offers $offers)
     {
         // finish 
-        $this->setFinish($apply);
+        $this->setApplyFinish($apply);
         // set roles 
         $user = $apply->getStudent()->getUser();
         $user->setRoles(['ROLE_SUPER_STUDENT']); 

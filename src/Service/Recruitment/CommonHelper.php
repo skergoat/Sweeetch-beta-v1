@@ -50,7 +50,24 @@ class CommonHelper
         }
     }
 
-    public function setFinish($relation)
+    public function setRecruitFinish($relation)
+    {
+        if($relation->getHired() == false 
+            &&  $relation->getAgree() == true 
+            // && $relation->getConfirmed() == true
+            && $relation->getFinished() == false 
+            && $relation->getRefused() == false 
+        ) {
+            $relation->setHired(false);
+            $relation->setAgree(false);
+            // $relation->setConfirmed(false);
+            $relation->setFinished(true);
+            $relation->setRefused(false);
+            $relation->setDateFinished(new \DateTime('now', new DateTimeZone('Europe/Paris')));
+        }
+    }
+
+    public function setApplyFinish($relation)
     {
         if($relation->getHired() == false 
             &&  $relation->getAgree() == false 
