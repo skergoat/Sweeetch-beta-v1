@@ -152,14 +152,14 @@ class StudiesActionController extends AbstractController
      * @Route("/finish/{id}", name="recruit_finish", methods={"POST"})
      * @IsGranted("ROLE_SUPER_SCHOOL")
      */
-    public function finish(Recruit $recruit, RecruitRepository $repository, ApplyRepository $applyRepository, Request $request, RecruitHelper $helper, ApplyHelper $applyHelper, RecruitMailer $mailer)
+    public function finish(Recruit $recruit, RecruitRepository $repository, ApplyRepository $applyRepository, Request $request, RecruitHelper $helper, ApplyHelper $applyHelper)
     {
         // get entites
         $student = $recruit->getStudent();
         $studies = $recruit->getStudies();
 
         $apply = $applyRepository->findBy(['student' => $student, 'confirmed' => true])[0];
-        $applyHelper->finish($apply, $student, $apply->getOffers());
+        $applyHelper->finish($apply, $student, $apply->getOffers(), true);
 
         if($this->isCsrfTokenValid('finish'.$recruit->getId(), $request->request->get('_token'))) {
             // finish
@@ -186,7 +186,7 @@ class StudiesActionController extends AbstractController
      * @Route("/refuse/{id}", name="recruit_refuse", methods={"POST"})
      * @IsGranted("ROLE_SUPER_SCHOOL")
      */
-    public function refuse(RecruitRepository $repository, Recruit $recruit, Request $request, RecruitHelper $helper, RecruitMailer $mailer)
+    public function refuse(RecruitRepository $repository, Recruit $recruit, Request $request, RecruitHelper $helper)
     {
         // get entities
         $student = $recruit->getStudent();
