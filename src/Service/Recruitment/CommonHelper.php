@@ -3,17 +3,12 @@
 namespace App\Service\Recruitment;
 
 use DateTimeZone;
-
-// use App\Repository\RecruitRepository;
-// use Symfony\Component\HttpFoundation\Session\SessionInterface;
-// use Symfony\Component\Security\Core\Security;
-// use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-// use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 class CommonHelper
 {
 
-    public function hire($relation)
+    public function setHire($relation)
     {
         // set apply state 
         if($relation->getHired() == false && $relation->getFinished() == false) {
@@ -24,7 +19,7 @@ class CommonHelper
         }
     }
 
-    public function agree($relation)
+    public function setAgree($relation)
     {
         // set apply state 
         if($relation->getHired() == true 
@@ -40,7 +35,7 @@ class CommonHelper
         }
     }
 
-    public function confirm($relation)
+    public function setConfirm($relation)
     {
         if($relation->getHired() == false 
             && $relation->getConfirmed() == false 
@@ -55,24 +50,24 @@ class CommonHelper
         }
     }
 
-    public function finish($relation)
+    public function setFinish($relation)
     {
         if($relation->getHired() == false 
-            // && $relation->getConfirmed() == true
+            &&  $relation->getAgree() == false 
+            && $relation->getConfirmed() == true
             && $relation->getFinished() == false 
             && $relation->getRefused() == false 
-            &&  $relation->getAgree() == false 
         ) {
             $relation->setHired(false);
-            $relation->setFinished(true);
-            // $relation->setConfirmed(false);
-            $relation->setRefused(false);
             $relation->setAgree(false);
+            $relation->setConfirmed(false);
+            $relation->setFinished(true);
+            $relation->setRefused(false);
             $relation->setDateFinished(new \DateTime('now', new DateTimeZone('Europe/Paris')));
         }
     }
 
-    public function refuse($relation)
+    public function setRefuse($relation)
     {
         $relation->setHired(false);
         $relation->setFinished(false);

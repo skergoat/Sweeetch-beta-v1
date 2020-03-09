@@ -3,22 +3,28 @@
 namespace App\Service\Recruitment;
 
 use App\Entity\Apply;
+use App\Entity\Offers;
+use App\Entity\Student;
 use App\Repository\ApplyRepository;
+use App\Service\Mailer\ApplyMailer;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Service\Recruitment\CommonHelper;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class ApplyHelper extends CommonHelper
 {
-    private $recruitRepository; 
-    private $session;
+    private $applyRepository; 
+    private $mailer;
+    private $manager;
 
-    public function __construct(ApplyRepository $applyRepository, SessionInterface $session)
+    public function __construct(ApplyRepository $applyRepository, ApplyMailer $mailer, EntityManagerInterface $manager)
     {
         $this->applyRepository = $applyRepository;
-        $this->session = $session;
+        $this->mailer = $mailer;
+        $this->manager = $manager;
     }
 
-    // check apply state 
+    // check state 
     public function checkHired($key, $param)
     {
         return $this->applyRepository->findBy([$key => $param, 'hired' => 1]);
@@ -47,9 +53,6 @@ class ApplyHelper extends CommonHelper
     public function checkApply($offers, $student)
     {
         return $this->applyRepository->findBy(['offers' => $offers, 'student' => $student]);
-        // if($already) {
-        //     $this->session->getFlashBag()->add('error', 'Vous avez déjà postulé');
-        // }
     }
 
     // unavailable
@@ -82,20 +85,78 @@ class ApplyHelper extends CommonHelper
         }
     }
 
-    // end sweeetch process 
-    public function endProcess(Apply $apply)
+    public function hire(Apply $apply, Student $student, Offers $offers)
+    {
+        // hire
+        $this->setHire($apply);
+        // close offer 
+        $offers->setState(true); 
+        // send notification
+        $this->mailer->sendHireNotification($apply);
+        // delete other applies
+        $others = $this->applyRepository->getOtherApplies($student->getId(), $offers->getId());
+        if($others) {
+            foreach($others as $others) {
+                // send notification
+                $this->mailer->sendOtherNotification($others);
+                // delete other applies 
+                $this->manager->remove($others);   
+            }   
+        }
+    }
+
+    public function agree(Apply $apply, Student $student, Offers $offers)
+    {    
+         // agree
+         $this->setAgree($apply);
+         // send notification
+         $this->mailer->sendAgreeNotification($student, $offers);
+         // set to unavailable
+         $this->unavailables($offers, $student);
+    }
+
+    public function confirm(Apply $apply, Student $student, Offers $offers)
+    {
+        // confirm
+        $this->setConfirm($apply);
+        // send notification
+        $this->mailer->sendConfirmNotification($student, $offers);
+        // set roles
+        $student->getUser()->setRoles(['ROLE_STUDENT_HIRED']);
+    }
+
+    public function finish(Apply $apply, Student $student, Offers $offers)
     {
         // finish 
-        $this->finish($apply);
+        $this->setFinish($apply);
         // set roles 
         $user = $apply->getStudent()->getUser();
         $user->setRoles(['ROLE_SUPER_STUDENT']); 
         // send notification
-        // $mailer->sendFinishNotification($student, $offers);
+        $this->mailer->sendFinishNotification($student, $offers);
         // set to available
-        $student = $apply->getStudent();
-        $offers = $apply->getOffers();
         $this->available($offers, $student);
     }
 
+    public function refuse(Apply $apply, Student $student, Offers $offers)
+    {
+         // refuse
+         $this->setRefuse($apply);
+         // close offer 
+        //  $offers->setState(false);
+         // send notification
+         $this->mailer->sendRefuseNotification($student, $offers);
+         // set to available
+         // $helper->available($offers, $student);
+    }
+
+    public function delete(Apply $apply, Student $student, Offers $offers)
+    {
+        // close offer 
+        $offers->setState(false);
+        // set to available
+        // $helper->available($offers, $student);
+        // send notification
+        $this->mailer->sendDeleteNotification($offers);
+    }
 }

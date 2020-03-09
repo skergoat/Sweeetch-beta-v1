@@ -101,7 +101,7 @@ class ApplyActionsController extends AbstractController
      * @Route("/hire/{id}", name="hire", methods={"POST"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
-    public function hire(Apply $apply, ApplyRepository $repository, Request $request, ApplyHelper $helper, ApplyMailer $mailer)
+    public function hire(Apply $apply, ApplyRepository $repository, Request $request, ApplyHelper $helper)
     {   
         // get users
         $student = $apply->getStudent();
@@ -115,27 +115,29 @@ class ApplyActionsController extends AbstractController
 
         if($this->isCsrfTokenValid('hire'.$apply->getId(), $request->request->get('_token')))
         {
-            // hire
-            $helper->hire($apply);
-            // close offer 
-            $offers->setState(true); 
-            // send notification
-            $mailer->sendHireNotification($apply);
-            // delete other applies
-            $entityManager = $this->getDoctrine()->getManager();
-            $others = $repository->getOtherApplies($student->getId(), $offers->getId());
+            $helper->hire($apply, $student, $offers);
+            // // hire
+            // $helper->hire($apply);
+            // // close offer 
+            // $offers->setState(true); 
+            // // send notification
+            // $mailer->sendHireNotification($apply);
+            // // delete other applies
+            // $entityManager = $this->getDoctrine()->getManager();
+            // $others = $repository->getOtherApplies($student->getId(), $offers->getId());
 
-            if($others) {
+            // if($others) {
 
-                foreach($others as $others) {
-                    // send notification
-                    $mailer->sendOtherNotification($others);
-                    // delete other applies 
-                    $entityManager->remove($others);   
-                }   
-            }
+            //     foreach($others as $others) {
+            //         // send notification
+            //         $mailer->sendOtherNotification($others);
+            //         // delete other applies 
+            //         $entityManager->remove($others);   
+            //     }   
+            // }
             // save 
-            $entityManager->flush();
+            $entityManager = $this->getDoctrine()->getManager()->flush();
+
             $this->addFlash('success', 'Elève Embauché !');
             return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);  
         }
@@ -155,13 +157,14 @@ class ApplyActionsController extends AbstractController
         $student = $apply->getStudent();
         $offers = $apply->getOffers();
 
-        if($this->isCsrfTokenValid('agree'.$student->getId(), $request->request->get('_token'))) {      
+        if($this->isCsrfTokenValid('agree'.$student->getId(), $request->request->get('_token'))) {  
             // agree
-            $helper->agree($apply);
-            // send notification
-            $mailer->sendAgreeNotification($student, $offers);
-            // set to unavailable
-            $helper->unavailables($offers, $student);
+            $helper->agree($apply, $student, $offers);
+            // $helper->agree($apply);
+            // // send notification
+            // $mailer->sendAgreeNotification($student, $offers);
+            // // set to unavailable
+            // $helper->unavailables($offers, $student);
             // save
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'offre acceptée');
@@ -177,7 +180,7 @@ class ApplyActionsController extends AbstractController
      * @Route("/confirm/{id}", name="confirm", methods={"POST"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
-    public function confirm(ApplyRepository $repository, Apply $apply, Request $request, ApplyMailer $mailer, ApplyHelper $helper)
+    public function confirm(Apply $apply, ApplyRepository $repository, Request $request, ApplyHelper $helper)
     {
         // get other applies
         $student = $apply->getStudent();
@@ -185,11 +188,12 @@ class ApplyActionsController extends AbstractController
 
         if($this->isCsrfTokenValid('confirm'.$apply->getId(), $request->request->get('_token'))) {
             // confirm 
-            $helper->confirm($apply);
-            // send notification
-            $mailer->sendConfirmNotification($student, $offers);
-            // set roles
-            $student->getUser()->setRoles(['ROLE_STUDENT_HIRED']);
+            $helper->confirm($apply, $student, $offers);
+            // $helper->confirm($apply);
+            // // send notification
+            // $mailer->sendConfirmNotification($student, $offers);
+            // // set roles
+            // $student->getUser()->setRoles(['ROLE_STUDENT_HIRED']);
             // save
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Mission Commencée. Bon travail !');
@@ -213,14 +217,15 @@ class ApplyActionsController extends AbstractController
 
         if($this->isCsrfTokenValid('stop'.$apply->getId(), $request->request->get('_token'))) {
             // finish 
-            $helper->finish($apply);
-            // set roles 
-            $user = $apply->getStudent()->getUser();
-            $user->setRoles(['ROLE_SUPER_STUDENT']); 
-            // send notification
-            $mailer->sendFinishNotification($student, $offers);
-            // set to available
-            $helper->available($offers, $student);
+            $helper->finish($apply, $student, $offers);
+            // $helper->finish($apply);
+            // // set roles 
+            // $user = $apply->getStudent()->getUser();
+            // $user->setRoles(['ROLE_SUPER_STUDENT']); 
+            // // send notification
+            // $mailer->sendFinishNotification($student, $offers);
+            // // set to available
+            // $helper->available($offers, $student);
             // save
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Mission Terminée. Bravo !');
@@ -249,13 +254,13 @@ class ApplyActionsController extends AbstractController
 
         if($this->isCsrfTokenValid('refuse'.$apply->getId(), $request->request->get('_token'))) {
             // refuse
-            $helper->refuse($apply);
-            // close offer 
-            $offers->setState(false);
-            // send notification
-            $mailer->sendRefuseNotification($student, $offers);
-            // set to available
-            // $helper->available($offers, $student);
+            $helper->refuse($apply, $student, $offers);
+            // // close offer 
+            // $offers->setState(false);
+            // // send notification
+            // $mailer->sendRefuseNotification($student, $offers);
+            // // set to available
+            // // $helper->available($offers, $student);
             // save
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Candidat refusée');
@@ -278,12 +283,13 @@ class ApplyActionsController extends AbstractController
         $offers = $apply->getOffers();
 
         if ($this->isCsrfTokenValid('delete'.$apply->getId(), $request->request->get('_token'))) {
-            // close offer 
-            $offers->setState(false);
-            // set to available
-            // $helper->available($offers, $student);
-            // send notification
-            $mailer->sendDeleteNotification($offers);
+            // delete  
+            $helper->delete($apply, $student, $offers);
+            // $offers->setState(false);
+            // // set to available
+            // // $helper->available($offers, $student);
+            // // send notification
+            // $mailer->sendDeleteNotification($offers);
             // save and delete
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($apply);

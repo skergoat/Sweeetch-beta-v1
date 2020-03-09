@@ -26,95 +26,114 @@
     {{ message }}
 </div>
 {% endfor %}
+{# <div class="col-md-12">
+  <div class="card card-responsive-table">
 
-<div class="col-md-12">
-    <div class="card card-responsive-table">
+    <div class="pagination-bottom mb-4 mt-4">{{ knp_pagination_render(offers) }}</div>
 
-      <div class="pagination-bottom mb-4 mt-4">{{ knp_pagination_render(offers) }}</div>
+      <div class="card-body p-0">
 
-        <div class="card-body p-0">
+          <table class="table-offers table"> #}
+            
+            <!-- Main content -->
+<section class="content">
+  <div class="row">
+      <div class="col-12">
+          <div class="card">
+              <div class="card-header">
+                  <h3 class="card-title" style="font-weight:900;font-size:22px;">Candidatures</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                  <table id="example1" class="table table-bordered table-hover">
+              <thead>
+                  <tr>
+                      <th>Titre</th>
+                      <th>Lieu</th>
+                      <th>Début</th>
+                      <th>Situation</th>
+                      <th>Modifier</th>
+                  </tr>
+              </thead>
+              <tbody>
 
-            <table class="table-offers table">
-                <thead>
-                    <tr>
-                        <th>Titre</th>
-                        <th>Lieu</th>
-                        <th>Début</th>
-                        <th>Situation</th>
-                        <th>Modifier</th>
-                    </tr>
-                </thead>
-                <tbody>
+              {% for offers in offers %}
 
-                {% for offers in offers %}
+                {% if offers.applies | length == 0 %} 
+              
+                  <tr>
+                      <td><a href="{{ path('offers_preview', {'id': offers.id, 'company':company.id}) }}">{{ offers.title }}</a></td>
+                      <td>{{ offers.location }}</td>
+                      <td>{{ offers.dateStart ? offers.dateStart|date("d/m/Y") : '' }}</td>
+                      <td> <span class="badge bg-primary">Ouvert</span> </td>
+                      <td>
+                          <a href="{{ path('offers_edit', {'id': offers.id, 'company':company.id}) }}" title="Modifier"><i class="fas fa-edit"></i></a>
+                      </td> 
+                  </tr>
+                  
+                {% elseif offers.applies | length > 0 %}
 
-                  {% if offers.applies | length == 0 %}
-                
-                    <tr>
-                        <td><a href="{{ path('offers_preview', {'id': offers.id, 'company':company.id}) }}">{{ offers.title }}</a></td>
-                        <td>{{ offers.location }}</td>
-                        <td>{{ offers.dateStart ? offers.dateStart|date("d/m/Y") : '' }}</td>
-                        <td> <span class="badge bg-primary">Ouvert</span> </td>
-                        <td>
-                            <a href="{{ path('offers_edit', {'id': offers.id, 'company':company.id}) }}" title="Modifier"><i class="fas fa-edit"></i></a>
-                        </td> 
-                    </tr>
+                  {% if offers.applies[0].finished == false %} 
 
-                  {% endif %}
-                    
-                  {% if offers.applies | length > 0 %}
-
-                    {% if offers.applies[0].finished == false %}
-
-                    <tr>
-                        <td><a href="{{ path('offers_preview', {'id': offers.applies[0].offers.id, 'company':company.id}) }}">{{ offers.applies[0].offers.title }}</a></td>
-                        <td>{{ offers.applies[0].offers.location }}</td>
-                        <td>{{ offers.applies[0].offers.dateStart ? offers.applies[0].offers.dateStart|date("d/m/Y") : '' }}</td>
-                        <td>    
-                            {% if offers.applies[0].confirmed == false %}
-                              {% if offers.applies[0].agree == false %}
-                                {% if offers.applies[0].hired == false %}
-                                <span class="badge bg-primary">Ouvert</span>
-                                {% else %}
-                                <span class="badge bg-warning">En attente</span>
-                                {% endif %}
+                  <tr>
+                      <td><a href="{{ path('offers_preview', {'id': offers.applies[0].offers.id, 'company':company.id}) }}">{{ offers.applies[0].offers.title }}</a></td>
+                      <td>{{ offers.applies[0].offers.location }}</td>
+                      <td>{{ offers.applies[0].offers.dateStart ? offers.applies[0].offers.dateStart|date("d/m/Y") : '' }}</td>
+                      <td>    
+                          {% if offers.applies[0].confirmed == false %}
+                            {% if offers.applies[0].agree == false %}
+                              {% if offers.applies[0].hired == false %}
+                              <span class="badge bg-primary">Ouvert</span>
                               {% else %}
-                                <span class="badge bg-warning">A valider</span>    
+                              <span class="badge bg-warning">En attente</span>
                               {% endif %}
                             {% else %}
-                            <span class="badge bg-success">En cours</span>
-                            {% endif %} 
-                        </td>
-                        <td>
-                            <a href="{{ path('offers_edit', {'id': offers.applies[0].offers.id, 'company':company.id}) }}" title="Modifier"><i class="fas fa-edit"></i></a>
-                        </td>
-                    </tr>
-                    {% elseif offers.applies[0].finished == true and offers.applies | length == 0 %}
-                    <tr class="border-top">
-                      <td colspan="8" class="border-top-td">Aucun emploi pour le moment</td>
-                    </tr> 
-                    {% elseif offers.applies[0].finished == true and offers.applies | length > 0 %}
-                    <tr class="border-top">
-                      <td colspan="8" class="border-top-td">Aucun emploi pour le moment</td>
-                    </tr> 
-                    {% endif %}
+                              <span class="badge bg-warning">A valider</span>    
+                            {% endif %}
+                          {% else %}
+                          <span class="badge bg-success">En cours</span>
+                          {% endif %} 
+                      </td>
+                      <td>
+                          <a href="{{ path('offers_edit', {'id': offers.applies[0].offers.id, 'company':company.id}) }}" title="Modifier"><i class="fas fa-edit"></i></a>
+                      </td>
+                  </tr>
 
-                  {% endif %}
-                
-                {% else %}
-                <tr class="border-top">
+                 {# {% elseif offers.applies[0].finished == true and offers.applies | length == 0 %}
+                  <tr class="border-top">
                     <td colspan="8" class="border-top-td">Aucun emploi pour le moment</td>
-                </tr> 
-                {% endfor %}
-
-                </tbody>
+                  </tr> 
+                  {% elseif offers.applies[0].finished == true and offers.applies | length > 0 and offers | length == 0 %}
+                  <tr class="border-top">
+                    <td colspan="8" class="border-top-td">Aucun emploi pour le moment</td>
+                  </tr>  #}
+                  {% endif %} 
+              
+              {# {% else %}
+              <tr class="border-top">
+                  <td colspan="8" class="border-top-td">Aucun emploi pour le moment</td>
+              </tr> #}
+              {% endif %}
+              
+              {% endfor %}
+              </tbody>
             </table>
-        </div>
-
-        <div class="pagination-bottom mt-5">{{ knp_pagination_render(offers) }}</div>
-
-    </div>      
+          </div>
+  <!-- /.card-body -->
+      </div>
+  <!-- /.card -->
   </div>
+<!-- /.col -->
+</div>
+<!-- /.row -->
+</section>
+          {# </table>
+      </div>
+
+      <div class="pagination-bottom mt-5">{{ knp_pagination_render(offers) }}</div> 
+
+  </div>      
+</div> #}
 
 {% else %}
 

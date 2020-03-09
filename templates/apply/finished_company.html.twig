@@ -19,7 +19,7 @@
     {{ message }}
 </div>
 {% endfor %}
-
+{# 
 <div class="col-md-12">
     <div class="card card-responsive-table">
 
@@ -27,7 +27,17 @@
 
             <div class="card-body p-0">
 
-                <table class="table-offers table">
+                <table class="table-offers table"> #}
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title" style="font-weight:900;font-size:22px;">Candidatures</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="example2" class="table table-bordered table-hover">
                     <thead>
                         <tr>
                             <th>Titre</th>
@@ -55,23 +65,31 @@
                         
                         {# {% endif %} #}
                     
-                    {% else %}
+                    {# {% else %}
 
                     <tr class="border-top">
                         <td colspan="8" class="border-top-td">Aucun emploi terminé</td>
-                    </tr>   
+                    </tr>    #}
 
                     {% endfor %}
                                                     
                 </tbody>
-            </table> 
+            </table>
+            </div>
+<!-- /.card-body -->
+        </div>
+    <!-- /.card -->
+        </div>
+    <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+            {# </table> 
         </div>
         <div class="pagination-bottom mt-5">{{ knp_pagination_render(applies) }}</div>
 
     </div>      
-</div> 
-
-     
+</div>  #}
 
 {% endif %}
 
