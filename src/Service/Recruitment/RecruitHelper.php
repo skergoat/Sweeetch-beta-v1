@@ -2,22 +2,26 @@
 
 namespace App\Service\Recruitment;
 
+use App\Entity\Recruit;
+use App\Entity\Student;
+use App\Entity\Studies;
 use App\Repository\RecruitRepository;
+use App\Service\Mailer\RecruitMailer;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Service\Recruitment\CommonHelper;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-// use Symfony\Component\Security\Core\Security;
-// use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-// use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class RecruitHelper extends CommonHelper
 {
     private $recruitRepository; 
-    private $session;
+    private $mailer;
+    private $manager;
 
-    public function __construct(RecruitRepository $recruitRepository, SessionInterface $session)
+    public function __construct(RecruitRepository $recruitRepository, RecruitMailer $mailer, EntityManagerInterface $manager)
     {
         $this->recruitRepository = $recruitRepository;
-        $this->session = $session;
+        $this->mailer = $mailer;
+        $this->manager = $manager;
     }
 
     // recruit state
@@ -75,5 +79,58 @@ class RecruitHelper extends CommonHelper
                  $unavailables->setUnavailable(false);
              }      
          }
-     }
+    }
+
+    public function hire(Recruit $recruit, Student $student, Studies $studies)
+    {
+        // set state
+        $this->setHire($recruit);
+        // send notification
+        $this->mailer->sendHireNotification($recruit);
+    }
+
+    public function agree(Recruit $recruit, Student $student, Studies $studies)
+    {    
+        // agree
+        $this->setAgree($recruit);
+        // set to unavailable
+        $this->unavailables($studies, $student);
+        // send notification
+        $this->mailer->sendAgreeNotification($student, $studies);
+    }
+
+    public function finish(Recruit $recruit, Student $student, Studies $studies)
+    {
+         // confirm
+         $this->setRecruitFinish($recruit);
+         // set roles 
+         $user = $recruit->getStudent()->getUser();
+         $user->setRoles(['ROLE_SUPER_STUDENT']);
+         // send notification
+         $this->mailer->sendFinishNotification($student, $studies);
+         // set to available
+         $this->available($studies, $student);
+    }
+
+    public function refuse(Apply $apply, Student $student, Offers $offers)
+    {
+         // refuse
+         $this->setRefuse($apply);
+         // close offer 
+        //  $offers->setState(false);
+         // send notification
+         $this->mailer->sendRefuseNotification($student, $offers);
+         // set to available
+         // $helper->available($offers, $student);
+    }
+
+    public function delete(Apply $apply, Student $student, Offers $offers)
+    {
+        // close offer 
+        $offers->setState(false);
+        // set to available
+        // $helper->available($offers, $student);
+        // send notification
+        $this->mailer->sendDeleteNotification($offers);
+    }
 }

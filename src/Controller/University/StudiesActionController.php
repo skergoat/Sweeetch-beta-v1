@@ -92,7 +92,7 @@ class StudiesActionController extends AbstractController
     * @Route("/hire/{id}", name="recruit_hire", methods={"POST"})
     * @IsGranted("ROLE_SUPER_SCHOOL")
     */
-    public function hire(RecruitRepository $repository, Recruit $recruit, Request $request, RecruitHelper $helper, RecruitMailer $mailer)
+    public function hire(RecruitRepository $repository, Recruit $recruit, Request $request, RecruitHelper $helper)
     {   
         // get users
         $student = $recruit->getStudent();
@@ -106,13 +106,11 @@ class StudiesActionController extends AbstractController
         
         if($this->isCsrfTokenValid('hire'.$recruit->getId(), $request->request->get('_token'))) {           // not usefull to delete others 
             // set state
-            $helper->hire($recruit);
-            // send notification
-            $mailer->sendHireNotification($recruit);
+            $helper->hire($recruit, $student, $studies);
+            // // send notification
+            // $mailer->sendHireNotification($recruit);
             // save
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->flush();
-            
+            $entityManager = $this->getDoctrine()->getManager()->flush();   
             $this->addFlash('success', 'Elève recruté !');
             return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
         }
@@ -126,7 +124,7 @@ class StudiesActionController extends AbstractController
     * @Route("/agree/{id}", name="recruit_agree", methods={"POST"})
     * @IsGranted("ROLE_SUPER_STUDENT")
     */
-    public function agree(RecruitRepository $repository, Recruit $recruit, Request $request, RecruitHelper $helper, RecruitMailer $mailer)
+    public function agree(RecruitRepository $repository, Recruit $recruit, Request $request, RecruitHelper $helper)
     {
         // get other applies
         $student = $recruit->getStudent();
@@ -134,11 +132,11 @@ class StudiesActionController extends AbstractController
 
         if($this->isCsrfTokenValid('agree'.$recruit->getId(), $request->request->get('_token'))) {
             // agree
-            $helper->agree($recruit);
-            // set to unavailable
-            $helper->unavailables($studies, $student);
-            // send notification
-            $mailer->sendAgreeNotification($student, $studies);
+            $helper->agree($recruit, $student, $studies);
+            // // set to unavailable
+            // $helper->unavailables($studies, $student);
+            // // send notification
+            // $mailer->sendAgreeNotification($student, $studies);
             // save
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Cursus accepté !');
@@ -160,18 +158,18 @@ class StudiesActionController extends AbstractController
         $student = $recruit->getStudent();
         $studies = $recruit->getStudies();
 
-        $applyHelper->endProcess($applyRepository->findBy(['student' => $student, 'confirmed' => true])[0]);
+        // $applyHelper->endProcess($applyRepository->findBy(['student' => $student, 'confirmed' => true])[0]);
 
         if($this->isCsrfTokenValid('finish'.$recruit->getId(), $request->request->get('_token'))) {
-            // confirm
-            $helper->finish($recruit);
-            // set roles 
-            $user = $recruit->getStudent()->getUser();
-            $user->setRoles(['ROLE_SUPER_STUDENT']);
-            // send notification
-            $mailer->sendFinishNotification($student, $studies);
-            // set to available
-            $helper->available($studies, $student);
+            // finish
+            $helper->finish($recruit, $student, $studies);
+            // // set roles 
+            // $user = $recruit->getStudent()->getUser();
+            // $user->setRoles(['ROLE_SUPER_STUDENT']);
+            // // send notification
+            // $mailer->sendFinishNotification($student, $studies);
+            // // set to available
+            // $helper->available($studies, $student);
             // save
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Mission Commencée. Bon travail !');
