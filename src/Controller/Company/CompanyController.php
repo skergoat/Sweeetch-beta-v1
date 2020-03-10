@@ -94,7 +94,7 @@ class CompanyController extends AbstractController
 
             return $this->render('company/show.html.twig', [
                 'company' => $company,  // company layout
-                'applies' => $helper->checkApplies($offers),
+                'applies' => $helper->checkApplies('offers', $offers),
                 'hired' => $helper->checkHired('offers', $offers),  // show hired 
                 'agree' => $helper->checkAgree('offers', $offers), // find agreed applies 
                 'finished' =>  $applyRepository->findByOffersFinished($offers), // find confirmed or finished applies 

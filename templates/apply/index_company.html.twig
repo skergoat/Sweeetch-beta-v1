@@ -93,9 +93,11 @@
                       <td>{{ offers.dateStart ? offers.dateStart|date("d/m/Y à g\\hi") : '' }}</td>
                       <td> <span class="badge bg-primary">Ouvert</span> </td>
                       <td>
-                          <a href="{{ path('offers_edit', {'id': offers.id, 'company':company.id}) }}" title="Modifier" class="btn btn-danger btn-sm"> 
+                          <a href="{{ path('offers_edit', {'id': offers.id, 'company':company.id}) }}" title="Modifier"> 
+                            <button class="btn btn-danger btn-sm">
                             <i class="fas fa-times"></i>
                             Modifier
+                            </button>
                           </a>
                       </td> 
                   </tr>

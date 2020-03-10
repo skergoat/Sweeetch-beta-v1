@@ -106,6 +106,23 @@ class ApplyRepository extends ServiceEntityRepository
     //     ;
     // }
 
+    public function findByStudentProcess($student) { 
+
+        return $this->createQueryBuilder('u')
+        ->andWhere('u.student = :student')
+        ->andWhere('u.hired = :hired')
+        ->orWhere('u.agree = :agree')
+        ->orWhere('u.confirmed = :confirmed')
+        ->setParameter('student', $student)
+        ->setParameter('hired', true)
+        ->setParameter('agree', true)
+        ->setParameter('confirmed', true)
+        ->orderBy('u.hired', 'desc')
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+
     public function findByOffersProcess($offer) { 
 
         foreach($offer as $offer) {

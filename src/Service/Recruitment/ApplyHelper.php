@@ -66,10 +66,10 @@ class ApplyHelper extends CommonHelper
     }
 
     // open applies 
-    public function checkApplies($offers)
+    public function checkApplies($key, $param)
     {
         return $this->applyRepository->findBy([
-            'offers' => $offers,
+            $key => $param,
             'hired' => false,
             'agree' => false,
             'refused' => false,
