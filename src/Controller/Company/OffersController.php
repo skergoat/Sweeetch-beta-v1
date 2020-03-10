@@ -84,7 +84,7 @@ class OffersController extends AbstractController
                 'company' => $company,
                 'hired' => $helper->checkHired('offers', $offers),
                 'agree' => $helper->checkAgree('offers', $offers),
-                'closed' =>  $helper->checkFinished('offers', $offers),
+                'closed' =>  $helper->checkOfferFinished($offers),
                 'candidates' => $helper->nbCandidates($offers),    
             ]);
         }
