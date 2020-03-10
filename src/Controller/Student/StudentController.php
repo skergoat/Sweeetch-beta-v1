@@ -145,14 +145,11 @@ class StudentController extends AbstractController
         if ($checker->studentValid($student)) {
 
             return $this->render('student/show.html.twig', [
-                'student' => $student,
-                // 'applies' => $applyRepository->findByStudent($student),
-                // 'finished' => $applyRepository->findBy(['student' => $student, 'finished' => true]),
-                 // 'hired' => $applyRepository->checkIfHired($student)
-                'applies' => $helper->checkApplies('student', $student),
-                'process' => $applyRepository->findByStudentProcess($student),  
-                'fresh' => $applyRepository->findByStudentByFresh($student),
-                'hired' => $helper->checkHired('student', $student),
+                'student' => $student,  
+                'applies' => $helper->checkApplies('student', $student),    // open applies 
+                'process' => $applyRepository->findByStudentProcess($student),  // processing applies 
+                'fresh' => $applyRepository->findByStudentByFresh($student), // nb candidates
+                'hired' => $helper->checkHired('student', $student), // confirm warning 
             ]);
         }  
     }
