@@ -13,10 +13,19 @@
     </div>
 </div> <br>
 
-<div class="col-md-12">
-    <div class="card card-responsive-table">
-        <div class="card-body">
-            <table class="table-offers table">
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                {# <div class="card-header">
+                    <h3 class="card-title" style="font-weight:900;font-size:22px;">Candidatures</h3>
+                    <a href="#help-1" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                        <i class="fas fa-question-circle"></i>
+                    </a>
+                </div> #}
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="finish1" class="table table-bordered table-hover">
                 <thead>
                     <tr>
                         <th>Titre</th>
@@ -62,18 +71,50 @@
                         {% endif %}
 
                     {% endfor %}
-                    
+{#                     
                 {% else %}
                 <tr class="border-top">
                     <td colspan="8" class="border-top-td">Aucune candidature en cours</td>
-                </tr>             
+                </tr>              #}
                 {% endif %}
 
                 </tbody>
-            </table> 
-            
+            </table>
         </div>
+<!-- /.card-body -->
     </div>
+<!-- /.card -->
 </div>
+<!-- /.col -->
+</div>
+<!-- /.row -->
+</section>
  
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script>
+        $(function () {
+            $("#finish1").DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": false,
+                "info": false,
+                "autoWidth": false,
+                "responsive": true,
+                "language": {
+                "emptyTable": "Aucun recrutement terminé",
+                "paginate": {
+                    "previous": "Précédent",
+                    'next':'Suivant'
+                    }
+                }
+            });    
+        });
+    </script>
+
 {% endblock %}

@@ -94,8 +94,8 @@
                       <td> <span class="badge bg-primary">Ouvert</span> </td>
                       <td>
                           <a href="{{ path('offers_edit', {'id': offers.id, 'company':company.id}) }}" title="Modifier"> 
-                            <button class="btn btn-danger btn-sm">
-                            <i class="fas fa-times"></i>
+                            <button class="btn btn-info btn-sm">
+                              <i class="fas fa-edit"></i>
                             Modifier
                             </button>
                           </a>
@@ -127,7 +127,7 @@
                       </td>
                       <td>
                         <a href="{{ path('offers_edit', {'id': offers.applies[0].offers.id, 'company':company.id}) }}">
-                          <button  title="Modifier" style="color:white;" class="btn btn-secondary btn-sm"> 
+                          <button  title="Modifier" style="color:white;" class="btn btn-info btn-sm"> 
                             <i class="fas fa-edit"></i>
                             Modifier
                           </button>

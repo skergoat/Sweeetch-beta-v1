@@ -340,7 +340,7 @@
                                         <td><a href="{{ path('student_apply', {'id': student.id}) }}" class="action-link">{{ process.offers.title }}</a></td>
                                         <td>
                                             {% if process.hired == true %}
-                                                <span class="badge badge-warning" title="L'employeur attend votre validation">vous devez valider la mission</span>
+                                                <span class="badge badge-warning" title="L'employeur attend votre validation">à valider</span>
                                             {% elseif process.agree == true %}
                                             <span class="badge badge-info" title="Embauche en cours">Dossier en traitement</span>
                                             {% elseif process.confirmed == true %}
