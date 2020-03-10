@@ -1,6 +1,6 @@
 @media all and (max-width:1024px)
 {
-    .fa-user-check {
+    .fa-user-check, .fas.fa-edit {
         display:none;
     }
 }
@@ -116,5 +116,10 @@
 
     .time-icon:nth-child(3) {
         left:83%;
+    }
+
+    // cards padding
+    .card.card-primary {
+        padding:15px;
     }
 }
