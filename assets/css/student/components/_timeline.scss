@@ -6,11 +6,10 @@
 }
 
 .time-icon {
-
     &:first-child {
         position:relative;
         top:36px;
-        left:-20px;
+        left:0px;
         width:20px;
 
         &:hover {
@@ -20,9 +19,11 @@
 
     &:nth-child(2) {
         position:relative;
-        top:22px;
-        left:36%;
+        // top:0px;
+        // left:30%;
+        top:-10px;
         width:20px;
+        left:43%;
 
         &:hover {
             cursor:pointer;
@@ -31,8 +32,8 @@
 
     &:nth-child(3) {
         position:relative;
-        top:8px;
-        left:75%;
+        top:-57px;
+        left:88%;
         width:20px;
 
         &:hover {
@@ -43,12 +44,17 @@
     & .fas {
         font-size:18px;
     }
+
+    & span {
+        padding:10px;
+    }
 }
 
 .timeline {
-
+    margin:0px;
+    
     &::before {
-        width:100%;
+        width:95%;
     }
 
     & > div > .timeline-item {
@@ -57,18 +63,19 @@
     }
 }
 
-.time-icon:nth-child(3) {
-    left:94%;
-}
+// .time-icon:nth-child(3) {
+//     left:90%;
+// }
 
-.time-icon:nth-child(2) {
-    left:45%;
-}
+// .time-icon:nth-child(2) {
+//     left:43%;
+// }
 
 .timeline > .message {
     // position:absolute;
     opacity:0;
-    top:40px;
+    // top:50px;
+    top:-40px;
     margin:auto;
     max-width:400px;
 }
