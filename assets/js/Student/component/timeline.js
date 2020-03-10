@@ -4,15 +4,15 @@ $('.time-icon').mouseover(function() {
 
     switch(data) {
         case 'first': 
-        text = 'Embauche';
+        text = 'Acceptez ou refusez la candidature';
         break;
 
         case 'second': 
-        text = 'Traitement du dossier';
+        text = 'Signature du contrat d\'alternance';
         break;
 
         case 'third': 
-        text = 'Début de la mission';
+        text = 'Recrutement terminé';
         break;
     }
 

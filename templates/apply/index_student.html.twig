@@ -30,40 +30,40 @@
          
          <h5>Progression du recrutement : </h5>
 
-         <div class="timeline col-lg-10" style="position:relative">
+         <div class="timeline col-lg-12" style="position:relative">
 
              <div class="time-icon" data-url="first">
                  {% if applies[0] is defined %}
                      {% if applies[0].hired == true %}
-                     <i class="fas fa-play-circle bg-red"></i>
+                     <span class="badge bg-warning">à valider</span>
                      {% else %}
-                     <i class="fas fa-play-circle bg-grey"></i>
+                     <span class="badge bg-secondary">à valider</span>
                      {% endif %}
                  {% else %}
-                 <i class="fas fa-play-circle bg-grey"></i>
+                 <span class="badge bg-secondary">à valider</span>
                  {% endif %}
              </div>
              
              <div class="time-icon" data-url="second">
                  {% if applies[0] is defined %}
                      {% if applies[0].agree == true %}
-                     <i class="fas fa-cog bg-yellow"></i>
+                     <span class="badge bg-info">en Traitement</span>
                      {% else %}
-                     <i class="fas fa-cog bg-grey"></i>
+                     <span class="badge bg-secondary">en Traitement</span>
                      {% endif %}
                  {% else %}
-                 <i class="fas fa-cog bg-grey"></i>
+                 <span class="badge bg-secondary">en Traitement</span>
                  {% endif %}
              </div>
              <div class="time-icon" data-url="third">
                  {% if applies[0] is defined %}
                      {% if applies[0].confirmed == true %}
-                     <i class="fas fa-check-circle bg-green"></i>
+                     <span class="badge bg-success">recruté</span>
                      {% else %}
-                     <i class="fas fa-check-circle bg-grey"></i>
+                     <span class="badge bg-secondary">recruté</span>
                      {% endif %}
                  {% else %}
-                 <i class="fas fa-check-circle bg-grey"></i>
+                 <span class="badge bg-secondary">recruté</span>
                  {% endif %}
              </div>
 
@@ -91,7 +91,7 @@
 <section class="content">
     <div class="row">
         <div class="col-12">
-            <div class="card">
+            <div class="card card-responsive-table">
                 <div class="card-header">
                     <h3 class="card-title" style="font-weight:900;font-size:22px;">Candidatures</h3>
                     <a href="#help-1" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
@@ -138,7 +138,7 @@
                                     <span class="badge bg-warning">à valider</span>
                                     {% endif %}
                                 {% else %}
-                                <span class="badge bg-warning">dossier en Traitement</span>
+                                <span class="badge bg-info">dossier en Traitement</span>
                                 {% endif %}
                             {% else %}
                             <span class="badge bg-success">en cours</span>
@@ -228,7 +228,7 @@
                 "searching": false,
                 "ordering": false,
                 "info": false,
-                "autoWidth": false,
+                "autoWidth": true,
                 "responsive": true,
                 "language": {
                 "emptyTable": "Aucune offre pour le moment",
