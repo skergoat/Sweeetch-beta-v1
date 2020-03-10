@@ -65,6 +65,20 @@ class ApplyHelper extends CommonHelper
         return $this->applyRepository->findBy(['offers' => $offers, 'refused' => 0, 'unavailable' => 0, 'confirmed' => 0, 'finished' => 0]);
     }
 
+    // open applies 
+    public function checkApplies($offers)
+    {
+        return $this->applyRepository->findBy([
+            'offers' => $offers,
+            'hired' => false,
+            'agree' => false,
+            'refused' => false,
+            'unavailable' => false,
+            'confirmed' => false,
+            'finished' => false
+        ]);
+    }
+
     // unavailable
     public function unavailables($offers, $student)
     {

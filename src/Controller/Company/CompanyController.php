@@ -95,12 +95,11 @@ class CompanyController extends AbstractController
             $offers = $offersRepository->findBy(['company' => $company]);
 
             return $this->render('company/show.html.twig', [
-                'company' => $company,  // company layout 
-                'applies' => $applyRepository->findByOffersProcess($offers), // find processing applies 
+                'company' => $company,  // company layout
+                'applies' => $helper->checkApplies($offers),
+                'hired' => $helper->checkHired('offers', $offers),  // show hired 
+                'agree' => $helper->checkAgree('offers', $offers), // find agreed applies 
                 'finished' =>  $applyRepository->findByOffersFinished($offers), // find confirmed or finished applies 
-                // infos 
-                'hired' => $helper->checkHired('offers', $offers),  // show nb hired 
-                'agree' => $helper->checkAgree('offers', $offers), // show nb agree
                 'candidates' => $helper->nbCandidates($offers), // show nb applies 
             ]);
         }

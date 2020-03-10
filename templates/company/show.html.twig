@@ -157,15 +157,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {# {% for finished in finished %}
-    
+                                {% for applies in applies %}
                                 <tr class="border-top">
-                                    <td><a href="{{ path('show_finished', {id:finished.offers.id, company:company.id}) }}" class="action-link">{{ finished.offers.title }}</a></td>
+                                    <td><a href="{{ path('offers_preview', {id:applies.offers.id, company:company.id}) }}" class="action-link">{{ applies.offers.title }}</a></td>
                                     <td>
-                                        <span class="badge badge-success right">Recruté</span>
-                                    </td>   
-                                </tr>  
-                                {% endfor %}  #}
+                                        <span class="badge badge-primary right">Ouverte</span> 
+                                    </td>
+                                </tr>
+                                {% endfor %} 
                             </tbody>
                         </table>
                     </div>
@@ -196,15 +195,18 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {# {% for finished in finished %}
-    
+                                {% for agree in agree %}
                                 <tr class="border-top">
-                                    <td><a href="{{ path('show_finished', {id:finished.offers.id, company:company.id}) }}" class="action-link">{{ finished.offers.title }}</a></td>
+                                    <td><a href="{{ path('offers_preview', {id:agree.offers.id, company:company.id}) }}" class="action-link">{{ agree.offers.title }}</a></td>
                                     <td>
-                                        <span class="badge badge-success right">Recruté</span>
-                                    </td>   
-                                </tr>  
-                                {% endfor %}  #}
+                                        {% if agree.hired == true %}
+                                        <span class="badge badge-warning right">En attente d'acceptation</span>
+                                        {% elseif agree.agree == true %}
+                                        <span class="badge bg-info">A Finaliser</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %} 
                             </tbody>
                         </table>
                     </div>
@@ -309,18 +311,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for applies in applies %}
-
-                            <tr class="border-top">
-                                <td><a href="{{ path('offers_preview', {id:applies.offers.id, company:company.id}) }}" class="action-link">{{ applies.offers.title }}</a></td>
-                                <td>
-                                    {% if applies.hired == true %}
-                                    <span class="badge badge-warning right">En attente d'acceptation</span>
-                                    {% elseif applies.agree == true %}
-                                    <span class="badge bg-info">A Finaliser</span>
-                                    {% endif %}
-                                </td>
-                            </tr>
+                            {% for hired in hired %}
+                                <tr class="border-top">
+                                    <td><a href="{{ path('offers_preview', {id:hired.offers.id, company:company.id}) }}" class="action-link">{{ hired.offers.title }}</a></td>
+                                    <td>
+                                        <span class="badge badge-warning right">En attente d'acceptation</span>
+                                    </td>
+                                </tr>
                             {% endfor %} 
                         </tbody>
                     </table>
@@ -361,13 +358,12 @@
                             </thead>
                             <tbody>
                                 {% for finished in finished %}
-    
                                 <tr class="border-top">
-                                    <td><a href="{{ path('show_finished', {id:finished.offers.id, company:company.id}) }}" class="action-link">{{ finished.offers.title }}</a></td>
+                                    <td><a href="{{ path('offers_preview', {id:finished.offers.id, company:company.id}) }}" class="action-link">{{ finished.offers.title }}</a></td>
                                     <td>
                                         <span class="badge badge-success right">Recruté</span>
-                                    </td>   
-                                </tr>  
+                                    </td>
+                                </tr>
                                 {% endfor %} 
                             </tbody>
                         </table>
@@ -431,7 +427,7 @@
                 "autoWidth": false,
                 "responsive": true,
                 "language": {
-                "emptyTable": "Aucune recrutement terminé",
+                "emptyTable": "Aucune attente d'acceptation",
                 "paginate": {
                     "previous": "Précédent",
                     'next':'Suivant'
