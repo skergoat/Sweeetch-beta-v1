@@ -9,8 +9,8 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-6">
-            <h1 class="m-0">Emplois</h1> <br>
-            <a href="{{ path('offers_new', {id:company.id}) }}" class="btn btn-success">Créer un Emploi</a>
+            <h1 class="m-0">Annonces</h1> <br>
+            <a href="{{ path('offers_new', {id:company.id}) }}" class="btn btn-success">Créer une Annonce</a>
         </div>
     </div>
 </div> <br>
@@ -26,23 +26,12 @@
     {{ message }}
 </div>
 {% endfor %}
-{# <div class="col-md-12">
-  <div class="card card-responsive-table">
 
-    <div class="pagination-bottom mb-4 mt-4">{{ knp_pagination_render(offers) }}</div>
-
-      <div class="card-body p-0">
-
-          <table class="table-offers table"> #}
-            
-            <!-- Main content -->
 <section class="content">
   <div class="row">
       <div class="col-12">
           <div class="card">
-              <div class="card-header">
-                  <h3 class="card-title" style="font-weight:900;font-size:22px;">Candidatures</h3>
-              </div>
+    
               <!-- /.card-header -->
               <div class="card-body">
                   <table id="example1" class="table table-bordered table-hover">
@@ -64,7 +53,7 @@
                   <tr>
                       <td><a href="{{ path('offers_preview', {'id': offers.id, 'company':company.id}) }}">{{ offers.title }}</a></td>
                       <td>{{ offers.location }}</td>
-                      <td>{{ offers.dateStart ? offers.dateStart|date("d/m/Y") : '' }}</td>
+                      <td>{{ offers.dateStart ? offers.dateStart|date("d/m/Y à g\\hi") : '' }}</td>
                       <td> <span class="badge bg-primary">Ouvert</span> </td>
                       <td>
                           <a href="{{ path('offers_edit', {'id': offers.id, 'company':company.id}) }}" title="Modifier"><i class="fas fa-edit"></i></a>
@@ -73,7 +62,7 @@
                   
                 {% elseif offers.applies | length > 0 %}
 
-                  {% if offers.applies[0].finished == false %} 
+                  {% if offers.applies[0].finished == false and offers.applies[0].confirmed == false %} 
 
                   <tr>
                       <td><a href="{{ path('offers_preview', {'id': offers.applies[0].offers.id, 'company':company.id}) }}">{{ offers.applies[0].offers.title }}</a></td>

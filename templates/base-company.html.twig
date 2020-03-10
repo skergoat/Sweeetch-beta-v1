@@ -124,45 +124,45 @@
                                 <a class="nav-link" href="{{ path('offers_company_index', {id:company.id}) }}">
                                     <i class="nav-icon fa fa-bookmark"></i>
                                     <p>
-                                        Emplois
+                                        Annonces
                                     </p>
-                                    {% if agree is defined or hired is defined or applyc is defined %}
+                                    {% if agree is defined or hired is defined or closed is defined %}
                                         {% if agree | length > 0 %}
                                         <span class="badge badge-warning right" title="candidatures">A valider : {{ agree | length }}</span>
                                         {% elseif hired | length > 0 %}
                                         <span class="badge badge-warning right" title="candidatures">En attente : {{ hired | length }}</span>
-                                        {% elseif applyc| length > 0 %}
-                                        <span class="badge badge-primary right" title="candidatures">Candidats : {{ applyc | length }}</span>
+                                        {% elseif candidates| length > 0 %}
+                                        <span class="badge badge-primary right" title="candidatures">Candidats : {{ candidates | length }}</span>
                                         {% endif %}
                                     {% endif %}
                                 </a>
                                 {% if is_granted('ROLE_SUPER_COMPANY') %}
-                                    {% if app.request.get('_route') == 'offers_company_index' or app.request.get('_route') == 'offers_new' or app.request.get('_route') == 'offers_preview' or app.request.get('_route') == 'offers_edit' or app.request.get('_route') == 'offers_company_finished' or app.request.get('_route') == 'show_applied_profile' %}
+                                    {% if app.request.get('_route') == 'offers_company_index' or app.request.get('_route') == 'offers_new' or app.request.get('_route') == 'offers_preview' or app.request.get('_route') == 'offers_edit' or app.request.get('_route') == 'offers_company_finished' or app.request.get('_route') == 'show_applied_profile' or app.request.get('_route') == 'show_finished' %}
 
                                 <li class="nav nav-tree">
                                     <li class="nav-item">
-                                        <a href="{{ path('offers_company_index', {id:company.id}) }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Tous</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
                                         <a href="{{ path('offers_new', {id:company.id}) }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Nouveau</p>
+                                        <p>Nouvelle</p>
                                         </a>
                                     </li>
+                                    {# <li class="nav-item">
+                                        <a href="{{ path('offers_company_index', {id:company.id}) }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Ouverte</p>
+                                        </a>
+                                    </li> #}
                                     <li class="nav-item">
                                         <a  href="{{ path('offers_company_finished', {id:company.id}) }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Archives</p>
-                                        {% if appliesf is defined %}
-                                            {% if appliesf | length > 0 %}
-                                            <span class="badge badge-warning right" title="candidatures">{{ appliesf | length }}</span>
+                                        <p>Fermées</p>
+                                        {% if closed is defined %}
+                                          {% if closed | length > 0 %}
+                                            <span class="badge badge-warning right" title="candidatures">{{ closed | length }}</span>
                                             {% endif %}
                                         {% elseif applies is defined %}
                                             {% if applies | length > 0 %}
-                                            <span class="badge badge-warning right" title="candidatures">{{ applies | length }}</span>
+                                            <span class="badge badge-success right" title="candidatures">{{ applies | length }}</span>
                                             {% endif %}
                                         {% endif %}
                                         </a>

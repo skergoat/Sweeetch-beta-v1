@@ -52,7 +52,7 @@ class OffersController extends AbstractController
      * @Route("/new/{id}", name="offers_new", methods={"GET","POST"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
-    public function new(Request $request, Company $company, ApplyRepository $applyRepository, OffersRepository $offersRepository, CompanyChecker $checker): Response
+    public function new(Request $request, Company $company, ApplyRepository $applyRepository, OffersRepository $offersRepository, CompanyChecker $checker, ApplyHelper $helper): Response
     {
         if($checker->companyValid($company)) {
 
@@ -82,10 +82,10 @@ class OffersController extends AbstractController
                 'offers' => $offer,
                 'form' => $form->createView(),
                 'company' => $company,
-                'hired' => $applyRepository->findBy(['offers' => $offers, 'hired' => 1]),
-                'agree' => $applyRepository->findBy(['offers' => $offers, 'agree' => 1]),
-                'applies' => $applyRepository->findBy(['offers' => $offers, 'finished' => 1]),
-                'applyc' => $applyRepository->findBy(['offers' => $offers, 'refused' => 0, 'unavailable' => 0, 'confirmed' => 0, 'finished' => 0])     
+                'hired' => $helper->checkHired('offers', $offers),
+                'agree' => $helper->checkAgree('offers', $offers),
+                'closed' =>  $helper->checkFinished('offers', $offers),
+                'candidates' => $helper->nbCandidates($offers),    
             ]);
         }
     }
@@ -169,13 +169,13 @@ class OffersController extends AbstractController
      */
     public function delete(Request $request, Offers $offer, ApplyRepository $repository, ApplyMailer $mailer, ApplyHelper $helper): Response
     {
+        // prevent user from deleting finished offer 
+        if($helper->checkFinished('offers', $offer)) {
+            $this->addFlash('error', 'Mission terminée');
+            return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
+        }
+        
         if ($this->isCsrfTokenValid('delete'.$offer->getId(), $request->request->get('_token'))) {
-
-            // prevent user from deleting finished offer 
-            if($helper->checkFinished('offers', $offer)) {
-                $this->addFlash('error', 'Mission terminée');
-                return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
-            }
             // delete related applies
             $helper->handleApplies($offer);
             // delete

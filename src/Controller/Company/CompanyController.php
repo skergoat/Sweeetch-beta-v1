@@ -13,6 +13,7 @@ use App\Service\Mailer\ApplyMailer;
 use App\Repository\OffersRepository;
 use App\Form\CompanyEditPasswordType;
 use App\Repository\CompanyRepository;
+use App\Service\Recruitment\ApplyHelper;
 use App\Service\UserChecker\AdminChecker;
 use App\Service\UserChecker\CompanyChecker;
 use Knp\Component\Pager\PaginatorInterface;
@@ -87,7 +88,7 @@ class CompanyController extends AbstractController
      * @Route("/{id}", name="company_show", methods={"GET"})
      * @IsGranted("ROLE_COMPANY")
      */
-    public function show(Company $company, OffersRepository $offersRepository, ApplyRepository $applyRepository, CompanyChecker $checker): Response
+    public function show(Company $company, OffersRepository $offersRepository, ApplyRepository $applyRepository, CompanyChecker $checker, ApplyHelper $helper): Response
     {
         if($checker->companyValid($company)) {
             $offers = $offersRepository->findBy(['company' => $company]);
@@ -97,11 +98,12 @@ class CompanyController extends AbstractController
                 'company' => $company,
                 'offers' => $offers,
                 'applies' => $applies,
-                'finished' => $applyRepository->findBy(['offers' => $offers, 'finished' => 1]),
-                'confirmed' => $applyRepository->findBy(['offers' => $offers, 'confirmed' => 1]),
-                'hired' => $applyRepository->findBy(['offers' => $offers, 'hired' => 1]),
-                'agree' => $applyRepository->findBy(['offers' => $offers, 'agree' => 1]),
-                'applyc' => $applyRepository->findBy(['offers' => $offers, 'refused' => 0, 'unavailable' => 0, 'confirmed' => 0, 'finished' => 0])
+                // infos 
+                'hired' => $helper->checkHired('offers', $offers),
+                'agree' => $helper->checkAgree('offers', $offers),
+                'confirmed' => $helper->checkConfirmed('offers', $offers),
+                'finished' =>  $helper->checkFinished('offers', $offers),
+                'candidates' => $helper->nbCandidates($offers),
             ]);
         }
     }
@@ -110,7 +112,7 @@ class CompanyController extends AbstractController
      * @Route("/{id}/edit", name="company_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_COMPANY")
      */
-    public function edit(Request $request, Company $company, UserPasswordEncoderInterface $passwordEncoder, OffersRepository $offersRepository, ApplyRepository $applyRepository, CompanyChecker $checker, UploaderHelper $uploaderHelper): Response
+    public function edit(Request $request, Company $company, UserPasswordEncoderInterface $passwordEncoder, OffersRepository $offersRepository, ApplyRepository $applyRepository, CompanyChecker $checker, UploaderHelper $uploaderHelper, ApplyHelper $helper): Response
     {
         if($checker->companyValid($company)) {
 
@@ -166,9 +168,12 @@ class CompanyController extends AbstractController
                 'company' => $company,
                 'form' => $form->createView(),
                 'formPassword' => $formPassword->createView(),
-                'hired' => $applyRepository->findBy(['offers' => $offers, 'hired' => 1]),
-                'agree' => $applyRepository->findBy(['offers' => $offers, 'agree' => 1]),
-                'applyc' => $applyRepository->findBy(['offers' => $offers, 'refused' => 0, 'unavailable' => 0, 'confirmed' => 0, 'finished' => 0])
+                // infos 
+                'hired' => $helper->checkHired('offers', $offers),
+                'agree' => $helper->checkAgree('offers', $offers),
+                // 'confirmed' => $helper->checkConfirmed('offers', $offers),
+                // 'finished' =>  $helper->checkFinished('offers', $offers),
+                'candidates' => $helper->nbCandidates($offers),
             ]);
         }
     }
