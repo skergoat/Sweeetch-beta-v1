@@ -104,7 +104,7 @@
                                 {% if is_granted('ROLE_ADMIN') %}
                                 <td style="padding-top: 18px;" colspan="8"><a href="{{ path('student_show', { "id":finished.student.id }) }}">{{ finished.student.name }} {{ finished.student.lastname }}</a></td>
                                 {% else %}
-                                <td style="padding-top: 18px;" colspan="8"><a href="{{ path('show_applied_profile', { "id":finished.student.id, "company_id": offers.company.id, "offers":offers.id }) }}">{{ finished.student.name }} {{ finished.student.lastname }}</a></td>
+                                <td style="padding-top: 18px;" colspan="8"><a href="{{ path('show_applied_finished', { "id":finished.student.id, "company_id": offers.company.id, "offers":offers.id }) }}">{{ finished.student.name }} {{ finished.student.lastname }}</a></td>
                                 {% endif %}
                             {% else %}
                                 <td>
