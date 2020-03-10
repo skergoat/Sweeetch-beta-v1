@@ -36,20 +36,18 @@ class CompanyController extends AbstractController
      */
     public function index(CompanyRepository $companyRepository, PaginatorInterface $paginator, Request $request): Response
     {   
-        // if($checker->adminValid($user)) 
-        // {
-            $queryBuilder = $companyRepository->findAllPaginated("DESC");
+        $queryBuilder = $companyRepository->findAllPaginated("DESC");
 
-            $pagination = $paginator->paginate(
-                $queryBuilder, /* query NOT result */
-                $request->query->getInt('page', 1)/*page number*/,
-                10/*limit per page*/
-            );
+        $pagination = $paginator->paginate(
+            $queryBuilder, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
 
-            return $this->render('company/index.html.twig', [
-                'companies' => $pagination,
-            ]);
-        // }
+        return $this->render('company/index.html.twig', [
+            'companies' => $pagination,
+        ]);
+
     }
 
     /**

@@ -7,7 +7,7 @@
 
 {% if is_granted('ROLE_SUPER_STUDENT') %}
 
-<div class="container-fluid">
+{# <div class="container-fluid">
     <div class="row">
         <div class="col-sm-6">
             <h1 class="m-0">Candidatures</h1> <br>
@@ -16,7 +16,82 @@
             </a>
         </div>
     </div>
-</div> <br>
+</div> <br> #}
+
+<div class="row row-top">
+
+    <div class="col-lg-6">
+
+         <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Candidatures</h1> <br>
+                    <a href="{{ path('offers_index') }}" class="btn btn-sm btn-success">
+                        Chercher un emploi
+                    </a>
+                </div>
+            </div>
+        </div> <br>
+     </div>
+
+     <div class="col-timeline col-lg-6">
+
+     {% if applies[0] is defined %}
+         {% if applies[0].hired == true or applies[0].agree == true or applies[0].confirmed == true %}
+         
+         <h5>Progression du recrutement : </h5>
+
+         <div class="timeline col-lg-10" style="position:relative">
+
+             <div class="time-icon" data-url="first">
+                 {% if applies[0] is defined %}
+                     {% if applies[0].hired == true %}
+                     <i class="fas fa-play-circle bg-red"></i>
+                     {% else %}
+                     <i class="fas fa-play-circle bg-grey"></i>
+                     {% endif %}
+                 {% else %}
+                 <i class="fas fa-play-circle bg-grey"></i>
+                 {% endif %}
+             </div>
+             
+             <div class="time-icon" data-url="second">
+                 {% if applies[0] is defined %}
+                     {% if applies[0].agree == true %}
+                     <i class="fas fa-cog bg-yellow"></i>
+                     {% else %}
+                     <i class="fas fa-cog bg-grey"></i>
+                     {% endif %}
+                 {% else %}
+                 <i class="fas fa-cog bg-grey"></i>
+                 {% endif %}
+             </div>
+             <div class="time-icon" data-url="third">
+                 {% if applies[0] is defined %}
+                     {% if applies[0].confirmed == true %}
+                     <i class="fas fa-check-circle bg-green"></i>
+                     {% else %}
+                     <i class="fas fa-check-circle bg-grey"></i>
+                     {% endif %}
+                 {% else %}
+                 <i class="fas fa-check-circle bg-grey"></i>
+                 {% endif %}
+             </div>
+
+             <div class="message message-first">
+                 <div class="timeline-item">
+                 <h3 style="text-align:center;" class="timeline-header">Traitement du dossier</h3>
+                 </div>
+             </div>
+
+         </div>
+
+         {% endif %}
+     {% endif %}
+
+     </div>
+
+ </div>
 
 {% for message in app.flashes('success') %}
 <div class="alert alert-success">

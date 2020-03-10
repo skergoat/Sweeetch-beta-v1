@@ -172,6 +172,45 @@
                 <div class="card" style="padding:0px;">
 
                     <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
+                        
+                        <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
+                            En Attente d'Acceptation
+                            <a href="#info-4" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                            <i class="fas fa-question-circle"></i>
+                            </a>
+                        </p>
+    
+                        <div class="card-tools">
+                          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus" style="color:#8e8e8e;"></i>
+                          </button>
+                        </div>
+                    </div>
+    
+                    <div class="card-body">
+                        <table id="dash3" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Annonces</th>
+                                    <th>Etat du Recrutement</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for hired in hired %}
+                                    <tr class="border-top">
+                                        <td><a href="{{ path('offers_preview', {id:hired.offers.id, company:company.id}) }}" class="action-link">{{ hired.offers.title }}</a></td>
+                                        <td>
+                                            <span class="badge badge-warning right">En attente d'acceptation</span>
+                                        </td>
+                                    </tr>
+                                {% endfor %} 
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card" style="padding:0px;">
+
+                    <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
                         <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
                             Recrutements en cours 
                             <a href="#info-2" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
@@ -210,6 +249,85 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+                {# <div class="card" style="padding:0px;">
+
+                    <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
+                        
+                        <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
+                            En Attente d'Acceptation
+                            <a href="#info-4" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                            <i class="fas fa-question-circle"></i>
+                            </a>
+                        </p>
+    
+                        <div class="card-tools">
+                          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus" style="color:#8e8e8e;"></i>
+                          </button>
+                        </div>
+                    </div>
+    
+                    <div class="card-body">
+                        <table id="dash3" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Annonces</th>
+                                    <th>Etat du Recrutement</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for hired in hired %}
+                                    <tr class="border-top">
+                                        <td><a href="{{ path('offers_preview', {id:hired.offers.id, company:company.id}) }}" class="action-link">{{ hired.offers.title }}</a></td>
+                                        <td>
+                                            <span class="badge badge-warning right">En attente d'acceptation</span>
+                                        </td>
+                                    </tr>
+                                {% endfor %} 
+                            </tbody>
+                        </table>
+                    </div>
+                </div> #}
+            </div>
+
+            <div class="card" style="padding:0px;">
+
+                <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
+                    
+                    <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
+                        Recrutements terminés
+                        <a href="#info-5" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                        <i class="fas fa-question-circle"></i>
+                        </a>
+                    </p>
+
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus" style="color:#8e8e8e;"></i>
+                      </button>
+                    </div>
+                </div>
+        
+                <div class="card-body" >
+                    <table id="dash4" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Annonces</th>
+                                <th>Etat du Recrutement</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for finished in finished %}
+                            <tr class="border-top">
+                                <td><a href="{{ path('offers_preview', {id:finished.offers.id, company:company.id}) }}" class="action-link">{{ finished.offers.title }}</a></td>
+                                <td>
+                                    <span class="badge badge-success right">Recruté</span>
+                                </td>
+                            </tr>
+                            {% endfor %} 
+                        </tbody>
+                    </table>
                 </div>
             </div>
             
@@ -284,7 +402,7 @@
 
         <div class="col-lg-6">
 
-            <div class="card" style="padding:0px;">
+            {# <div class="card" style="padding:0px;">
 
                 <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
                     
@@ -322,7 +440,7 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div> #}
 
         </div>
 
@@ -330,7 +448,7 @@
 
             <div class="col-lg- table-scroll">
 
-                <div class="card" style="padding:0px;">
+                {# <div class="card" style="padding:0px;">
 
                     <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
                         
@@ -368,7 +486,7 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
+                </div> #}
             </div>
         </div>
     </div>
