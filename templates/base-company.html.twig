@@ -137,7 +137,15 @@
                                     {% endif %}
                                 </a>
                                 {% if is_granted('ROLE_SUPER_COMPANY') %}
-                                    {% if app.request.get('_route') == 'offers_company_index' or app.request.get('_route') == 'offers_new' or app.request.get('_route') == 'offers_preview' or app.request.get('_route') == 'offers_edit' or app.request.get('_route') == 'offers_company_finished' or app.request.get('_route') == 'show_applied_profile' or app.request.get('_route') == 'show_finished' %}
+                                    {% if app.request.get('_route') == 'offers_company_index' 
+                                    or app.request.get('_route') == 'offers_new' 
+                                    or app.request.get('_route') == 'offers_preview' 
+                                    or app.request.get('_route') == 'offers_edit' 
+                                    or app.request.get('_route') == 'offers_company_finished' 
+                                    or app.request.get('_route') == 'show_applied_profile' 
+                                    or app.request.get('_route') == 'show_finished' 
+                                    or app.request.get('_route') == 'show_applied_finished'
+                                %}
 
                                 <li class="nav nav-tree">
                                     <li class="nav-item">
@@ -146,19 +154,13 @@
                                         <p>Nouvelle</p>
                                         </a>
                                     </li>
-                                    {# <li class="nav-item">
-                                        <a href="{{ path('offers_company_index', {id:company.id}) }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Ouverte</p>
-                                        </a>
-                                    </li> #}
                                     <li class="nav-item">
                                         <a  href="{{ path('offers_company_finished', {id:company.id}) }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Fermées</p>
                                         {% if closed is defined %}
                                           {% if closed | length > 0 %}
-                                            <span class="badge badge-warning right" title="candidatures">{{ closed | length }}</span>
+                                            <span class="badge badge-success right" title="candidatures">recrutés : {{ closed | length }}</span>
                                             {% endif %}
                                         {% elseif applies is defined %}
                                             {% if applies | length > 0 %}

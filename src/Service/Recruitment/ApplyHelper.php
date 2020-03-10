@@ -40,9 +40,14 @@ class ApplyHelper extends CommonHelper
         return  $this->applyRepository->findBy([$key => $param, 'confirmed' => 1]);
     }
 
-    public function checkFinished($key, $student)
+    public function checkFinished($key,$param)
     {
-        return $this->applyRepository->findBy([$key => $student, 'finished' => 1]);
+        return  $this->applyRepository->findBy([$key => $param, 'finished' => 1]);
+    }
+
+    public function checkOfferFinished($offers)
+    {
+        return $this->applyRepository->findByOffersFinished($offers);
     }
 
     public function checkRefused($offers, $student)

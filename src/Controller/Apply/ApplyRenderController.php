@@ -78,7 +78,7 @@ class ApplyRenderController extends AbstractController
                 'company' => $company,
                 'hired' => $helper->checkHired('offers', $offers),
                 'agree' => $helper->checkAgree('offers', $offers),
-                'closed' =>  $helper->checkFinished('offers', $offers),
+                'closed' =>  $helper->checkOfferFinished($offers),
                 'candidates' => $helper->nbCandidates($offers),
             ]);
         }
@@ -101,7 +101,7 @@ class ApplyRenderController extends AbstractController
                 // infos 
                 'hired' => $helper->checkHired('offers', $offers),
                 'agree' => $helper->checkAgree('offers', $offers),
-                'closed' =>  $helper->checkFinished('offers', $offers),
+                'closed' =>  $helper->checkOfferFinished($offers),
                 'candidates' => $helper->nbCandidates($offers),
             ]);
         }
@@ -125,7 +125,7 @@ class ApplyRenderController extends AbstractController
                  // infos
                  'hired' => $helper->checkHired('offers', $offers),
                  'agree' => $helper->checkAgree('offers', $offers),
-                 'closed' =>  $helper->checkFinished('offers', $offers),
+                 'closed' =>  $helper->checkOfferFinished($offers),
                  'candidates' => $helper->nbCandidates($offers),
             ]);
         }
@@ -149,7 +149,7 @@ class ApplyRenderController extends AbstractController
                 // infos
                 'hired' => $helper->checkHired('offers', $offers),
                 'agree' => $helper->checkAgree('offers', $offers),
-                'closed' =>  $helper->checkFinished('offers', $offers),
+                'closed' =>  $helper->checkOfferFinished($offers),
                 'candidates' => $helper->nbCandidates($offers),
             ]);
         }
@@ -193,6 +193,8 @@ class ApplyRenderController extends AbstractController
                  // infos 
                  'hired' => $helper->checkHired('offers', $offer),
                  'agree' => $helper->checkAgree('offers', $offer),
+                 'closed' =>  $helper->checkOfferFinished($offer),
+
                 //  'confirmed' => $helper->checkConfirmed('offers', $offers),
                  'finished' =>  $helper->checkFinished('offers', $offer),
                  'candidates' => $helper->nbCandidates($offer),
@@ -219,6 +221,7 @@ class ApplyRenderController extends AbstractController
                  // infos 
                  'hired' => $helper->checkHired('offers', $offer),
                  'agree' => $helper->checkAgree('offers', $offer),
+                 'closed' =>  $helper->checkOfferFinished($offer),
                 //  'confirmed' => $helper->checkConfirmed('offers', $offers),
                  'finished' =>  $helper->checkFinished('offers', $offer),
                  'candidates' => $helper->nbCandidates($offer),
