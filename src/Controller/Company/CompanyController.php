@@ -91,19 +91,17 @@ class CompanyController extends AbstractController
     public function show(Company $company, OffersRepository $offersRepository, ApplyRepository $applyRepository, CompanyChecker $checker, ApplyHelper $helper): Response
     {
         if($checker->companyValid($company)) {
+            // get company offers 
             $offers = $offersRepository->findBy(['company' => $company]);
-            $applies = $applyRepository->findBy(['offers' => $offers]);
 
             return $this->render('company/show.html.twig', [
-                'company' => $company,
-                'offers' => $offers,
-                'applies' => $applies,
+                'company' => $company,  // company layout 
+                'applies' => $applyRepository->findByOffersProcess($offers), // find processing applies 
+                'finished' =>  $applyRepository->findByOffersFinished($offers), // find confirmed or finished applies 
                 // infos 
-                'hired' => $helper->checkHired('offers', $offers),
-                'agree' => $helper->checkAgree('offers', $offers),
-                'confirmed' => $helper->checkConfirmed('offers', $offers),
-                'finished' =>  $helper->checkFinished('offers', $offers),
-                'candidates' => $helper->nbCandidates($offers),
+                'hired' => $helper->checkHired('offers', $offers),  // show nb hired 
+                'agree' => $helper->checkAgree('offers', $offers), // show nb agree
+                'candidates' => $helper->nbCandidates($offers), // show nb applies 
             ]);
         }
     }

@@ -86,13 +86,15 @@
 
                 <div class="card-responsive card-body" style="max-width:100%;overflow:scroll;">
                     <table class="table">
-                        <tbody>
+                        <thead>
                             <tr>
                                 <th><strong>Titre</strong></th>
                                 <th><strong>Ecole</strong></th>
                                 <th><strong>Début</strong></th>
                                 <th><strong>Fin</strong></th>
                             </tr>
+                        </thead>
+                        <tbody>
                             {% for education in student.profile.education %}
                             <tr>
                                 <td>{{ education.title }}</td>

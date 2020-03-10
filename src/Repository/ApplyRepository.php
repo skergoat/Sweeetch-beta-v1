@@ -106,6 +106,24 @@ class ApplyRepository extends ServiceEntityRepository
     //     ;
     // }
 
+    public function findByOffersProcess($offer) { 
+
+        foreach($offer as $offer) {
+
+            return $this->createQueryBuilder('u')
+            ->andWhere('u.offers = :offers')
+            ->andWhere('u.hired = :hired')
+            ->orWhere('u.agree = :agree')
+            ->setParameter('offers', $offer)
+            ->setParameter('hired', true)
+            ->setParameter('agree', true)
+            ->orderBy('u.agree', 'desc')
+            ->getQuery()
+            ->getResult()
+            ;
+        }
+    }
+
     public function findByOffersByFinished($offer) { 
 
         // foreach($offer as $offer) {

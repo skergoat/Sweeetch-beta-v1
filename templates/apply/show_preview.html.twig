@@ -84,6 +84,9 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title" style="font-weight:900;font-size:22px;">Candidatures</h3>
+                    <a href="#help-1" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                        <i class="fas fa-question-circle"></i>
+                    </a>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -124,9 +127,10 @@
                                     </form>
 
                             {% elseif applies.hired == true %}
-                                    <button class="btn-icon-form btn-icon btn-warning" title="En attente d'acceptation de l'étudiant">
+                                    {# <button class="btn-icon-form btn-icon btn-warning" title="En attente d'acceptation de l'étudiant">
                                         <i class="fas fa-hourglass-start"></i>
-                                    </button>
+                                    </button> #}
+                                    <span class="badge badge-warning right">En attente d'acceptation du candidat</span>
                             {% elseif applies.agree == true %}
 
                                     <form method="post" class="btn-icon-form" action="{{ path('confirm', { id:applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir commencer la mission ?');">
@@ -142,9 +146,6 @@
                                     </form>  #}
 
                             {% endif %}
-                                    <a href="#help-1" rel="modal:open" class="btn-modal btn-icon-form btn-icon btn-secondary" title="aide">
-                                        <i class="fas fa-question-circle"></i>
-                                    </a>
                                 </div>
                             </td>
                         </tr>

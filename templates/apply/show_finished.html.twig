@@ -88,14 +88,16 @@
                 <div class="card-header">
                     <h3 class="card-title" style="font-weight:900;font-size:22px;">Candidatures</h3>
                 </div>
-                <!-- /.card-header -->
+    
                 <div class="card-body">
                     <table id="example1" class="table table-bordered table-hover">
-                    <tbody>
+                    <thead>
                         <tr>
                             <th>Nom</th>
                             <th>Actions</th>
                         </tr>
+                    </thead>
+                    <tbody>
 
                         {% for finished in finished %}
                             
@@ -145,5 +147,4 @@
         // $('#card-3').CardWidget('toggle');
     });
 </script>
-
 {% endblock %}
