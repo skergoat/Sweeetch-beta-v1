@@ -180,7 +180,7 @@ class ApplyRenderController extends AbstractController
      * @ParamConverter("company", options={"id" = "company_id"})
      * @ParamConverter("offers", options={"id" = "offers"})
      */
-    public function showStudentProfile(Student $student, Company $company, Offers $offers, ApplyRepository $applyRepository, AuthorizationCheckerInterface $authorizationChecker, OffersRepository $offersRepository, CompanyChecker $checker, ApplyHelper $helper): Response
+    public function showAppliedProfile(Student $student, Company $company, Offers $offers, ApplyRepository $applyRepository, AuthorizationCheckerInterface $authorizationChecker, OffersRepository $offersRepository, CompanyChecker $checker, ApplyHelper $helper): Response
     {   
         if($checker->studentProfileValid($company, $offers, $student)) {
 
@@ -190,12 +190,38 @@ class ApplyRenderController extends AbstractController
                 'student' => $student,
                 'company' => $company,
                 'offers' => $offers,
-                // infos 
-                'hired' => $helper->checkHired('offers', $offers),
-                'agree' => $helper->checkAgree('offers', $offers),
-                // 'confirmed' => $helper->checkConfirmed('offers', $offers),
-                'finished' =>  $helper->checkFinished('offers', $offers),
-                'candidates' => $helper->nbCandidates($offers),
+                 // infos 
+                 'hired' => $helper->checkHired('offers', $offer),
+                 'agree' => $helper->checkAgree('offers', $offer),
+                //  'confirmed' => $helper->checkConfirmed('offers', $offers),
+                 'finished' =>  $helper->checkFinished('offers', $offer),
+                 'candidates' => $helper->nbCandidates($offer),
+            ]);
+        }
+    }
+
+     /**
+     * @Route("/applied/{id}/company/{company_id}/offers/{offers}", name="show_applied_finished", methods={"GET"})
+     * @IsGranted("ROLE_SUPER_COMPANY")
+     * @ParamConverter("company", options={"id" = "company_id"})
+     * @ParamConverter("offers", options={"id" = "offers"})
+     */
+    public function showAppliedFinished(Student $student, Company $company, Offers $offers, ApplyRepository $applyRepository, AuthorizationCheckerInterface $authorizationChecker, OffersRepository $offersRepository, CompanyChecker $checker, ApplyHelper $helper): Response
+    {   
+        if($checker->studentProfileValid($company, $offers, $student)) {
+
+            $offer = $offersRepository->findBy(['company' => $company]);
+
+            return $this->render('apply/show_applied_finished.html.twig', [
+                'student' => $student,
+                'company' => $company,
+                'offers' => $offers,
+                 // infos 
+                 'hired' => $helper->checkHired('offers', $offer),
+                 'agree' => $helper->checkAgree('offers', $offer),
+                //  'confirmed' => $helper->checkConfirmed('offers', $offers),
+                 'finished' =>  $helper->checkFinished('offers', $offer),
+                 'candidates' => $helper->nbCandidates($offer),
             ]);
         }
     }
