@@ -32,7 +32,7 @@ class ApplyHelper extends CommonHelper
 
     public function checkAgree($key, $param)
     {
-        $this->applyRepository->findBy([$key => $param, 'agree' => 1]);
+        return $this->applyRepository->findBy([$key => $param, 'agree' => 1]);
     }
  
     public function checkConfirmed($key,$param)
