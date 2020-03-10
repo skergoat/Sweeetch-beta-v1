@@ -21,6 +21,7 @@ use App\Repository\ResumeRepository;
 use App\Form\StudentEditPasswordType;
 use App\Repository\StudentRepository;
 use App\Form\UpdateStudentGeneralType;
+use App\Service\Recruitment\ApplyHelper;
 use App\Service\UserChecker\AdminChecker;
 use App\Service\UserChecker\StudentChecker;
 use Knp\Component\Pager\PaginatorInterface;
@@ -139,17 +140,19 @@ class StudentController extends AbstractController
      * @Route("/{id}", name="student_show", methods={"GET"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function show(Student $student, ApplyRepository $applyRepository, StudentChecker $checker): Response
+    public function show(Student $student, ApplyRepository $applyRepository, StudentChecker $checker, ApplyHelper $helper): Response
     {
         if ($checker->studentValid($student)) {
 
             return $this->render('student/show.html.twig', [
                 'student' => $student,
-                'applies' => $applyRepository->findByStudent($student),
-                'finished' => $applyRepository->findBy(['student' => $student, 'finished' => true]),
+                // 'applies' => $applyRepository->findByStudent($student),
+                // 'finished' => $applyRepository->findBy(['student' => $student, 'finished' => true]),
+                 // 'hired' => $applyRepository->checkIfHired($student)
+                'applies' => $helper->checkApplies('student', $student),
+                'process' => $applyRepository->findByStudentProcess($student),  
                 'fresh' => $applyRepository->findByStudentByFresh($student),
-                // 'hired' => $applyRepository->checkIfHired($student)
-                'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true])
+                'hired' => $helper->checkHired('student', $student),
             ]);
         }  
     }
