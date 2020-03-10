@@ -75,8 +75,7 @@
                 <p>{{ offers.description |raw }}</p>
             </div>
             
-        </div>
-            
+        </div>      
     </div>
 </div>
 </section>
@@ -90,61 +89,84 @@
                 </div>
     
                 <div class="card-body">
-                    <table id="example1" class="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th>Nom</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                    <table id="finish1" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                        {% for finished in finished %}
-                            
-                        <tr>
-                            {% if finished.student.id is defined %}
-                                {% if is_granted('ROLE_ADMIN') %}
-                                <td style="padding-top: 18px;" colspan="8"><a href="{{ path('student_show', { "id":finished.student.id }) }}">{{ finished.student.name }} {{ finished.student.lastname }}</a></td>
+                            {% for finished in finished %}         
+                            <tr>
+                                {% if finished.student.id is defined %}
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                    <td style="padding-top: 18px;"><a href="{{ path('student_show', { "id":finished.student.id }) }}">{{ finished.student.name }} {{ finished.student.lastname }}</a></td>
+                                    {% else %}
+                                    <td style="padding-top: 18px;" ><a href="{{ path('show_applied_finished', { "id":finished.student.id, "company_id": offers.company.id, "offers":offers.id }) }}">{{ finished.student.name }} {{ finished.student.lastname }}</a></td>
+                                    {% endif %}
+                                    <td></td>
                                 {% else %}
-                                <td style="padding-top: 18px;" colspan="8"><a href="{{ path('show_applied_finished', { "id":finished.student.id, "company_id": offers.company.id, "offers":offers.id }) }}">{{ finished.student.name }} {{ finished.student.lastname }}</a></td>
+                                    <td>
+                                        <p style="color:red;">Le profil de l'étudiant a été détruit</p>
+                                    </td>
+                                    <td colspan="2">
+                                        <form method="post" action="{{ path('delete_empty_companySide', {'id': finished.offers.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette mission ?');">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ finished.offers.id) }}">
+                                            <button class="btn btn-danger">Supprimer</button>
+                                        </form>
+                                    </td>
                                 {% endif %}
-                            {% else %}
-                                <td>
-                                    <p style="color:red;">Le profil de l'étudiant a été détruit</p>
-                                </td>
-                                <td colspan="2">
-                                    <form method="post" action="{{ path('delete_empty_companySide', {'id': finished.offers.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette mission ?');">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ finished.offers.id) }}">
-                                        <button class="btn btn-danger">Supprimer</button>
-                                    </form>
-                                </td>
-                            {% endif %}
-                        </tr>
+                            </tr>
 
-                        {% endfor %}
+                            {% endfor %}
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
+        <!-- /.card-body -->
             </div>
-    <!-- /.card-body -->
+        <!-- /.card -->
         </div>
-    <!-- /.card -->
+    <!-- /.col -->
     </div>
-  <!-- /.col -->
-</div>
 <!-- /.row -->
 </section>
 
 {% endblock %}
 
 {% block javascripts %}
+
 {{ parent() }}
+
 <script>
     $(document).ready(function() {
         $('#card-1').CardWidget('toggle');
         // $('#card-2').CardWidget('toggle');
         // $('#card-3').CardWidget('toggle');
     });
+
+        $(function () {
+        $("#finish1").DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "info": false,
+            "autoWidth": false,
+            "responsive": true,
+            "language": {
+            "emptyTable": "Aucune offre pour le moment",
+            "paginate": {
+                "previous": "Précédent",
+                'next':'Suivant'
+                }
+            }
+        });   
+    });
+
 </script>
+
 {% endblock %}
