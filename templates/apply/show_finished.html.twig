@@ -1,0 +1,149 @@
+{% extends 'base-company.html.twig' %}
+
+{% block title %} {{ parent() }} - Entreprises {% endblock %}
+
+{% block body %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6">
+            <h1 class="m-0 titles-front">{{ offers.title }}</h1> <br>
+            <div>
+                <a href="{{ path('offers_company_finished', {id:offers.company.id}) }}" class="btn btn-sm btn-sm-1 btn-labeled btn-default">
+                    <span class="btn-label"><i class="fa fa-chevron-left"></i></span>
+                    Revenir 
+                </a>
+            </div>
+        </div>
+    </div>
+</div> <br>
+
+{% for message in app.flashes('success') %}
+<div class="alert alert-success">
+    {{ message }}
+</div>
+{% endfor %}
+
+{% for message in app.flashes('error') %}
+<div class="alert alert-danger">
+    {{ message }}
+</div>
+{% endfor %}
+
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card" id="card-1">
+        
+                <div class="card-header">
+                    <p class="card-title" style="color:#FFC756 !important; font-weight:900;font-size:22px;">Détail de l'Offre</p>
+    
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus" style="color:#B5B7B9;"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table class="table offers-show col-lg-5 col-md-5 col-sm-12 col-xs-12">
+    
+                    <tbody>
+                        <tr>
+                            <th>Lieu</th>
+                            <td>{{ offers.location }}</td>
+                        </tr>
+                        <tr>
+                            <th>Domaine</th>
+                            <td>{{ offers.domain }}</td>
+                        </tr>
+                        <tr>
+                            <th>Du</th>
+                            <td>{{ offers.dateStart ? offers.dateStart|date('d-m-Y') : '' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Au</th>
+                            <td>{{ offers.dateEnd ? offers.dateEnd|date('d-m-Y') : '' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </table>
+
+            <div class="card description" style="padding:10px;">
+                <h5 class="mb-3">Description</h5>
+                <p>{{ offers.description |raw }}</p>
+            </div>
+            
+        </div>
+            
+    </div>
+</div>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title" style="font-weight:900;font-size:22px;">Candidatures</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="example1" class="table table-bordered table-hover">
+                    <tbody>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Actions</th>
+                        </tr>
+
+                        {% for finished in finished %}
+                            
+                        <tr>
+                            {% if finished.student.id is defined %}
+                                {% if is_granted('ROLE_ADMIN') %}
+                                <td style="padding-top: 18px;" colspan="8"><a href="{{ path('student_show', { "id":finished.student.id }) }}">{{ finished.student.name }} {{ finished.student.lastname }}</a></td>
+                                {% else %}
+                                <td style="padding-top: 18px;" colspan="8"><a href="{{ path('show_applied_profile', { "id":finished.student.id, "company_id": offers.company.id, "offers":offers.id }) }}">{{ finished.student.name }} {{ finished.student.lastname }}</a></td>
+                                {% endif %}
+                            {% else %}
+                                <td>
+                                    <p style="color:red;">Le profil de l'étudiant a été détruit</p>
+                                </td>
+                                <td colspan="2">
+                                    <form method="post" action="{{ path('delete_empty_companySide', {'id': finished.offers.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette mission ?');">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ finished.offers.id) }}">
+                                        <button class="btn btn-danger">Supprimer</button>
+                                    </form>
+                                </td>
+                            {% endif %}
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+    <!-- /.card-body -->
+        </div>
+    <!-- /.card -->
+    </div>
+  <!-- /.col -->
+</div>
+<!-- /.row -->
+</section>
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+    $(document).ready(function() {
+        $('#card-1').CardWidget('toggle');
+        // $('#card-2').CardWidget('toggle');
+        // $('#card-3').CardWidget('toggle');
+    });
+</script>
+
+{% endblock %}

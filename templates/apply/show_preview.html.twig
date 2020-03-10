@@ -9,25 +9,10 @@
         <div class="col-sm-6">
             <h1 class="m-0 titles-front">{{ offers.title }}</h1> <br>
             <div>
-                {% if offers.applies[0] is defined %}
-                    {% if offers.applies[0].finished == false %}
-                    <a href="{{ path('offers_company_index', {id:offers.company.id}) }}" class="btn btn-sm btn-sm-1 btn-labeled btn-default">
-                        <span class="btn-label"><i class="fa fa-chevron-left"></i></span>
-                        Revenir 
-                    </a>
-                    {% else %}
-                    <a href="{{ path('offers_company_finished', {id:offers.company.id}) }}" class="btn btn-sm btn-sm-1 btn-labeled btn-default">
-                        <span class="btn-label"><i class="fa fa-chevron-left"></i></span>
-                        Revenir 
-                    </a>
-                    {% endif %}
-                {% else %}
                 <a href="{{ path('offers_company_index', {id:offers.company.id}) }}" class="btn btn-sm btn-sm-1 btn-labeled btn-default">
                     <span class="btn-label"><i class="fa fa-chevron-left"></i></span>
                     Revenir 
                 </a>
-                {% endif %}
-                {# <a href="{{ path('offers_edit', {'id': offers.id, 'company':company.id}) }}" class="btn btn-sm btn-warning">Modifier</a> #}
             </div>
         </div>
     </div>
@@ -44,18 +29,24 @@
     {{ message }}
 </div>
 {% endfor %}
+<section class="content">
+<div class="row">
+    <div class="col-12">
+        <div class="card" id="card-1">
+    
+            <div class="card-header">
+                <p class="card-title" style="color:#FFC756 !important; font-weight:900;font-size:22px;">Détail de l'Offre</p>
 
-<div class="col-md-12">
-    <div class="card-responsive card">
-
-        <div class="Password card col-lg-12">
-
-            <div class="col-lg-12">
-                <h3 class="mb-3 mt-3 pl-3-responsive titles-front">Détail de l'Offre</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus" style="color:#B5B7B9;"></i>
+                    </button>
+                </div>
             </div>
-
-            <div class="card-responsive card-body">
+            <!-- /.card-header -->
+            <div class="card-body">
                 <table class="table offers-show col-lg-5 col-md-5 col-sm-12 col-xs-12">
+
                     <tbody>
                         <tr>
                             <th>Lieu</th>
@@ -82,20 +73,29 @@
                 </div>
                 
             </div>
+                
+        </div>
+    </div>
+</section> 
 
-            <div class="col-lg-12">
-                <h3 class="mb-3 mt-3 ml-1 titles-front">Candidatures</h3>
-            </div>
-
-            <div class="card-responsive card-body">
-            
-                <table class="table">
-                    <tbody>
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title" style="font-weight:900;font-size:22px;">Candidatures</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="example1" class="table table-bordered table-hover">
+                    <thead>
                         <tr>
                             <th>Nom</th>
                             <th>Actions</th>
                         </tr>
-                    
+                    </thead>
+                    <tbody>
+                    <!-- applies page -->
                     {% if applies[0] is defined %}
 
                         {% for applies in applies %}
@@ -134,12 +134,12 @@
                                         <button class="btn-icon btn-success" title="Démarrer la mission"><i class="far fa-play-circle"></i></button>
                                     </form>
 
-                            {% elseif applies.confirmed == true %}
+                            {# {% elseif applies.confirmed == true %}
 
-                                    {# <form method="post" class="btn-icon-form" action="{{ path('apply_finish', {'id': applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir terminer la mission ?');">
+                                    <form method="post" class="btn-icon-form" action="{{ path('apply_finish', {'id': applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir terminer la mission ?');">
                                         <input type="hidden" name="_token" value="{{ csrf_token('stop' ~ applies.id) }}">
                                         <button class="btn-icon btn-warning" title="Terminer la mission"><i class="far fa-stop-circle"></i></button>
-                                    </form> #}
+                                    </form>  #}
 
                             {% endif %}
                                     <a href="#help-1" rel="modal:open" class="btn-modal btn-icon-form btn-icon btn-secondary" title="aide">
@@ -150,48 +150,31 @@
                         </tr>
                     
                         {% endfor %}
-
-                    {% elseif finished | length > 0 %}
-                        
-                        {% for finished in finished %}
-                            
-                        <tr>
-                            {% if finished.student.id is defined %}
-                                {% if is_granted('ROLE_ADMIN') %}
-                                <td style="padding-top: 18px;" colspan="8"><a href="{{ path('student_show', { "id":finished.student.id }) }}">{{ finished.student.name }} {{ finished.student.lastname }}</a></td>
-                                {% else %}
-                                <td style="padding-top: 18px;" colspan="8"><a href="{{ path('show_applied_profile', { "id":finished.student.id, "company_id": offers.company.id, "offers":offers.id }) }}">{{ finished.student.name }} {{ finished.student.lastname }}</a></td>
-                                {% endif %}
-                            {% else %}
-                                <td>
-                                    <p style="color:red;">Le profil de l'étudiant a été détruit</p>
-                                </td>
-                                <td colspan="2">
-                                    <form method="post" action="{{ path('delete_empty_companySide', {'id': finished.offers.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette mission ?');">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ finished.offers.id) }}">
-                                        <button class="btn btn-danger">Supprimer</button>
-                                    </form>
-                                </td>
-                            {% endif %}
-                        </tr>
-
-                        {% endfor %}
-
-                    {% else %}
-
-                    <tr class="border-top">
-                        <td colspan="8" class="border-top-td">Aucune candidature en cours</td>
-                    </tr>    
                     
-                    {% endif %}
+                    {% endif %} 
 
                     </tbody>
                 </table>
-                
             </div>
+    <!-- /.card-body -->
         </div>
+    <!-- /.card -->
     </div>
+  <!-- /.col -->
 </div>
+<!-- /.row -->
+</section>
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+    $(document).ready(function() {
+        $('#card-1').CardWidget('toggle');
+        // $('#card-2').CardWidget('toggle');
+        // $('#card-3').CardWidget('toggle');
+    });
+</script>
 
 {% endblock %}

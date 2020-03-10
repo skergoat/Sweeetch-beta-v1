@@ -19,20 +19,6 @@ class ApplyRepository extends ServiceEntityRepository
         parent::__construct($registry, Apply::class);
     }
 
-    public function findTest($offers)
-    {
-        return (boolean)$this->createQueryBuilder('u')
-        ->andWhere('u.offers = :offers')
-        ->andWhere('u.hired = :hired')
-        ->setParameter('offers', $offers)
-        ->setParameter('hired', true)
-        ->getQuery()
-        ->getResult();
-        // ->andWhere('cat.name LIKE :searchTerm')
-        // ->orWhere('cat.iconKey LIKE :searchTerm')
-        // ->andWhere('cat.enabled = :enabled')
-    }
-
     public function applyExists($student, $offers) { 
         return (boolean)$this->createQueryBuilder('u')
         ->andWhere('u.offers = :offers AND u.student = :student')
@@ -69,16 +55,6 @@ class ApplyRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-
-    // public function checkIfHired($student) // 
-    // { 
-    //     return (boolean)$this->createQueryBuilder('u')
-    //     ->andWhere('u.student = :student AND u.hired = :hired')
-    //     ->setParameter('student', $student->getId())
-    //     ->setParameter('hired', true)
-    //     ->getQuery()
-    //     ->getOneOrNullResult();
-    // }
 
     public function findByStudentByFresh($student) 
     {
@@ -118,54 +94,10 @@ class ApplyRepository extends ServiceEntityRepository
         ;
     }
 
-    // public function checkIfFinished($offers) // 
-    // {
+    // public function findByOffer($offer) {  // 
     //     return $this->createQueryBuilder('u')
-    //         ->andWhere('u.offers = :offers AND u.finished = :finished')
-    //         ->setParameter('offers', $offers)
-    //         ->setParameter('finished', true)
-    //         ->getQuery()
-    //         ->getResult()
-    //     ;
-    // }
-
-    public function findByOffer($offer) {  // 
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.offers = :offers AND u.refused = :refused AND u.unavailable = :unavailable  AND u.finished = :finished')
-            ->setParameter('offers', $offer)
-            ->setParameter('refused', false)
-            ->setParameter('unavailable', false)
-            ->setParameter('finished', false)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-
-    public function findByOfferByFinished($offer) { // 
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.offers = :offers AND u.finished = :finished')
-            ->setParameter('offers', $offer)
-            ->setParameter('finished', true)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-
-    // public function findByStudentByFinished($student) // 
-    // {
-    //     return $this->createQueryBuilder('u')
-    //         ->andWhere('u.student = :student AND u.finished = :finished')
-    //         ->setParameter('student', $student)
-    //         ->setParameter('finished', true)
-    //         ->getQuery()
-    //         ->getResult()
-    //     ;
-    // }
-
-    // public function findByStudent($student) { // 
-    //     return $this->createQueryBuilder('u')
-    //         ->andWhere('u.student = :student AND u.refused = :refused AND u.unavailable = :unavailable AND u.finished = :finished')
-    //         ->setParameter('student', $student)
+    //         ->andWhere('u.offers = :offers AND u.refused = :refused AND u.unavailable = :unavailable  AND u.finished = :finished')
+    //         ->setParameter('offers', $offer)
     //         ->setParameter('refused', false)
     //         ->setParameter('unavailable', false)
     //         ->setParameter('finished', false)
@@ -173,6 +105,40 @@ class ApplyRepository extends ServiceEntityRepository
     //         ->getResult()
     //     ;
     // }
+
+    public function findByOffersByFinished($offer) { 
+
+        // foreach($offer as $offer) {
+
+            return $this->createQueryBuilder('u')
+            ->andWhere('u.offers = :offers')
+            ->andWhere('u.finished = :finished')
+            ->orWhere('u.confirmed = :confirmed')
+            ->setParameter('offers', $offer)
+            ->setParameter('finished', true)
+            ->setParameter('confirmed', true)
+            ->getQuery()
+            ->getResult()
+            ;
+        // }
+    }
+
+    public function findByOffersFinished($offer) { 
+
+        foreach($offer as $offer) {
+
+            return $this->createQueryBuilder('u')
+            ->andWhere('u.offers = :offers')
+            ->andWhere('u.finished = :finished')
+            ->orWhere('u.confirmed = :confirmed')
+            ->setParameter('offers', $offer)
+            ->setParameter('finished', true)
+            ->setParameter('confirmed', true)
+            ->getQuery()
+            ->getResult()
+            ;
+        }
+    }
 
     public function setToUnavailables($offers, $student) { //
         return $this->createQueryBuilder('u')

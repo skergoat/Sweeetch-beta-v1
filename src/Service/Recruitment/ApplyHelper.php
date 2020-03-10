@@ -24,7 +24,7 @@ class ApplyHelper extends CommonHelper
         $this->manager = $manager;
     }
 
-    // check state 
+    // check state and infos 
     public function checkHired($key, $param)
     {
         return $this->applyRepository->findBy([$key => $param, 'hired' => 1]);
@@ -53,6 +53,11 @@ class ApplyHelper extends CommonHelper
     public function checkApply($offers, $student)
     {
         return $this->applyRepository->findBy(['offers' => $offers, 'student' => $student]);
+    }
+    
+    public function nbCandidates($offers)
+    {
+        return $this->applyRepository->findBy(['offers' => $offers, 'refused' => 0, 'unavailable' => 0, 'confirmed' => 0, 'finished' => 0]);
     }
 
     // unavailable
@@ -96,7 +101,8 @@ class ApplyHelper extends CommonHelper
               }      
           }
      }
-
+    
+    // apply 
     public function hire(Apply $apply, Student $student, Offers $offers)
     {
         // hire
