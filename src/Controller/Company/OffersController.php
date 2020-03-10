@@ -141,11 +141,11 @@ class OffersController extends AbstractController
     public function edit(Request $request, Offers $offer, ApplyRepository $repository, Company $company, ApplyHelper $helper): Response
     {
         // prevent user from deleting finished offer 
-        if($helper->checkFinished('offers', $offer)) {
+        if($helper->checkConfirmed('offers', $offer) || $helper->checkFinished('offers', $offer) ) {
             $this->addFlash('error', 'Mission terminée');
             return $this->redirectToRoute('offers_company_index', ['id' => $company->getId()]);
-        }
-
+        }   
+  
         $form = $this->createForm(OffersType::class, $offer);
         $form->handleRequest($request);
 
