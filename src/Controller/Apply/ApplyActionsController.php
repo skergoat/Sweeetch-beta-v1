@@ -177,29 +177,29 @@ class ApplyActionsController extends AbstractController
         }
     }
 
-     /**
-     * @Route("/finish/{id}", name="apply_finish", methods={"POST"})
-     * @IsGranted("ROLE_SUPER_COMPANY")
-     */
-    public function finish(Apply $apply, ApplyRepository $applyRepository, Request $request, ApplyMailer $mailer, ApplyHelper $helper, RecruitHelper $recruitHelper)
-    {
-        // get other applies
-        $student = $apply->getStudent();
-        $offers = $apply->getOffers();
+    //  /**
+    //  * @Route("/finish/{id}", name="apply_finish", methods={"POST"})
+    //  * @IsGranted("ROLE_SUPER_COMPANY")
+    //  */
+    // public function finish(Apply $apply, ApplyRepository $applyRepository, Request $request, ApplyMailer $mailer, ApplyHelper $helper, RecruitHelper $recruitHelper)
+    // {
+    //     // get other applies
+    //     $student = $apply->getStudent();
+    //     $offers = $apply->getOffers();
 
-        if($this->isCsrfTokenValid('stop'.$apply->getId(), $request->request->get('_token'))) {
-            // finish 
-            $helper->finish($apply, $student, $offers, false);
-            // save
-            $this->getDoctrine()->getManager()->flush();
-            $this->addFlash('success', 'Mission Terminée. Bravo !');
-            return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
-        }
-        else {
-            $this->addFlash('error', 'requête invalide');
-            return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
-        }
-    }
+    //     if($this->isCsrfTokenValid('stop'.$apply->getId(), $request->request->get('_token'))) {
+    //         // finish 
+    //         $helper->finish($apply, $student, $offers, false);
+    //         // save
+    //         $this->getDoctrine()->getManager()->flush();
+    //         $this->addFlash('success', 'Mission Terminée. Bravo !');
+    //         return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
+    //     }
+    //     else {
+    //         $this->addFlash('error', 'requête invalide');
+    //         return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
+    //     }
+    // }
 
      /**
      * @Route("/refuse/{id}", name="apply_refuse", methods={"POST"})

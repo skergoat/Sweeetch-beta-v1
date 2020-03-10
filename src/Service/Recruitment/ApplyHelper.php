@@ -177,4 +177,30 @@ class ApplyHelper extends CommonHelper
         // send notification
         $this->mailer->sendDeleteNotification($offers);
     }
+
+    public function handleApplies(Offers $offers)
+    {   
+        // entities
+        $applies = $this->applyRepository->findBy(['offers' => $offers]);
+        // handle related applies
+        foreach($applies as $applies) 
+        {
+            $student = $applies->getStudent();
+            // set roles 
+            // $student->getUser()->setRoles([
+            //     "ROLE_SUPER_STUDENT"
+            // ]);
+            // set to available
+            $this->available($offers, $student);
+            // send mail 
+            $this->mailer->sendDeleteOffersCompanyMessage($student, $offers);
+            // remove unfinished applies and set offers_id to null
+            if($applies->getFinished() == false) {
+                $this->manager->remove($applies);
+            }
+            else {
+                $applies->setOffers(NULL);
+            }
+        }
+    }
 }

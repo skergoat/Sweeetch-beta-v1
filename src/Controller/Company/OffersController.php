@@ -138,11 +138,10 @@ class OffersController extends AbstractController
      * @IsGranted("ROLE_SUPER_COMPANY")
      * @ParamConverter("company", options={"id" = "company"})
      */
-    public function edit(Request $request, Offers $offer, ApplyRepository $repository, Company $company): Response
+    public function edit(Request $request, Offers $offer, ApplyRepository $repository, Company $company, ApplyHelper $helper): Response
     {
-        $finished = $repository->checkIfFinished($offer);
-
-        if($finished) {
+        // prevent user from deleting finished offer 
+        if($helper->checkFinished('offers', $offer)) {
             $this->addFlash('error', 'Mission terminée');
             return $this->redirectToRoute('offers_company_index', ['id' => $company->getId()]);
         }
@@ -151,10 +150,9 @@ class OffersController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // edit 
             $this->getDoctrine()->getManager()->flush();
-
             $this->addFlash('success', 'Mise à jour réussie !');
-
             return $this->redirectToRoute('offers_edit', ['id' => $offer->getId(), 'company' => $company->getId()]);
         }
 
@@ -173,48 +171,15 @@ class OffersController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$offer->getId(), $request->request->get('_token'))) {
 
-            $finished = $repository->findBy(['offers' => $offer, 'finished' => $finished]);
-
-            if($finished) {
+            // prevent user from deleting finished offer 
+            if($helper->checkFinished('offers', $offer)) {
                 $this->addFlash('error', 'Mission terminée');
                 return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
             }
-
+            // delete related applies
+            $helper->handleApplies($offer);
+            // delete
             $entityManager = $this->getDoctrine()->getManager();
-
-            $applies = $repository->findBy(['offers' => $offer]);
-            
-            foreach($applies as $applies) 
-            {
-                $student = $applies->getStudent();
-                // set roles 
-                $student->getUser()->setRoles([
-                    "ROLE_SUPER_STUDENT"
-                ]);
-
-                // set other student offers to unavailable
-                // $unavailables = $repository->setToUnavailables($offer, $student);
-
-                // foreach($unavailables as $unavailables) {
-                //     if($unavailables->getUnavailable() == true) {
-                //         $unavailables->setUnavailable(false);
-                //     } 
-                // }
-                $helper->available($offer, $studen);
-
-                // send mail 
-                // $email = $student->getUser()->getEmail();
-                // $name = $student->getName();
-                // $mailer->sendDeleteNotification($email, $name, $offer->getTitle());
-                
-                if($applies->getFinished() == false) {
-                    $entityManager->remove($applies);
-                }
-                else {
-                    $applies->setOffers(NULL);
-                }
-            }
-            // delete offers 
             $entityManager->remove($offer);
             $entityManager->flush();
         }
