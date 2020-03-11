@@ -18,7 +18,7 @@ class Recruit
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Studies", inversedBy="recruits")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $studies;
 

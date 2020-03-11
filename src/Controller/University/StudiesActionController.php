@@ -275,9 +275,12 @@ class StudiesActionController extends AbstractController
      * @Route("/{id}/{school_id}", name="studies_delete", methods={"DELETE"})
      * @ParamConverter("school", options={"id" = "school_id"})
      */
-    public function delete(Request $request, Studies $study, School $school): Response
+    public function delete(Request $request, Studies $study, School $school, RecruitHelper $helper): Response
     {
         if ($this->isCsrfTokenValid('delete'.$study->getId(), $request->request->get('_token'))) {
+            // handle recruit 
+            $helper->handleDeleteRecruit($study, $school);
+            // delete 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($study);
             $entityManager->flush();

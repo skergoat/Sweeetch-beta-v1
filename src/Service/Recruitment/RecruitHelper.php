@@ -2,6 +2,7 @@
 
 namespace App\Service\Recruitment;
 
+use App\Entity\School;
 use App\Entity\Recruit;
 use App\Entity\Student;
 use App\Entity\Studies;
@@ -97,7 +98,7 @@ class RecruitHelper extends CommonHelper
     // delete unavailable
     public function deleteUnavailable($studies, $student)
     {
-         $unavailables = $this->recruitRepository->setToUnavailables($studies, $student);
+        $unavailables = $this->recruitRepository->setToUnavailables($studies, $student);
  
          foreach($unavailables as $unavailables) {
              if($unavailables->getUnavailable() == true) {
@@ -147,4 +148,31 @@ class RecruitHelper extends CommonHelper
         // $this->mailer->sendRefuseNotification($student, $studies);     
     }
 
+    public function handleDeleteRecruit(Studies $studies, School $school)
+    { 
+        if($this->checkAgree('studies', $studies)) {
+            $this->available($studies, null);
+        }
+
+        // get applies 
+        $recruits = $studies->getRecruits();
+
+        foreach($recruits as $recruits) {
+            // get students
+            $student = $recruits->getStudent();
+            
+            // if recruit > mail notif if remove studies ?
+            
+            if($this->checkHired('studies', $studies) == [] && $this->checkAgree('studies', $studies) == []) {
+                // delete applies 
+                $this->manager->remove($recruits);
+            }
+            else {
+                // set student_id to null
+                $recruits->setStudent(NULL);
+                // delete unavailables
+                // $this->deleteUnavailable($offers, $student);
+            } 
+        }
+    }
 }
