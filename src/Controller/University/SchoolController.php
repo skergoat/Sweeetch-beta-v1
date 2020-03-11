@@ -11,6 +11,7 @@ use App\Repository\ApplyRepository;
 use App\Form\SchoolEditPasswordType;
 use App\Repository\SchoolRepository;
 use App\Service\UserChecker\AdminChecker;
+use App\Service\Recruitment\RecruitHelper;
 use App\Service\UserChecker\SchoolChecker;
 use App\Service\UserChecker\StudentChecker;
 use Knp\Component\Pager\PaginatorInterface;
@@ -145,9 +146,11 @@ class SchoolController extends AbstractController
      * @Route("/{id}/{from}", name="school_delete", methods={"DELETE"})
      * @IsGranted("ROLE_SCHOOL")
      */
-    public function delete(Request $request, School $school, $from): Response
+    public function delete(Request $request, School $school, RecruitHelper $helper, $from): Response
     {
         if ($this->isCsrfTokenValid('delete'.$school->getId(), $request->request->get('_token'))) {
+            // handle recruit 
+            $helper->handleDeleteCompany($school);
             // delete session
             $currentUserId = $this->getUser()->getId();
             if ($currentUserId == $school->getUser()->getId())
