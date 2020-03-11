@@ -47,7 +47,7 @@ class ApplyHelper extends CommonHelper
 
     public function checkOfferFinished($offers)
     {
-        return $this->applyRepository->findByOffersFinished($offers);
+        return $this->findByOffersFinished($offers);
     }
 
     public function checkRefused($offers, $student)
@@ -119,7 +119,23 @@ class ApplyHelper extends CommonHelper
                  $this->manager->remove($unavailables);
               }      
           }
-     }
+    }
+
+    // get applies from company 
+    public function findByOffersFinished($offers)
+    {
+        foreach($offers as $offers){
+            $applies = $this->applyRepository->findBy(['offers' => $offers]);
+
+            foreach($applies as $applies){
+                if($applies->getConfirmed() || $applies->getFinished()) {
+                    $array[] = $applies;
+                }
+            }
+        }
+
+        return isset($array) ? $array : null;
+    }
     
     // apply 
     public function hire(Apply $apply, Student $student, Offers $offers)

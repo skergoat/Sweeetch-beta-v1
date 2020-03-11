@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Apply;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Offers;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Apply|null find($id, $lockMode = null, $lockVersion = null)
@@ -135,40 +136,6 @@ class ApplyRepository extends ServiceEntityRepository
             ->setParameter('hired', true)
             ->setParameter('agree', true)
             ->orderBy('u.agree', 'desc')
-            ->getQuery()
-            ->getResult()
-            ;
-        }
-    }
-
-    public function findByOffersByFinished($offer) { 
-
-        // foreach($offer as $offer) {
-
-            return $this->createQueryBuilder('u')
-            ->andWhere('u.offers = :offers')
-            ->andWhere('u.finished = :finished')
-            ->orWhere('u.confirmed = :confirmed')
-            ->setParameter('offers', $offer)
-            ->setParameter('finished', true)
-            ->setParameter('confirmed', true)
-            ->getQuery()
-            ->getResult()
-            ;
-        // }
-    }
-
-    public function findByOffersFinished($offer) { 
-
-        foreach($offer as $offer) {
-
-            return $this->createQueryBuilder('u')
-            ->andWhere('u.offers = :offers')
-            ->andWhere('u.finished = :finished')
-            ->orWhere('u.confirmed = :confirmed')
-            ->setParameter('offers', $offer)
-            ->setParameter('finished', true)
-            ->setParameter('confirmed', true)
             ->getQuery()
             ->getResult()
             ;

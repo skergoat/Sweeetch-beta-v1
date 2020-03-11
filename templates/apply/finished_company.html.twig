@@ -41,7 +41,7 @@
                     <tbody>
             
                     {% for applies in applies %}
-
+                        {# {% if finished.offers.id is defined %} #}
                         <tr>
                             <td><a href="{{ path('show_finished', {'id': applies.offers.id, 'company':company.id}) }}">{{ applies.offers.title }}</a></td>
                             <td>{{ applies.offers.location }}</td>
@@ -51,7 +51,7 @@
                             <td>{{ applies.offers.dateEnd ? applies.offers.dateEnd|date('Y-m-d H:i:s') : '' }}</td> #}
                             <td> <span class="badge bg-success">Recruté</span> </td>
                         </tr>
-
+                        {# {% endif %} #}
                     {% endfor %}
                                                     
                 </tbody>
