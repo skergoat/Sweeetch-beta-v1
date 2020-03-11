@@ -288,7 +288,7 @@ class ApplyHelper extends CommonHelper
             if($this->checkConfirmed('student', $student) == [] && $this->checkFinished('student', $student) == []) {
                 // set offers state 
                 $offers->setState(false);
-                // delete applies or set student_id to null
+                // delete applies 
                 $this->manager->remove($applies);
             }
             else {

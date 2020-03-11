@@ -20,13 +20,26 @@ class RecruitRepository extends ServiceEntityRepository
     }
 
     public function setToUnavailables($studies, $student) {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.studies != :studies AND u.student = :student')
-            ->setParameter('studies', $studies)
-            ->setParameter('student', $student)
-            ->getQuery()
-            ->getResult()
-        ;
+
+        if($student == null)
+        {
+            return $this->createQueryBuilder('u')
+                ->andWhere('u.studies != :studies')
+                ->setParameter('studies', $studies)
+                // ->setParameter('student', $student)
+                ->getQuery()
+                ->getResult()
+            ;
+        }
+        else {
+            return $this->createQueryBuilder('u')
+                ->andWhere('u.studies != :studies AND u.student = :student')
+                ->setParameter('studies', $studies)
+                ->setParameter('student', $student)
+                ->getQuery()
+                ->getResult()
+            ;
+        }
     }
 
     // display recuit in process 

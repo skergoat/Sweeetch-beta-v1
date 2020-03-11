@@ -148,8 +148,6 @@ class SchoolController extends AbstractController
     public function delete(Request $request, School $school, $from): Response
     {
         if ($this->isCsrfTokenValid('delete'.$school->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-
             // delete session
             $currentUserId = $this->getUser()->getId();
             if ($currentUserId == $school->getUser()->getId())
@@ -158,13 +156,13 @@ class SchoolController extends AbstractController
               $session = new Session();
               $session->invalidate();
             }
-
+            // delete
+            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($school);
             $entityManager->flush();
         }
 
         $this->addFlash('success', 'Compte Supprimé');
-
         return $this->redirectToRoute($from);
     }
 }

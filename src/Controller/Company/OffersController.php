@@ -174,8 +174,6 @@ class OffersController extends AbstractController
             $this->addFlash('error', 'Mission terminée');
             return $this->redirectToRoute('offers_preview', ['id' => $offer->getId(), 'company' => $offer->getCompany()->getId()]);
         }
-
-        dd('delete');
         
         if ($this->isCsrfTokenValid('delete'.$offer->getId(), $request->request->get('_token'))) {
             // delete related applies
