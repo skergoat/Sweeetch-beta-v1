@@ -211,10 +211,6 @@ class ApplyHelper extends CommonHelper
         foreach($applies as $applies) 
         {
             $student = $applies->getStudent();
-            // set roles 
-            // $student->getUser()->setRoles([
-            //     "ROLE_SUPER_STUDENT"
-            // ]);
             // set to available
             $this->available($offers, $student);
             // send mail 
