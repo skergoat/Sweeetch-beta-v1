@@ -109,13 +109,13 @@
                                     <td></td>
                                 {% else %}
                                     <td>
-                                        <p style="color:red;">Le profil de l'étudiant a été détruit</p>
+                                        <p style="color:#FF475B;">Le profil de l'étudiant a été détruit</p>
                                     </td>
                                     <td colspan="2">
                                         <form method="post" action="{{ path('delete_empty_companySide', {'id': finished.offers.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette mission ?');">
                                             <input type="hidden" name="_method" value="DELETE">
                                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ finished.offers.id) }}">
-                                            <button class="btn btn-danger">Supprimer</button>
+                                            <button class="btn btn-danger">Supprimer L'Annonce</button>
                                         </form>
                                     </td>
                                 {% endif %}

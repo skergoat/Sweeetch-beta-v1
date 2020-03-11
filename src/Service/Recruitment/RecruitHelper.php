@@ -111,7 +111,7 @@ class RecruitHelper extends CommonHelper
         // set state
         $this->setHire($recruit);
         // send notification
-        $this->mailer->sendHireNotification($recruit);
+        // $this->mailer->sendHireNotification($recruit);
     }
 
     public function agree(Recruit $recruit, Student $student, Studies $studies)
@@ -121,7 +121,7 @@ class RecruitHelper extends CommonHelper
         // set to unavailable
         $this->unavailables($studies, $student);
         // send notification
-        $this->mailer->sendAgreeNotification($student, $studies);
+        // $this->mailer->sendAgreeNotification($student, $studies);
     }
 
     public function finish(Recruit $recruit, Student $student, Studies $studies)
@@ -134,7 +134,7 @@ class RecruitHelper extends CommonHelper
          $user = $recruit->getStudent()->getUser();
          $user->setRoles(['ROLE_SUPER_STUDENT']);
          // send notification
-         $this->mailer->sendFinishNotification($student, $studies);
+        //  $this->mailer->sendFinishNotification($student, $studies);
          // set to available
         //  $this->available($studies, $student);
     }
@@ -144,7 +144,7 @@ class RecruitHelper extends CommonHelper
         // refuse
         $this->setRefuse($recruit);
         // send notification
-        $this->mailer->sendRefuseNotification($student, $studies);     
+        // $this->mailer->sendRefuseNotification($student, $studies);     
     }
 
 }
