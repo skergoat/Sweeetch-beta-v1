@@ -40,7 +40,7 @@ class Studies
     private $domain;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Recruit", mappedBy="studies")
+     * @ORM\OneToMany(targetEntity="App\Entity\Recruit", mappedBy="studies", orphanRemoval=true)
      */
     private $recruits;
 

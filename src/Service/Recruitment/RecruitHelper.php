@@ -154,25 +154,60 @@ class RecruitHelper extends CommonHelper
             $this->available($studies, null);
         }
 
-        // get applies 
-        $recruits = $studies->getRecruits();
+        // // get applies 
+        // $recruits = $studies->getRecruits();
 
-        foreach($recruits as $recruits) {
-            // get students
-            $student = $recruits->getStudent();
+        // foreach($recruits as $recruits) {
+        //     // get students
+        //     $student = $recruits->getStudent();
             
-            // if recruit > mail notif if remove studies ?
+        //     // if recruit > mail notif if remove studies ?
             
-            if($this->checkHired('studies', $studies) == [] && $this->checkAgree('studies', $studies) == []) {
-                // delete applies 
-                $this->manager->remove($recruits);
+        //     if($this->checkHired('studies', $studies) == [] && $this->checkAgree('studies', $studies) == []) {
+        //         // delete applies 
+        //         $this->manager->remove($recruits);
+        //     }
+        //     else {
+        //         // set student_id to null
+        //         $recruits->setStudent(NULL);
+        //         // delete unavailables
+        //         // $this->deleteUnavailable($offers, $student);
+        //     } 
+        // }
+    }
+
+    public function handleDeleteCompany(School $school)
+    { 
+        $studies = $school->getStudies();
+
+        foreach($studies as $studies) 
+        {
+            if($this->checkAgree('studies', $studies)) {
+                $this->available($studies, null);
             }
-            else {
-                // set student_id to null
-                $recruits->setStudent(NULL);
-                // delete unavailables
-                // $this->deleteUnavailable($offers, $student);
-            } 
         }
+
+       
+
+        // // get applies 
+        // $recruits = $studies->getRecruits();
+
+        // foreach($recruits as $recruits) {
+        //     // get students
+        //     $student = $recruits->getStudent();
+            
+        //     // if recruit > mail notif if remove studies ?
+            
+        //     if($this->checkHired('studies', $studies) == [] && $this->checkAgree('studies', $studies) == []) {
+        //         // delete applies 
+        //         $this->manager->remove($recruits);
+        //     }
+        //     else {
+        //         // set student_id to null
+        //         $recruits->setStudent(NULL);
+        //         // delete unavailables
+        //         // $this->deleteUnavailable($offers, $student);
+        //     } 
+        // }
     }
 }
