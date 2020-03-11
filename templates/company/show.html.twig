@@ -319,12 +319,14 @@
                         </thead>
                         <tbody>
                             {% for finished in finished %}
+                                {# {% if finished.offers.id is defined %} #}
                             <tr class="border-top">
                                 <td><a href="{{ path('offers_preview', {id:finished.offers.id, company:company.id}) }}" class="action-link">{{ finished.offers.title }}</a></td>
                                 <td>
                                     <span class="badge badge-success right">Recruté</span>
                                 </td>
                             </tr>
+                                {# {% endif %} #}
                             {% endfor %} 
                         </tbody>
                     </table>

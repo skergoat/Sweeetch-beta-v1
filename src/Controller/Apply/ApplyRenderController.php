@@ -91,17 +91,19 @@ class ApplyRenderController extends AbstractController
     public function finishedByCompany(Company $company, OffersRepository $offersRepository, ApplyRepository $applyRepository, PaginatorInterface $paginator, Request $request, CompanyChecker $checker, ApplyHelper $helper): Response
     {     
         if($checker->companyValid($company)) {
-
+            // get offers 
             $offers = $offersRepository->findBy(['company' => $company], ['id' => 'desc']);
-        
+            // get finished or confirmed applies 
+            $array = $helper->findByOffersFinished($offers);
+            
             return $this->render('apply/finished_company.html.twig', [
                 'offers' => $offers,
                 'company' => $company,
-                'applies' => $applyRepository->findByOffersFinished($offers),
+                'applies' => isset($array) ? $array : null,
                 // infos 
                 'hired' => $helper->checkHired('offers', $offers),
                 'agree' => $helper->checkAgree('offers', $offers),
-                'closed' =>  $helper->checkOfferFinished($offers),
+                'closed' =>  isset($array) ? $array : null,
                 'candidates' => $helper->nbCandidates($offers),
             ]);
         }
@@ -141,11 +143,13 @@ class ApplyRenderController extends AbstractController
         if($checker->companyOffersValid($company, $offer)) {
             // get all company offers
             $offers = $offersRepository->findBy(['company' => $company]);
+             // get finished or confirmed applies 
+             $array = $helper->findByOffersFinished($offers);
         
             return $this->render('apply/show_finished.html.twig', [
                 'offers' => $offer, // current single offer content 
                 'company' => $company, // company layout 
-                'finished' => $applyRepository->findByOffersByFinished($offer), // get finished
+                'finished' => isset($array) ? $array : null, // get finished
                 // infos
                 'hired' => $helper->checkHired('offers', $offers),
                 'agree' => $helper->checkAgree('offers', $offers),
