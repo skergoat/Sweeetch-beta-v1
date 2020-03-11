@@ -179,7 +179,7 @@ class OffersController extends AbstractController
         
         if ($this->isCsrfTokenValid('delete'.$offer->getId(), $request->request->get('_token'))) {
             // delete related applies
-            $helper->handleApplies($offer);
+            $helper->handleOffersApplies($offer);
             // delete
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($offer);

@@ -161,8 +161,12 @@ class ApplyMailer
     }
 
     //
-    public function sendDeleteCompanyMessage($email, $name, $offerTitle)
+    public function sendDeleteCompanyMessage($student, $offers)
     {
+        $email = $student->getUser()->getEmail();
+        $name = $student->getName();
+        $offerTitle = $offers->getTitle();
+
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
             ->to(new Address($email, $name))

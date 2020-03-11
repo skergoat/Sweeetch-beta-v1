@@ -133,13 +133,13 @@ class ApplyHelper extends CommonHelper
         // close offer 
         $offers->setState(true); 
         // send notification
-        $this->mailer->sendHireNotification($apply);
+        // $this->mailer->sendHireNotification($apply);
         // delete other applies
         $others = $this->applyRepository->getOtherApplies($student->getId(), $offers->getId());
         if($others) {
             foreach($others as $others) {
                 // send notification
-                $this->mailer->sendOtherNotification($others);
+                // $this->mailer->sendOtherNotification($others);
                 // delete other applies 
                 $this->manager->remove($others);   
             }   
@@ -151,7 +151,7 @@ class ApplyHelper extends CommonHelper
          // agree
          $this->setAgree($apply);
          // send notification
-         $this->mailer->sendAgreeNotification($student, $offers);
+        //  $this->mailer->sendAgreeNotification($student, $offers);
          // set to unavailable
          $this->unavailables($offers, $student);
     }
@@ -161,7 +161,7 @@ class ApplyHelper extends CommonHelper
         // confirm
         $this->setConfirm($apply);
         // send notification
-        $this->mailer->sendConfirmNotification($student, $offers);
+        // $this->mailer->sendConfirmNotification($student, $offers);
         // set roles
         $student->getUser()->setRoles(['ROLE_STUDENT_HIRED']);
     }
@@ -178,6 +178,7 @@ class ApplyHelper extends CommonHelper
         }
     }
 
+    // when student has school 
     public function finish(Apply $apply, Student $student, ?Offers $offers)
     {
         if($offers == null) {
@@ -189,22 +190,7 @@ class ApplyHelper extends CommonHelper
             $this->setApplyFinish($apply);
         }   
         // delete unavailables 
-        $this->deleteUnavailable($offers, $student);
-    
-        // delete unavailables
-        // if($bool){
-           
-        // }
-        // else {
-        //     // set to available
-        //     $this->available($offers, $student);
-        // } 
-
-        // // set roles 
-        // $user = $apply->getStudent()->getUser();
-        // $user->setRoles(['ROLE_SUPER_STUDENT']); 
-        // // send notification
-        // $this->mailer->sendFinishNotification($student, $offers);  
+        $this->deleteUnavailable($offers, $student); 
     }
 
     public function refuse(Apply $apply, Student $student, Offers $offers)
@@ -214,7 +200,7 @@ class ApplyHelper extends CommonHelper
          // close offer 
         //  $offers->setState(false);
          // send notification
-         $this->mailer->sendRefuseNotification($student, $offers);
+        //  $this->mailer->sendRefuseNotification($student, $offers);
          // set to available
          // $helper->available($offers, $student);
     }
@@ -226,10 +212,11 @@ class ApplyHelper extends CommonHelper
         // set to available
         // $helper->available($offers, $student);
         // send notification
-        $this->mailer->sendDeleteNotification($offers);
+        // $this->mailer->sendDeleteNotification($offers);
     }
 
-    public function handleApplies(Offers $offers)
+    // when delete offers 
+    public function handleOffersApplies(Offers $offers)
     {   
         // entities
         $applies = $this->applyRepository->findBy(['offers' => $offers]);
@@ -240,7 +227,7 @@ class ApplyHelper extends CommonHelper
             // set to available
             $this->available($offers, $student);
             // send mail 
-            $this->mailer->sendDeleteOffersCompanyMessage($student, $offers);
+            // $this->mailer->sendDeleteOffersCompanyMessage($student, $offers);
             // remove unfinished applies and set offers_id to null
             if($applies->getFinished() == false) {
                 $this->manager->remove($applies);
@@ -248,6 +235,68 @@ class ApplyHelper extends CommonHelper
             else {
                 $applies->setOffers(NULL);
             }
+        }
+    }
+
+    // when delete company profile 
+    public function handleCompanyApplies($company)
+    {
+        // get related offers 
+        $offers = $company->getOffers();
+
+        foreach($offers as $offers) {
+            $applies = $offers->getApplies();
+            // get related applies 
+            foreach($applies as $applies) {
+                $student = $applies->getStudent();
+                // send mail 
+                // $this->mailer->sendDeleteCompanyMessage($student, $offers);
+                // if applies is agree, allow student to look for another job 
+                if($this->checkConfirmed('offers', $offers) == []) {
+                    $this->available($applies->getOffers(), $applies->getStudent());
+                }
+
+                // delete offers or keep finished or confirmed applies  
+                if($this->checkConfirmed('offers', $offers) == [] && $this->checkFinished('offers', $offers) == []) {
+                    // remove related applies 
+                    $this->manager->remove($applies);
+                }
+                else {
+                    $applies->setOffers(NULL);
+                } 
+            }
+            // remove related offers 
+            $this->manager->remove($offers);
+        }
+    }
+
+    // when delete company profile 
+    public function handleStudentApplies($student)
+    {
+        // get applies 
+        $applies = $student->getApplies();
+                
+        foreach($applies as $applies) {
+            // get offers 
+            $offers = $applies->getOffers();
+            // send mail 
+            // $email = $student->getUser()->getEmail();
+            // $name = $student->getName();
+            // $offerTitle = $offers->getTitle();
+            // $mailer->sendDeleteCompanyMessage($email, $name, $offerTitle); 
+
+            if($this->checkConfirmed('student', $student) == [] && $this->checkFinished('student', $student) == []) {
+                // set offers state 
+                $offers->setState(false);
+                // delete applies or set student_id to null
+                $this->manager->remove($applies);
+            }
+            else {
+                // set student_id to null
+                $applies->setStudent(NULL);
+                // delete unavailables
+                $this->deleteUnavailable($offers, $student);
+            } 
         }
     }
 }
