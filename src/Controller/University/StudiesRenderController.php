@@ -127,11 +127,13 @@ class StudiesRenderController extends AbstractController
 
     /**
     * @Route("/show/hired/{id}/student/{student}", name="show_student_hired", methods={"GET"})
-    * @IsGranted("ROLE_STUDENT_HIRED")
+    * @IsGranted("ROLE_SUPER_STUDENT")
     * @ParamConverter("student", options={"id" = "student"})
     */
     public function showHired(Studies $studies, Student $student, ApplyRepository $applyRepository)
     {
+        // si autorise que pour son id et celle de ses ecoles ca devrait etre ok !!!!
+        // attention a ce qu'il voit pas les unavailables pendant le recrutement !!!!
         return $this->render('studies/show_hired.html.twig', [
             'studies' => $studies,
             'student' => $student,

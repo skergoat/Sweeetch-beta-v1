@@ -143,13 +143,24 @@ class ApplyRepository extends ServiceEntityRepository
     }
 
     public function setToUnavailables($offers, $student) { //
-        return $this->createQueryBuilder('u')
+
+        if($offers == null)
+        {
+            return $this->createQueryBuilder('u')
+            ->andWhere('u.student = :student')
+            // ->setParameter('offers', $offers)
+            ->setParameter('student', $student)
+            ->getQuery()
+            ->getResult();
+        }
+        else {
+            return $this->createQueryBuilder('u')
             ->andWhere('u.offers != :offers AND u.student = :student')
             ->setParameter('offers', $offers)
             ->setParameter('student', $student)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
+        }  
     }
 
     public function checkIfRowExsists($offers, $student) { // 
