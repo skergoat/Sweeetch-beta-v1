@@ -182,42 +182,8 @@ class CompanyController extends AbstractController
     public function delete(Request $request, Company $company, ApplyRepository $repository, ApplyMailer $mailer, ApplyHelper $helper, $from): Response
     {
         if ($this->isCsrfTokenValid('delete'.$company->getId(), $request->request->get('_token'))) {
-
-            $entityManager = $this->getDoctrine()->getManager();
-
-            // get related offers 
-            $offers = $company->getOffers();
-
-            foreach($offers as $offers) {
-                $applies = $offers->getApplies();
-
-                // get related applies 
-                foreach($applies as $applies) {
-                    $student = $applies->getStudent();
-
-                    // send mail 
-                    // $email = $student->getUser()->getEmail();
-                    // $name = $student->getName();
-                    // $offerTitle = $offers->getTitle();
-                    // $mailer->sendDeleteCompanyMessage($email, $name, $offerTitle); 
-
-                    // if applies is agree, allow student to look for another job 
-                    if($helper->checkConfirmed('offers', $offers) == []) {
-                        $helper->available($applies->getOffers(), $applies->getStudent());
-                    }
-
-                    // delete offers or keep finished or confirmed applies  
-                    if($helper->checkConfirmed('offers', $offers) == [] && $helper->checkFinished('offers', $offers) == []) {
-                        // remove related applies 
-                        $entityManager->remove($applies);
-                    }
-                    else {
-                        $applies->setOffers(NULL);
-                    } 
-                }
-                // remove related offers 
-                $entityManager->remove($offers);
-            }
+            // handle applies 
+            $helper->handleCompanyApplies($company);
             // delete session
             $currentUserId = $this->getUser()->getId();
             if ($currentUserId == $company->getUser()->getId())
@@ -227,6 +193,7 @@ class CompanyController extends AbstractController
               $session->invalidate();
             }
             // remove company 
+            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($company);
             $entityManager->flush();
         }

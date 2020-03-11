@@ -259,58 +259,34 @@ class StudentController extends AbstractController
      * @Route("/{id}/{from}", name="student_delete", methods={"DELETE"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function delete(Request $request, Student $student, UploaderHelper $uploaderHelper, ApplyRepository $applyRepository, StudentChecker $checker, $from): Response
+    public function delete(Request $request, Student $student, UploaderHelper $uploaderHelper, ApplyRepository $applyRepository, StudentChecker $checker, ApplyHelper $helper, $from): Response
     {
-        if ($checker->studentValid($student)) {
-
-            if ($this->isCsrfTokenValid('delete'.$student->getId(), $request->request->get('_token'))) {
-
-                // delete private files when delete entity
-                foreach($this->entities as $entity)
-                {
-                    $get = 'get' . $entity;
-                    $fileName = $student->$get()->getFileName();
-                    if($fileName) {
-                        $uploaderHelper->deleteFile($fileName);
-                    } 
-                }
-
-                $entityManager = $this->getDoctrine()->getManager();
-
-                $applies = $student->getApplies();
-                
-                foreach($applies as $applies) {
-
-                    // send mail 
-                    // $email = $student->getUser()->getEmail();
-                    // $name = $student->getName();
-                    // $offerTitle = $offers->getTitle();
-
-                    // $mailer->sendDeleteCompanyMessage($email, $name, $offerTitle); 
-
-                    if($applies->getFinished() == false) {
-                        $entityManager->remove($applies);
-                    }
-                    else {
-                        $applies->setStudent(NULL);
-                    } 
-                }
-
-                // delete session
-                $currentUserId = $this->getUser()->getId();
-                if ($currentUserId == $student->getUser()->getId())
-                {
-                $session = $this->get('session');
-                $session = new Session();
-                $session->invalidate();
-                }
-
-                $entityManager->remove($student);
-                $entityManager->flush();
+        if ($this->isCsrfTokenValid('delete'.$student->getId(), $request->request->get('_token'))) {
+            // delete private files when delete entity
+            foreach($this->entities as $entity)
+            {
+                $get = 'get' . $entity;
+                $fileName = $student->$get()->getFileName();
+                if($fileName) {
+                    $uploaderHelper->deleteFile($fileName);
+                } 
             }
-
+            // handle applies 
+            $helper->handleStudentApplies($student); 
+            // delete session
+            $currentUserId = $this->getUser()->getId();
+            if ($currentUserId == $student->getUser()->getId())
+            {
+            $session = $this->get('session');
+            $session = new Session();
+            $session->invalidate();
+            }
+            // save 
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($student);
+            $entityManager->flush();
+            // redirect
             $this->addFlash('success', 'Compte Supprimé');
-
             return $this->redirectToRoute($from);
         }
     }
