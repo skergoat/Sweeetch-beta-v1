@@ -114,11 +114,11 @@
                 {% for applies in applies %}
 
                 <tbody>
+                    {% if applies.offers.id is defined %}
                     <tr>
                         <td>
                         {% if is_granted('ROLE_ADMIN') %}
-                        <a href="{{ path('offers_preview', {id : applies.offers.id, company:applies.offers.company.id}) }}">{{ applies.offers.title }}</a>  
-                        {% else %}
+                        <a href="{{ path('offers_preview', {id : applies.offers.id, company:applies.offers.company.id}) }}">{{ applies.offers.title }}</a> 
                             {% if applies.hired == true or  applies.agree == true or  applies.confirmed == true or  applies.finished == true %}
                         <a href="{{ path('offers_show_hired', {'id': applies.offers.id, 'student_id' : student.id}) }}">{{ applies.offers.title }}</a>
                             {% else %}
@@ -180,11 +180,17 @@
                             </div>
                         </td>
                     </tr>
-
-                    {# {% else %}
-                    <tr class="border-top">
-                        <td colspan="8" class="border-top-td">Aucune candidature en cours</td>
-                    </tr>  #}
+                    {% else %}
+                    <tr>
+                        <td colspan="8"> 
+                            <span style="color:#FF5961;">Votre entreprise a supprimé son compte </span>
+                            <a href="#suppr-1" rel="modal:open" class="badge " title="aide" style="color:#8e8e8e;">
+                                <i class="fas fa-question-circle"  style="margin-left:5px;color:#8e8e8e;"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endif %}
+                
                 {% endfor %}
                 </tbody>
             </table>

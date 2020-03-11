@@ -336,6 +336,7 @@
                                 </thead>
                                 <tbody>
                                     {% for process in process %}
+                                        {% if process.offers.title is defined %}
                                     <tr class="border-top">
                                         <td><a href="{{ path('student_apply', {'id': student.id}) }}" class="action-link">{{ process.offers.title }}</a></td>
                                         <td>
@@ -348,6 +349,16 @@
                                             {% endif %}
                                         </td>   
                                     </tr> 
+                                        {% else %}
+                                        <tr>
+                                            <td colspan="8"> 
+                                                <span style="color:#FF5961;">Votre entreprise a supprimé son compte </span>
+                                                <a href="#suppr-1" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                                                    <i class="fas fa-question-circle"  style="margin-left:5px;color:#8e8e8e;"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endif %}
                                     {% endfor %}
                                     {# {% for finished in finished %}
                                     <tr class="border-top">

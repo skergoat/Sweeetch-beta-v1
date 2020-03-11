@@ -177,43 +177,45 @@ class CompanyController extends AbstractController
      * @Route("/{id}/{from}", name="company_delete", methods={"DELETE"})
      * @IsGranted("ROLE_COMPANY")
      */
-    public function delete(Request $request, Company $company, ApplyRepository $repository, ApplyMailer $mailer, $from): Response
+    public function delete(Request $request, Company $company, ApplyRepository $repository, ApplyMailer $mailer, ApplyHelper $helper, $from): Response
     {
         if ($this->isCsrfTokenValid('delete'.$company->getId(), $request->request->get('_token'))) {
 
             $entityManager = $this->getDoctrine()->getManager();
 
-            // remove applies 
+            // get related offers 
             $offers = $company->getOffers();
 
             foreach($offers as $offers) {
                 $applies = $offers->getApplies();
 
+                // get related applies 
                 foreach($applies as $applies) {
                     $student = $applies->getStudent();
 
-                    // set roles 
-                    // $student->getUser()->setRoles([
-                    //     "ROLE_SUPER_STUDENT"
-                    // ]);
-
                     // send mail 
-                    $email = $student->getUser()->getEmail();
-                    $name = $student->getName();
-                    $offerTitle = $offers->getTitle();
-                    $mailer->sendDeleteCompanyMessage($email, $name, $offerTitle); 
+                    // $email = $student->getUser()->getEmail();
+                    // $name = $student->getName();
+                    // $offerTitle = $offers->getTitle();
+                    // $mailer->sendDeleteCompanyMessage($email, $name, $offerTitle); 
 
-                    if($applies->getFinished() == false) {
+                    // if applies is agree, allow student to look for another job 
+                    if($helper->checkConfirmed('offers', $offers) == []) {
+                        $helper->available($applies->getOffers(), $applies->getStudent());
+                    }
+
+                    // delete offers or keep finished or confirmed applies  
+                    if($helper->checkConfirmed('offers', $offers) == [] && $helper->checkFinished('offers', $offers) == []) {
+                        // remove related applies 
                         $entityManager->remove($applies);
                     }
                     else {
                         $applies->setOffers(NULL);
                     } 
                 }
-                // remove offers 
+                // remove related offers 
                 $entityManager->remove($offers);
             }
-
             // delete session
             $currentUserId = $this->getUser()->getId();
             if ($currentUserId == $company->getUser()->getId())
@@ -222,7 +224,7 @@ class CompanyController extends AbstractController
               $session = new Session();
               $session->invalidate();
             }
-
+            // remove company 
             $entityManager->remove($company);
             $entityManager->flush();
         }
