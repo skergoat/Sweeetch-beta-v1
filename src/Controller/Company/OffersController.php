@@ -104,7 +104,7 @@ class OffersController extends AbstractController
     
             if($hired || $agree || $confirmed || $finished) {  // if there are already applies then ... 
 
-                if ($authorizationChecker->isGranted('ROLE_SUPER_STUDENT')) { // if STUDENT then okk 
+                if ($authorizationChecker->isGranted('ROLE_SUPER_STUDENT')) { // if STUDENT then ok
                 
                     $student = $this->getUser()->getStudent();
                     $applied = $applyRepository->findAppliedIfExists($student, $offer);
