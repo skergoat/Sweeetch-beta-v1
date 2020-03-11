@@ -136,7 +136,7 @@ class RecruitHelper extends CommonHelper
          // send notification
          $this->mailer->sendFinishNotification($student, $studies);
          // set to available
-         $this->available($studies, $student);
+        //  $this->available($studies, $student);
     }
 
     public function refuse(Recruit $recruit, Student $student, Studies $studies)

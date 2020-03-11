@@ -151,7 +151,7 @@ class StudiesActionController extends AbstractController
         $studies = $recruit->getStudies();
 
         $apply = $applyRepository->findBy(['student' => $student, 'confirmed' => true])[0];
-        $applyHelper->finish($apply, $student, $apply->getOffers(), true);
+        $applyHelper->finish($apply, $student, $apply->getOffers());
 
         if($this->isCsrfTokenValid('finish'.$recruit->getId(), $request->request->get('_token'))) {
             // finish
