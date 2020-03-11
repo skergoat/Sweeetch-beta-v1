@@ -60,7 +60,7 @@ class StudiesActionController extends AbstractController
 
         if($this->isCsrfTokenValid('recruit'.$student->getId(), $request->request->get('_token'))) {
             // send notification
-            $mailer->sendRecruitNotification($studies);
+            // $mailer->sendRecruitNotification($studies);
             // create entity
             $recruit = new Recruit; 
             $recruit->setHired(false);
@@ -208,7 +208,7 @@ class StudiesActionController extends AbstractController
             $student = $recruit->getStudent();
             $studies = $recruit->getStudies();
             // send notification
-            $mailer->sendDeleteNotification($studies);
+            // $mailer->sendDeleteNotification($studies);
             // save and delete
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($recruit);
