@@ -71,7 +71,7 @@ class ApplyActionsController extends AbstractController
         if($this->isCsrfTokenValid('apply'.$student->getId(), $request->request->get('_token'))) {
 
             // send notification
-            // $mailer->sendApplyNotification($offers);
+            $mailer->sendApplyNotification($offers);
 
             $apply = new Apply; 
             $apply->setHired(false);

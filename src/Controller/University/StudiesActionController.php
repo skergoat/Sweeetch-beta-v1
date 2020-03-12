@@ -61,7 +61,7 @@ class StudiesActionController extends AbstractController
 
         if($this->isCsrfTokenValid('recruit'.$student->getId(), $request->request->get('_token'))) {
             // send notification
-            // $mailer->sendRecruitNotification($studies);
+            $mailer->sendRecruitNotification($studies);
             // create entity
             $recruit = new Recruit; 
             $recruit->setHired(false);

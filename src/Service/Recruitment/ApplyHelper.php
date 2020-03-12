@@ -139,7 +139,7 @@ class ApplyHelper extends CommonHelper
         if($others) {
             foreach($others as $others) {
                 // send notification
-                // $this->mailer->sendOtherNotification($others);
+                $this->mailer->sendOtherNotification($others);
                 // delete other applies 
                 $this->manager->remove($others);   
             }   
@@ -151,7 +151,7 @@ class ApplyHelper extends CommonHelper
          // agree
          $this->setAgree($apply);
          // send notification
-        //  $this->mailer->sendAgreeNotification($student, $offers);
+         $this->mailer->sendAgreeNotification($student, $offers);
          // set to unavailable
          $this->unavailables($offers, $student);
     }
@@ -161,7 +161,7 @@ class ApplyHelper extends CommonHelper
         // confirm
         $this->setConfirm($apply);
         // send notification
-        // $this->mailer->sendConfirmNotification($student, $offers);
+        $this->mailer->sendConfirmNotification($student, $offers);
         // set roles
         $student->getUser()->setRoles(['ROLE_STUDENT_HIRED']);
     }
@@ -200,7 +200,7 @@ class ApplyHelper extends CommonHelper
          // close offer 
         //  $offers->setState(false);
          // send notification
-        //  $this->mailer->sendRefuseNotification($student, $offers);
+         $this->mailer->sendRefuseNotification($student, $offers);
          // set to available
          // $helper->available($offers, $student);
     }
@@ -212,7 +212,7 @@ class ApplyHelper extends CommonHelper
         // set to available
         // $helper->available($offers, $student);
         // send notification
-        // $this->mailer->sendDeleteNotification($offers);
+        $this->mailer->sendDeleteNotification($offers);
     }
 
     // when delete offers 
