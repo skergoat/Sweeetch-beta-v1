@@ -296,8 +296,6 @@ class StudiesActionController extends AbstractController
         else {
             $this->addFlash('error', 'Requête Invalide');
             return $this->redirectToRoute('school_studies_index', [ 'id' => $school->getId() ]);
-        }
-        
+        }   
     }
-
 }
