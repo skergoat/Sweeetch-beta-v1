@@ -10,6 +10,7 @@ use App\Repository\ApplyRepository;
 use App\Repository\SchoolRepository;
 use App\Repository\RecruitRepository;
 use App\Repository\StudiesRepository;
+use App\Service\Recruitment\RecruitHelper;
 use App\Service\UserChecker\SchoolChecker;
 use App\Service\UserChecker\StudentChecker;
 use Knp\Component\Pager\PaginatorInterface;
@@ -80,15 +81,18 @@ class StudiesRenderController extends AbstractController
      * @ParamConverter("school", options={"id" = "school_id"})
      * @IsGranted("ROLE_SUPER_SCHOOL")
      */
-    public function show(Studies $study, School $school, RecruitRepository $recruitRepository): Response
+    public function show(Studies $study, School $school, RecruitRepository $recruitRepository,SchoolChecker $checker): Response
     {
-        return $this->render('studies/show.html.twig', [
-            'study' => $study,
-            'school' => $school,
-            'finished' => $recruitRepository->findBy(['studies' => $study, 'finished' => true], ['date_finished' => 'desc']),
-            'recruit' => $recruitRepository->findBy(['studies' => $study, 'hired' => false, 'agree' => false, 'refused' => false, 'unavailable' => false, 'finished' => false], ['date_recruit' => 'desc']),
-            'process' => $recruitRepository->findProcessing($study)
-        ]);
+        if ($checker->schoolStudiesEditValid($school, $study)) {
+
+            return $this->render('studies/show.html.twig', [
+                'study' => $study,
+                'school' => $school,
+                'finished' => $recruitRepository->findBy(['studies' => $study, 'finished' => true], ['date_finished' => 'desc']),
+                'recruit' => $recruitRepository->findBy(['studies' => $study, 'hired' => false, 'agree' => false, 'refused' => false, 'unavailable' => false, 'finished' => false], ['date_recruit' => 'desc']),
+                'process' => $recruitRepository->findProcessing($study)
+            ]);
+        }
     }
 
     /**
@@ -148,12 +152,14 @@ class StudiesRenderController extends AbstractController
     * @ParamConverter("school", options={"id" = "school"})
     * @ParamConverter("study", options={"id" = "study"})
     */
-    public function showApplied(Student $student, School $school, Studies $study)
+    public function showApplied(Student $student, School $school, Studies $study, SchoolChecker $checker)
     {
-        return $this->render('studies/show-applied.html.twig', [
-            'student' => $student,
-            'school' => $school,
-            'study' => $study
-        ]);
+        if ($checker->schoolshowAppliedValid($student, $school, $study)) {
+            return $this->render('studies/show-applied.html.twig', [
+                'student' => $student,
+                'school' => $school,
+                'study' => $study
+            ]);
+        }
     } 
 }

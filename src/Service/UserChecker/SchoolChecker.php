@@ -56,5 +56,22 @@ class SchoolChecker
         }
     }
 
+    // show applied
+    public function schoolshowAppliedValid($student, $school, $studies)
+    {
+        $userRequired = $school->getUser()->getId();
+
+        if($this->isAdmin()
+        || $this->user->getId() == $userRequired 
+        AND $this->studiesRepository->findBy(['school' => $school, 'id' => $studies])
+        AND $this->recruitRepository->findBy(['student' => $student, 'studies' => $studies]))
+        {
+            return true;
+        }
+        else {
+            $this->Exception() ;
+        }
+    }
+
 
 }
