@@ -196,9 +196,13 @@ class CompanyController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($company);
             $entityManager->flush();
-        }
 
-        $this->addFlash('success', 'Compte Supprimé');
-        return $this->redirectToRoute($from);
+            $this->addFlash('success', 'Compte Supprimé');
+            return $this->redirectToRoute($from);
+        }
+        else {
+            $this->addFlash('error', 'Requête Invalide');
+            return $this->redirectToRoute($from);
+        }     
     }
 }

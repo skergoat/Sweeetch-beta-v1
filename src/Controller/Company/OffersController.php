@@ -82,6 +82,7 @@ class OffersController extends AbstractController
                 'offers' => $offer,
                 'form' => $form->createView(),
                 'company' => $company,
+                // infos
                 'hired' => $helper->checkHired('offers', $offers),
                 'agree' => $helper->checkAgree('offers', $offers),
                 'closed' =>  $helper->checkOfferFinished($offers),
@@ -138,7 +139,7 @@ class OffersController extends AbstractController
      * @IsGranted("ROLE_SUPER_COMPANY")
      * @ParamConverter("company", options={"id" = "company"})
      */
-    public function edit(Request $request, Offers $offer, ApplyRepository $repository, Company $company, CompanyChecker $checker, ApplyHelper $helper): Response
+    public function edit(Request $request, Offers $offer, ApplyRepository $repository, OffersRepository $offersRepository, Company $company, CompanyChecker $checker, ApplyHelper $helper): Response
     {
         if($checker->companyOffersValid($company, $offer)) {
             // prevent user from deleting finished offer 
@@ -157,10 +158,18 @@ class OffersController extends AbstractController
                 return $this->redirectToRoute('offers_edit', ['id' => $offer->getId(), 'company' => $company->getId()]);
             }
 
+            // get and render offers infos 
+            $offers = $offersRepository->findBy(['company' => $company], ['id' => 'desc']);
+
             return $this->render('offers/edit.html.twig', [
                 'offers' => $offer,
                 'company' => $company,
                 'form' => $form->createView(),
+                // infos
+                'hired' => $helper->checkHired('offers', $offers),
+                'agree' => $helper->checkAgree('offers', $offers),
+                'closed' =>  $helper->checkOfferFinished($offers),
+                'candidates' => $helper->nbCandidates($offers),   
             ]);
         }
     }
@@ -184,9 +193,13 @@ class OffersController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($offer);
             $entityManager->flush();
-        }
 
-        $this->addFlash('success', 'Offre supprimée !');
-        return $this->redirectToRoute('offers_company_index', ['id' => $offer->getCompany()->getId()]);
+            $this->addFlash('success', 'Offre supprimée !');
+            return $this->redirectToRoute('offers_company_index', ['id' => $offer->getCompany()->getId()]);
+        }
+        else {
+            $this->addFlash('error', 'Requête Invalide');
+            return $this->redirectToRoute('offers_company_index', ['id' => $offer->getCompany()->getId()]);
+        }    
     }
 }
