@@ -83,6 +83,9 @@ class StudiesRenderController extends AbstractController
      */
     public function show(Studies $study, School $school, RecruitRepository $recruitRepository,SchoolChecker $checker): Response
     {
+
+        // dd($recruitRepository->findProcessing($study));
+
         if ($checker->schoolStudiesEditValid($school, $study)) {
 
             return $this->render('studies/show.html.twig', [

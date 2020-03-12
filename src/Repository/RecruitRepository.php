@@ -46,9 +46,7 @@ class RecruitRepository extends ServiceEntityRepository
     public function findProcessing($study)
     {
         return $this->createQueryBuilder('f')
-            ->andWhere('f.studies = :studies')
-            ->andWhere('f.hired = :hired')
-            ->orWhere('f.agree = :agree')
+            ->andWhere('f.studies = :studies AND (f.hired = :hired OR f.agree = :agree)')
             ->setParameter('studies', $study)
             ->setParameter('hired', true)
             ->setParameter('agree', true)
