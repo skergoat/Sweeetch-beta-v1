@@ -114,7 +114,7 @@ class ApplyRepository extends ServiceEntityRepository
         // ->andWhere('u.hired = :hired')
         // ->orWhere('u.agree = :agree')
         // ->orWhere('u.confirmed = :confirmed')
-        ->andWhere('f.student = :student AND (f.hired = :hired OR f.agree = :agree OR u.confirmed = :confirmed)')
+        ->andWhere('u.student = :student AND (u.hired = :hired OR u.agree = :agree OR u.confirmed = :confirmed)')
         ->setParameter('student', $student)
         ->setParameter('hired', true)
         ->setParameter('agree', true)
