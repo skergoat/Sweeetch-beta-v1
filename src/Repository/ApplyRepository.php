@@ -110,10 +110,11 @@ class ApplyRepository extends ServiceEntityRepository
     public function findByStudentProcess($student) { 
 
         return $this->createQueryBuilder('u')
-        ->andWhere('u.student = :student')
-        ->andWhere('u.hired = :hired')
-        ->orWhere('u.agree = :agree')
-        ->orWhere('u.confirmed = :confirmed')
+        // ->andWhere('u.student = :student')
+        // ->andWhere('u.hired = :hired')
+        // ->orWhere('u.agree = :agree')
+        // ->orWhere('u.confirmed = :confirmed')
+        ->andWhere('f.student = :student AND (f.hired = :hired OR f.agree = :agree OR u.confirmed = :confirmed)')
         ->setParameter('student', $student)
         ->setParameter('hired', true)
         ->setParameter('agree', true)
@@ -124,23 +125,23 @@ class ApplyRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findByOffersProcess($offer) { 
+    // public function findByOffersProcess($offer) { 
 
-        foreach($offer as $offer) {
+    //     foreach($offer as $offer) {
 
-            return $this->createQueryBuilder('u')
-            ->andWhere('u.offers = :offers')
-            ->andWhere('u.hired = :hired')
-            ->orWhere('u.agree = :agree')
-            ->setParameter('offers', $offer)
-            ->setParameter('hired', true)
-            ->setParameter('agree', true)
-            ->orderBy('u.agree', 'desc')
-            ->getQuery()
-            ->getResult()
-            ;
-        }
-    }
+    //         return $this->createQueryBuilder('u')
+    //         ->andWhere('u.offers = :offers')
+    //         ->andWhere('u.hired = :hired')
+    //         ->orWhere('u.agree = :agree')
+    //         ->setParameter('offers', $offer)
+    //         ->setParameter('hired', true)
+    //         ->setParameter('agree', true)
+    //         ->orderBy('u.agree', 'desc')
+    //         ->getQuery()
+    //         ->getResult()
+    //         ;
+    //     }
+    // }
 
     public function setToUnavailables($offers, $student) { //
 
