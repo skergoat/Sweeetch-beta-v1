@@ -65,7 +65,7 @@ class SecurityController extends AbstractController
         throw new \Exception('This method can be blank - it will be intercepted by the logout key on your firewall');
     }
 
-    # /**
+    // /**
     //  * @Route("/oubli-pass", name="app_forgotten_password")
     //  */
     // public function oubliPass(Request $request, UsersRepository $users, TokenGeneratorInterface $tokenGenerator): Response
