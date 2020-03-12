@@ -73,5 +73,24 @@ class SchoolChecker
         }
     }
 
+    //student documents 
+    public function documentValid($resume, $studies, $school, $student)
+    {
+        $userRequired = $school->getUser()->getId();  
+        if($this->isAdmin()
+        || $this->user->getId() == $userRequired
+        AND $this->studiesRepository->findBy(['school' => $school, 'id' => $studies->getId()])
+        AND $check = $this->recruitRepository->findBy(['studies' => $studies, 'student' => $student])
+        AND $student->getResume() == $resume
+        ) 
+        {
+            return true;
+        }
+        else {
+            $this->Exception() ;
+        }
+    }
+
+
 
 }

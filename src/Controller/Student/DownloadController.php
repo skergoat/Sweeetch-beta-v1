@@ -5,11 +5,14 @@ namespace App\Controller\Student;
 use App\Entity\IdCard;
 use App\Entity\Offers;
 use App\Entity\Resume;
+use App\Entity\School;
 use App\Entity\Company;
 use App\Entity\Student;
+use App\Entity\Studies;
 use App\Entity\StudentCard;
 use App\Entity\ProofHabitation;
 use App\Service\UploaderHelper;
+use App\Service\UserChecker\SchoolChecker;
 use App\Service\UserChecker\CompanyChecker;
 use App\Service\UserChecker\StudentChecker;
 use Symfony\Component\Routing\Annotation\Route;
@@ -67,6 +70,22 @@ class DownloadController extends AbstractController
     public function downloadResumeCompany(Resume $resume, Offers $offers, Company $company, Student $student, UploaderHelper $uploaderHelper, CompanyChecker $checker)
     {
        if($checker->documentValid($resume, $offers, $company, $student))
+       {
+            $response = $this->downloadDocuments($resume, $uploaderHelper); 
+            return $response; 
+       }
+    }
+
+     /**
+     * @Route("/resume/{id}/studies/{studies}/school/{school}/student/{student}/download", name="school_download_resume", methods={"GET"})
+     * @IsGranted("ROLE_SUPER_SCHOOL")
+     * @ParamConverter("studies", options={"id" = "studies"})
+     * @ParamConverter("school", options={"id" = "school"})
+     * @ParamConverter("student", options={"id" = "student"})
+     */
+    public function downloadResumeSchool(Resume $resume, Studies $studies, School $school, Student $student, UploaderHelper $uploaderHelper, SchoolChecker $checker)
+    {
+       if($checker->documentValid($resume, $studies, $school, $student))
        {
             $response = $this->downloadDocuments($resume, $uploaderHelper); 
             return $response; 
