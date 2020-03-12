@@ -154,26 +154,8 @@ class RecruitHelper extends CommonHelper
             $this->available($studies, null);
         }
 
-        // // get applies 
-        // $recruits = $studies->getRecruits();
-
-        // foreach($recruits as $recruits) {
-        //     // get students
-        //     $student = $recruits->getStudent();
-            
-        //     // if recruit > mail notif if remove studies ?
-            
-        //     if($this->checkHired('studies', $studies) == [] && $this->checkAgree('studies', $studies) == []) {
-        //         // delete applies 
-        //         $this->manager->remove($recruits);
-        //     }
-        //     else {
-        //         // set student_id to null
-        //         $recruits->setStudent(NULL);
-        //         // delete unavailables
-        //         // $this->deleteUnavailable($offers, $student);
-        //     } 
-        // }
+        // if recruit > mail notif if remove studies ?
+        // set to null and ask student to continue research or to stop ? 
     }
 
     public function handleDeleteCompany(School $school)
@@ -187,27 +169,7 @@ class RecruitHelper extends CommonHelper
             }
         }
 
-       
-
-        // // get applies 
-        // $recruits = $studies->getRecruits();
-
-        // foreach($recruits as $recruits) {
-        //     // get students
-        //     $student = $recruits->getStudent();
-            
-        //     // if recruit > mail notif if remove studies ?
-            
-        //     if($this->checkHired('studies', $studies) == [] && $this->checkAgree('studies', $studies) == []) {
-        //         // delete applies 
-        //         $this->manager->remove($recruits);
-        //     }
-        //     else {
-        //         // set student_id to null
-        //         $recruits->setStudent(NULL);
-        //         // delete unavailables
-        //         // $this->deleteUnavailable($offers, $student);
-        //     } 
-        // }
+        // if recruit > mail notif if remove studies ?
+        // set to null and ask student to continue research or to stop ? 
     }
 }

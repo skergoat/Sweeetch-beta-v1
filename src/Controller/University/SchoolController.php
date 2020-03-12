@@ -34,20 +34,17 @@ class SchoolController extends AbstractController
      */
     public function index(SchoolRepository $schoolRepository, PaginatorInterface $paginator, Request $request, AdminChecker $checker): Response
     {
-        // if($checker->adminValid($user)) 
-        // {
-            $queryBuilder = $schoolRepository->findAllPaginated("DESC");
+        $queryBuilder = $schoolRepository->findAllPaginated("DESC");
 
-            $pagination = $paginator->paginate(
-                $queryBuilder, /* query NOT result */
-                $request->query->getInt('page', 1)/*page number*/,
-                10/*limit per page*/
-            );
+        $pagination = $paginator->paginate(
+            $queryBuilder, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
 
-            return $this->render('school/index.html.twig', [
-                'schools' => $pagination,
-            ]);
-        // }
+        return $this->render('school/index.html.twig', [
+            'schools' => $pagination,
+        ]);
     }
 
     /**
@@ -163,9 +160,13 @@ class SchoolController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($school);
             $entityManager->flush();
-        }
 
-        $this->addFlash('success', 'Compte Supprimé');
-        return $this->redirectToRoute($from);
+            $this->addFlash('success', 'Compte Supprimé');
+            return $this->redirectToRoute($from);
+        }
+        else {
+            $this->addFlash('error', 'Requête Invalide');
+            return $this->redirectToRoute($from);
+        }
     }
 }
