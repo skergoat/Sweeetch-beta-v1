@@ -19,7 +19,7 @@
   ============================-->
   <header id="header">
 
-    <div id="topbar">
+    {# <div id="topbar">
       <div class="container">
         <div class="social-links">
           <a href="https://twitter.com/SweeetchA" target="_blank" class="twitter"><i class="fa fa-twitter"></i></a>
@@ -27,25 +27,21 @@
           <a href="https://fr.linkedin.com/company/sweetchmontpellier?trk=public_profile_topcard_current_company" target="_blank" class="linkedin"><i class="fa fa-linkedin"></i></a>
           <a href="https://www.instagram.com/sweeetch_alternance/" target="_blank" class="instagram"><i class="fa fa-instagram"></i></a>
         </div>
-      </div>
-    </div>
+      </div> #}
+    {# </div> #}
 
-    <div class="container">
-
+    <div class="container" id="customer-header">
       <div class="logo float-left">
         <!-- LOGO HOME IMAGE -->
-        <h1 class="text-light"><a href="#intro" class="scrollto"><span>SWEEETCH</span></a></h1>
-        <!-- <a href="#header" class="scrollto"><img src="img/logo.png" alt="" class="img-fluid"></a> -->
+        {# <h1 class="text-light"><a href="#intro" class="scrollto"><span>SWEEETCH</span></a></h1> #}
+        <a href="#header" class="scrollto"><img src="{{ asset('build/Sweeetch-logo.png') }}" alt="" class="img-fluid"></a> 
       </div>
 
       <nav class="main-nav float-right d-none d-lg-block">
         <ul>
-          <li class="active"><a href="{{ path('homepage') }}">Acceuil</a></li>
-          <li><a href="#about">À propos</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#team">Équipe</a></li>
-
-          <li><a href="#footer">Contact</a>
+          <li class="active"><a href="{{ path('homepage') }}">Accueil</a></li>
+          <li><a href="#about">Sweeetch</a></li>
+          <li><a href="#why-us">Nos fonctionnalités</a></li>
           <li><a href="{{ path('offers_index') }}">Emplois</a></li>
               {# <ul>
                   <li><a href="cgu.html">Conditions Générales D'utilisation</a></li>
@@ -87,17 +83,17 @@
     Intro Section /*  ici j'écris quoi ?*/
   ============================-->
   <section id="intro" class="clearfix">
-    <div class="container d-flex h-100">
-      <div class="row justify-content-center align-self-center">
-        <div class="col-md-6 intro-info order-md-first order-last">
-          <h2><span class="couleurR">Les</span><span class="couleurB"> fonctionnalités</span><span class="couleurJ"> De Sweetch</span><br>des solutions innovantes<span> Commencez dès maintenant !</span></h2>
+    <div class= "container d-flex h-100" style="max-width:90% !important">
+      <div class="row justify-content-center align-self-center" style="display:flex; justify-content:center; align-items:center;">
+        <div class="col-md-6 intro-info order-md-first order-last" >
+          <h2>La plateforme qui révolutionne la recherche d'alternance !</h2>
           <div>
             <a href="{{ path('student_new') }}" class="btn-get-started scrollto">Inscrivez-vous</a>
           </div>
         </div>
   
         <div class="col-md-6 intro-img order-md-last order-first">
-          <img src="{{ asset('build/intro-img-f.png') }}" alt="" class="img-fluid">
+            <img src="{{ asset('build/CV.png') }}" alt="Sweeetch alternance" class="img-fluid">
         </div>
       </div>
 
@@ -111,34 +107,24 @@
     ============================-->
     <section id="about">
 
-      <div class="container">
+      <div class="container"style="max-width:85%" >
         <div class="row">
 
           <div class="col-lg-5 col-md-6">
             <div class="why-us-img">
-              <img src="{{ asset('build/about-img.jpg') }}" alt="" class="img-fluid">
+              <img src="{{ asset('build/Image-2.png') }}" alt="" class="img-fluid">
             </div>
           </div>
 
-          <div class="col-lg-7 col-md-6">
+          <div class="col-lg-6 col-md-6">
             <div class="about-content">
-              <h2>Comment Sweeetch fonctionne</h2>
-              <h3>L'avenir vous appartient, finies les démarches inutiles, il est temps d'atteindre votre objectif</h3>
+              <h2>Sweeetch, dis m’en plus sur toi ! </h2>
+              <h3>Une app créée par 2 anciens alternants qui ont connu la pénibilité d’une recherche d’alternance !</h3>
 
-              <p>Accepter une alternance par dépit, c'est fini !<br><br>
+              <p>Nous te donnons le pouvoir de choisir ton propre futur : consulte et postule sur toutes les offres d’alternance de nos partenaires, sans aucun intermédiaire. A toi de faire la différence ! 🚀</p>
+                <p> Marketing, Ressources humaines, Mode, Communication, Gestion d’entreprise, Management, Métiers du sport, de l’agro-alimentaire… C’est simple, tu trouveras forcément ton bonheur ! 😀</p>
 
-                  Avec Sweeetch,  c'est toi qui décides de ton futur : Marketing, ressources humaines, mode, communication, artisanat...<br><br>
-                  
-                  Des centaines d'offres d'emplois accessibles chaque jour, et sans intermédiaire. Tu y trouveras forcément ton bonheur 😀
-                  </p>
-              <p>Fais confiance à Sweeetch ! 
-
-                  De la prestigieuse Business School de ta ville en passant par les meilleurs centres de formation en alternance, nous sélectionnons pour toi les établissements les plus adaptés à la direction que tu souhaites donner à ta carrière professionnelle.</p>
-              <ul>
-                <li><i class="ion-android-checkmark-circle"></i>Accède aux meilleures écoles</li>
-                <li><i class="ion-android-checkmark-circle"></i>Choisis parmi tous les secteurs d'activité</li>
-                <li><i class="ion-android-checkmark-circle"></i>Des astuces qui font la différence</li>
-              </ul>
+                 <p> Nous sélectionnons aussi pour toi les écoles les plus adaptées à la direction que tu souhaites donner à ta carrière professionnelle. Deviens un Sweeetcher ! 🔥</p>
             </div>
           </div>
         </div>
@@ -219,42 +205,36 @@
       <div class="container-fluid">
         
         <header class="section-header">
-          <h3>Pourquoi nous choisir?</h3>
-          <p>Nous savons que s'insérer sans bagage ou sorti récemment du système scolaire s'avère compliqué, c'est pourquoi vous êtes notre priorité, vous êtes notre avenir travaillant ensemble.</p>
+          <h3>Conçue pour les alternants  </h3>
+          <p>Conscient de tous les obstacles qui freinent ta recherche d'alternance, On a décidé de créer une plateforme simple & rapide afin que tu puisses avoir l'esprit tranquille !
+           </p>
         </header>
 
         <div class="row">
-
-          <div class="col-lg-6">
-            <div class="why-us-img">
-              <img src="{{ asset('build/why-us.jpg') }}" alt="" class="img-fluid">
+          <div class="col-lg-5">
+            <div class="why-us-img"id="custom-img">
+              <img src="{{ asset('build/sansbord.png') }}" alt="" id="custom" class="img-fluid">
             </div>
           </div>
 
-          <div class="col-lg-6">
-            <div class="why-us-content">
-              <h1>SWEEETCH</h1>
-              <p>
-                  Une alternance en quelques clics Grâce à Sweeetch, tu peux désormais trouver ton école et ton entreprise simplement
-
-              </p>
-
+          <div class="col-lg-7"style="height:auto;display:flex;flex-direction:column;align-items:flex-start;justify-content: center;">
+            <div class="why-us-content"style="max-width:90%">
               <div class="features wow bounceInUp clearfix">
                 <i class="fa fa-diamond" style="color: #0748fc;"></i>
-                <h4>Un accompagnement de qualité</h4>
-                <p>Notre équipe t'aide  et te conseille sur ta recherche d'alternance</p>
+                <h4>Deviens un chasseur d'alternance </h4>
+                <p>Notre équipe t'apporte son expertise et ses conseils jusqu'à l'obtention de ton alternance. </p>
               </div>
 
               <div class="features wow bounceInUp clearfix">
                 <i class="fa fa-users" style="color: #0748fc;"></i>
-                <h4>Tous les secteurs d'activité</h4>
-                <p>Accepter une alternance par dépit, c'est fini. Avec Sweeetch</p>
+                <h4>Profite de tous les secteurs d'activité</h4>
+                <p>Marketing, Ressources humaines, Mode, Communication, Gestion d’entreprise, Management... en contrat d'apprentissage ou contrat de professionnalisation.
               </div>
               
               <div class="features wow bounceInUp clearfix">
                 <i class="fa fa-thumbs-up" style="color: #0748fc;"></i>
-                <h4>C'est toi qui décides de ton futur </h4>
-                <p>Marketing, ressources humaines, mode, communication, artisan</p>
+                <h4>Une alternance simple & rapide </h4>
+                <p> Toutes les démarches sur une même plateforme !  Ton entreprise et ton école en quelques clics.</p>
               </div>
               
             </div>
@@ -263,31 +243,7 @@
 
         </div>
 
-      </div>
-
-      <div class="container">
-        <div class="row counters">
-
-          <div class="col-lg-3 col-6 text-center">
-            <span data-toggle="counter-up">80</span>
-            <p>Clients SWEEETCH</p>
-          </div>
-
-          <div class="col-lg-3 col-6 text-center">
-            <span data-toggle="counter-up">1</span>
-            <p> Écoles partenaires</p>
-          </div>
-
-          <div class="col-lg-3 col-6 text-center">
-            <span data-toggle="counter-up">70</span>
-            <p>Alternants inscrits</p>
-          </div>
-
-          <div class="col-lg-3 col-6 text-center">
-            <span data-toggle="counter-up">0</span>
-            <p>Professionnels inscrits </p>
-          </div>
-  
+      </div> 
         </div>
 
       </div>
@@ -314,42 +270,7 @@
     <!--==========================
       Features section APPP
     ============================-->
-    <section id="features">
-      <div class="container">
-
-        <div class="row feature-item">
-          <div class="col-lg-6 wow fadeInUp">
-            <img src="{{ asset('build/features-1.svg') }}" class="img-fluid" alt="">
-          </div>
-          <div class="col-lg-6 wow fadeInUp pt-5 pt-lg-0">
-            <h4><span class="couleurR">Les</span><span class="couleurB"> fonctionnalités</span><span class="couleurJ"> De Sweetch</span><br>des solutions innovantes<span> Commencez dès maintenant !</span</h4><br><br>
-
-            <p>
-                lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce lorem purus, elementum non turpis sit amet, mollis ultricies lectus. Praesent iaculis, turpis eu blandit tempus, tellus ipsum congue lorem, nec tincidunt ipsum dui at ni
-            </p>
-            <p>
-                lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce lorem purus, elementum non turpis sit amet, mollis ultricies lectus. Praesent iaculis, turpis eu blandit tempus, tellus ipsum congue lorem, nec tincidunt ipsum dui at ni
-            </p>
-          </div>
-        </div>
-
-        <div class="row feature-item mt-5 pt-5">
-          <div class="col-lg-6 wow fadeInUp order-1 order-lg-2">
-            <img src="{{ asset('build/features-2.svg') }}" class="img-fluid" alt="">
-          </div>
-
-          <div class="col-lg-6 wow fadeInUp pt-4 pt-lg-0 order-2 order-lg-1">
-            <h4>Lorem ipsum</h4>
-            <p>
-                lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce lorem purus, elementum non turpis sit amet, mollis ultricies lectus. Praesent iaculis, turpis eu blandit tempus, tellus ipsum congue lorem, nec tincidunt ipsum dui at ni
-            </p>
-            <p>
-                lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce lorem purus, elementum non turpis sit amet, mollis ultricies lectus. Praesent iaculis, turpis eu blandit tempus, tellus ipsum congue lorem, nec tincidunt ipsum dui at ni
-            </p>
-            <p>
-                lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce lorem purus, elementum non turpis sit amet, mollis ultricies lectus. Praesent iaculis, turpis eu blandit tempus, tellus ipsum congue lorem, nec tincidunt ipsum dui at ni
-            </p>
-          </div>
+    
           
         </div>
 
@@ -485,82 +406,7 @@
     </section>#}<!-- #clients -->
 
     <!--========================== !-->
-    <section id="faq">
-      <div class="container">
-        <header class="section-header">
-          <h3>Questions fréquemment posées</h3>
-          <p>Ces questions sont les plus fréquemment posées du point de vue des alternants, n'hésitez pas à nous contacter pour plus d'informations.</p>
-        </header>
-
-        <ul id="faq-list" class="wow fadeInUp">
-          <li>
-            <a data-toggle="collapse" class="collapsed" href="#faq1">Développer votre employabilité.<i class="ion-android-remove"></i></a>
-            <div id="faq1" class="collapse" data-parent="#faq-list">
-              <p>
-                En tant qu’intérimaire, vous disposez d’un large panel de solutions de formation pour améliorer votre employabilité. Découvrez l’ensemble des dispositifs de formation ouvert aux intérimaires.
-                FASTT (Fonds d'action Social du Travail Temporaire), Formations etc 
-              </p>
-            </div>
-          </li>
-
-          <li>
-            <a data-toggle="collapse" href="#faq2" class="collapsed">Vos droits en intérim.<i class="ion-android-remove"></i></a>
-            <div id="faq2" class="collapse" data-parent="#faq-list">
-              <p>
-                Maladie, accidents du travail, maternité… Vous bénéficiez des indemnisations de la Sécurité Sociale, de la caisse de retraite, de prévoyance du Travail Temporaire et sous certaines conditions, des revenus complémentaires versés par l’IREPS.
-                De plus, vous aurez droit aux congés habituels prévus par le droit du travail ainsi qu’aux congés exceptionnels pour certains événements familiaux : <br>
-                * 4 jours pour un mariage <br>
-                * 3 jours pour la naissance d’un enfant <br>
-                * 1 jour pour le décès d’un parent… <br>
-              </p>
-            </div>
-          </li>
-
-          <li>
-            <a data-toggle="collapse" href="#faq3" class="collapsed">Vos devoirs en intérim.<i class="ion-android-remove"></i></a>
-            <div id="faq3" class="collapse" data-parent="#faq-list">
-              <p>
-                Votre qualité d’intérimaire fait de vous notre ambassadeur. Vous êtes garant de la bonne exécution de votre contrat de mission et du respect du règlement intérieur de l’entreprise.
-                Cette responsabilité vous témoigne de la confiance que nous vous accordons ! Votre statut d’intérimaire vous soumet également à certaines obligations :
-                <br>
-                * Passer une visite médicale <br>
-                * Être présent pendant toute la mission d’intérim <br>
-                * Réaliser la mission qui vous a été confiée avec la meilleure qualité possible <br>
-              </p>
-            </div>
-          </li>
-
-          <li>
-            <a data-toggle="collapse" href="#faq4" class="collapsed">SWEEETCH Agence en ligne<i class="ion-android-remove"></i></a>
-            <div id="faq4" class="collapse" data-parent="#faq-list">
-              <p>
-                SWEEETCH est une agence en ligne spécialisée dans l'intérim 18-25 ans. nous comptons à ce jour aucune agence physique. L'importance pour nous est d'assurés nos candidats vers un emploi.
-              </p>
-            </div>
-          </li>
-
-          <li>
-            <a data-toggle="collapse" href="#faq5" class="collapsed">Les élements qui composent votre rémunération <i class="ion-android-remove"></i></a>
-            <div id="faq5" class="collapse" data-parent="#faq-list">
-              <p>
-                Vous la percevez à la fin de votre contrat. 10% d'indemnité de congés payés : elle vous sera versée à chaque fin de contrat, soit 10% du salaire brut, IFM comprise.
-                Le versement de votre salaire s'effectue avant le 15 du mois 
-            </div>
-          </li>
-
-          <li>
-            <a data-toggle="collapse" href="#faq6" class="collapsed">Acquérir de l'expérience avec SWEEETCH<i class="ion-android-remove"></i></a>
-            <div id="faq6" class="collapse" data-parent="#faq-list">
-              <p>
-                "Passer par l'intérim est très intéressant pour acquérir de l'expérience" explique Jérôme Gras, Directeur Executif chez Page Personnel. "Les jeunes diplômés ont d'ailleurs bien compris ses multiples avantages. Ils ne sont pas dupes : ils savent qu'ils ne trouveront peut-être pas exactement ce qu'ils recherchent en intérim mais qu'ils s'en rapprocheront. Mais c'est aussi ça la vie professionnelle."
-              </p>
-            </div>
-          </li>
-
-        </ul>
-
-      </div>
-    </section><!-- #faq -->
+    
 
   </main>
 
@@ -577,20 +423,6 @@
           <div class="col-lg-6">
 
             <div class="row">
-
-                <div class="col-sm-6">
-
-                  <div class="footer-info">
-                    <h3>SWEEETCH
-                    </h3>
-                    <p>Une alternance en quelques clics    Grâce à Sweeetch, tu peux désormais trouver ton école et ton entreprise simplement.</p>
-                    <a class="twitter-timeline" href="https://twitter.com/SweeetchA?ref_src=twsrc%5Etfw" height="450">Tweets by SweeetchA</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                    
-                  </div>
-
-
-                </div>
-
                 <div class="col-sm-6">
                   <div class="footer-links">
                     <h4>
@@ -601,29 +433,11 @@
                       <li><a href="#">Services</a></li>
                       <li><a href="{{ path('conditions') }}">Conditions d'utilisation</a></li>
                       <li><a href="#">Politique de confidentialité</a></li>
+                      <li><a href="{{ path('faq') }}">FAQ</a></li>
                     </ul>
                   </div>
                   <div class="footer-links">
-                      <h4>NOUS CONTACTER</h4>
-                      <p>
-                        Siège: SWEEETCH<br>
-                        Rue parmentier <br>
-                        Montpellier, 34000<br>
-                        <strong>Téléphone:</strong> 01 12 52 63 45<br>
-                        <strong>Email:</strong> sweeetch@service.com<br>
-                      </p>
                     </div>
-                  <div class="footer-links">
-                    <h4>Siège CTO SWEEETCH</h4>
-                    <p>
-                      Siège: SWEEETCH CTO  <br>
-                      Rue parmentier <br>
-                      Montbéliard, 25200<br>
-                      <strong>Téléphone:</strong> 01 12 52 63 45<br>
-                      <strong>Email:</strong> infos-dev@sweeetch.com<br>
-                    </p>
-                  </div>
-
                   <div class="social-links">
                     <a href="https://twitter.com/SweeetchA" target="_blank" class="twitter"><i class="fa fa-twitter"></i></a>
                     <a href="https://www.facebook.com/sweeetch.ton.alternance/" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a>
@@ -642,9 +456,9 @@
             <div class="form">
               
               <h4>MESSAGE</h4>
-              <p>Besoin d'aide ? Une question ? Sweeetch te répond ans les plus brefs délais.<br><br>
+              <p>Si vous avez des questions à propos de Sweeetch, que vous soyez une entreprise à la recherche d’un alternant ou un étudiant en quête d’une alternance,
 
-                  Notre équipe d'experts te suit dans chaque démarche (CV, lettre de motivation, entretiens...) et te fais profiter d'un coaching de qualité grâce à notre service d'accompagnement personnalisé.
+                 n’hésitez pas à nous contacter en remplissant le formulaire ci-dessous et nous vous répondrons dans les plus brefs délais.
               </p>
               <form action="{{ path('contact') }}" method="post" role="form" class="contactForm">
                 <div class="form-group">
@@ -684,7 +498,7 @@
       </div>
       <div class="credits">
 
-        L'équipe de SWEEETCH</a>
+        Fait avec ❤️ par d'anciens alternants</a>
       </div>
     </div>
   </footer><!-- #footer -->

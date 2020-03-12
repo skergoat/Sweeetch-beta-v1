@@ -33,6 +33,14 @@ class FrontController extends AbstractController
         return $this->render("Front/conditions.html.twig");
     }
 
+
+     /**
+     * @Route("/faq", name="faq")
+     */
+    public function faq()
+    {
+        return $this->render("Front/Faq.html.twig");
+    }
     /**
      * @Route("/contact", name="contact")
      */
