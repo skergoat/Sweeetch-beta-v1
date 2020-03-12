@@ -36,7 +36,7 @@ class StudiesActionController extends AbstractController
     public function recruit(Studies $studies, Student $student, RecruitRepository $repository, Request $request, RecruitHelper $helper, RecruitMailer $mailer)
     {
         // check if student is already hired
-        if($helper->checkAgree('student', $student) || $helper->checkFinished('student', $student)) {
+        if($helper->checkAgree('student', $student)) {
             $this->addFlash('error', 'Vous êtes déjà embauché ailleurs. Rendez-vous sur votre profil.');
             return  $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'from' => 'student', 'from_id' => $student->getId()]);
         }
@@ -54,7 +54,7 @@ class StudiesActionController extends AbstractController
         }
 
         // check if student has already applied to current study
-        if($helper->checkRecruit($studies, $student)) {  
+        if($helper->checkRecruit($studies, $student) && !$helper->checkFinished('student', $student)) {    
             $this->addFlash('error', 'Vous avez déjà postulé');
             return  $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'from' => 'student', 'from_id' => $student->getId()]);
         }
@@ -98,7 +98,7 @@ class StudiesActionController extends AbstractController
         $studies = $recruit->getstudies();
 
         // check if student is available
-        if($helper->checkAgree('student', $student) || $helper->checkFinished('student', $student)) {
+        if($helper->checkAgree('student', $student)) {
             $this->addFlash('error', 'Cet étudiant n\'est plus disponible.');
             return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
         }
