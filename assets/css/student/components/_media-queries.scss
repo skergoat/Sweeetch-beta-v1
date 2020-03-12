@@ -1,3 +1,10 @@
+@media all and (max-width:1024px)
+{
+    .fa-user-check, .fas.fa-edit {
+        display:none;
+    }
+}
+
 @media all and (max-width: 1000px) {
 
     .table-scroll-card-width {
@@ -68,17 +75,17 @@
 
     .time-icon:nth-child(2) {
         left:40%;
-        top:72px;
+        top:40px;
+    }
+
+    .time-icon:nth-child(3) {
+        left:88%;
+        top:-6px;
     }
 
     .timeline::before {
         width:97%;
         top:100px;
-    }
-
-    .time-icon:nth-child(3) {
-        left:90%;
-        top:57px;
     }
 
     .message-fourth {
@@ -102,7 +109,17 @@
         top:100px;
     }
 
+    .time-icon:nth-child(2) {
+        left:37%;
+        // top:40px;
+    }
+
     .time-icon:nth-child(3) {
-        left:86%;
+        left:83%;
+    }
+
+    // cards padding
+    .card.card-primary {
+        padding:15px;
     }
 }

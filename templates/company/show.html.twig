@@ -4,6 +4,92 @@
 
 {% block body %}
 
+    <div id="info-1" class="modal">
+        <div class="container" style="text-align:justify;">
+            <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">Bienvenue sur votre tableau de bord !</p><br><br>
+            <p> Le tableau 
+                <span style="color:#4c4c4c !important;font-weight:900;">Candidats</span>
+                Contient la liste de toutes les personnes qui ont postulées à une de vos annonces. 
+            </p>
+            <p> 
+                Votre mission : <span style="font-weight:900;">accepter ou refuser les candidats ! </span>
+            </p>
+            <p> 
+                Pour cela : 
+                <ul>
+                    <li>allez dans l'onglet "Annonces" de la barre lattérale</li><br>
+                    <li>Cliquez sur l'annonce de votre choix pour voir apparaitre les candidats</li><br>
+                    <li>Cliquez ensuite sur ... ou ...</li><br>
+                </ul>
+            </p>
+            <span style="font-weight:900;">Merci !</span> 
+        </div> 
+    </div>
+
+    <div id="info-2" class="modal">
+        <div class="container" style="text-align:justify;">
+            <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">Bienvenue sur votre tableau de bord !</p><br><br>
+            <p> Le tableau 
+                <span style="color:#4c4c4c !important;font-weight:900;">Recrutements en cours </span>
+                Contient la liste des candidats que vous êtes en train de recruter.  
+            </p>
+            <p>Concrètement cela veut dire que vous en êtes à la signature des contrats. C'est une excellente nouvelle ! </p>
+            <p> 
+                Dès que les contrats sont signés, pensez a : 
+                <ul>
+                    <li>vous rendre dans l'onglet "Annonces"</li>
+                    <li>sélectionner l'annonce sur laquelle vous venez de signer le contrat</li>
+                    <li>cliquer sur ... pour indiquer que le recrutement est terminé</li>
+                </ul>
+
+                <span style="font-weight:900;">Merci !</span> 
+            </p>
+        </div> 
+    </div>
+
+    <div id="info-3" class="modal">
+        <div class="container" style="text-align:justify;">
+            <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">Bienvenue sur votre tableau de bord !</p><br><br>
+            <p> La carte 
+                <span style="color:#4c4c4c !important;font-weight:900;">Infos du Compte </span>
+                contient les infos que vous avez renseignées lors de votre inscription.  
+            </p>
+            <p>Vous pouvez les mettre à jour dans l'onglet "Infos du Compte" de la barre lattérale. </p>
+            <p> Dans cet onglet vous changerez aussi vos mots de passe ou téléchargerez votre photo de profil.</p>
+            <p> 
+                <span style="font-weight:900;">Bonne prise en main !</span> 
+            </p>
+        </div> 
+    </div>
+
+    <div id="info-4" class="modal">
+        <div class="container" style="text-align:justify;">
+            <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">Bienvenue sur votre tableau de bord !</p><br><br>
+            <p> Le tableau 
+                <span style="color:#4c4c4c !important;font-weight:900;">En Attente d'Acceptation</span>
+                Contient la liste des candidats que vous souhaitez recruter et qui doivent accepter votre demande.  
+            </p>
+            <p>Prenez patience car la signature du contrat n'est pas loin !</p>
+            <p>
+                <span style="font-weight:900;">Merci !</span> 
+            </p>
+        </div> 
+    </div>
+
+    <div id="info-5" class="modal">
+        <div class="container" style="text-align:justify;">
+            <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">Bienvenue sur votre tableau de bord !</p><br><br>
+            <p> Le tableau 
+                <span style="color:#4c4c4c !important;font-weight:900;">Recrutements terminés</span>
+                Contient la liste des candidats que vous avez recrutés.  
+            </p>
+            <p>C'est un peu comme la mémoire de votre activité sur Sweeetch... <a href="">#nostalgie</a></p>
+            <p>
+                <span style="font-weight:900;">En espérant vous apporter satisfaction !</span> 
+            </p>
+        </div> 
+    </div>
+
     <div class="row row-top">
 
        <div class="col-lg-5">
@@ -41,23 +127,235 @@
         </div>
     </div> 
 
-    <div class="row card-margin">
+    <div class="row">
+
+        <div class="col-lg-6">
+            <div class="col-lg- table-scroll">
+                <div class="card" style="padding:0px;">
+
+                    <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
+                        <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
+                            Candidats 
+                            <a href="#info-1" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                            <i class="fas fa-question-circle"></i>
+                            </a>
+                        </p>
+        
+                        <div class="card-tools">
+                          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus" style="color:#8e8e8e;"></i>
+                          </button>
+                        </div>
+                    </div>
+            
+                    <div class="card-body card-responsive-table">
+                        <table id="dash1" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Annonces</th>
+                                    <th>Etat du Recrutement</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for applies in applies %}
+                                <tr class="border-top">
+                                    <td><a href="{{ path('offers_preview', {id:applies.offers.id, company:company.id}) }}" class="action-link">{{ applies.offers.title }}</a></td>
+                                    <td>
+                                        <span class="badge badge-primary right">Ouverte</span> 
+                                    </td>
+                                </tr>
+                                {% endfor %} 
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card" style="padding:0px;">
+
+                    <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
+                        
+                        <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
+                            En Attente d'Acceptation
+                            <a href="#info-4" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                            <i class="fas fa-question-circle"></i>
+                            </a>
+                        </p>
+    
+                        <div class="card-tools">
+                          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus" style="color:#8e8e8e;"></i>
+                          </button>
+                        </div>
+                    </div>
+    
+                    <div class="card-body card-responsive-table">
+                        <table id="dash3" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Annonces</th>
+                                    <th>Etat du Recrutement</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for hired in hired %}
+                                    <tr class="border-top">
+                                        <td><a href="{{ path('offers_preview', {id:hired.offers.id, company:company.id}) }}" class="action-link">{{ hired.offers.title }}</a></td>
+                                        <td>
+                                            <span class="badge badge-warning right">En attente d'acceptation</span>
+                                        </td>
+                                    </tr>
+                                {% endfor %} 
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card" style="padding:0px;">
+
+                    <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
+                        <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
+                            Recrutements en cours 
+                            <a href="#info-2" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                            <i class="fas fa-question-circle"></i>
+                            </a>
+                        </p>
+
+                        <div class="card-tools">
+                          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus" style="color:#8e8e8e;"></i>
+                          </button>
+                        </div>
+                    </div>
+            
+                    <div class="card-body card-responsive-table">
+                        <table id="dash2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Annonces</th>
+                                    <th>Etat du Recrutement</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for agree in agree %}
+                                <tr class="border-top">
+                                    <td><a href="{{ path('offers_preview', {id:agree.offers.id, company:company.id}) }}" class="action-link">{{ agree.offers.title }}</a></td>
+                                    <td>
+                                        {% if agree.hired == true %}
+                                        <span class="badge badge-warning right">En attente d'acceptation</span>
+                                        {% elseif agree.agree == true %}
+                                        <span class="badge bg-info">A Finaliser</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %} 
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {# <div class="card" style="padding:0px;">
+
+                    <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
+                        
+                        <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
+                            En Attente d'Acceptation
+                            <a href="#info-4" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                            <i class="fas fa-question-circle"></i>
+                            </a>
+                        </p>
+    
+                        <div class="card-tools">
+                          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus" style="color:#8e8e8e;"></i>
+                          </button>
+                        </div>
+                    </div>
+    
+                    <div class="card-body">
+                        <table id="dash3" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Annonces</th>
+                                    <th>Etat du Recrutement</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for hired in hired %}
+                                    <tr class="border-top">
+                                        <td><a href="{{ path('offers_preview', {id:hired.offers.id, company:company.id}) }}" class="action-link">{{ hired.offers.title }}</a></td>
+                                        <td>
+                                            <span class="badge badge-warning right">En attente d'acceptation</span>
+                                        </td>
+                                    </tr>
+                                {% endfor %} 
+                            </tbody>
+                        </table>
+                    </div>
+                </div> #}
+            </div>
+
+            <div class="card" style="padding:0px;">
+
+                <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
+                    
+                    <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
+                        Recrutements terminés
+                        <a href="#info-5" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                        <i class="fas fa-question-circle"></i>
+                        </a>
+                    </p>
+
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus" style="color:#8e8e8e;"></i>
+                      </button>
+                    </div>
+                </div>
+        
+                <div class="card-body card-responsive-table">
+                    <table id="dash4" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Annonces</th>
+                                <th>Etat du Recrutement</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for finished in finished %}
+                                {# {% if finished.offers.id is defined %} #}
+                            <tr class="border-top">
+                                <td><a href="{{ path('offers_preview', {id:finished.offers.id, company:company.id}) }}" class="action-link">{{ finished.offers.title }}</a></td>
+                                <td>
+                                    <span class="badge badge-success right">Recruté</span>
+                                </td>
+                            </tr>
+                                {# {% endif %} #}
+                            {% endfor %} 
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+        </div>
 
         <div class="col-lg-6">
 
-            <div class="card col-lg-" style="padding:0px;">
+            <div class="card col-lg-" id="card-1" style="padding:0px;">
 
-                <div class="cardRed card-header-color card-header border-transparent">
-                    <p class="card-title">Infos du compte</p>
-    
+                <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
+                    
+                    <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
+                        Infos du compte
+                        <a href="#info-3" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                        <i class="fas fa-question-circle"></i>
+                        </a>
+                    </p>
+
                     <div class="card-tools">
                       <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                        <i class="fas fa-minus"></i>
+                        <i class="fas fa-minus" style="color:#8e8e8e;"></i>
                       </button>
                     </div>
                 </div>
                 
-                <div class="card-body p-0 card-dashboard">
+                <div class="card-body card-responsive-table">
                     <div class="table-padding table-responsive">
                         <table class="table m-0">
                             <tbody>
@@ -98,173 +396,185 @@
                     </div>
                 </div>
             </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-6">
+
+            {# <div class="card" style="padding:0px;">
+
+                <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
+                    
+                    <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
+                        En Attente d'Acceptation
+                        <a href="#info-4" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                        <i class="fas fa-question-circle"></i>
+                        </a>
+                    </p>
+
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus" style="color:#8e8e8e;"></i>
+                      </button>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <table id="dash3" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Annonces</th>
+                                <th>Etat du Recrutement</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for hired in hired %}
+                                <tr class="border-top">
+                                    <td><a href="{{ path('offers_preview', {id:hired.offers.id, company:company.id}) }}" class="action-link">{{ hired.offers.title }}</a></td>
+                                    <td>
+                                        <span class="badge badge-warning right">En attente d'acceptation</span>
+                                    </td>
+                                </tr>
+                            {% endfor %} 
+                        </tbody>
+                    </table>
+                </div>
+            </div> #}
+
         </div>
 
         <div class="col-lg-6">
 
             <div class="col-lg- table-scroll">
 
-                <div class="card" style="padding:0px; height:510px;max-height:510px;overflow:scroll;">
-                   
-                    <div class="cardYellow card-header-color card-header border-transparent">
-                        <p class="card-title">Missions en attente</p>
-        
+                {# <div class="card" style="padding:0px;">
+
+                    <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
+                        
+                        <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
+                            Recrutements terminés
+                            <a href="#info-5" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                            <i class="fas fa-question-circle"></i>
+                            </a>
+                        </p>
+
                         <div class="card-tools">
                           <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <i class="fas fa-minus"></i>
+                            <i class="fas fa-minus" style="color:#8e8e8e;"></i>
                           </button>
                         </div>
                     </div>
-                
-                    <div class="card-body p-0 card-dashboard">
-                        <div class="table-responsive">
-                            <table class="table m-0">
-                                <tbody>
-                                    <tr>
-                                        <th>Mission</th>
-                                        <th>Situation</th>
-                                    </tr>
-                                    
-                                    {% if hired | length != 0 and agree | length != 0 %}
-
-                                        {% for hired in hired %}
-                                    
-                                        <tr class="border-top">
-                                            <td><a href="" class="action-link">{{ hired.offers.title }}</a></td>
-                                            <td>
-                                                <span class="badge badge-danger" title="Mission en cours. Bonne chance !">L'Eleve doit confirmer</span>
-                                            </td>   
-                                        </tr> 
-
-                                        {% endfor %}
-
-                                        {% for agree in agree %}
-                                    
-                                        <tr class="border-top">
-                                            <td><a href="" class="action-link">{{ agree.offers.title }}</a></td>
-                                            <td>
-                                                <span class="badge badge-warning" title="Mission en cours. Bonne chance !">Dossier en traitement</span>
-                                            </td>   
-                                        </tr> 
-
-                                        {% endfor %}
-                                        
-                                    {% else %}
-                                    <tr class="border-top">
-                                        <td colspan="8" class="border-top-td">Aucune mission en cours</td>
-                                    </tr> 
-                                    {% endif %}
-                                    
-                                </tbody>
-                            </table>
-                        </div>
+            
+                    <div class="card-body" >
+                        <table id="dash4" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Annonces</th>
+                                    <th>Etat du Recrutement</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for finished in finished %}
+                                <tr class="border-top">
+                                    <td><a href="{{ path('offers_preview', {id:finished.offers.id, company:company.id}) }}" class="action-link">{{ finished.offers.title }}</a></td>
+                                    <td>
+                                        <span class="badge badge-success right">Recruté</span>
+                                    </td>
+                                </tr>
+                                {% endfor %} 
+                            </tbody>
+                        </table>
                     </div>
-                </div>
+                </div> #}
             </div>
         </div>
     </div>
 
-    <div class="row">
-
-        <div class="col-lg-12">
-    
-            <div class="col-lg- table-scroll">
-
-                <div class="card" style="padding:0px;">
-                   
-                    <div class="cardBlue card-header-color card-header border-transparent">
-                        <p class="card-title">Missions en cours</p>
-        
-                        <div class="card-tools">
-                          <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <i class="fas fa-minus"></i>
-                          </button>
-                        </div>
-                    </div>
-                
-            
-                    <div class="card-body p-0 card-dashboard">
-                        <div class="table-responsive">
-                            <table class="table m-0">
-                                <tbody>
-                                    <tr>
-                                        <th>Mission</th>
-                                        <th>Situation</th>
-                                    </tr>
-
-                                 {% for confirmed in confirmed %}
-
-                                    <tr class="border-top">
-                                        <td><a href="" class="action-link">{{ confirmed.offers.title }}</a></td>
-                                        <td>
-                                            <span class="badge badge-success" title="Mission en cours. Bonne chance !">Mission en cours</span>
-                                        </td>   
-                                    </tr>  
-
-                                 {% else %} 
-                                    <tr class="border-top">
-                                        <td colspan="8" class="border-top-td">Aucun emploi en cours</td>
-                                    </tr> 
-
-                                 {% endfor %} 
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="col-lg-12 table-scroll">
-
-                <div class="card" style="padding:0px;">
-                   
-                    <div class="cardBlue card-header-color card-header border-transparent">
-                        <p class="card-title">Missions terminées</p>
-        
-                        <div class="card-tools">
-                          <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <i class="fas fa-minus"></i>
-                          </button>
-                        </div>
-                    </div>
-                
-            
-                    <div class="card-body p-0 card-dashboard">
-                        <div class="table-responsive">
-                            <table class="table m-0">
-                                <tbody>
-                                    <tr>
-                                        <th>Mission</th>
-                                        <th>Situation</th>
-                                    </tr>
-
-                                 {% for finished in finished %}
-
-                                    <tr class="border-top">
-                                        <td><a href="" class="action-link">{{ finished.offers.title }}</a></td>
-                                        <td>
-                                            <span class="badge badge-warning" title="Mission en cours. Bonne chance !">Mission terminée</span>
-                                        </td>   
-                                    </tr>  
-
-                                 {% else %} 
-                                    <tr class="border-top">
-                                        <td colspan="8" class="border-top-td">Aucun emploi en cours</td>
-                                    </tr> 
-
-                                 {% endfor %} 
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> 
-
 {% endblock %}
 
+{% block javascripts %}
 
+{{ parent() }}
+
+<script>
+        $(function () {   
+        // $(function () {
+            $("#dash1").DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": false,
+                "info": false,
+                "autoWidth": false,
+                "responsive": true,
+                "language": {
+                "emptyTable": "Aucun candidat pour l'instant",
+                "paginate": {
+                    "previous": "Précédent",
+                    'next':'Suivant'
+                    }
+                }
+            });   
+        // });
+
+        // $(function () {
+            $("#dash2").DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": false,
+                "info": false,
+                "autoWidth": false,
+                "responsive": true,
+                "language": {
+                "emptyTable": "Aucun recrutement en cours",
+                "paginate": {
+                    "previous": "Précédent",
+                    'next':'Suivant'
+                    }
+                }
+            });
+            
+            $("#dash3").DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": false,
+                "info": false,
+                "autoWidth": false,
+                "responsive": true,
+                "language": {
+                "emptyTable": "Aucune attente d'acceptation",
+                "paginate": {
+                    "previous": "Précédent",
+                    'next':'Suivant'
+                    }
+                }
+            });
+
+
+            $("#dash4").DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": false,
+                "info": false,
+                "autoWidth": false,
+                "responsive": true,
+                "language": {
+                "emptyTable": "Aucune recrutement terminé",
+                "paginate": {
+                    "previous": "Précédent",
+                    'next':'Suivant'
+                    }
+                }
+            });
+        });
+
+    </script>
+            
+{% endblock %}
 

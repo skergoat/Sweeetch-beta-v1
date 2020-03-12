@@ -27,6 +27,12 @@
     </div>
     {% endfor %}
 
+    {% for message in app.flashes('error') %}
+    <div class="alert alert-danger">
+        {{ message }}
+    </div>
+    {% endfor %}
+
     {{ include('offers/_form.html.twig', {'button_label': 'Update'}) }}
 
 {% endblock %}

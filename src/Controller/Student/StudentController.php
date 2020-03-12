@@ -21,6 +21,7 @@ use App\Repository\ResumeRepository;
 use App\Form\StudentEditPasswordType;
 use App\Repository\StudentRepository;
 use App\Form\UpdateStudentGeneralType;
+use App\Service\Recruitment\ApplyHelper;
 use App\Service\UserChecker\AdminChecker;
 use App\Service\UserChecker\StudentChecker;
 use Knp\Component\Pager\PaginatorInterface;
@@ -139,16 +140,16 @@ class StudentController extends AbstractController
      * @Route("/{id}", name="student_show", methods={"GET"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function show(Student $student, ApplyRepository $applyRepository, StudentChecker $checker): Response
+    public function show(Student $student, ApplyRepository $applyRepository, StudentChecker $checker, ApplyHelper $helper): Response
     {
         if ($checker->studentValid($student)) {
 
             return $this->render('student/show.html.twig', [
-                'student' => $student,
-                'applies' => $applyRepository->findByStudent($student),
-                'finished' => $applyRepository->findBy(['student' => $student, 'finished' => true]),
-                'fresh' => $applyRepository->findByStudentByFresh($student),
-                'hired' => $applyRepository->checkIfHired($student)
+                'student' => $student,  
+                'applies' => $helper->checkApplies('student', $student),    // open applies 
+                'process' => $applyRepository->findByStudentProcess($student),  // processing applies 
+                'fresh' => $applyRepository->findByStudentByFresh($student), // nb candidates
+                'hired' => $helper->checkHired('student', $student), // confirm warning 
             ]);
         }  
     }
@@ -247,7 +248,8 @@ class StudentController extends AbstractController
                 'formDoc' => $formDoc->createView(),
                 'formPassword' => $formPassword->createView(),
                 'fresh' => $applyRepository->findByStudentByFresh($student),
-                'hired' => $applyRepository->checkIfHired($student)
+                // 'hired' => $applyRepository->checkIfHired($student)
+                'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true])
             ]);
 
         }   
@@ -257,58 +259,34 @@ class StudentController extends AbstractController
      * @Route("/{id}/{from}", name="student_delete", methods={"DELETE"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function delete(Request $request, Student $student, UploaderHelper $uploaderHelper, ApplyRepository $applyRepository, StudentChecker $checker, $from): Response
+    public function delete(Request $request, Student $student, UploaderHelper $uploaderHelper, ApplyRepository $applyRepository, StudentChecker $checker, ApplyHelper $helper, $from): Response
     {
-        if ($checker->studentValid($student)) {
-
-            if ($this->isCsrfTokenValid('delete'.$student->getId(), $request->request->get('_token'))) {
-
-                // delete private files when delete entity
-                foreach($this->entities as $entity)
-                {
-                    $get = 'get' . $entity;
-                    $fileName = $student->$get()->getFileName();
-                    if($fileName) {
-                        $uploaderHelper->deleteFile($fileName);
-                    } 
-                }
-
-                $entityManager = $this->getDoctrine()->getManager();
-
-                $applies = $student->getApplies();
-                
-                foreach($applies as $applies) {
-
-                    // send mail 
-                    // $email = $student->getUser()->getEmail();
-                    // $name = $student->getName();
-                    // $offerTitle = $offers->getTitle();
-
-                    // $mailer->sendDeleteCompanyMessage($email, $name, $offerTitle); 
-
-                    if($applies->getFinished() == false) {
-                        $entityManager->remove($applies);
-                    }
-                    else {
-                        $applies->setStudent(NULL);
-                    } 
-                }
-
-                // delete session
-                $currentUserId = $this->getUser()->getId();
-                if ($currentUserId == $student->getUser()->getId())
-                {
-                $session = $this->get('session');
-                $session = new Session();
-                $session->invalidate();
-                }
-
-                $entityManager->remove($student);
-                $entityManager->flush();
+        if ($this->isCsrfTokenValid('delete'.$student->getId(), $request->request->get('_token'))) {
+            // delete private files when delete entity
+            foreach($this->entities as $entity)
+            {
+                $get = 'get' . $entity;
+                $fileName = $student->$get()->getFileName();
+                if($fileName) {
+                    $uploaderHelper->deleteFile($fileName);
+                } 
             }
-
+            // handle applies 
+            $helper->handleStudentApplies($student); 
+            // delete session
+            $currentUserId = $this->getUser()->getId();
+            if ($currentUserId == $student->getUser()->getId())
+            {
+            $session = $this->get('session');
+            $session = new Session();
+            $session->invalidate();
+            }
+            // save 
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($student);
+            $entityManager->flush();
+            // redirect
             $this->addFlash('success', 'Compte Supprimé');
-
             return $this->redirectToRoute($from);
         }
     }

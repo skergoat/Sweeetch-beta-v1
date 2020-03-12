@@ -34,6 +34,7 @@ class FrontController extends AbstractController
     }
 
 
+
      /**
      * @Route("/faq", name="faq")
      */
@@ -41,6 +42,16 @@ class FrontController extends AbstractController
     {
         return $this->render("Front/Faq.html.twig");
     }
+
+    //  /**
+    //  * @Route("/confidentialite", name="confidentialite")
+    //  */
+    // public function confidentialite()
+    // {
+    //     return $this->render("Front/confidentialite.html.twig");
+    // }
+
+
     /**
      * @Route("/contact", name="contact")
      */

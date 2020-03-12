@@ -49,14 +49,20 @@ class Recruit
     private $unavailable;
 
     /**
+     * @ORM\Column(type="datetime")
+     */
+    private $date_recruit;
+
+  /**
      * @ORM\Column(type="boolean")
      */
-    private $confirmed;
+    private $finished;
 
-    // /**
-    //  * @ORM\Column(type="boolean")
-    //  */
-    // private $confirmed;
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $date_finished;
+
 
     public function getId(): ?int
     {
@@ -135,27 +141,39 @@ class Recruit
         return $this;
     }
 
-    public function getConfirmed(): ?bool
+    public function getDateRecruit(): ?\DateTimeInterface
     {
-        return $this->confirmed;
+        return $this->date_recruit;
     }
 
-    public function setConfirmed(bool $confirmed): self
+    public function setDateRecruit(\DateTimeInterface $date_recruit): self
     {
-        $this->confirmed = $confirmed;
+        $this->date_recruit = $date_recruit;
+    
+        return $this;
+    }
+    
+    public function getFinished(): ?bool
+    {
+        return $this->finished;
+    }
+
+    public function setFinished(bool $finished): self
+    {
+        $this->finished = $finished;
 
         return $this;
     }
 
-    // public function getConfirm(): ?bool
-    // {
-    //     return $this->confirm;
-    // }
+    public function getDateFinished(): ?\DateTimeInterface
+    {
+        return $this->date_finished;
+    }
 
-    // public function setConfirm(bool $confirm): self
-    // {
-    //     $this->confirm = $confirm;
+    public function setDateFinished(\DateTimeInterface $date_finished): self
+    {
+        $this->date_finished = $date_finished;
 
-    //     return $this;
-    // }
+        return $this;
+    }
 }

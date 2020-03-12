@@ -22,6 +22,7 @@
             <!-- bootstrap and custom styles -->    
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+            <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 
             {{ encore_entry_link_tags('student') }}
 
@@ -33,23 +34,36 @@
 
         <div id="help-1" class="modal">
             <div class="container" style="text-align:justify;">
-                <h5>L'embauche se déroule en 6 étapes</h5>
+                <h5>L'embauche se déroule en 5 étapes :</h5>
                 <br>
                 <ol>
-                    <li>Vous postulez à une offre sur la page dediée</li><br>
-                    <li>Des qu'une entreprise retient votre profil, vous en etes averti sur votre tableau de bord et dans le menu latteral par l'icone <span class="badge badge-warning">!</span>
-                    <br>Sur cette page, seul reste votre embauche. Toutes vos autres candidatures ont disparues ! Mais rassurez-vous : elles reviendront des votre mission terminee <i class="far fa-smile"></i> 
+                    <li>Cliquez sur <a class="btn btn-sm btn-success" style="color:white;">Chercher un emploi</a></li> et postulez aux offres de votre choix</li><br><br>
+                    <li>Dès qu'une entreprise vous recrute, l'étiquette <span class="badge badge-warning">à valider</span> apparait dans la barre lattérale et les tableaux de candidatures. 
+                    Vous pouvez accepter la mission en appuyant sur <button class="btn btn-success btn-sm"><i class="fas fa-user-check" title="Embaucher"></i>Accepter</button>
                     </li><br>
-                    <li>Vous devez ensuite accepter ou refuser la mission</li><br>
-                    <li>Puis viennent les formalites d'embauche. <br>Votre profil affiche alors : <span class="badge bg-warning">Dossier en traitement</span></li><br>
-                    <li>Lorsque la mission commence, votre profil affiche : <span class="badge bg-success">En cours</span>. 
-                    <br>A partir de ce moment, vous pouvez recevoir des propositions d'ecoles en alternance. 
+                    <li>Une fois la mission acceptée, vous pouvez prendre contact avec l'entreprise pour signer un contrat d'alternance. Votre profil affiche alors : <span class="badge bg-info">Dossier en traitement</span></li><br>
+                    <li>Une fois le contrat signé, votre profile affiche <span class="badge bg-success">En cours</span>. 
+                    C'est le moment de chercher une école en cliquant sur l'onglet <strong>Formations</strong> de la barre lattérale. 
                     </i></li><br>
-                    <li>Quand la mission est terminée, allez voir dans l'onglet Candidatures > Terminees : la mission que vous venez de finir vient d'apparaitre !
-                    <br>Vous pouvez de nouveau postuler a une offre d'emploi et recommencer tout le processus <i class="far fa-smile"></i>
-                    </i></li><br>
+                    <li>
+                    Lorsque vous êtes inscrits dans une école, Sweeetch a accompli sa mission. C'est le moment de voler de vos propres ailes ! <a href="">#nostalgie</a> <br> <br>
+                    La procédure de recrutement est alors archivée et consultable dans l'onglet <strong>Candidatures > Terminées</strong> de la barre lattérale.
+                    </li><br>
                 </ol>
-                <p><strong>Nb :</strong> si vous souhaitez refuser définitivement une mission, cliquez sur : <button class="btn-icon btn-danger" title="Supprimer"><i class="fas fa-times"></i></button></p>
+                <p><strong>Nb :</strong> si vous souhaitez refuser définitivement une mission, cliquez sur :   <button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></p>
+                <p><strong>Nb : Tous ces boutons apparaissent au fur et à mesure de l'avancée du recrutement. Si vous ne les trouvez pas tous en même temps, c'est normal 😉 </strong></p>
+                <p style="font-weight:900;">Bonne recherche !</p>
+            </div> 
+        </div>
+
+        <div id="suppr-1" class="modal">
+            <div class="container" style="text-align:justify;">
+                <h5>Votre entreprise a supprimé son compte</h5>
+                <br>
+                <p><strong>Pas de panique !</strong></p>
+                <p>Si vous êtes déjà recruté sur Sweeetch vous gardez le droit de chercher une école sur le site.</p>
+                <p>Si vous n'êtes pas encore recruté sur Sweeetch... vous serez obligés de chercher un nouveau job ... <a href="">#désolé</a></p>
+                <p style="font-weight:900;">Toutes nos excuses pour le désagrement !</p>
             </div> 
         </div>
 
@@ -137,11 +151,11 @@
                                 <a class="nav-link" href="{{ path('student_apply', { id:student.id }) }}">
                                     <i class="nav-icon fa fa-bookmark"></i>
                                     <p>
-                                        Candidatures 
-                                        {% if fresh > 0 %}
-                                        <span class="badge badge-info right" title="candidatures">{{ fresh }}</span>                                         
-                                        {% elseif hired == true %}
-                                        <span class="right badge badge-warning" title="mission à confirmer">!</span>
+                                        Candidatures                                     
+                                        {% if hired == true %}
+                                        <span class="right badge badge-warning" title="mission à confirmer">à valider</span>
+                                        {% elseif fresh > 0 %}
+                                        <span class="badge badge-primary right" title="candidatures">{{ fresh }}</span> 
                                         {% endif %} 
                                     </p>
                                 </a>
@@ -179,8 +193,8 @@
                                     </p>
                                 </a>
 
-                                {% if is_granted('ROLE_STUDENT_HIRED') %}
-                                    {% if app.request.get('_route') == 'school_student_index' or app.request.get('_route') == 'show_student_hired' %}
+                                {% if is_granted('ROLE_SUPER_STUDENT') %}
+                                    {% if app.request.get('_route') == 'school_student_index' or app.request.get('_route') == 'show_student_hired' or app.request.get('_route') == 'school_student_finished'  %}
 
                                 <li class="nav nav-tree">
                                     <li class="nav-item">
@@ -190,7 +204,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="" class="nav-link">
+                                        <a href="{{ path('school_student_finished', {id:student.id}) }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Terminées</p>
                                         {% if finished is defined %}
@@ -224,8 +238,29 @@
         {{ encore_entry_script_tags('student') }}
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
+            <script>
+                $(function () {
+                    $("#example1").DataTable({
+                        "paging": true,
+                        "lengthChange": false,
+                        "searching": false,
+                        "ordering": false,
+                        "info": false,
+                        "autoWidth": false,
+                        "responsive": true,
+                        "language": {
+                        "emptyTable": "Aucune inscription pour le moment",
+                        "paginate": {
+                            "previous": "Précédent",
+                            'next':'Suivant'
+                            }
+                        }
+                    });   
+                });
+            </script>
 
         <script>
             $(document).ready(function() {

@@ -9,7 +9,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-6">
-            <h1 class="m-0">Mission Terminées</h1> <br>
+            <h1 class="m-0">Annonces Fermées</h1> <br>
         </div>
     </div>
 </div> 
@@ -20,58 +20,51 @@
 </div>
 {% endfor %}
 
-<div class="col-md-12">
-    <div class="card card-responsive-table">
-
-       <div class="pagination-bottom mb-4 mt-4">{{ knp_pagination_render(applies) }}</div>
-
-            <div class="card-body p-0">
-
-                <table class="table-offers table">
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-responsive-table">
+    
+                <div class="card-body">
+                    <table id="example2" class="table table-bordered table-hover">
                     <thead>
                         <tr>
                             <th>Titre</th>
                             <th>Lieu</th>
                             <th>Domaine</th>
-                            <th>Début</th>
-                            <th>Fin</th>
+                            <th>Recruté le</th>
+                            {# <th>Début</th>
+                            <th>Fin</th> #}
                             <th>Situation</th>
                         </tr>
                     </thead>
                     <tbody>
             
                     {% for applies in applies %}
-
-                        {# {% if applies.finished == true %} #}
-                    
-                            <tr>
-                                <td><a href="{{ path('offers_preview', {'id': applies.offers.id, 'company':company.id}) }}">{{ applies.offers.title }}</a></td>
-                                <td>{{ applies.offers.location }}</td>
-                                <td>{{ applies.offers.domain }}</td>
-                                <td>{{ applies.offers.dateStart ? applies.offers.dateStart|date('Y-m-d H:i:s') : '' }}</td>
-                                <td>{{ applies.offers.dateEnd ? applies.offers.dateEnd|date('Y-m-d H:i:s') : '' }}</td>
-                                <td> <span class="badge bg-warning">Terminée</span> </td>
-                            </tr>
-                        
+                        {# {% if finished.offers.id is defined %} #}
+                        <tr>
+                            <td><a href="{{ path('show_finished', {'id': applies.offers.id, 'company':company.id}) }}">{{ applies.offers.title }}</a></td>
+                            <td>{{ applies.offers.location }}</td>
+                            <td>{{ applies.offers.domain }}</td>
+                            <td>{{ applies.dateRecruit|date("d/m/Y à g\\hi") }}</td>
+                            {# <td>{{ applies.offers.dateStart ? applies.offers.dateStart|date('Y-m-d H:i:s') : '' }}</td>
+                            <td>{{ applies.offers.dateEnd ? applies.offers.dateEnd|date('Y-m-d H:i:s') : '' }}</td> #}
+                            <td> <span class="badge bg-success">Recruté</span> </td>
+                        </tr>
                         {# {% endif %} #}
-                    
-                    {% else %}
-
-                    <tr class="border-top">
-                        <td colspan="8" class="border-top-td">Aucun emploi terminé</td>
-                    </tr>   
-
                     {% endfor %}
                                                     
                 </tbody>
-            </table> 
+            </table>
+            </div>
+<!-- /.card-body -->
         </div>
-        <div class="pagination-bottom mt-5">{{ knp_pagination_render(applies) }}</div>
-
-    </div>      
-</div> 
-
-     
+    <!-- /.card -->
+        </div>
+    <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
 
 {% endif %}
 

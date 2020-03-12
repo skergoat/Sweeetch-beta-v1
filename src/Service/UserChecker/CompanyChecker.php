@@ -24,7 +24,6 @@ class CompanyChecker
     }
 
     // general 
-
     public function isAdmin() {
         return $this->authorizationChecker->isGranted('ROLE_ADMIN'); 
     }
