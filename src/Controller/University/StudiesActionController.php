@@ -14,6 +14,7 @@ use App\Repository\StudiesRepository;
 use App\Service\Mailer\RecruitMailer;
 use App\Service\Recruitment\ApplyHelper;
 use App\Service\Recruitment\RecruitHelper;
+use App\Service\UserChecker\SchoolChecker;
 use App\Service\UserChecker\StudentChecker;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -226,49 +227,55 @@ class StudiesActionController extends AbstractController
      /**
      * @Route("/new/{school}", name="studies_new", methods={"GET","POST"})
      */
-    public function new(Request $request, School $school): Response
+    public function new(Request $request, School $school, SchoolChecker $checker): Response
     {
-        $study = new Studies();
-        $form = $this->createForm(StudiesType::class, $study);
-        $form->handleRequest($request);
+        if ($checker->schoolValid($school)) {
 
-        if ($form->isSubmitted() && $form->isValid()) {
+            $study = new Studies();
+            $form = $this->createForm(StudiesType::class, $study);
+            $form->handleRequest($request);
 
-            $study = $form->getData();
-            $study->setSchool($school);
+            if ($form->isSubmitted() && $form->isValid()) {
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($study);
-            $entityManager->flush();
+                $study = $form->getData();
+                $study->setSchool($school);
 
-            return $this->redirectToRoute('school_studies_index', [ 'id' => $school->getId() ]);
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($study);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('school_studies_index', [ 'id' => $school->getId() ]);
+            }
+
+            return $this->render('studies/new.html.twig', [
+                'study' => $study,
+                'form' => $form->createView(),
+                'school' => $school
+            ]);
         }
-
-        return $this->render('studies/new.html.twig', [
-            'study' => $study,
-            'form' => $form->createView(),
-            'school' => $school
-        ]);
     }
 
     /**
      * @Route("/{id}/edit/{school_id}", name="studies_edit", methods={"GET","POST"})
      * @ParamConverter("school", options={"id" = "school_id"})
      */
-    public function edit(Request $request, Studies $study, School $school): Response
+    public function edit(Request $request, Studies $study, School $school, SchoolChecker $checker): Response
     {
-        $form = $this->createForm(StudiesType::class, $study);
-        $form->handleRequest($request);
+        if ($checker->schoolStudiesEditValid($school, $study)) {
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $form = $this->createForm(StudiesType::class, $study);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->getDoctrine()->getManager()->flush();
+            }
+
+            return $this->render('studies/edit.html.twig', [
+                'study' => $study,
+                'form' => $form->createView(),
+                'school' => $school
+            ]);
         }
-
-        return $this->render('studies/edit.html.twig', [
-            'study' => $study,
-            'form' => $form->createView(),
-            'school' => $school
-        ]);
     }
 
     /**
