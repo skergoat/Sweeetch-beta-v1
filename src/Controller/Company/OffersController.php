@@ -138,29 +138,31 @@ class OffersController extends AbstractController
      * @IsGranted("ROLE_SUPER_COMPANY")
      * @ParamConverter("company", options={"id" = "company"})
      */
-    public function edit(Request $request, Offers $offer, ApplyRepository $repository, Company $company, ApplyHelper $helper): Response
+    public function edit(Request $request, Offers $offer, ApplyRepository $repository, Company $company, CompanyChecker $checker, ApplyHelper $helper): Response
     {
-        // prevent user from deleting finished offer 
-        if($helper->checkConfirmed('offers', $offer) || $helper->checkFinished('offers', $offer)) {
-            $this->addFlash('error', 'Mission terminée');
-            return $this->redirectToRoute('offers_company_index', ['id' => $company->getId()]);
-        }   
-  
-        $form = $this->createForm(OffersType::class, $offer);
-        $form->handleRequest($request);
+        if($checker->companyOffersValid($company, $offer)) {
+            // prevent user from deleting finished offer 
+            if($helper->checkConfirmed('offers', $offer) || $helper->checkFinished('offers', $offer)) {
+                $this->addFlash('error', 'Mission terminée');
+                return $this->redirectToRoute('offers_company_index', ['id' => $company->getId()]);
+            }   
+    
+            $form = $this->createForm(OffersType::class, $offer);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // edit 
-            $this->getDoctrine()->getManager()->flush();
-            $this->addFlash('success', 'Mise à jour réussie !');
-            return $this->redirectToRoute('offers_edit', ['id' => $offer->getId(), 'company' => $company->getId()]);
+            if ($form->isSubmitted() && $form->isValid()) {
+                // edit 
+                $this->getDoctrine()->getManager()->flush();
+                $this->addFlash('success', 'Mise à jour réussie !');
+                return $this->redirectToRoute('offers_edit', ['id' => $offer->getId(), 'company' => $company->getId()]);
+            }
+
+            return $this->render('offers/edit.html.twig', [
+                'offers' => $offer,
+                'company' => $company,
+                'form' => $form->createView(),
+            ]);
         }
-
-        return $this->render('offers/edit.html.twig', [
-            'offers' => $offer,
-            'company' => $company,
-            'form' => $form->createView(),
-        ]);
     }
 
     /**
