@@ -125,9 +125,7 @@ class SchoolController extends AbstractController
                 }
 
                 $this->getDoctrine()->getManager()->flush();
-
                 $this->addFlash('success', 'Mise à jour réussie');
-
                 return $this->redirectToRoute('school_edit', ['id' => $school->getId() ]);
             }
 
