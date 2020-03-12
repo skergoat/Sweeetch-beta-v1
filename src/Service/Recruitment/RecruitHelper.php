@@ -73,7 +73,7 @@ class RecruitHelper extends CommonHelper
         $unavailables = $this->recruitRepository->setToUnavailables($studies, $student);
 
         foreach($unavailables as $unavailables) {
-            if($unavailables->getRefused() != true && $unavailables->getAgree() != true) {
+            if($unavailables->getRefused() != true && $unavailables->getAgree() != true && $unavailables->getFinished() != true) {
                 $unavailables->setUnavailable(true);
 
                 if($unavailables->getHired() == true) {
