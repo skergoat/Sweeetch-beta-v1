@@ -1,0 +1,42 @@
+.section-bg{
+    background-color: white;
+}
+.about-content p {
+    font-size:23px;
+}
+#custom{
+width: 450px;
+display:block;
+margin:auto;
+}
+#custom-img{
+    display:flex;
+    justify-content: flex-end;
+}
+#intro{
+    background: rgb(57,188,236);
+    background: linear-gradient(48deg, rgba(57,188,236,1) 1%, rgba(255,131,131,1) 27%, rgba(245,189,104,0.95) 86%);
+}
+.intro-info h2{
+    color:#FFFFFF !important;
+}
+#header{
+    background-color:rgba($color: #FFFFFF, $alpha: 0.7); 
+     height:90px;
+     padding: 5px 0;
+     & .logo img {
+        // padding: 0;
+        // margin: 0px;
+        max-height: 70px;
+    }
+   }
+.main-nav a{
+    font-size:16px;
+}
+.main-nav {margin-top:5px;}
+
+#customer-header{
+    display: flex;
+align-items: center;
+justify-content: space-between;
+}

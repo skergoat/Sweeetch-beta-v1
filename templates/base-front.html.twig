@@ -112,6 +112,18 @@
         <script src="{{ asset('lib/counterup/counterup.min.js') }}"></script>
 
         <!-- Template Main Javascript File -->
+    <script>
+	$(document).scroll(function() {
+		$('#header.header-scrolled').css({'padding':'5px 0', 'height':'90px'});
+
+	});
+</script>
+{#<script>
+	$(document).scroll(function() {
+		$('#header.header-scrolled').css({'padding':'0px 0'});
+		$('.img-fluid').css('padding', '0px');
+	});
+</script>#}
         <script src="{{ asset('js/main.js') }}"></script>
         {% endblock %}
     </body>
