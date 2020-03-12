@@ -37,6 +37,10 @@ class StudentChecker
         return $this->authorizationChecker->isGranted('ROLE_SUPER_COMPANY'); 
     }
 
+    public function isSchool() {
+        return $this->authorizationChecker->isGranted('ROLE_SUPER_SCHOOL'); 
+    }
+
     public function isStudent() {
         return $this->authorizationChecker->isGranted('ROLE_SUPER_STUDENT') || $this->authorizationChecker->isGranted('ROLE_STUDENT'); 
     }
@@ -114,6 +118,10 @@ class StudentChecker
     
         }
         else if($this->isCompany())
+        {
+            return $this->isAdmin() ? true : $this->Exception(); 
+        }
+        else if($this->isSchool())
         {
             return $this->isAdmin() ? true : $this->Exception(); 
         }

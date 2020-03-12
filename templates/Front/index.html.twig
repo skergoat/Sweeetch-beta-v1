@@ -87,6 +87,8 @@
       <div class="row justify-content-center align-self-center" style="display:flex; justify-content:center; align-items:center;">
         <div class="col-md-6 intro-info order-md-first order-last" >
           <h2>La plateforme qui révolutionne la recherche d'alternance !</h2>
+
+    
           <div>
             <a href="{{ path('student_new') }}" class="btn-get-started scrollto">Inscrivez-vous</a>
           </div>
@@ -94,6 +96,7 @@
   
         <div class="col-md-6 intro-img order-md-last order-first">
             <img src="{{ asset('build/CV.png') }}" alt="Sweeetch alternance" class="img-fluid">
+
         </div>
       </div>
 
@@ -113,6 +116,7 @@
           <div class="col-lg-5 col-md-6">
             <div class="why-us-img">
               <img src="{{ asset('build/Image-2.png') }}" alt="" class="img-fluid">
+
             </div>
           </div>
 
@@ -211,14 +215,25 @@
         </header>
 
         <div class="row">
+
           <div class="col-lg-5">
             <div class="why-us-img"id="custom-img">
               <img src="{{ asset('build/sansbord.png') }}" alt="" id="custom" class="img-fluid">
             </div>
           </div>
 
-          <div class="col-lg-7"style="height:auto;display:flex;flex-direction:column;align-items:flex-start;justify-content: center;">
-            <div class="why-us-content"style="max-width:90%">
+          {#<div class="col-lg-7"style="height:auto;display:flex;flex-direction:column;align-items:flex-start;justify-content: center;">
+            <div class="why-us-content"style="max-width:90%">#}
+
+           <div class="col-lg-7" style="height:auto;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;"> 
+            <div class="why-us-content" style="max-width:90% !important">
+              {# <h1>SWEEETCH</h1>
+              <p>
+                  Une alternance en quelques clics Grâce à Sweeetch, tu peux désormais trouver ton école et ton entreprise simplement
+
+              </p> #}
+
+
               <div class="features wow bounceInUp clearfix">
                 <i class="fa fa-diamond" style="color: #0748fc;"></i>
                 <h4>Deviens un chasseur d'alternance </h4>
@@ -243,10 +258,35 @@
 
         </div>
 
-      </div> 
+      </div>
+
+      {# <div class="container">
+        <div class="row counters">
+
+          <div class="col-lg-3 col-6 text-center">
+            <span data-toggle="counter-up">80</span>
+            <p>Clients SWEEETCH</p>
+          </div>
+
+          <div class="col-lg-3 col-6 text-center">
+            <span data-toggle="counter-up">1</span>
+            <p> Écoles partenaires</p>
+          </div>
+
+          <div class="col-lg-3 col-6 text-center">
+            <span data-toggle="counter-up">70</span>
+            <p>Alternants inscrits</p>
+          </div>
+
+          <div class="col-lg-3 col-6 text-center">
+            <span data-toggle="counter-up">0</span>
+            <p>Professionnels inscrits </p>
+          </div>
+  
+
         </div>
 
-      </div>
+      </div> #}
     </section>
 
     <!--==========================

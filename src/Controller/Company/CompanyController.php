@@ -13,6 +13,7 @@ use App\Service\Mailer\ApplyMailer;
 use App\Repository\OffersRepository;
 use App\Form\CompanyEditPasswordType;
 use App\Repository\CompanyRepository;
+use App\Service\Recruitment\ApplyHelper;
 use App\Service\UserChecker\AdminChecker;
 use App\Service\UserChecker\CompanyChecker;
 use Knp\Component\Pager\PaginatorInterface;
@@ -35,20 +36,18 @@ class CompanyController extends AbstractController
      */
     public function index(CompanyRepository $companyRepository, PaginatorInterface $paginator, Request $request): Response
     {   
-        // if($checker->adminValid($user)) 
-        // {
-            $queryBuilder = $companyRepository->findAllPaginated("DESC");
+        $queryBuilder = $companyRepository->findAllPaginated("DESC");
 
-            $pagination = $paginator->paginate(
-                $queryBuilder, /* query NOT result */
-                $request->query->getInt('page', 1)/*page number*/,
-                10/*limit per page*/
-            );
+        $pagination = $paginator->paginate(
+            $queryBuilder, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
 
-            return $this->render('company/index.html.twig', [
-                'companies' => $pagination,
-            ]);
-        // }
+        return $this->render('company/index.html.twig', [
+            'companies' => $pagination,
+        ]);
+
     }
 
     /**
@@ -87,21 +86,21 @@ class CompanyController extends AbstractController
      * @Route("/{id}", name="company_show", methods={"GET"})
      * @IsGranted("ROLE_COMPANY")
      */
-    public function show(Company $company, OffersRepository $offersRepository, ApplyRepository $applyRepository, CompanyChecker $checker): Response
+    public function show(Company $company, OffersRepository $offersRepository, ApplyRepository $applyRepository, CompanyChecker $checker, ApplyHelper $helper): Response
     {
         if($checker->companyValid($company)) {
+            // get company offers 
             $offers = $offersRepository->findBy(['company' => $company]);
-            $applies = $applyRepository->findBy(['offers' => $offers]);
+             // get finished or confirmed applies 
+             $array = $helper->findByOffersFinished($offers);
 
             return $this->render('company/show.html.twig', [
-                'company' => $company,
-                'offers' => $offers,
-                'applies' => $applies,
-                'finished' => $applyRepository->findBy(['offers' => $offers, 'finished' => 1]),
-                'confirmed' => $applyRepository->findBy(['offers' => $offers, 'confirmed' => 1]),
-                'hired' => $applyRepository->findBy(['offers' => $offers, 'hired' => 1]),
-                'agree' => $applyRepository->findBy(['offers' => $offers, 'agree' => 1]),
-                'applyc' => $applyRepository->findBy(['offers' => $offers, 'refused' => 0, 'unavailable' => 0, 'confirmed' => 0, 'finished' => 0])
+                'company' => $company,  // company layout
+                'applies' => $helper->checkApplies('offers', $offers),
+                'hired' => $helper->checkHired('offers', $offers),  // show hired 
+                'agree' => $helper->checkAgree('offers', $offers), // find agreed applies 
+                'finished' => isset($array) ? $array : null, // find confirmed or finished applies 
+                'candidates' => $helper->nbCandidates($offers), // show nb applies 
             ]);
         }
     }
@@ -110,7 +109,7 @@ class CompanyController extends AbstractController
      * @Route("/{id}/edit", name="company_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_COMPANY")
      */
-    public function edit(Request $request, Company $company, UserPasswordEncoderInterface $passwordEncoder, OffersRepository $offersRepository, ApplyRepository $applyRepository, CompanyChecker $checker, UploaderHelper $uploaderHelper): Response
+    public function edit(Request $request, Company $company, UserPasswordEncoderInterface $passwordEncoder, OffersRepository $offersRepository, ApplyRepository $applyRepository, CompanyChecker $checker, UploaderHelper $uploaderHelper, ApplyHelper $helper): Response
     {
         if($checker->companyValid($company)) {
 
@@ -124,8 +123,6 @@ class CompanyController extends AbstractController
             $formPassword->handleRequest($request);
 
             if($form->isSubmitted() && $form->isValid() || $formPassword->isSubmitted() && $formPassword->isValid()) {
-
-                // dd($form['pictures']->getData());
 
                 $uploadedFile = $form['pictures']->getData();
 
@@ -158,9 +155,7 @@ class CompanyController extends AbstractController
                 }
 
                 $this->getDoctrine()->getManager()->flush();
-
                 $this->addFlash('success', 'Mise à jour réussie');
-
                 return $this->redirectToRoute('company_edit', ['id' => $company->getId() ]);
             }
 
@@ -170,9 +165,12 @@ class CompanyController extends AbstractController
                 'company' => $company,
                 'form' => $form->createView(),
                 'formPassword' => $formPassword->createView(),
-                'hired' => $applyRepository->findBy(['offers' => $offers, 'hired' => 1]),
-                'agree' => $applyRepository->findBy(['offers' => $offers, 'agree' => 1]),
-                'applyc' => $applyRepository->findBy(['offers' => $offers, 'refused' => 0, 'unavailable' => 0, 'confirmed' => 0, 'finished' => 0])
+                // infos 
+                'hired' => $helper->checkHired('offers', $offers),
+                'agree' => $helper->checkAgree('offers', $offers),
+                // 'confirmed' => $helper->checkConfirmed('offers', $offers),
+                // 'finished' =>  $helper->checkFinished('offers', $offers),
+                'candidates' => $helper->nbCandidates($offers),
             ]);
         }
     }
@@ -181,46 +179,11 @@ class CompanyController extends AbstractController
      * @Route("/{id}/{from}", name="company_delete", methods={"DELETE"})
      * @IsGranted("ROLE_COMPANY")
      */
-    public function delete(Request $request, Company $company, ApplyRepository $repository, ApplyMailer $mailer, $from): Response
+    public function delete(Request $request, Company $company, ApplyRepository $repository, ApplyMailer $mailer, ApplyHelper $helper, $from): Response
     {
         if ($this->isCsrfTokenValid('delete'.$company->getId(), $request->request->get('_token'))) {
-
-            $entityManager = $this->getDoctrine()->getManager();
-
-            $offers = $company->getOffers();
-
-            // remove applies 
-            foreach($offers as $offers) {
-
-                $applies = $offers->getApplies();
-
-                foreach($applies as $applies) {
-
-                    $student = $applies->getStudent();
-
-                    // set roles 
-                    // $student->getUser()->setRoles([
-                    //     "ROLE_SUPER_STUDENT"
-                    // ]);
-
-                    // send mail 
-                    // $email = $student->getUser()->getEmail();
-                    // $name = $student->getName();
-                    // $offerTitle = $offers->getTitle();
-
-                    // $mailer->sendDeleteCompanyMessage($email, $name, $offerTitle); 
-
-                    if($applies->getFinished() == false) {
-                        $entityManager->remove($applies);
-                    }
-                    else {
-                        $applies->setOffers(NULL);
-                    } 
-                }
-                // remove offers 
-                $entityManager->remove($offers);
-            }
-
+            // handle applies 
+            $helper->handleCompanyApplies($company);
             // delete session
             $currentUserId = $this->getUser()->getId();
             if ($currentUserId == $company->getUser()->getId())
@@ -229,13 +192,17 @@ class CompanyController extends AbstractController
               $session = new Session();
               $session->invalidate();
             }
-
+            // remove company 
+            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($company);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Compte Supprimé');
+            return $this->redirectToRoute($from);
         }
-
-        $this->addFlash('success', 'Compte Supprimé');
-
-        return $this->redirectToRoute($from);
+        else {
+            $this->addFlash('error', 'Requête Invalide');
+            return $this->redirectToRoute($from);
+        }     
     }
 }

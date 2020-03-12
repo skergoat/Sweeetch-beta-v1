@@ -19,15 +19,12 @@ class StudiesRepository extends ServiceEntityRepository
         parent::__construct($registry, Studies::class);
     }
 
-    /*
-    public function findOneBySomeField($value): ?Studies
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+    // public function studiesExists($school, $studies) { 
+    //     return (boolean)$this->createQueryBuilder('u')
+    //     ->andWhere('u.studies = :offers AND u.school = :school')
+    //     ->setParameter('studies', $studies->getId())
+    //     ->setParameter('school', $school->getId())
+    //     ->getQuery()
+    //     ->getOneOrNullResult();
+    // }
 }

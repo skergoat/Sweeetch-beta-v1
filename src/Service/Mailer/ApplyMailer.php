@@ -16,8 +16,12 @@ class ApplyMailer
         $this->mailer = $mailer;
     }
 
-    public function sendApplyMessage($email, $name, $title)
+    public function sendApplyNotification($offers)
     {
+        $email = $offers->getCompany()->getUser()->getEmail();
+        $name = $offers->getCompany()->getFirstname();
+        $title = $offers->getTitle();
+
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
             ->to(new Address($email, $name))
@@ -30,9 +34,11 @@ class ApplyMailer
         $this->mailer->send($mail);
     }
 
-    public function sendHireMessage($email, $name, $title)
+    public function sendHireNotification($apply)
     {
-        // dd('send');
+        $email = $apply->getStudent()->getUser()->getEmail();
+        $name = $apply->getStudent()->getName();
+        $title = $apply->getOffers()->getTitle(); 
 
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
@@ -46,8 +52,12 @@ class ApplyMailer
         $this->mailer->send($mail);
     }
 
-    public function sendOthersMessage($email, $name, $title)
-    {
+    public function sendOtherNotification($others)
+    {   
+        $title = $others->getOffers()->getTitle();
+        $name = $others->getStudent()->getName();
+        $email = $others->getStudent()->getUser()->getEmail();
+
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
             ->to(new Address($email, $name))
@@ -60,9 +70,11 @@ class ApplyMailer
         $this->mailer->send($mail);
     }
 
-    public function sendAgreeMessage($email, $name, $title)
+    public function sendAgreeNotification($student, $offers)
     {
-        // dd('send');
+        $email = $student->getUser()->getEmail();
+        $name = $student->getName();
+        $title = $offers->getTitle();
 
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
@@ -76,9 +88,11 @@ class ApplyMailer
         $this->mailer->send($mail);
     }
 
-    public function sendConfirmMessage($email, $name, $title)
+    public function sendConfirmNotification($student, $offers)
     {
-        // dd('send');
+        $email = $student->getUser()->getEmail();
+        $name = $student->getName();
+        $title = $offers->getTitle(); 
 
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
@@ -92,8 +106,11 @@ class ApplyMailer
         $this->mailer->send($mail);
     }
 
-    public function sendFinishMessage($email, $name, $title)
+    public function sendFinishNotification($student, $offers)
     {
+        $email = $student->getUser()->getEmail();
+        $name = $student->getName();
+        $title = $offers->getTitle(); 
 
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
@@ -107,8 +124,12 @@ class ApplyMailer
         $this->mailer->send($mail);
     }
 
-    public function sendRefuseMessage($email, $name, $title)
+    public function sendRefuseNotification($student, $offers)
     {
+        $email = $student->getUser()->getEmail();
+        $name = $student->getName();
+        $title = $offers->getTitle(); 
+
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
             ->to(new Address($email, $name))
@@ -121,8 +142,12 @@ class ApplyMailer
         $this->mailer->send($mail);
     }
 
-    public function sendDeleteMessage($email, $name, $title)
+    public function sendDeleteNotification($offers)
     {
+        $email = $offers->getCompany()->getUser()->getEmail();
+        $name =  $offers->getCompany()->getFirstName();
+        $title = $offers->getTitle();
+
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
             ->to(new Address($email, $name))
@@ -135,8 +160,31 @@ class ApplyMailer
         $this->mailer->send($mail);
     }
 
-    public function sendDeleteCompanyMessage($email, $name, $offerTitle)
+    //
+    public function sendDeleteCompanyMessage($student, $offers)
     {
+        $email = $student->getUser()->getEmail();
+        $name = $student->getName();
+        $offerTitle = $offers->getTitle();
+
+        $mail = (new TemplatedEmail())
+            ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
+            ->to(new Address($email, $name))
+            ->subject('Problems with docs')
+            ->htmlTemplate('email/apply/delete-company.html.twig')
+            ->context([
+                'title' => $offerTitle,
+            ]); 
+        
+        $this->mailer->send($mail);
+    }
+
+    public function sendDeleteOffersCompanyMessage($student, $offers)
+    {
+        $email = $student->getUser()->getEmail();
+        $name = $student->getName();
+        $offerTitle = $offers->getTitle();
+
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
             ->to(new Address($email, $name))

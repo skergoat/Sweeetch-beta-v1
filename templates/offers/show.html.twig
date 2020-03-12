@@ -23,11 +23,6 @@
             <div class="container nav-desktop">
                 <nav class="nav-jobs main-nav d-none d-lg-block">
                     <ul>
-                        {% if page is defined %}
-                        <li><a href="{{ path('offers_index', {'page':page}) }}">Emplois</a></li>
-                        {% else %}
-                        <li><a href="{{ path('offers_index', {'page':1}) }}">Emplois</a></li>
-                        {% endif %} 
                         {% if is_granted('ROLE_ADMIN') %}
                         <li><a href="/admin">ADMIN</a></li>
                         {% elseif  is_granted('ROLE_STUDENT') %}
@@ -37,6 +32,11 @@
                         {% elseif  is_granted('ROLE_SCHOOL') %}
                         <li><a href="{{ path('school_show', {'id': app.user.school.id}) }}">MON ECOLE</a></li>
                         {% endif %}
+                        {% if page is defined %}
+                        <li><a href="{{ path('offers_index', {'page':page}) }}">Emplois</a></li>
+                        {% else %}
+                        <li><a href="{{ path('offers_index', {'page':1}) }}">Emplois</a></li>
+                        {% endif %} 
                     </ul>
                 </nav>
             </div>

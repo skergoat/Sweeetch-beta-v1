@@ -10,6 +10,7 @@ use App\Repository\ApplyRepository;
 use App\Repository\SchoolRepository;
 use App\Repository\RecruitRepository;
 use App\Repository\StudiesRepository;
+use App\Service\Recruitment\RecruitHelper;
 use App\Service\UserChecker\SchoolChecker;
 use App\Service\UserChecker\StudentChecker;
 use Knp\Component\Pager\PaginatorInterface;
@@ -35,14 +36,14 @@ class StudiesRenderController extends AbstractController
 
             return $this->render('studies/index.html.twig', [
                 'studies' => $studiesRepository->findBy(['school' => $school]),
-                'school' => $school
+                'school' => $school,
             ]);
         }
     }
 
     /**
      * @Route("/student/{id}", name="school_student_index", methods={"GET"})
-     * @IsGranted("ROLE_SUPER_STUDENT")
+     * @IsGranted("ROLE_STUDENT")
      */
     public function indexByStudent(Student $student, RecruitRepository $recruitRepository, SchoolRepository $schoolRepository, ApplyRepository $applyRepository, StudentChecker $checker): Response
     {
@@ -50,9 +51,27 @@ class StudiesRenderController extends AbstractController
 
             return $this->render('school/index_student.html.twig', [
                 'student' => $student,
-                'recruit' => $recruitRepository->findBy(['student' => $student, 'refused' => false, 'unavailable' => false], ['hired' => 'desc']),
+                'recruit' => $recruitRepository->findBy(['student' => $student, 'refused' => false, 'unavailable' => false, 'finished' => false], ['hired' => 'desc']),
                 'fresh' => $applyRepository->findByStudentByFresh($student),
-                'hired' => $applyRepository->checkIfHired($student)
+                'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true]),
+                'finished' => $recruitRepository->findBy(['student' => $student, 'finished' => true]),
+            ]);
+        } 
+    }
+
+    /**
+     * @Route("/student/finished/{id}", name="school_student_finished", methods={"GET"})
+     * @IsGranted("ROLE_STUDENT")
+     */
+    public function indexfinished(Student $student, RecruitRepository $recruitRepository, SchoolRepository $schoolRepository, ApplyRepository $applyRepository, StudentChecker $checker): Response
+    {
+        if ($checker->studentValid($student)) {
+
+            return $this->render('school/index-finished.html.twig', [
+                'student' => $student,
+                'finished' => $recruitRepository->findBy(['student' => $student, 'finished' => true], ['date_finished' => 'desc']),
+                'fresh' => $applyRepository->findByStudentByFresh($student),
+                'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true])
             ]);
         } 
     }
@@ -62,13 +81,21 @@ class StudiesRenderController extends AbstractController
      * @ParamConverter("school", options={"id" = "school_id"})
      * @IsGranted("ROLE_SUPER_SCHOOL")
      */
-    public function show(Studies $study, School $school, RecruitRepository $recruitRepository): Response
+    public function show(Studies $study, School $school, RecruitRepository $recruitRepository,SchoolChecker $checker): Response
     {
-        return $this->render('studies/show.html.twig', [
-            'study' => $study,
-            'school' => $school,
-            'recruit' => $recruitRepository->findBy(['studies' => $study, 'refused' => false, 'unavailable' => false])
-        ]);
+
+        // dd($recruitRepository->findProcessing($study));
+
+        if ($checker->schoolStudiesEditValid($school, $study)) {
+
+            return $this->render('studies/show.html.twig', [
+                'study' => $study,
+                'school' => $school,
+                'finished' => $recruitRepository->findBy(['studies' => $study, 'finished' => true], ['date_finished' => 'desc']),
+                'recruit' => $recruitRepository->findBy(['studies' => $study, 'hired' => false, 'agree' => false, 'refused' => false, 'unavailable' => false, 'finished' => false], ['date_recruit' => 'desc']),
+                'process' => $recruitRepository->findProcessing($study)
+            ]);
+        }
     }
 
     /**
@@ -88,7 +115,7 @@ class StudiesRenderController extends AbstractController
         return $this->render('studies/index-student.html.twig', [
             'studies' => $pagination,
             'from' => $from,
-            'id' => $id
+            'id' => $id,
         ]);
     } 
 
@@ -112,11 +139,13 @@ class StudiesRenderController extends AbstractController
     */
     public function showHired(Studies $studies, Student $student, ApplyRepository $applyRepository)
     {
+        // si autorise que pour son id et celle de ses ecoles ca devrait etre ok !!!!
+        // attention a ce qu'il voit pas les unavailables pendant le recrutement !!!!
         return $this->render('studies/show_hired.html.twig', [
             'studies' => $studies,
             'student' => $student,
             'fresh' => $applyRepository->findByStudentByFresh($student),
-            'hired' => $applyRepository->checkIfHired($student)
+            'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true])
         ]);  
     }
 
@@ -126,12 +155,14 @@ class StudiesRenderController extends AbstractController
     * @ParamConverter("school", options={"id" = "school"})
     * @ParamConverter("study", options={"id" = "study"})
     */
-    public function showApplied(Student $student, School $school, Studies $study)
+    public function showApplied(Student $student, School $school, Studies $study, SchoolChecker $checker)
     {
-        return $this->render('studies/show-applied.html.twig', [
-            'student' => $student,
-            'school' => $school,
-            'study' => $study
-        ]);
+        if ($checker->schoolshowAppliedValid($student, $school, $study)) {
+            return $this->render('studies/show-applied.html.twig', [
+                'student' => $student,
+                'school' => $school,
+                'study' => $study
+            ]);
+        }
     } 
 }

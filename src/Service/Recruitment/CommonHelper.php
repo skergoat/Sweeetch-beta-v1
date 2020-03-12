@@ -2,41 +2,40 @@
 
 namespace App\Service\Recruitment;
 
-// use App\Repository\RecruitRepository;
-// use Symfony\Component\HttpFoundation\Session\SessionInterface;
-// use Symfony\Component\Security\Core\Security;
-// use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-// use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use DateTimeZone;
+use Doctrine\ORM\EntityManagerInterface;
 
 class CommonHelper
 {
 
-    public function hire($relation)
+    public function setHire($relation)
     {
         // set apply state 
-        if($relation->getHired() == false && $relation->getConfirmed() == false) {
+        if($relation->getHired() == false && $relation->getFinished() == false) {
             $relation->setHired(true);
-            $relation->setConfirmed(false);
+            $relation->setFinished(false);
             $relation->setRefused(false);
+            $relation->setDateRecruit(new \DateTime('now', new DateTimeZone('Europe/Paris')));
         }
     }
 
-    public function agree($relation)
+    public function setAgree($relation)
     {
         // set apply state 
         if($relation->getHired() == true 
-            && $relation->getConfirmed() == false 
+            && $relation->getFinished() == false 
             && $relation->getRefused() == false 
             && $relation->getAgree() == false
         ) {
             $relation->setHired(false);
-            $relation->setConfirmed(false);
+            $relation->setFinished(false);
             $relation->setRefused(false);
             $relation->setAgree(true);
+            $relation->setDateRecruit(new \DateTime('now', new DateTimeZone('Europe/Paris')));
         }
     }
 
-    public function confirm($relation)
+    public function setConfirm($relation)
     {
         if($relation->getHired() == false 
             && $relation->getConfirmed() == false 
@@ -47,13 +46,48 @@ class CommonHelper
             $relation->setConfirmed(true);
             $relation->setRefused(false);
             $relation->setAgree(false);
+            $relation->setDateFinished(new \DateTime('now', new DateTimeZone('Europe/Paris')));
         }
     }
 
-    public function refuse($relation)
+    public function setRecruitFinish($relation)
+    {
+        if($relation->getHired() == false 
+            &&  $relation->getAgree() == true 
+            // && $relation->getConfirmed() == true
+            && $relation->getFinished() == false 
+            && $relation->getRefused() == false 
+        ) {
+            $relation->setHired(false);
+            $relation->setAgree(false);
+            // $relation->setConfirmed(false);
+            $relation->setFinished(true);
+            $relation->setRefused(false);
+            $relation->setDateFinished(new \DateTime('now', new DateTimeZone('Europe/Paris')));
+        }
+    }
+
+    public function setApplyFinish($relation)
+    {
+        if($relation->getHired() == false 
+            &&  $relation->getAgree() == false 
+            && $relation->getConfirmed() == true
+            && $relation->getFinished() == false 
+            && $relation->getRefused() == false 
+        ) {
+            $relation->setHired(false);
+            $relation->setAgree(false);
+            $relation->setConfirmed(false);
+            $relation->setFinished(true);
+            $relation->setRefused(false);
+            $relation->setDateFinished(new \DateTime('now', new DateTimeZone('Europe/Paris')));
+        }
+    }
+
+    public function setRefuse($relation)
     {
         $relation->setHired(false);
-        $relation->setConfirmed(false);
+        $relation->setFinished(false);
         $relation->setRefused(true);
     }
 }

@@ -58,6 +58,16 @@ class Apply
      */
     private $agree;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $date_finished;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $date_recruit;
+
 
     public function getId(): ?int
     {
@@ -156,6 +166,30 @@ class Apply
     public function setAgree(bool $agree): self
     {
         $this->agree = $agree;
+
+        return $this;
+    }
+
+    public function getDateFinished(): ?\DateTimeInterface
+    {
+        return $this->date_finished;
+    }
+
+    public function setDateFinished(\DateTimeInterface $date_finished): self
+    {
+        $this->date_finished = $date_finished;
+
+        return $this;
+    }
+
+    public function getDateRecruit(): ?\DateTimeInterface
+    {
+        return $this->date_recruit;
+    }
+
+    public function setDateRecruit(\DateTimeInterface $date_recruit): self
+    {
+        $this->date_recruit = $date_recruit;
 
         return $this;
     }

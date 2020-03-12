@@ -11,6 +11,7 @@ use App\Repository\ApplyRepository;
 use App\Form\SchoolEditPasswordType;
 use App\Repository\SchoolRepository;
 use App\Service\UserChecker\AdminChecker;
+use App\Service\Recruitment\RecruitHelper;
 use App\Service\UserChecker\SchoolChecker;
 use App\Service\UserChecker\StudentChecker;
 use Knp\Component\Pager\PaginatorInterface;
@@ -33,20 +34,17 @@ class SchoolController extends AbstractController
      */
     public function index(SchoolRepository $schoolRepository, PaginatorInterface $paginator, Request $request, AdminChecker $checker): Response
     {
-        // if($checker->adminValid($user)) 
-        // {
-            $queryBuilder = $schoolRepository->findAllPaginated("DESC");
+        $queryBuilder = $schoolRepository->findAllPaginated("DESC");
 
-            $pagination = $paginator->paginate(
-                $queryBuilder, /* query NOT result */
-                $request->query->getInt('page', 1)/*page number*/,
-                10/*limit per page*/
-            );
+        $pagination = $paginator->paginate(
+            $queryBuilder, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
 
-            return $this->render('school/index.html.twig', [
-                'schools' => $pagination,
-            ]);
-        // }
+        return $this->render('school/index.html.twig', [
+            'schools' => $pagination,
+        ]);
     }
 
     /**
@@ -127,9 +125,7 @@ class SchoolController extends AbstractController
                 }
 
                 $this->getDoctrine()->getManager()->flush();
-
                 $this->addFlash('success', 'Mise à jour réussie');
-
                 return $this->redirectToRoute('school_edit', ['id' => $school->getId() ]);
             }
 
@@ -145,11 +141,11 @@ class SchoolController extends AbstractController
      * @Route("/{id}/{from}", name="school_delete", methods={"DELETE"})
      * @IsGranted("ROLE_SCHOOL")
      */
-    public function delete(Request $request, School $school, $from): Response
+    public function delete(Request $request, School $school, RecruitHelper $helper, $from): Response
     {
         if ($this->isCsrfTokenValid('delete'.$school->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-
+            // handle recruit 
+            $helper->handleDeleteCompany($school);
             // delete session
             $currentUserId = $this->getUser()->getId();
             if ($currentUserId == $school->getUser()->getId())
@@ -158,13 +154,17 @@ class SchoolController extends AbstractController
               $session = new Session();
               $session->invalidate();
             }
-
+            // delete
+            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($school);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Compte Supprimé');
+            return $this->redirectToRoute($from);
         }
-
-        $this->addFlash('success', 'Compte Supprimé');
-
-        return $this->redirectToRoute($from);
+        else {
+            $this->addFlash('error', 'Requête Invalide');
+            return $this->redirectToRoute($from);
+        }
     }
 }

@@ -28,6 +28,7 @@
             <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,500,600,700,700i|Montserrat:300,400,500,600,700" rel="stylesheet">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+            <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 
             <!-- bootstrap and custom styles -->    
             {{ encore_entry_link_tags('company') }}
@@ -43,12 +44,14 @@
                 <br>
                 <ol>
                     <li>L'étudiant postule à votre offre</li><br>
-                    <li>Vous choisissez de l'embaucher en cliquant sur le bouton <button class="btn-icon btn-success" title="Supprimer"><i class="fas fa-user-check"></i></button></li><br>
-                    <li>Vous devez ensuite attendre qu'il accepte votre offre</li><br>
-                    <li>Quand il a accepté vous pouvez commencer la procédure d'embauche. <br> Une fois celle-ci terminée, cliquez sur le bouton <button class="btn-icon btn-success" title="Supprimer"><i class="far fa-play-circle"></i></button> pour indiquer que la mission commence</li><br>
-                    <li>Quand la mission est terminée, cliquez sur <button class="btn-icon btn-danger" title="Supprimer"><i class="far fa-stop-circle"></i></button></li><br>
+                    <li>Vous choisissez de l'embaucher en cliquant sur <button class="btn btn-success btn-sm"><i class="fas fa-user-check" title="Embaucher"></i> Recruter</button><br><br>
+                    <li>Vous voyez ensuite apparaitre le badge :  <span class="badge badge-warning right">En attente d'acceptation du candidat</span> pour laisser au candidat le temps d'accepter la mission</li><br>
+                    <li>Quand il a accepté, vous pouvez prendre contact avec l'étudiant et commencer la procédure d'embauche. </li><br>
+                    <li> Une fois le recrutement terminé, cliquez sur  <button class="btn btn-info btn-sm"><i class="far fa-stop-circle"></i> Finaliser le recrutement</button> pour indiquer que la mission commence</li><br>
                 </ol>
-                <p><strong>Nb :</strong> si vous souhaitez refuser définitivement une candidature, cliquez sur : <button class="btn-icon btn-danger" title="Supprimer"><i class="fas fa-times"></i></button></p>
+                <p><strong>Nb :</strong> si vous souhaitez refuser définitivement une candidature, cliquez sur : <button class="btn btn-danger btn-sm"><i class="fas fa-times"></i> Refuser</button></p>
+                <p><strong>Nb : Tous ces boutons apparaissent au fur et à mesure de l'avancée du recrutement. Si vous ne les trouvez pas tous en même temps, c'est normal 😉 </strong></p>
+
             </div> 
         </div>
         
@@ -123,45 +126,47 @@
                                 <a class="nav-link" href="{{ path('offers_company_index', {id:company.id}) }}">
                                     <i class="nav-icon fa fa-bookmark"></i>
                                     <p>
-                                        Emplois
+                                        Annonces
                                     </p>
-                                    {% if agree is defined or hired is defined or applyc is defined %}
+                                    {% if agree is defined or hired is defined or closed is defined %}
                                         {% if agree | length > 0 %}
-                                        <span class="badge badge-warning right" title="candidatures">A valider : {{ agree | length }}</span>
+                                        <span class="badge badge-info right" title="candidatures">A Finaliser : {{ agree | length }}</span>
                                         {% elseif hired | length > 0 %}
                                         <span class="badge badge-warning right" title="candidatures">En attente : {{ hired | length }}</span>
-                                        {% elseif applyc| length > 0 %}
-                                        <span class="badge badge-primary right" title="candidatures">Candidats : {{ applyc | length }}</span>
+                                        {% elseif candidates| length > 0 %}
+                                        <span class="badge badge-primary right" title="candidatures">Candidats : {{ candidates | length }}</span>
                                         {% endif %}
                                     {% endif %}
                                 </a>
                                 {% if is_granted('ROLE_SUPER_COMPANY') %}
-                                    {% if app.request.get('_route') == 'offers_company_index' or app.request.get('_route') == 'offers_new' or app.request.get('_route') == 'offers_preview' or app.request.get('_route') == 'offers_edit' or app.request.get('_route') == 'offers_company_finished' or app.request.get('_route') == 'show_applied_profile' %}
+                                    {% if app.request.get('_route') == 'offers_company_index' 
+                                    or app.request.get('_route') == 'offers_new' 
+                                    or app.request.get('_route') == 'offers_preview' 
+                                    or app.request.get('_route') == 'offers_edit' 
+                                    or app.request.get('_route') == 'offers_company_finished' 
+                                    or app.request.get('_route') == 'show_applied_profile' 
+                                    or app.request.get('_route') == 'show_finished' 
+                                    or app.request.get('_route') == 'show_applied_finished'
+                                %}
 
                                 <li class="nav nav-tree">
                                     <li class="nav-item">
-                                        <a href="{{ path('offers_company_index', {id:company.id}) }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Tous</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
                                         <a href="{{ path('offers_new', {id:company.id}) }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Nouveau</p>
+                                        <p>Nouvelle</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a  href="{{ path('offers_company_finished', {id:company.id}) }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Terminés</p>
-                                        {% if appliesf is defined %}
-                                            {% if appliesf | length > 0 %}
-                                            <span class="badge badge-warning right" title="candidatures">{{ appliesf | length }}</span>
+                                        <p>Fermées</p>
+                                        {% if closed is defined %}
+                                          {% if closed | length > 0 %}
+                                            <span class="badge badge-success right" title="candidatures">recrutés : {{ closed | length }}</span>
                                             {% endif %}
                                         {% elseif applies is defined %}
                                             {% if applies | length > 0 %}
-                                            <span class="badge badge-warning right" title="candidatures">{{ applies | length }}</span>
+                                            <span class="badge badge-success right" title="candidatures">{{ applies | length }}</span>
                                             {% endif %}
                                         {% endif %}
                                         </a>
@@ -199,6 +204,7 @@
             </script>
 
             <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+            <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 
             <script>
                 $(document).ready(function() {
@@ -219,6 +225,48 @@
                     $('#browse-' + id).text(fileName);
                 });   
             });   
+            </script>
+
+            <script>
+                $(function () {
+                    $("#example1").DataTable({
+                        "paging": true,
+                        "lengthChange": false,
+                        "searching": false,
+                        "ordering": false,
+                        "info": false,
+                        "autoWidth": false,
+                        "responsive": true,
+                        "language": {
+                        "emptyTable": "Aucune offre pour le moment",
+                        "paginate": {
+                            "previous": "Précédent",
+                            'next':'Suivant'
+                            }
+                        }
+                    });   
+                // });
+
+                // $(function () {
+                    $("#example2").DataTable({
+                        "paging": true,
+                        "lengthChange": false,
+                        "searching": false,
+                        "ordering": false,
+                        "info": false,
+                        "autoWidth": false,
+                        "responsive": true,
+                        "language": {
+                        "emptyTable": "Aucune mission terminée",
+                        "paginate": {
+                            "previous": "Précédent",
+                            'next':'Suivant'
+                            }
+                        }
+                    });   
+                // })  
+                });
+
             </script>
             
         {% endblock %}
