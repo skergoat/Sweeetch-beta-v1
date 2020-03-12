@@ -291,8 +291,13 @@ class StudiesActionController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($study);
             $entityManager->flush();
+            return $this->redirectToRoute('school_studies_index', [ 'id' => $school->getId() ]);
         }
-        return $this->redirectToRoute('school_studies_index', [ 'id' => $school->getId() ]);
+        else {
+            $this->addFlash('error', 'Requête Invalide');
+            return $this->redirectToRoute('school_studies_index', [ 'id' => $school->getId() ]);
+        }
+        
     }
 
 }
