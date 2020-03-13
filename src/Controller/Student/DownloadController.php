@@ -61,7 +61,7 @@ class DownloadController extends AbstractController
     }
 
     /**
-     * @Route("/resume/{id}/offers/{offers}/company/{company}/student/{student}/download", name="company_download_resume", methods={"GET"})
+     * @Route("download/company/resume/{id}/{offers}/{company}/{student}", name="company_download_resume", methods={"GET"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      * @ParamConverter("offers", options={"id" = "offers"})
      * @ParamConverter("company", options={"id" = "company"})
@@ -77,7 +77,7 @@ class DownloadController extends AbstractController
     }
 
      /**
-     * @Route("/resume/{id}/studies/{studies}/school/{school}/student/{student}/download", name="school_download_resume", methods={"GET"})
+     * @Route("download/school/resume/{id}/studies/{studies}/school/{school}/student/{student}/download", name="school_download_resume", methods={"GET"})
      * @IsGranted("ROLE_SUPER_SCHOOL")
      * @ParamConverter("studies", options={"id" = "studies"})
      * @ParamConverter("school", options={"id" = "school"})

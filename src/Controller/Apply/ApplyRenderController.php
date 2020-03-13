@@ -24,13 +24,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-/**
- * @Route("/apply")
- */
+
 class ApplyRenderController extends AbstractController
 {
      /**
-     * @Route("/index/student/{id}", name="student_apply", methods={"GET"})
+     * @Route("/student/applies/{id}", name="student_apply", methods={"GET"})
      * @IsGranted("ROLE_STUDENT")
      */
     public function indexByStudent(StudentRepository $repository, applyRepository $applyRepository, Student $student, StudentChecker $checker)
@@ -47,7 +45,7 @@ class ApplyRenderController extends AbstractController
     }
 
     /**
-     * @Route("/finished/student/{id}", name="student_finished", methods={"GET"})
+     * @Route("/company/finished/student/{id}", name="student_finished", methods={"GET"})
      * @IsGranted("ROLE_STUDENT")
      */
     public function finishedByStudent(StudentRepository $repository, applyRepository $applyRepository, Student $student, StudentChecker $checker)
@@ -64,7 +62,7 @@ class ApplyRenderController extends AbstractController
     }
 
     /**
-     * @Route("/index/company/{id}", name="offers_company_index", methods={"GET"})
+     * @Route("/company/applies/{id}", name="offers_company_index", methods={"GET"})
      * @IsGranted("ROLE_COMPANY")
      */
     public function indexByCompany(Company $company, OffersRepository $offersRepository, ApplyRepository $applyRepository, Request $request, CompanyChecker $checker, ApplyHelper $helper): Response
@@ -85,7 +83,7 @@ class ApplyRenderController extends AbstractController
     }
 
      /**
-     * @Route("/finished/company/{id}", name="offers_company_finished", methods={"GET"})
+     * @Route("/company/applies/finished/{id}", name="offers_company_finished", methods={"GET"})
      * @IsGranted("ROLE_COMPANY")
      */
     public function finishedByCompany(Company $company, OffersRepository $offersRepository, ApplyRepository $applyRepository, PaginatorInterface $paginator, Request $request, CompanyChecker $checker, ApplyHelper $helper): Response
@@ -110,7 +108,7 @@ class ApplyRenderController extends AbstractController
     }
 
     /**
-     * @Route("/show/company/{id}/{company}", name="offers_preview", methods={"GET"})
+     * @Route("/company/apply/{id}/{company}", name="offers_preview", methods={"GET"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      * @ParamConverter("company", options={"id" = "company"})
      */
@@ -134,7 +132,7 @@ class ApplyRenderController extends AbstractController
     }
 
     /**
-     * @Route("/show/finished/{id}/{company}", name="show_finished", methods={"GET"})
+     * @Route("/company/apply/finished/{id}/{company}", name="show_finished", methods={"GET"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      * @ParamConverter("company", options={"id" = "company"})
      */
@@ -160,7 +158,7 @@ class ApplyRenderController extends AbstractController
     }
 
     /**
-     * @Route("/profile/{id}/student/{student_id}", name="offers_show_hired", methods={"GET"})
+     * @Route("/student/apply/{id}/{student_id}", name="offers_show_hired", methods={"GET"})
      * @IsGranted("ROLE_SUPER_STUDENT")
      * @ParamConverter("student", options={"id" = "student_id"})
      */
@@ -179,7 +177,7 @@ class ApplyRenderController extends AbstractController
     }
 
      /**
-     * @Route("/profile/{id}/company/{company_id}/offers/{offers}", name="show_applied_profile", methods={"GET"})
+     * @Route("/company/profile/{id}/{company_id}/{offers}", name="show_applied_profile", methods={"GET"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      * @ParamConverter("company", options={"id" = "company_id"})
      * @ParamConverter("offers", options={"id" = "offers"})
@@ -207,7 +205,7 @@ class ApplyRenderController extends AbstractController
     }
 
      /**
-     * @Route("/applied/{id}/company/{company_id}/offers/{offers}", name="show_applied_finished", methods={"GET"})
+     * @Route("/company/profile/finished/{id}/{company_id}/{offers}", name="show_applied_finished", methods={"GET"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      * @ParamConverter("company", options={"id" = "company_id"})
      * @ParamConverter("offers", options={"id" = "offers"})

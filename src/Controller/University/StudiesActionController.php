@@ -23,13 +23,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
-/**
- * @Route("/studies")
- */
 class StudiesActionController extends AbstractController
 {
    /**
-     * @Route("/study/{id}/student/{student_id}/", name="recruit", methods={"POST"})
+     * @Route("/studies/study/{id}/student/{student_id}/", name="recruit", methods={"POST"})
      * @IsGranted("ROLE_STUDENT_HIRED")
      * @ParamConverter("student", options={"id" = "student_id"})
      */
@@ -88,7 +85,7 @@ class StudiesActionController extends AbstractController
     }
 
     /**
-    * @Route("/hire/{id}", name="recruit_hire", methods={"POST"})
+    * @Route("/studies/hire/{id}", name="recruit_hire", methods={"POST"})
     * @IsGranted("ROLE_SUPER_SCHOOL")
     */
     public function hire(RecruitRepository $repository, Recruit $recruit, Request $request, RecruitHelper $helper)
@@ -118,7 +115,7 @@ class StudiesActionController extends AbstractController
     }
 
     /**
-    * @Route("/agree/{id}", name="recruit_agree", methods={"POST"})
+    * @Route("/studies/agree/{id}", name="recruit_agree", methods={"POST"})
     * @IsGranted("ROLE_SUPER_STUDENT")
     */
     public function agree(RecruitRepository $repository, Recruit $recruit, Request $request, RecruitHelper $helper)
@@ -142,7 +139,7 @@ class StudiesActionController extends AbstractController
     }
 
     /**
-     * @Route("/finish/{id}", name="recruit_finish", methods={"POST"})
+     * @Route("/studies/finish/{id}", name="recruit_finish", methods={"POST"})
      * @IsGranted("ROLE_SUPER_SCHOOL")
      */
     public function finish(Recruit $recruit, RecruitRepository $repository, ApplyRepository $applyRepository, Request $request, RecruitHelper $helper, ApplyHelper $applyHelper)
@@ -169,7 +166,7 @@ class StudiesActionController extends AbstractController
     }
 
     /**
-     * @Route("/refuse/{id}", name="recruit_refuse", methods={"POST"})
+     * @Route("/studies/refuse/{id}", name="recruit_refuse", methods={"POST"})
      * @IsGranted("ROLE_SUPER_SCHOOL")
      */
     public function refuse(RecruitRepository $repository, Recruit $recruit, Request $request, RecruitHelper $helper)
@@ -198,7 +195,7 @@ class StudiesActionController extends AbstractController
     }
 
     /**
-     * @Route("/delete/recruit/{id}", name="delete_recruit", methods={"DELETE"})
+     * @Route("/studies/delete/recruit/{id}", name="delete_recruit", methods={"DELETE"})
      * @IsGranted("ROLE_SUPER_STUDENT")
      * @ParamConverter("recruit", options={"id" = "id"})
      */
@@ -225,7 +222,7 @@ class StudiesActionController extends AbstractController
     }
 
      /**
-     * @Route("/new/{school}", name="studies_new", methods={"GET","POST"})
+     * @Route("/school/studies/new/{school}", name="studies_new", methods={"GET","POST"})
      */
     public function new(Request $request, School $school, SchoolChecker $checker): Response
     {
@@ -256,7 +253,7 @@ class StudiesActionController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit/{school_id}", name="studies_edit", methods={"GET","POST"})
+     * @Route("/studies/{id}/edit/{school_id}", name="studies_edit", methods={"GET","POST"})
      * @ParamConverter("school", options={"id" = "school_id"})
      */
     public function edit(Request $request, Studies $study, School $school, SchoolChecker $checker): Response
@@ -279,7 +276,7 @@ class StudiesActionController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/{school_id}", name="studies_delete", methods={"DELETE"})
+     * @Route("/studies/{id}/{school_id}", name="studies_delete", methods={"DELETE"})
      * @ParamConverter("school", options={"id" = "school_id"})
      */
     public function delete(Request $request, Studies $study, School $school, RecruitHelper $helper): Response

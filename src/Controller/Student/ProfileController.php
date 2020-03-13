@@ -19,12 +19,12 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
- * @Route("/profile")
+ * @Route("/student")
  */
 class ProfileController extends AbstractController
 {
     /**
-     * @Route("/{id}/edit/{student_id}", name="profile_edit", methods={"GET","POST"})
+     * @Route("/profile/edit/{id}/{student_id}", name="profile_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_STUDENT")
      * @ParamConverter("student", options={"id" = "student_id"})
      */
