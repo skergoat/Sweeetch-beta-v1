@@ -19,20 +19,20 @@ class ActivateHTMLAdder
         case ['ROLE_SCHOOL']:
         case ['ROLE_SUPER_SCHOOL']:
         case['ROLE_RECRUIT']:
-        $color = 'green';
-        $message = 'hello';
+        $color = '#85CBE6';
+        $message = 'Validez votre email pour pouvoir recruter';
         break;
 
         case ['ROLE_STUDENT']:
         case ['ROLE_SUPER_STUDENT']:
-        $color = 'blue';
-        $message = 'coucou';
+        $color = '#FFCC66';
+        $message = 'Validez votre email pour pouvoir postuler';
         break;
 
         case ['ROLE_COMPANY']:
         case ['ROLE_SUPER_COMPANY']:
-        $color = 'red';
-        $message = 'hey !';
+        $color = '#FF737B';
+        $message = 'Validez votre email pour pouvoir recruter';
         break;
     }
 
