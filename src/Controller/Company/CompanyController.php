@@ -8,6 +8,7 @@ use App\Entity\Pictures;
 use App\Form\CompanyType;
 use App\Form\UpdateCompanyType;
 use App\Service\UploaderHelper;
+use App\Service\Mailer\UserMailer;
 use App\Repository\ApplyRepository;
 use App\Service\Mailer\ApplyMailer;
 use App\Repository\OffersRepository;
@@ -53,7 +54,7 @@ class CompanyController extends AbstractController
     /**
      * @Route("/new", name="company_new", methods={"GET","POST"})
      */
-    public function new(UserPasswordEncoderInterface $passwordEncoder, Request $request): Response
+    public function new(UserPasswordEncoderInterface $passwordEncoder, Request $request, UserMailer $mailer): Response
     {
         $company = new Company();
         $form = $this->createForm(CompanyType::class, $company);
@@ -68,6 +69,10 @@ class CompanyController extends AbstractController
                 $user,
                 $user->getPassword()
             ));
+            // On génère un token et on l'enregistre
+            $user->setActivateToken(md5(uniqid()));
+            // On génère l'e-mail
+            $mailer->sendActivate($user);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($company);
@@ -153,10 +158,6 @@ class CompanyController extends AbstractController
                         $user->getPassword()
                     ));
                 }
-                 // On génère un token et on l'enregistre
-                $user->setActivateToken(md5(uniqid()));
-                // On génère l'e-mail
-                $mailer->sendActivate($user);
 
                 $this->getDoctrine()->getManager()->flush();
                 $this->addFlash('success', 'Mise à jour réussie');

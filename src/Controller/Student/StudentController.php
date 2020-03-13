@@ -16,6 +16,7 @@ use Gedmo\Sluggable\Util\Urlizer;
 use App\Form\UpdateStudentDocType;
 use App\Form\UserEditPasswordType;
 use App\Repository\UserRepository;
+use App\Service\Mailer\UserMailer;
 use App\Repository\ApplyRepository;
 use App\Repository\ResumeRepository;
 use App\Form\StudentEditPasswordType;
@@ -73,7 +74,7 @@ class StudentController extends AbstractController
     /**
      * @Route("/new/", name="student_new", methods={"GET","POST"})
      */
-    public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder, UploaderHelper $uploaderHelper, ValidatorInterface $validator): Response
+    public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder, UploaderHelper $uploaderHelper, ValidatorInterface $validator, UserMailer $mailer): Response
     {
         $student = new Student();
         $form = $this->createForm(StudentType::class, $student);
@@ -116,6 +117,10 @@ class StudentController extends AbstractController
                 $user,
                 $user->getPassword()
             ));
+            // On génère un token et on l'enregistre
+            $user->setActivateToken(md5(uniqid()));
+            // On génère l'e-mail
+            $mailer->sendActivate($user);
 
             // create empty profile 
             $profile = new Profile;
@@ -234,10 +239,6 @@ class StudentController extends AbstractController
                         $user->getPassword()
                     ));
                 }
-                 // On génère un token et on l'enregistre
-                $user->setActivateToken(md5(uniqid()));
-                // On génère l'e-mail
-                $mailer->sendActivate($user);
 
                 $manager = $this->getDoctrine()->getManager()->flush();
 
