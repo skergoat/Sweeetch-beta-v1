@@ -2,15 +2,10 @@
 
 namespace App\Service;
 
-// use App\Entity\Apply;
-// use App\Entity\Offers;
-// use App\Entity\Student;
-// use App\Repository\ApplyRepository;
-// use App\Service\Mailer\ApplyMailer;
 use App\Entity\User;
-// use App\Service\Recruitment\CommonHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class AdminHelper
 {

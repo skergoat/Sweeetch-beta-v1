@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Service\SecurityHelper;
 use App\Repository\UserRepository;
 use App\Repository\ApplyRepository;
 use App\Service\UserChecker\AdminChecker;
@@ -42,7 +43,7 @@ class UserController extends AbstractController
     /**
      * @Route("/new", name="user_new", methods={"GET","POST"})
      */
-    public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder, SecurityHelper $helper): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -58,13 +59,14 @@ class UserController extends AbstractController
                 $user,
                 $form['password']->getData()
             ));
-
+            // save 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
-
+            // create link to change password 
+            $helper->createResetPasswordLink($user);
+            // redirect
             $this->addFlash('success', 'Admin crée');
-
             return $this->redirectToRoute('user_new');
         }
 
