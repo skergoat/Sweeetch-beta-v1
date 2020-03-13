@@ -36,6 +36,7 @@ class UserFixture extends Fixture
         $superAdmin = new User; 
         $superAdmin->setEmail('kergoane@gmail.com');
         $superAdmin->setRoles(['ROLE_SUPER_ADMIN']);
+        $superAdmin->setConfirmed(true);
         $superAdmin->setPassword($this->passwordEncoder->encodePassword(
             $superAdmin,
             'malaysia333?'

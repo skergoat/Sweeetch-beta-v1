@@ -126,8 +126,8 @@
 
                         {% if is_granted('ROLE_SUPER_STUDENT') %}
 
-                            {% if app.user.activateToken | length > 0 %}
-                                <div class="col-12 col-sm-6 col-md-12">
+                            {# {% if app.user.activateToken | length > 0 %} #}
+                                {# <div class="col-12 col-sm-6 col-md-12">
                                     <div class="info-box mb-3">
                                     <span class="info-box-icon bg-danger elevation-1"><i class="fa fa-exclamation-triangle"></i></span>
                         
@@ -138,9 +138,9 @@
                                         </span>
                                     </div>
                                     </div>
-                                </div>
+                                </div> #}
 
-                            {% else %}
+                            {# {% else %} #}
                                 {% if offers.state == false %}
                                 <form method="post" action="{{ path('apply', { id:offers.id, student_id:app.user.student.id, page:page }) }}">
                                     <input type="hidden" name="_method" value="POST">
@@ -160,7 +160,7 @@
                                 </div>
                                 {% endif %}
                                 
-                            {% endif %}
+                            {# {% endif %} #}
 
                         {% elseif is_granted('ROLE_STUDENT') %}
                         <div class="col-12 col-sm-6 col-md-12">
@@ -170,11 +170,11 @@
                             <div class="info-box-content">
                                 <span class="info-box-number">Validation en attente</span>
                                 <span class="info-box-text">
-                                    {% if app.user.activateToken | length > 0 %}
+                                    {# {% if app.user.activateToken | length > 0 %} #}
                                     Vous devez valider votre email et attendre que Sweeetch valide votre compte pour pouvoir postuler
-                                    {% else %}
+                                    {# {% else %}
                                     Vous devez attendre que Sweeetch valide votre compte pour pouvoir postuler
-                                    {% endif %}
+                                    {% endif %} #}
                                 </span>
                             </div>
                             </div>
