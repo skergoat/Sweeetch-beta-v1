@@ -12,7 +12,6 @@ class SecurityHelper
 {
     private $manager;
     private $userMailer;
-    // private $userRepository;
     private $tokenGenerator;
     private $router;
 
@@ -22,7 +21,6 @@ class SecurityHelper
         $this->mailer = $userMailer;
         $this->tokenGenerator = $tokenGenerator;
         $this->router = $router;
-        // $this->userRepository = $userRepository;
     }
 
     public function createResetPasswordLink($user)
@@ -34,10 +32,8 @@ class SecurityHelper
             // On retourne sur la page de connexion
             return $this->redirectToRoute('app_login');
         }
-
         // On génère un token
         $token = $this->tokenGenerator->generateToken();
-
         // On essaie d'écrire le token en base de données
         try{
             $user->setResetToken($token);
@@ -48,11 +44,9 @@ class SecurityHelper
             $this->addFlash('warning', $e->getMessage());
             return $this->redirectToRoute('app_login');
         }
-
         // On génère l'URL de réinitialisation de mot de passe
         $url = $this->router->generate('app_reset_password', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
         // On génère l'e-mail
-        $this->mailer->sendRecoverPassword($user, $url);
-        
+        $this->mailer->sendAdminPassword($user, $url);  
     }
 }

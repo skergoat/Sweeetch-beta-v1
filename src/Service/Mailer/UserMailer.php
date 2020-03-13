@@ -30,6 +30,21 @@ class UserMailer
         $this->mailer->send($mail);
     }
 
+    public function sendAdminPassword($user, $url)
+    {
+        $mail = (new TemplatedEmail())
+            ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
+            ->to(new Address($user->getEmail()))
+            ->subject('Activation du compte')
+            ->htmlTemplate('email/admin-mdp.html.twig')
+            ->context([
+                'url' => $url,
+                'mail' => $user->getEmail()
+            ]); 
+        
+        $this->mailer->send($mail);
+    }
+
     public function sendActivate($user)
     {
         $mail = (new TemplatedEmail())
