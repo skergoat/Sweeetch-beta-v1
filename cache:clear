@@ -1,48 +1,0 @@
-Script started on Sun Mar  8 22:53:32 2020
-[?1034hbash-3.2$ git status 
-On branch steph
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working directory)
-
-	[31mmodified:   assets/css/school/components/_cards.scss[m
-	[31mmodified:   assets/css/student/components/_cards.scss[m
-	[31mmodified:   cache:clear[m
-	[31mmodified:   src/Controller/University/StudiesRenderController.php[m
-	[31mmodified:   src/Repository/RecruitRepository.php[m
-	[31mmodified:   templates/base-school.html.twig[m
-	[31mmodified:   templates/school/edit.html.twig[m
-	[31mmodified:   templates/studies/index.html.twig[m
-	[31mmodified:   templates/studies/show.html.twig[m
-
-no changes added to commit (use "git add" and/or "git commit -a")
-bash-3.2$ git commit -am ''show [K[K[K[K[K[Kshow studies ok"[K'
-[steph eea8234] show studies ok
- 9 files changed, 174 insertions(+), 2045 deletions(-)
- rewrite cache:clear (100%)
-bash-3.2$ git push origin steph
-Enumerating objects: 46, done.
-Counting objects:   2% (1/46)   Counting objects:   4% (2/46)   Counting objects:   6% (3/46)   Counting objects:   8% (4/46)   Counting objects:  10% (5/46)   Counting objects:  13% (6/46)   Counting objects:  15% (7/46)   Counting objects:  17% (8/46)   Counting objects:  19% (9/46)   Counting objects:  21% (10/46)   Counting objects:  23% (11/46)   Counting objects:  26% (12/46)   Counting objects:  28% (13/46)   Counting objects:  30% (14/46)   Counting objects:  32% (15/46)   Counting objects:  34% (16/46)   Counting objects:  36% (17/46)   Counting objects:  39% (18/46)   Counting objects:  41% (19/46)   Counting objects:  43% (20/46)   Counting objects:  45% (21/46)   Counting objects:  47% (22/46)   Counting objects:  50% (23/46)   Counting objects:  52% (24/46)   Counting objects:  54% (25/46)   Counting objects:  56% (26/46)   Counting objects:  58% (27/46)   Counting objects:  60% (28/46)   Counting objects:  63% (29/46)   Counting objects:  65% (30/46)   Counting objects:  67% (31/46)   Counting objects:  69% (32/46)   Counting objects:  71% (33/46)   Counting objects:  73% (34/46)   Counting objects:  76% (35/46)   Counting objects:  78% (36/46)   Counting objects:  80% (37/46)   Counting objects:  82% (38/46)   Counting objects:  84% (39/46)   Counting objects:  86% (40/46)   Counting objects:  89% (41/46)   Counting objects:  91% (42/46)   Counting objects:  93% (43/46)   Counting objects:  95% (44/46)   Counting objects:  97% (45/46)   Counting objects: 100% (46/46)   Counting objects: 100% (46/46), done.
-Delta compression using up to 8 threads
-Compressing objects:   4% (1/24)   Compressing objects:   8% (2/24)   Compressing objects:  12% (3/24)   Compressing objects:  16% (4/24)   Compressing objects:  20% (5/24)   Compressing objects:  25% (6/24)   Compressing objects:  29% (7/24)   Compressing objects:  33% (8/24)   Compressing objects:  37% (9/24)   Compressing objects:  41% (10/24)   Compressing objects:  45% (11/24)   Compressing objects:  50% (12/24)   Compressing objects:  54% (13/24)   Compressing objects:  58% (14/24)   Compressing objects:  62% (15/24)   Compressing objects:  66% (16/24)   Compressing objects:  70% (17/24)   Compressing objects:  75% (18/24)   Compressing objects:  79% (19/24)   Compressing objects:  83% (20/24)   Compressing objects:  87% (21/24)   Compressing objects:  91% (22/24)   Compressing objects:  95% (23/24)   Compressing objects: 100% (24/24)   Compressing objects: 100% (24/24), done.
-Writing objects:   4% (1/24)   Writing objects:   8% (2/24)   Writing objects:  12% (3/24)   Writing objects:  16% (4/24)   Writing objects:  20% (5/24)   Writing objects:  25% (6/24)   Writing objects:  29% (7/24)   Writing objects:  33% (8/24)   Writing objects:  37% (9/24)   Writing objects:  41% (10/24)   Writing objects:  45% (11/24)   Writing objects:  50% (12/24)   Writing objects:  54% (13/24)   Writing objects:  58% (14/24)   Writing objects:  62% (15/24)   Writing objects:  66% (16/24)   Writing objects:  70% (17/24)   Writing objects:  75% (18/24)   Writing objects:  79% (19/24)   Writing objects:  83% (20/24)   Writing objects:  87% (21/24)   Writing objects:  91% (22/24)   Writing objects:  95% (23/24)   Writing objects: 100% (24/24)   Writing objects: 100% (24/24), 3.15 KiB | 1.58 MiB/s, done.
-Total 24 (delta 19), reused 0 (delta 0)
-remote: Resolving deltas:   0% (0/19)[Kremote: Resolving deltas:   5% (1/19)[Kremote: Resolving deltas:  10% (2/19)[Kremote: Resolving deltas:  15% (3/19)[Kremote: Resolving deltas:  26% (5/19)[Kremote: Resolving deltas:  31% (6/19)[Kremote: Resolving deltas:  36% (7/19)[Kremote: Resolving deltas:  42% (8/19)[Kremote: Resolving deltas:  47% (9/19)[Kremote: Resolving deltas:  52% (10/19)[Kremote: Resolving deltas:  57% (11/19)[Kremote: Resolving deltas:  63% (12/19)[Kremote: Resolving deltas:  68% (13/19)[Kremote: Resolving deltas:  73% (14/19)[Kremote: Resolving deltas:  78% (15/19)[Kremote: Resolving deltas:  84% (16/19)[Kremote: Resolving deltas:  89% (17/19)[Kremote: Resolving deltas:  94% (18/19)[Kremote: Resolving deltas: 100% (19/19)[Kremote: Resolving deltas: 100% (19/19), completed with 18 local objects.[K
-To https://github.com/skergoat/Sweeetch.git
-   fdf4b85..eea8234  steph -> steph
-bash-3.2$ git checkout master 
-error: Your local changes to the following files would be overwritten by checkout:
-	cache:clear
-Please commit your changes or stash them before you switch branches.
-Aborting
-bash-3.2$ giut [K[K[Kt merge ma[K[Ksteph
-Already up to date.
-bash-3.2$ git branch 
-[?1h=  master[m[m
-* [32msteph[m[m
-[K[?1l>bash-3.2$ git checkout master 
-error: Your local changes to the following files would be overwritten by checkout:
-	cache:clear
-Please commit your changes or stash them before you switch branches.
-Aborting
-bash-3.2$ git st
