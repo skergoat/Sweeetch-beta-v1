@@ -35,7 +35,7 @@ class StudentType extends AbstractType
             ])
             ->add('resume', ResumeType::class)
             ->add('idCard', IdCardType::class)
-            // ->add('studentCard', StudentCardType::class)
+            ->add('studentCard', StudentCardType::class)
             ->add('proofHabitation', ProofHabitationType::class)
         ;   
     }

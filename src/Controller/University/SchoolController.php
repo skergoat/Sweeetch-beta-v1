@@ -80,7 +80,7 @@ class SchoolController extends AbstractController
             $entityManager->persist($school);
             $entityManager->flush();
 
-            return $this->redirectToRoute('school_index');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('school/new.html.twig', [
