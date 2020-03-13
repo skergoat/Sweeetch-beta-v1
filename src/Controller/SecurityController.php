@@ -123,12 +123,9 @@ class SecurityController extends AbstractController
             $user = $userRepository->findOneBy(['email' => $donnees['email']]);
             // on envoie le lien de recuperation 
             $helper->createResetPasswordLink($user);
-            // On crée le message flash de confirmation
-            $this->addFlash('success', 'E-mail de réinitialisation du mot de passe envoyé !');
             // On redirige vers la page de login
             return $this->redirectToRoute('app_login');
         }
-
         // On envoie le formulaire à la vue
         return $this->render('security/forgotten_password.html.twig',['emailForm' => $form->createView()]);
     }
