@@ -34,6 +34,7 @@ class CompanyFixtures extends Fixture
             $user = new User; 
             $user->setEmail('company' . $i . '@gmail.com');
             $user->setRoles(['ROLE_COMPANY']);
+            $user->setConfirmed(false);
             $user->setPassword($this->passwordEncoder->encodePassword(
                 $user,
                 'test'

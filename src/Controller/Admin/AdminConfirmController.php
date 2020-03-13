@@ -27,7 +27,8 @@ class AdminConfirmController extends AbstractController
         if($this->isCsrfTokenValid('confirm'.$user->getId(), $request->request->get('_token'))) 
         { 
             // confirm
-            $helper->confirm($user); 
+            $helper->confirm($user);
+            $user->setConfirmed(true); 
             // save 
             $this->getDoctrine()->getManager()->flush();
             // send flash  

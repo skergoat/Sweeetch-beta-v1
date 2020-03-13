@@ -14,36 +14,62 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class AdminHelper
 {
-    // private $applyRepository; 
-    // private $mailer;
-    // private $manager;
-
     public function __construct(EntityManagerInterface $manager)
     {
-        // $this->applyRepository = $applyRepository;
-        // $this->mailer = $mailer;
         $this->manager = $manager;
     }
 
     public function confirm(User $user)
     {
-        $user->getActivateToken() == true ? $token = false : $token = true;
-
-        dd($token);
+        $user->getActivateToken() == true ? $token = true : $token = false;
 
         if($user->getStudent() != null)
         {
-            $token == true ? $user->setRoles(['ROLE_SUPER_STUDENT']) : $user->setRoles(['ROLE_STUDENT ROLE_WAIT']); 
+            if($token == false)
+            {
+                $user->setRoles(['ROLE_SUPER_STUDENT']); 
+            }
         }
         else if($user->getCompany() != null) {
 
-            $user->setRoles(['ROLE_SUPER_COMPANY']); 
+            if($token == false)
+            {
+                $user->setRoles(['ROLE_SUPER_COMPANY']); 
+            }
         }
         else if($user->getSchool() != null)
         {
-            $user->setRoles(['ROLE_SUPER_SCHOOL']); 
-        }
-               
+            if($token == false)
+            {
+                $user->setRoles(['ROLE_SUPER_SCHOOL']);
+            } 
+        }           
     }
 
+    public function activateAccount($user)
+    {
+        $user->getConfirmed() == true ? $confirmed = true : $confirmed = false;
+
+        if($user->getStudent() != null)
+        {
+            if($confirmed == true)
+            {
+                $user->setRoles(['ROLE_SUPER_STUDENT']); 
+            }
+        }
+        else if($user->getCompany() != null) {
+
+            if($confirmed == true)
+            {
+                $user->setRoles(['ROLE_SUPER_COMPANY']); 
+            }
+        }
+        else if($user->getSchool() != null)
+        {
+            if($confirmed == true)
+            {
+                $user->setRoles(['ROLE_SUPER_SCHOOL']);
+            } 
+        }
+    }
 }

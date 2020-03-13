@@ -39,10 +39,10 @@
                             <td class="email-{{ student.user.id }}"><strong><a href="{{ path('student_show', {'id': student.id}) }}" >{{ student.user.email }}</a></strong></td>
                             <td>{{ student.name }}</td>
                             <td>{{ student.lastname }}</td>
-                            <td>{% if student.user.roles == ['ROLE_STUDENT'] %}<span class="badge badge-warning">A confirmer</span>{% else %}<span class="badge badge-success">Confirmé</span>{% endif %}</td>
+                            <td>{% if student.user.confirmed == false %}<span class="badge badge-warning">A confirmer</span>{% else %}<span class="badge badge-success">Confirmé</span>{% endif %}</td>
                             <td class="table-actions">
                                 <div class="icon-group">
-                                {% if student.user.roles == ['ROLE_STUDENT'] %}
+                                {% if student.user.confirmed == false %}
                                     <form method="post" class="form-icon" action="{{ path('admin_confirm', {'id': student.user.id, 'from':'student_index'}) }}" onsubmit="return confirm('Are you sure you want to confirm this user ?');">
                                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ student.user.id) }}">
                                         <button class="btn-icon btn-success"><i class="fas fa-check" title="confirmer le compte"></i></button>

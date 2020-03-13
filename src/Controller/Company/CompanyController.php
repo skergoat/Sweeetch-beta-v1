@@ -65,6 +65,7 @@ class CompanyController extends AbstractController
             // set roles 
             $user = $company->getUser();
             $user->setRoles(['ROLE_COMPANY']);
+            $user->setConfirmed(false);
             $user->setPassword($passwordEncoder->encodePassword(
                 $user,
                 $user->getPassword()
