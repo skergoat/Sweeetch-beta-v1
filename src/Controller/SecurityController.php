@@ -6,15 +6,16 @@ use App\Form\RecoverType;
 use App\Form\ResetPassType;
 use App\Form\UserEditPasswordType;
 use App\Repository\UserRepository;
-use App\Service\Mailer\ForgottenMailer;
+use App\Service\Mailer\UserMailer;
+// use App\Service\Mailer\ForgottenMailer;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Regex;
-use Symfony\Component\Validator\Constraints\Length;
 // use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -76,10 +77,33 @@ class SecurityController extends AbstractController
         throw new \Exception('This method can be blank - it will be intercepted by the logout key on your firewall');
     }
 
+     /**
+     * @Route("/activation/{token}", name="activation")
+     */
+    public function activation($token, UserRepository $users)
+    {
+        // On recherche si un utilisateur avec ce token existe dans la base de données
+        $user = $users->findOneBy(['activate_token' => $token]);
+        // Si aucun utilisateur n'est associé à ce token
+        if(!$user){
+            // On renvoie une erreur 404
+            throw $this->createNotFoundException('Cet utilisateur n\'existe pas');
+        }
+        // On supprime le token
+        $user->setActivateToken(null);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($user);
+        $entityManager->flush();
+        // On génère un message
+        $this->addFlash('message', 'Utilisateur activé avec succès');
+        // On retourne à l'accueil
+        return $this->redirectToRoute('app_login');
+    }
+
     /**
      * @Route("/oubli-pass", name="app_forgotten_password")
      */
-    public function oubliPass(Request $request, UserRepository $userRepository, TokenGeneratorInterface $tokenGenerator, ForgottenMailer $mailer): Response
+    public function oubliPass(Request $request, UserRepository $userRepository, TokenGeneratorInterface $tokenGenerator, UserMailer $mailer): Response
     {
         // On initialise le formulaire
         $form = $this->createForm(ResetPassType::class);
