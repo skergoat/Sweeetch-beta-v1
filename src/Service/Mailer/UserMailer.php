@@ -7,7 +7,7 @@ use Symfony\Component\Mime\Address;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 
-class ForgottenMailer
+class UserMailer
 {
     private $mailer;
 
@@ -25,6 +25,20 @@ class ForgottenMailer
             ->htmlTemplate('email/recover.html.twig')
             ->context([
                 'url' => $url,
+            ]); 
+        
+        $this->mailer->send($mail);
+    }
+
+    public function sendActivate($user)
+    {
+        $mail = (new TemplatedEmail())
+            ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
+            ->to(new Address($user->getEmail()))
+            ->subject('Activation du compte Sweeetch')
+            ->htmlTemplate('email/activate.html.twig')
+            ->context([
+                'token' => $user->getActivateToken(),
             ]); 
         
         $this->mailer->send($mail);

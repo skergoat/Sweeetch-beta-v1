@@ -234,6 +234,10 @@ class StudentController extends AbstractController
                         $user->getPassword()
                     ));
                 }
+                 // On génère un token et on l'enregistre
+                $user->setActivateToken(md5(uniqid()));
+                // On génère l'e-mail
+                $mailer->sendActivate($user);
 
                 $manager = $this->getDoctrine()->getManager()->flush();
 

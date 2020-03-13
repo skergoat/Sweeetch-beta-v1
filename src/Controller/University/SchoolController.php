@@ -7,9 +7,12 @@ use App\Entity\School;
 use App\Entity\Student;
 use App\Form\SchoolType;
 use App\Form\UpdateSchoolType;
+use App\Repository\UserRepository;
+use App\Service\Mailer\UserMailer;
 use App\Repository\ApplyRepository;
 use App\Form\SchoolEditPasswordType;
 use App\Repository\SchoolRepository;
+// use App\Service\Mailer\ForgottenMailer;
 use App\Service\UserChecker\AdminChecker;
 use App\Service\Recruitment\RecruitHelper;
 use App\Service\UserChecker\SchoolChecker;
@@ -50,7 +53,7 @@ class SchoolController extends AbstractController
     /**
      * @Route("/new", name="school_new", methods={"GET","POST"})
      */
-    public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder, UserMailer $mailer): Response
     {
         $school = new School();
         $form = $this->createForm(SchoolType::class, $school);
@@ -68,6 +71,10 @@ class SchoolController extends AbstractController
                  $user,
                  $user->getPassword()
             ));
+             // On génère un token et on l'enregistre
+            $user->setActivateToken(md5(uniqid()));
+            // On génère l'e-mail
+            $mailer->sendActivate($user);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($school);
