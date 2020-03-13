@@ -62,6 +62,11 @@ class User implements UserInterface
      */
     private $activate_token;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $confirmed;
+
 
     public function getId(): ?int
     {
@@ -212,6 +217,18 @@ class User implements UserInterface
     public function setActivateToken(?string $activate_token): self
     {
         $this->activate_token = $activate_token;
+
+        return $this;
+    }
+
+    public function getConfirmed(): ?bool
+    {
+        return $this->confirmed;
+    }
+
+    public function setConfirmed(bool $confirmed): self
+    {
+        $this->confirmed = $confirmed;
 
         return $this;
     }

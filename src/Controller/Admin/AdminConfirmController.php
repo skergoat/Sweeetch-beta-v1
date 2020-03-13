@@ -3,13 +3,14 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
+use App\Service\AdminHelper;
 use App\Service\Mailer\Mailer;
 use Symfony\Component\Mime\Email;
 use App\Repository\UserRepository;
 use Symfony\Component\Mime\Address;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use Symfony\Component\HttpFoundation\Request;
 // use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -21,36 +22,27 @@ class AdminConfirmController extends AbstractController
      * @Route("admin/confirm/{id}/{from}", name="admin_confirm", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function confirm($from, User $user, UserRepository $userRepository, Request $request): Response
-    {     
-        if($user->getStudent() != null)
-        {
-            $user->setRoles(['ROLE_SUPER_STUDENT']); 
-        }
-        else if($user->getCompany() != null) {
-
-            $user->setRoles(['ROLE_SUPER_COMPANY']); 
-        }
-        else if($user->getSchool() != null)
-        {
-            $user->setRoles(['ROLE_SUPER_SCHOOL']); 
-        }
-            
-        if($this->isCsrfTokenValid('confirm'.$user->getId(), $request->request->get('_token'))) {
+    public function confirm($from, User $user, UserRepository $userRepository, Request $request, AdminHelper $helper): Response
+    {    
+        if($this->isCsrfTokenValid('confirm'.$user->getId(), $request->request->get('_token'))) 
+        { 
+            // confirm
+            $helper->confirm($user); 
+            // save 
             $this->getDoctrine()->getManager()->flush();
+            // send flash  
+            $this->addFlash('success', 'Compte Confirmé');
+            // redirect
+            if($from == 'admin' || $from == 'student_index' || $from == 'company_index' || $from == 'school_index') {
+                return $this->redirectToRoute($from);
+            }
+            else {
+                throw new \Exception('La route demandée n\'existe pas');
+            } 
         }
         else {
             throw new \Exception('Demande Invalide');
         }
-
-        $this->addFlash('success', 'Compte Confirmé');
-
-        if($from == 'admin' || $from == 'student_index' || $from == 'company_index' || $from == 'school_index') {
-            return $this->redirectToRoute($from);
-        }
-        else {
-            throw new \Exception('La route demandée n\'existe pas');
-        }  
     }
 
     /**
