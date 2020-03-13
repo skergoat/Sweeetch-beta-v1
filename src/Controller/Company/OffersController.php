@@ -24,13 +24,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 
-/**
- * @Route("/offers")
- */
 class OffersController extends AbstractController
 {
     /**
-     * @Route("/page/{page<\d+>?1}", name="offers_index", methods={"GET"})
+     * @Route("offers/page/{page<\d+>?1}", name="offers_index", methods={"GET"})
      */
     public function index(OffersRepository $offersRepository, PaginatorInterface $paginator, Request $request, $page): Response
     {
@@ -49,7 +46,7 @@ class OffersController extends AbstractController
     }
 
     /**
-     * @Route("/new/{id}", name="offers_new", methods={"GET","POST"})
+     * @Route("company/offers/new/{id}", name="offers_new", methods={"GET","POST"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
     public function new(Request $request, Company $company, ApplyRepository $applyRepository, OffersRepository $offersRepository, CompanyChecker $checker, ApplyHelper $helper): Response
@@ -92,7 +89,7 @@ class OffersController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/{page<\d+>?1}", name="offers_show", methods={"GET"})
+     * @Route("offers/{id}/{page<\d+>?1}", name="offers_show", methods={"GET"})
      */
     public function show(Offers $offer, ApplyRepository $applyRepository, AuthorizationCheckerInterface $authorizationChecker, $page): Response
     {
@@ -135,7 +132,7 @@ class OffersController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit/{company}", name="offers_edit", methods={"GET","POST"})
+     * @Route("company/offers/edit/{id}/{company}", name="offers_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_SUPER_COMPANY")
      * @ParamConverter("company", options={"id" = "company"})
      */

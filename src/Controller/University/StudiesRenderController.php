@@ -21,13 +21,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
-/**
- * @Route("/studies")
- */
 class StudiesRenderController extends AbstractController
 {
      /**
-     * @Route("/index/{id}", name="school_studies_index", methods={"GET"})
+     * @Route("school/studies/{id}", name="school_studies_index", methods={"GET"})
      * @IsGranted("ROLE_SUPER_SCHOOL")
      */
     public function index(StudiesRepository $studiesRepository, School $school, SchoolChecker $checker): Response
@@ -42,7 +39,7 @@ class StudiesRenderController extends AbstractController
     }
 
     /**
-     * @Route("/student/{id}", name="school_student_index", methods={"GET"})
+     * @Route("/student/studies/{id}", name="school_student_index", methods={"GET"})
      * @IsGranted("ROLE_STUDENT")
      */
     public function indexByStudent(Student $student, RecruitRepository $recruitRepository, SchoolRepository $schoolRepository, ApplyRepository $applyRepository, StudentChecker $checker): Response
@@ -77,15 +74,12 @@ class StudiesRenderController extends AbstractController
     }
 
      /**
-     * @Route("/show/{id}/{school_id}", name="school_studies_show", methods={"GET"})
+     * @Route("school/study/{id}/{school_id}", name="school_studies_show", methods={"GET"})
      * @ParamConverter("school", options={"id" = "school_id"})
      * @IsGranted("ROLE_SUPER_SCHOOL")
      */
     public function show(Studies $study, School $school, RecruitRepository $recruitRepository,SchoolChecker $checker): Response
     {
-
-        // dd($recruitRepository->findProcessing($study));
-
         if ($checker->schoolStudiesEditValid($school, $study)) {
 
             return $this->render('studies/show.html.twig', [
@@ -99,7 +93,7 @@ class StudiesRenderController extends AbstractController
     }
 
     /**
-     * @Route("/candidate/{from}/{id}", name="studies_candidate_index", methods={"GET"})
+     * @Route("/cursus/index/{from}/{id}", name="studies_candidate_index", methods={"GET"})
      * @IsGranted("ROLE_RECRUIT")
      */
     public function indexCandidate(StudiesRepository $studiesRepository, PaginatorInterface $paginator, Request $request, $from, $id): Response
@@ -120,7 +114,7 @@ class StudiesRenderController extends AbstractController
     } 
 
     /**
-    * @Route("/show/recruit/{id}/{from}/{from_id}", name="studies_show_recruit", methods={"GET"})
+    * @Route("crusus/show/{from}/{id}/{from_id}", name="studies_show_recruit", methods={"GET"})
     * @IsGranted("ROLE_RECRUIT")
     */
     public function showRecruit(Studies $study, $from, $from_id) 
@@ -150,7 +144,7 @@ class StudiesRenderController extends AbstractController
     }
 
     /**
-    * @Route("/show/applied/{id}/{school}/{study}", name="show_student_applied", methods={"GET"})
+    * @Route("school/profile/{id}/{school}/{study}", name="show_student_applied", methods={"GET"})
     * @IsGranted("ROLE_SUPER_SCHOOL")
     * @ParamConverter("school", options={"id" = "school"})
     * @ParamConverter("study", options={"id" = "study"})

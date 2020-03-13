@@ -13,8 +13,6 @@ class ActivateListener
 {
     protected $activateHTML;
     private $security;
-    private $forbiddenPath = ['', '/', '/offers/page', '/conditions', '/faq'];
-    private $matchedPath = '/^\/offers\/[0-9]{1,}$/';
   
     public function __construct(ActivateHTMLAdder $activateHTML, Security $security)
     {
@@ -33,7 +31,11 @@ class ActivateListener
             // check if user is connected and has not activate account
             if($this->security->getToken()->getUser() != 'anon.' && $this->security->getUser()->getActivateToken() != null) {    
                 // display warning message 
-                if(!in_array($path, $this->forbiddenPath) && preg_match($this->matchedPath, $path) == false){
+                if(
+                    preg_match('/^\/company\/.{1,}/', $path) == true
+                ||  preg_match('/^\/student\/.{1,}/', $path) == true
+                ||  preg_match('/^\/school\/.{1,}/', $path) == true
+                ){
                     $this->activateHTML->addActivate($response, $this->security->getToken()->getUser());
                 }       
             }
