@@ -40,6 +40,18 @@
             </div>
         </header>
 
+        {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+        {% endfor %}
+
+        {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+        {% endfor %}
+
         <form method="post" action="/login" class="form-center form-center--login">
             {% if error %}
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -61,10 +73,11 @@
                 value="{{ csrf_token('authenticate') }}"
             >
 
-            <div class="checkbox mb-3">
+            <div class="checkbox mb-3" style="display:flex;justify-content:space-between;">
                 <label>
                     <input type="checkbox" name="_remember_me"> se souvenir de moi
-                </label>
+                </label> <br>
+                <div><a href="{{ path('app_forgotten_password') }}">mot de passe oublié ?</a></div>
             </div>
             
             <button class="Password btn btn-lg btn-primary" type="submit">
