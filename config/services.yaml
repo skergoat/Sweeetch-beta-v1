@@ -41,6 +41,12 @@ services:
 
     Symfony\Component\Asset\Context\RequestStackContext: '@assets.context'
 
+    App\EventListener\ActivateListener:
+        # arguments:
+        #     - 'App\Activate\ActivateHTMLAdder'
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: processActivate }
+
     # App\EventListener\LoginListener:
     #     tags:
     #         - { name: kernel.event_listener, event: security.authentication.success }
