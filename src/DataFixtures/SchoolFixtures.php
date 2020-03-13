@@ -38,6 +38,7 @@ class SchoolFixtures extends Fixture
             $user = new User; 
             $user->setEmail('school' . $i . '@gmail.com');
             $user->setRoles(['ROLE_SCHOOL']);
+            $user->setConfirmed(false);
             $user->setPassword($this->passwordEncoder->encodePassword(
                 $user,
                 'ste'

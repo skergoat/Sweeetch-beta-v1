@@ -40,6 +40,7 @@ class StudentFixtures extends Fixture
             $user = new User; 
             $user->setEmail('crypte' . $i . '@gmail.com');
             $user->setRoles(['ROLE_STUDENT']);
+            $user->setConfirmed(false);
             $user->setPassword($this->passwordEncoder->encodePassword(
                 $user,
                 'crypte'

@@ -4,17 +4,18 @@ namespace App\Controller;
 
 use App\Form\RecoverType;
 use App\Form\ResetPassType;
+use App\Service\AdminHelper;
 use App\Form\UserEditPasswordType;
 use App\Repository\UserRepository;
-use App\Service\Mailer\UserMailer;
 // use App\Service\Mailer\ForgottenMailer;
+use App\Service\Mailer\UserMailer;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\Regex;
 // use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -80,7 +81,7 @@ class SecurityController extends AbstractController
      /**
      * @Route("/activation/{token}", name="activation")
      */
-    public function activation($token, UserRepository $users)
+    public function activation($token, UserRepository $users, AdminHelper $helper)
     {
         // On recherche si un utilisateur avec ce token existe dans la base de données
         $user = $users->findOneBy(['activate_token' => $token]);
@@ -89,6 +90,9 @@ class SecurityController extends AbstractController
             // On renvoie une erreur 404
             throw $this->createNotFoundException('Cet utilisateur n\'existe pas');
         }
+
+        // confirm
+        $helper->activateAccount($user);
         // On supprime le token
         $user->setActivateToken(null);
         $entityManager = $this->getDoctrine()->getManager();
