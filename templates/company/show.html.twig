@@ -90,15 +90,19 @@
         </div> 
     </div>
 
-    <div class="row row-top">
+    <div class="row" style="margin-bottom:50px;">
 
-       <div class="col-lg-5">
+        <div class="col-lg-4">
 
             <div class="content-title">
                 <h1>Tableau de Bord</h1>
             </div>
 
-            <div class="row account-state">
+        </div>
+
+        <div class="col-lg-8">
+
+            <div class="row">
                 {% if company.user.confirmed == true %}
                 <div class="col-12 col-sm-6 col-md-6">
                     <div class="info-checked info-box info-success mb-3">
@@ -125,7 +129,79 @@
                 {% endif %}
             </div>
         </div>
+           
     </div> 
+
+    <div class="row">
+
+        <div class="col-lg-6">
+
+            <div class="card col-lg-" id="card-1" style="padding:0px;">
+
+                <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
+                    
+                    <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
+                        Infos du compte
+                        <a href="#info-3" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                        <i class="fas fa-question-circle"></i>
+                        </a>
+                    </p>
+
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus" style="color:#8e8e8e;"></i>
+                      </button>
+                    </div>
+                </div>
+                
+                <div class="card-body card-responsive-table">
+                    <div class="table-padding table-responsive">
+                        <table class="table m-0">
+                            <tbody>
+                                <tr>
+                                    <th>Email</th>
+                                    <td>{{ company.user.email }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Entreprise</th>
+                                    <td>{{ company.companyName }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Prénom</th>
+                                    <td>{{ company.firstname }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Nom</th>
+                                    <td>{{ company.lastname }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Adresse</th>
+                                    <td>{{ company.address }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Code Postal</th>
+                                    <td>{{ company.zipCode }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Ville</th>
+                                    <td>{{ company.city }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Téléphone</th>
+                                    <td>{{ company.telNumber }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Siret</th>
+                                    <td>{{ company.siret }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
     <div class="row">
 
@@ -250,45 +326,7 @@
                         </table>
                     </div>
                 </div>
-                {# <div class="card" style="padding:0px;">
-
-                    <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
-                        
-                        <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
-                            En Attente d'Acceptation
-                            <a href="#info-4" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
-                            <i class="fas fa-question-circle"></i>
-                            </a>
-                        </p>
-    
-                        <div class="card-tools">
-                          <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <i class="fas fa-minus" style="color:#8e8e8e;"></i>
-                          </button>
-                        </div>
-                    </div>
-    
-                    <div class="card-body">
-                        <table id="dash3" class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Annonces</th>
-                                    <th>Etat du Recrutement</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for hired in hired %}
-                                    <tr class="border-top">
-                                        <td><a href="{{ path('offers_preview', {id:hired.offers.id, company:company.id}) }}" class="action-link">{{ hired.offers.title }}</a></td>
-                                        <td>
-                                            <span class="badge badge-warning right">En attente d'acceptation</span>
-                                        </td>
-                                    </tr>
-                                {% endfor %} 
-                            </tbody>
-                        </table>
-                    </div>
-                </div> #}
+           
             </div>
 
             <div class="card" style="padding:0px;">
@@ -337,79 +375,12 @@
 
         <div class="col-lg-6">
 
-            <div class="card col-lg-" id="card-1" style="padding:0px;">
+            <div class="card" style="padding:0px;">
 
                 <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
                     
                     <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
-                        Infos du compte
-                        <a href="#info-3" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
-                        <i class="fas fa-question-circle"></i>
-                        </a>
-                    </p>
-
-                    <div class="card-tools">
-                      <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                        <i class="fas fa-minus" style="color:#8e8e8e;"></i>
-                      </button>
-                    </div>
-                </div>
-                
-                <div class="card-body card-responsive-table">
-                    <div class="table-padding table-responsive">
-                        <table class="table m-0">
-                            <tbody>
-                                <tr>
-                                    <th>Entreprise</th>
-                                    <td>{{ company.companyName }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Prénom</th>
-                                    <td>{{ company.firstname }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Nom</th>
-                                    <td>{{ company.lastname }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Adresse</th>
-                                    <td>{{ company.address }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Code Postal</th>
-                                    <td>{{ company.zipCode }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Ville</th>
-                                    <td>{{ company.city }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Téléphone</th>
-                                    <td>{{ company.telNumber }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Siret</th>
-                                    <td>{{ company.siret }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <div class="row">
-
-        <div class="col-lg-6">
-
-            {# <div class="card" style="padding:0px;">
-
-                <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
-                    
-                    <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
-                        En Attente d'Acceptation
+                        Vos Annonces
                         <a href="#info-4" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
                         <i class="fas fa-question-circle"></i>
                         </a>
@@ -422,8 +393,8 @@
                     </div>
                 </div>
 
-                <div class="card-body">
-                    <table id="dash3" class="table table-bordered table-hover">
+                <div class="card-body card-responsive-table">
+                    <table id="dash5" class="table table-bordered table-hover">
                         <thead>
                             <tr>
                                 <th>Annonces</th>
@@ -431,64 +402,69 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for hired in hired %}
-                                <tr class="border-top">
-                                    <td><a href="{{ path('offers_preview', {id:hired.offers.id, company:company.id}) }}" class="action-link">{{ hired.offers.title }}</a></td>
-                                    <td>
-                                        <span class="badge badge-warning right">En attente d'acceptation</span>
-                                    </td>
+                            {% for offers in offers %}
+
+                                {% if offers.applies | length == 0 %} 
+                            
+                                <tr>
+                                    <td><a href="{{ path('offers_preview', {'id': offers.id, 'company':company.id}) }}">{{ offers.title }}</a></td>
+                                   
+                                    <td> <span class="badge bg-primary">Ouverte</span> </td>
+                                  
                                 </tr>
-                            {% endfor %} 
+                                
+                                {% elseif offers.applies | length > 0 %}
+
+                                {% if offers.applies[0].finished == false and offers.applies[0].confirmed == false %} 
+
+                                <tr>
+                                    <td><a href="{{ path('offers_preview', {'id': offers.applies[0].offers.id, 'company':company.id}) }}">{{ offers.applies[0].offers.title }}</a></td>
+                                
+                                    <td>    
+                                        {% if offers.applies[0].confirmed == false %}
+                                            {% if offers.applies[0].agree == false %}
+                                            {% if offers.applies[0].hired == false %}
+                                            <span class="badge bg-primary">Ouverte</span> <span class="badge badge-warning right" title="candidatures">Candidats : {{offers.applies | length}} </span>
+                                            {% else %}
+                                            <span class="badge bg-warning">En attente d'Acceptation</span>
+                                            {% endif %}
+                                            {% else %}
+                                            <span class="badge bg-info">A Finaliser</span>    
+                                            {% endif %}
+                                        {% else %}
+                                        <span class="badge bg-success">En cours</span>
+                                        {% endif %} 
+                                    </td>
+                                
+                                </tr>
+
+                                {% endif %} 
+                            
+                        
+                            {% endif %}
+                            
+                            {% endfor %}
+                           
                         </tbody>
                     </table>
                 </div>
-            </div> #}
+            </div>
 
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-6">
+
+        
         </div>
 
         <div class="col-lg-6">
 
             <div class="col-lg- table-scroll">
 
-                {# <div class="card" style="padding:0px;">
-
-                    <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
-                        
-                        <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
-                            Recrutements terminés
-                            <a href="#info-5" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
-                            <i class="fas fa-question-circle"></i>
-                            </a>
-                        </p>
-
-                        <div class="card-tools">
-                          <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <i class="fas fa-minus" style="color:#8e8e8e;"></i>
-                          </button>
-                        </div>
-                    </div>
-            
-                    <div class="card-body" >
-                        <table id="dash4" class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Annonces</th>
-                                    <th>Etat du Recrutement</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for finished in finished %}
-                                <tr class="border-top">
-                                    <td><a href="{{ path('offers_preview', {id:finished.offers.id, company:company.id}) }}" class="action-link">{{ finished.offers.title }}</a></td>
-                                    <td>
-                                        <span class="badge badge-success right">Recruté</span>
-                                    </td>
-                                </tr>
-                                {% endfor %} 
-                            </tbody>
-                        </table>
-                    </div>
-                </div> #}
+                
             </div>
         </div>
     </div>
@@ -498,6 +474,14 @@
 {% block javascripts %}
 
 {{ parent() }}
+
+<script>
+    $(document).ready(function() {
+        $('#card-1').CardWidget('toggle');
+        // $('#card-2').CardWidget('toggle');
+        // $('#card-3').CardWidget('toggle');
+    });
+</script>
 
 <script>
         $(function () {   
@@ -555,8 +539,24 @@
                 }
             });
 
-
             $("#dash4").DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": false,
+                "info": false,
+                "autoWidth": false,
+                "responsive": true,
+                "language": {
+                "emptyTable": "Aucune recrutement terminé",
+                "paginate": {
+                    "previous": "Précédent",
+                    'next':'Suivant'
+                    }
+                }
+            });
+
+            $("#dash5").DataTable({
                 "paging": true,
                 "lengthChange": false,
                 "searching": false,

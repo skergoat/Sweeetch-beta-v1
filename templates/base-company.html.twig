@@ -134,7 +134,7 @@
                                         {% elseif hired | length > 0 %}
                                         <span class="badge badge-warning right" title="candidatures">En attente : {{ hired | length }}</span>
                                         {% elseif candidates| length > 0 %}
-                                        <span class="badge badge-primary right" title="candidatures">Candidats : {{ candidates | length }}</span>
+                                        <span class="badge badge-warning right" title="candidatures">Candidats : {{ candidates | length }}</span>
                                         {% endif %}
                                     {% endif %}
                                 </a>
