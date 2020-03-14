@@ -30,6 +30,11 @@ class ApplyHelper extends CommonHelper
         return $this->applyRepository->findBy([$key => $param, 'hired' => 1]);
     }
 
+    public function checkWait($key, $param)
+    {
+        return $this->applyRepository->findBy([$key => $param, 'wait' => 1]);
+    }
+
     public function checkAgree($key, $param)
     {
         return $this->applyRepository->findBy([$key => $param, 'agree' => 1]);
@@ -140,6 +145,7 @@ class ApplyHelper extends CommonHelper
         if($others) {
             foreach($others as $others) {
                 // send notification
+                if($others->getUnavailable() == false && $others->getRefused() == false)
                 $others->setWait(true); // et delete apply  
                 // $this->mailer->sendOtherNotification($others);
                 // delete other applies 
