@@ -459,7 +459,7 @@
                                     {% for finished in finished %}
                                         {# {% if finished.offers.id is defined %} #}
                                     <tr class="border-top">
-                                        <td>{{ agree.student.name }} {{ agree.student.lastName }}</td>
+                                        <td>{{ finished.student.name }} {{ finished.student.lastName }}</td>
                                         <td><a href="{{ path('offers_preview', {id:finished.offers.id, company:company.id}) }}" class="action-link">{{ finished.offers.title }}</a></td>
                                         <td>
                                             <span class="badge badge-success right">Recruté</span>
@@ -498,6 +498,7 @@
         // $(function () {
             $("#dash1").DataTable({
                 "paging": true,
+                "pageLength": 5,
                 "lengthChange": false,
                 "searching": false,
                 "ordering": false,
@@ -517,6 +518,7 @@
         // $(function () {
             $("#dash2").DataTable({
                 "paging": true,
+                "pageLength": 5,
                 "lengthChange": false,
                 "searching": false,
                 "ordering": false,
@@ -534,6 +536,7 @@
             
             $("#dash3").DataTable({
                 "paging": true,
+                "pageLength": 5,
                 "lengthChange": false,
                 "searching": false,
                 "ordering": false,
@@ -551,6 +554,7 @@
 
             $("#dash4").DataTable({
                 "paging": true,
+                "pageLength": 5,
                 "lengthChange": false,
                 "searching": false,
                 "ordering": false,
@@ -568,6 +572,7 @@
 
             $("#dash5").DataTable({
                 "paging": true,
+                "pageLength": 5,
                 "lengthChange": false,
                 "searching": false,
                 "ordering": false,

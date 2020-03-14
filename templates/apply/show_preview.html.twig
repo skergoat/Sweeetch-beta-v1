@@ -94,6 +94,7 @@
                     <thead>
                         <tr>
                             <th>Nom</th>
+                            <th>Date de candidature</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -109,6 +110,7 @@
                             {% else %}
                             <td style="padding-top: 18px;"><a href="{{ path('show_applied_profile', { "id":applies.student.id, "company_id": offers.company.id, "offers":offers.id }) }}">{{ applies.student.name }} {{ applies.student.lastname }}</a></td>
                             {% endif %}
+                            <td>{{ applies.dateRecruit|date("d/m/Y à g\\hi") }}</td>
                             <td style="color:white;">
                             
                                 <div class="btn-group">

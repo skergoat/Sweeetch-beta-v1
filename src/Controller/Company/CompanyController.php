@@ -98,14 +98,14 @@ class CompanyController extends AbstractController
             // get company offers 
             $offers = $offersRepository->findBy(['company' => $company]);
              // get finished or confirmed applies 
-             $array = $helper->findByOffersFinished($offers);
+            $array = $helper->findByOffersFinished($offers);
 
             return $this->render('company/show.html.twig', [
                 'company' => $company,  // company layout
                 'offers' => $offersRepository->findBy(['company' => $company], ['id' => 'desc']),
                 'applies' => $helper->checkApplies('offers', $offers),
-                'hired' => $helper->checkHired('offers', $offers),  // show hired 
-                'agree' => $helper->checkAgree('offers', $offers), // find agreed applies 
+                'hired' => $applyRepository->findBy(['offers' => $offers, 'hired' => true],['date_recruit' => 'desc']),  // show hired 
+                'agree' => $applyRepository->findBy(['offers' => $offers, 'agree' => true],['date_recruit' => 'desc']), // find agreed applies 
                 'finished' => isset($array) ? $array : null, // find confirmed or finished applies 
                 'candidates' => $helper->nbCandidates($offers), // show nb applies 
             ]);
