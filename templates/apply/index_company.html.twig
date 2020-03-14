@@ -105,7 +105,22 @@
                           {% if offers.applies[0].confirmed == false %}
                             {% if offers.applies[0].agree == false %}
                               {% if offers.applies[0].hired == false %}
-                              <span class="badge badge-primary right" title="candidatures">Candidats : {{ offers.applies | length }} </span>
+                              {# count nb refused and unavailables#}
+                              {% set refused = [] %}
+                              {% set unavailable = [] %}
+                              {% for applies in offers.applies %}
+                                {# refused #}
+                                {% if applies.refused == true %}
+                                  {% set refused = refused|merge([{ refused: applies }]) %}
+                                {% endif %}
+                                {# unavailable #}
+                                {% if applies.unavailable == true %}
+                                  {% set unavailable = unavailable|merge([{ refused: applies }]) %}
+                                {% endif %}
+                              {% endfor %}
+                              {# total #}
+                              {% set minus = refused|length + unavailable|length %}
+                              <span class="badge badge-primary right" title="candidatures">Candidats : {{ offers.applies|length - minus  }} </span>
                               {% else %}
                               <span class="badge bg-warning">En attente</span>
                               {% endif %}
@@ -126,20 +141,8 @@
                       </td>
                   </tr>
 
-                 {# {% elseif offers.applies[0].finished == true and offers.applies | length == 0 %}
-                  <tr class="border-top">
-                    <td colspan="8" class="border-top-td">Aucun emploi pour le moment</td>
-                  </tr> 
-                  {% elseif offers.applies[0].finished == true and offers.applies | length > 0 and offers | length == 0 %}
-                  <tr class="border-top">
-                    <td colspan="8" class="border-top-td">Aucun emploi pour le moment</td>
-                  </tr>  #}
                   {% endif %} 
-              
-              {# {% else %}
-              <tr class="border-top">
-                  <td colspan="8" class="border-top-td">Aucun emploi pour le moment</td>
-              </tr> #}
+       
               {% endif %}
               
               {% endfor %}
