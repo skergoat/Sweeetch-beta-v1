@@ -255,13 +255,13 @@
                                     <td>    
                                         {% if offers.applies[0].confirmed == false %}
                                             {% if offers.applies[0].agree == false %}
-                                            {% set hired = [] %}
+                                            {% set hiredArray = [] %}
                                             {% for applies in offers.applies %}
                                                 {% if applies.hired == true %}
-                                                {% set hired = hired|merge([{ hired: applies }]) %}
+                                                {% set hiredArray = hiredArray|merge([{ hiredArray: applies }]) %}
                                                 {% endif %}
                                             {% endfor %}
-                                            {% if hired | length == 0 %}
+                                            {% if hiredArray | length == 0 %}
                                                 {# count nb refused and unavailables #}
                                                 {% set refused = [] %}
                                                 {% set unavailable = [] %}
