@@ -237,7 +237,7 @@
                                 <tr class="border-top">
                                     <td><a href="{{ path('offers_preview', {id:applies.offers.id, company:company.id}) }}" class="action-link">{{ applies.offers.title }}</a></td>
                                     <td>
-                                        <span class="badge badge-primary right">Ouverte</span> 
+                                        <span class="badge badge-secondary right">Ouverte</span> 
                                     </td>
                                 </tr>
                                 {% endfor %} 
@@ -409,7 +409,7 @@
                                 <tr>
                                     <td><a href="{{ path('offers_preview', {'id': offers.id, 'company':company.id}) }}">{{ offers.title }}</a></td>
                                    
-                                    <td> <span class="badge bg-primary">Ouverte</span> </td>
+                                    <td> <span class="badge bg-secondary">Ouverte</span> </td>
                                   
                                 </tr>
                                 
@@ -424,7 +424,7 @@
                                         {% if offers.applies[0].confirmed == false %}
                                             {% if offers.applies[0].agree == false %}
                                             {% if offers.applies[0].hired == false %}
-                                            <span class="badge bg-primary">Ouverte</span> <span class="badge badge-warning right" title="candidatures">Candidats : {{offers.applies | length}} </span>
+                                            <span class="badge badge-primary right" title="candidatures">Candidats : {{offers.applies | length}} </span>
                                             {% else %}
                                             <span class="badge bg-warning">En attente d'Acceptation</span>
                                             {% endif %}
