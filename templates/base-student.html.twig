@@ -241,26 +241,27 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 
-            <script>
-                $(function () {
-                    $("#example1").DataTable({
-                        "paging": true,
-                        "lengthChange": false,
-                        "searching": false,
-                        "ordering": false,
-                        "info": false,
-                        "autoWidth": false,
-                        "responsive": true,
-                        "language": {
-                        "emptyTable": "Aucune inscription pour le moment",
-                        "paginate": {
-                            "previous": "Précédent",
-                            'next':'Suivant'
-                            }
+        <script>
+            $(function () {
+                $("#example1").DataTable({
+                    "paging": true,
+                    "pageLength": 5,
+                    "lengthChange": false,
+                    "searching": false,
+                    "ordering": false,
+                    "info": false,
+                    "autoWidth": false,
+                    "responsive": true,
+                    "language": {
+                    "emptyTable": "Aucune inscription pour le moment",
+                    "paginate": {
+                        "previous": "Précédent",
+                        'next':'Suivant'
                         }
-                    });   
-                });
-            </script>
+                    }
+                });   
+            });
+        </script>
 
         <script>
             $(document).ready(function() {
