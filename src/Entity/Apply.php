@@ -68,10 +68,10 @@ class Apply
      */
     private $date_recruit;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $wait;
+    // /**
+    //  * @ORM\Column(type="boolean")
+    //  */
+    // private $wait;
 
 
     public function getId(): ?int
@@ -199,15 +199,15 @@ class Apply
         return $this;
     }
 
-    public function getWait(): ?bool
-    {
-        return $this->wait;
-    }
+    // public function getWait(): ?bool
+    // {
+    //     return $this->wait;
+    // }
 
-    public function setWait(bool $wait): self
-    {
-        $this->wait = $wait;
+    // public function setWait(bool $wait): self
+    // {
+    //     $this->wait = $wait;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 }

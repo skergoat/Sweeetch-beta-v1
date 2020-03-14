@@ -80,7 +80,7 @@ class ApplyActionsController extends AbstractController
             $apply->setRefused(false);
             $apply->setUnavailable(false);
             $apply->setFinished(false);
-            $apply->setWait(false);
+            // $apply->setWait(false);
             $apply->setDateRecruit(new \DateTime('now', new DateTimeZone('Europe/Paris')));
             $apply->setDateFinished(new \DateTime('now', new DateTimeZone('Europe/Paris')));
             $apply->setOffers($offers);
@@ -110,7 +110,7 @@ class ApplyActionsController extends AbstractController
         $offers = $apply->getOffers();
 
         // check if student is available
-        if($helper->checkWait('student', $student) || $helper->checkAgree('student', $student) || $helper->checkConfirmed('student', $student)) {
+        if($helper->checkAgree('student', $student) || $helper->checkConfirmed('student', $student)) {
             $this->addFlash('error', 'Cet étudiant n\'est plus disponible.');
             return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
         }
