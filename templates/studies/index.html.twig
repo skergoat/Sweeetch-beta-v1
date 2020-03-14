@@ -38,9 +38,15 @@
                 <table class="table-offers table">
                     <thead>
                         <tr>
-                            <th>Title</th>
+                            <th>Titre</th>
                             <th>Domaine</th>
-                            <th>actions</th>
+                            {# <th>Date de Candidature</th> #}
+                            <th>Situation 
+                                <a href="#flag-1" rel="modal:open" class="badge " title="aide" style="color:#8e8e8e;">
+                                <i class="fas fa-question-circle"></i>
+                                </a>
+                            </th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -49,7 +55,18 @@
                             <td><a href="{{ path('school_studies_show', {'id': study.id, school_id: study.school.id }) }}">{{ study.title }}</a></td>
                             <td>{{ study.domain }}</td>
                             <td>
-                                <a href="{{ path('studies_edit', {'id': study.id, school_id: study.school.id }) }}"><i class="fas fa-edit"></i></a>
+                                {% if study.recruit is defined %}
+                                {{ study.recruit }} 
+                                {% endif %}
+                            </td>
+                            {# <td>{{ study.recruit.dateRecruit ? study.recruit.dateRecruit|date("d/m/Y à g\\hi") : '' }}</td> #}
+                            <td>
+                                <a href="{{ path('studies_edit', {'id': study.id, school_id: study.school.id }) }}">
+                                    <button  title="Modifier" style="color:white;" class="btn btn-info btn-sm"> 
+                                        <i class="fas fa-edit"></i>
+                                        Modifier
+                                    </button>
+                                </a>
                             </td>
                         </tr>
                     {% else %}

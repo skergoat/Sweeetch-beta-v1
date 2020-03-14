@@ -131,7 +131,7 @@ class StudiesRenderController extends AbstractController
     * @IsGranted("ROLE_STUDENT_HIRED")
     * @ParamConverter("student", options={"id" = "student"})
     */
-    public function showHired(Studies $studies, Student $student, ApplyRepository $applyRepository)
+    public function showHired(Studies $studies, Student $student, ApplyRepository $applyRepository, RecruitRepository $recruitRepository)
     {
         // si autorise que pour son id et celle de ses ecoles ca devrait etre ok !!!!
         // attention a ce qu'il voit pas les unavailables pendant le recrutement !!!!
@@ -139,7 +139,8 @@ class StudiesRenderController extends AbstractController
             'studies' => $studies,
             'student' => $student,
             'fresh' => $applyRepository->findByStudentByFresh($student),
-            'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true])
+            'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true]),
+            'finished' => $recruitRepository->findBy(['student' => $student, 'finished' => true]),
         ]);  
     }
 

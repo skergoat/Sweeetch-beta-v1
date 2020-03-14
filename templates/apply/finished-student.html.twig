@@ -44,7 +44,7 @@
                     <tr>
                         <td>
                             {% if is_granted('ROLE_ADMIN') %}
-                            <a href="{{ path('offers_preview', {id : finished.offers.id}) }}"> {{ finished.offers.title }} </a> 
+                            <a href="{{ path('offers_show_hired', {'id': finished.offers.id, 'student_id' : student.id}) }}"> {{ finished.offers.title }} </a> 
                             {% else %}
                             <a href="{{ path('offers_show_hired', {'id': finished.offers.id, 'student_id' : student.id}) }}">{{ finished.offers.title }}</a>
                             {% endif %}
@@ -71,11 +71,7 @@
                         {% endif %}
 
                     {% endfor %}
-{#                     
-                {% else %}
-                <tr class="border-top">
-                    <td colspan="8" class="border-top-td">Aucune candidature en cours</td>
-                </tr>              #}
+
                 {% endif %}
 
                 </tbody>

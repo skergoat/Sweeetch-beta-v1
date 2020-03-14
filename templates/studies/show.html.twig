@@ -53,19 +53,15 @@
     <div class="row">
         <div class="col-12">
             <div class="card" id="card-1">
-                {# <div class="card-header" style="border-bottom:0px;"> #}
-                    {# <div class="col-lg-12"> #}
-                    <div class="card-header">
-                        <p class="card-title" style="color:#FFC756 !important; font-weight:900;font-size:22px;">Détail du cursus</p>
-        
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <i class="fas fa-minus" style="color:#B5B7B9;"></i>
-                            </button>
-                        </div>
+                <div class="card-header">
+                    <p class="card-title" style="color:#FFC756 !important; font-weight:900;font-size:22px;">Détail du cursus</p>
+    
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus" style="color:#B5B7B9;"></i>
+                        </button>
                     </div>
-                    {# </div> #}
-                {# </div> #}
+                </div>
                 <div class="card-responsive card-body">
                     <table class="table offers-show col-lg-5 col-md-5 col-sm-12 col-xs-12">
                         <tbody>
@@ -96,6 +92,9 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title" style="font-weight:900;font-size:22px;">Candidatures</h3>
+                    <a href="#help-1" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                        <i class="fas fa-question-circle"></i>
+                    </a>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -122,23 +121,18 @@
                                         {% if recruit.hired == false and recruit.agree == false and recruit.finished == false %}
                                         <form method="post" action="{{ path('recruit_hire', { id:recruit.id }) }}" class="btn-icon-form" onsubmit="return confirm('Etes-vous certain de vouloir embaucher cet étudiant ?');">
                                             <input type="hidden" name="_token" value="{{ csrf_token('hire' ~ recruit.id) }}">
-                                            <button class="btn-icon btn-success"><i class="fas fa-user-check" title="Embaucher"></i></button>
+                                            <button class="btn btn-success btn-sm">
+                                                <i class="fas fa-user-check" title="Embaucher"></i>
+                                                Recruter
+                                            </button>
                                         </form>
                                         <form method="post" action="{{ path('recruit_refuse', {'id': recruit.id }) }}" class="btn-icon-form" onsubmit="return confirm('Etes-vous certain de vouloir refuser cette candidature ?');">
                                             <input type="hidden" name="_token" value="{{ csrf_token('refuse' ~ recruit.id) }}">
-                                            <button class="btn-icon btn-danger" title="Refuser">
+                                            <button class="btn btn-danger btn-sm">
                                                 <i class="fas fa-times"></i>
+                                                Refuser
                                             </button>
                                         </form>
-                                        {# {% elseif recruit.hired == true %}
-                                        <button class="btn-icon-form btn-icon btn-warning" title="En attente d'acceptation de l'étudiant">
-                                            <i class="fas fa-hourglass-start"></i>
-                                        </button>
-                                        {% elseif recruit.agree == true %}
-                                        <form method="post" class="btn-icon-form" action="{{ path('recruit_confirm', { id:recruit.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir commencer l\'inscription ?');">
-                                            <input type="hidden" name="_token" value="{{ csrf_token('confirm' ~ recruit.id) }}">
-                                            <button class="btn-icon btn-success" title="Démarrer la mission"><i class="far fa-play-circle"></i></button>
-                                        </form> #}
                                         {% endif %}
                                         <a href="#help-1" rel="modal:open" class="btn-modal btn-icon-form btn-icon btn-secondary" title="aide">
                                             <i class="fas fa-question-circle"></i>
@@ -146,11 +140,6 @@
                                     </div>
                                 </td>
                             </tr>
-            
-                            {# {% else %}
-                            <tr class="border-top">
-                                <td colspan="8" class="border-top-td">Aucune candidature pour le moment</td>
-                            </tr>   #}
                             {% endfor %}
         
                         </tbody>
@@ -163,6 +152,9 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title" style="font-weight:900;font-size:22px;">Inscriptions en cours</h3>
+                    <a href="#help-1" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                        <i class="fas fa-question-circle"></i>
+                    </a>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -186,17 +178,6 @@
                         <td>Ouvert</td>
                         <td>
                             <div class="btn-group">
-                                {# {% if recruit.hired == false and recruit.agree == false and recruit.confirmed == false %}
-                                <form method="post" action="{{ path('recruit_hire', { id:recruit.id }) }}" class="btn-icon-form" onsubmit="return confirm('Etes-vous certain de vouloir embaucher cet étudiant ?');">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('hire' ~ recruit.id) }}">
-                                    <button class="btn-icon btn-success"><i class="fas fa-user-check" title="Embaucher"></i></button>
-                                </form>
-                                <form method="post" action="{{ path('recruit_refuse', {'id': recruit.id }) }}" class="btn-icon-form" onsubmit="return confirm('Etes-vous certain de vouloir refuser cette candidature ?');">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('refuse' ~ recruit.id) }}">
-                                    <button class="btn-icon btn-danger" title="Refuser">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </form> #}
                                 {% if process.hired == true %}
                                 <button class="btn-icon-form btn-icon btn-warning" title="En attente d'acceptation de l'étudiant">
                                     <i class="fas fa-hourglass-start"></i>
@@ -204,20 +185,18 @@
                                 {% elseif process.agree == true %}
                                 <form method="post" class="btn-icon-form" action="{{ path('recruit_finish', { id:process.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir commencer l\'inscription ?');">
                                     <input type="hidden" name="_token" value="{{ csrf_token('finish' ~ process.id) }}">
-                                    <button class="btn-icon btn-success" title="Démarrer la mission"><i class="far fa-play-circle"></i></button>
+                                    <button class="btn btn-info btn-sm">
+                                        <i class="far fa-stop-circle"></i>
+                                        Finaliser le recrutement
+                                    </button>
                                 </form>
                                 {% endif %}
-                                <a href="#help-1" rel="modal:open" class="btn-modal btn-icon-form btn-icon btn-secondary" title="aide">
+                                {# <a href="#help-1" rel="modal:open" class="btn-modal btn-icon-form btn-icon btn-secondary" title="aide">
                                     <i class="fas fa-question-circle"></i>
-                                </a>
+                                </a> #}
                             </div>
                         </td>
                     </tr>
-    
-                    {# {% else %}
-                        <tr class="border-top">
-                            <td colspan="8" class="border-top-td">Aucune candidature pour le moment</td>
-                        </tr>   #}
                     {% endfor %}
     
                         </tbody>
@@ -229,6 +208,9 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title" style="font-weight:900;font-size:22px;">Inscriptions Terminées</h3>
+                    <a href="#help-1" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                        <i class="fas fa-question-circle"></i>
+                    </a>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -252,38 +234,25 @@
                         <td>Ouvert</td>
                         <td>
                             <div class="btn-group">
-                                {# {% if recruit.hired == false and recruit.agree == false and recruit.confirmed == false %}
-                                <form method="post" action="{{ path('recruit_hire', { id:recruit.id }) }}" class="btn-icon-form" onsubmit="return confirm('Etes-vous certain de vouloir embaucher cet étudiant ?');">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('hire' ~ recruit.id) }}">
-                                    <button class="btn-icon btn-success"><i class="fas fa-user-check" title="Embaucher"></i></button>
-                                </form>
-                                <form method="post" action="{{ path('recruit_refuse', {'id': recruit.id }) }}" class="btn-icon-form" onsubmit="return confirm('Etes-vous certain de vouloir refuser cette candidature ?');">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('refuse' ~ recruit.id) }}">
-                                    <button class="btn-icon btn-danger" title="Refuser">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </form> #}
-                                {% if finished.hired == true %}
+                                {# {% if finished.hired == true %}
                                 <button class="btn-icon-form btn-icon btn-warning" title="En attente d'acceptation de l'étudiant">
                                     <i class="fas fa-hourglass-start"></i>
                                 </button>
                                 {% elseif finished.agree == true %}
                                 <form method="post" class="btn-icon-form" action="{{ path('recruit_finish', { id:finished.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir finaliser l\'inscription ?');">
                                     <input type="hidden" name="_token" value="{{ csrf_token('finish' ~ finished.id) }}">
-                                    <button class="btn-icon btn-success" title="Démarrer la mission"><i class="far fa-play-circle"></i></button>
+                                    <button class="btn btn-success btn-sm">
+                                        <i class="fas fa-user-check" title="Embaucher"></i>
+                                        Recruter
+                                    </button>
                                 </form>
-                                {% endif %}
-                                <a href="#help-1" rel="modal:open" class="btn-modal btn-icon-form btn-icon btn-secondary" title="aide">
+                                {% endif %} #}
+                                {# <a href="#help-1" rel="modal:open" class="btn-modal btn-icon-form btn-icon btn-secondary" title="aide">
                                     <i class="fas fa-question-circle"></i>
-                                </a>
+                                </a> #}
                             </div>
                         </td>
                     </tr>
-    
-                    {# {% else %}
-                        <tr class="border-top">
-                            <td colspan="8" class="border-top-td">Aucune candidature pour le moment</td>
-                        </tr>   #}
                     {% endfor %}
     
                         </tbody>
