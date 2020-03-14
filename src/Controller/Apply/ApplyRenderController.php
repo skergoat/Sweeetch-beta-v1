@@ -36,7 +36,7 @@ class ApplyRenderController extends AbstractController
         if ($checker->studentValid($student)) {    
             return $this->render('apply/index_student.html.twig', [
                 'student' => $student,
-                'applies' => $applyRepository->findBy(['student' => $student, 'refused' => false, 'unavailable' => false, 'finished' => false], ['hired' => 'desc']),
+                'applies' => $applyRepository->findBy(['student' => $student, 'refused' => false, 'unavailable' => false, 'finished' => false], ['date_recruit' => 'desc']),
                 'finished' => $applyRepository->findBy(['student' => $student, 'finished' => true]),
                 'fresh' =>  $applyRepository->findByStudentByFresh($student),
                 'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true]),
