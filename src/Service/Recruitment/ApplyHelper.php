@@ -150,6 +150,17 @@ class ApplyHelper extends CommonHelper
 
     public function agree(Apply $apply, Student $student, Offers $offers)
     {    
+        // set others to wait
+        // $others = $this->applyRepository->getOtherApplies($student->getId(), $offers->getId());
+        $others = $this->applyRepository->findBy(['offers' => $offers, 'wait' => true]);
+        if($others) {
+            foreach($others as $others) {
+                // send notification
+                $this->mailer->sendOtherNotification($others);
+                // delete other applies 
+                $this->manager->remove($others);   
+            }   
+        }
          // agree
          $this->setAgree($apply);
          // send notification
