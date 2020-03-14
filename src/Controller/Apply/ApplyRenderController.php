@@ -121,7 +121,7 @@ class ApplyRenderController extends AbstractController
             return $this->render('apply/show_preview.html.twig', [
                 'offers' => $offer, // current single offer content 
                 'company' => $company, // company layout 
-                'applies' => $applyRepository->findBy(['offers' => $offer, 'refused' => false, 'unavailable' => false, 'confirmed' => false, 'finished' => false, 'wait' => false], ['date_recruit' => 'desc']),
+                'applies' => $applyRepository->findBy(['offers' => $offer, 'refused' => false, 'unavailable' => false, 'confirmed' => false, 'finished' => false], ['date_recruit' => 'desc']),
                  // infos
                  'hired' => $helper->checkHired('offers', $offers),
                  'agree' => $helper->checkAgree('offers', $offers),

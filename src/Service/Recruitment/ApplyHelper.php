@@ -81,7 +81,7 @@ class ApplyHelper extends CommonHelper
             'unavailable' => false,
             'confirmed' => false,
             'finished' => false,
-            'wait' => false
+            // 'wait' => false
         ], ['date_recruit' => 'desc']);
     }
 
@@ -118,15 +118,13 @@ class ApplyHelper extends CommonHelper
     // get applies from company 
     public function findByOffersFinished($offers)
     {
-        // foreach($offers as $offers){
-            $applies = $this->applyRepository->findBy(['offers' => $offers], ['date_finished' => 'desc']);
+        $applies = $this->applyRepository->findBy(['offers' => $offers], ['date_finished' => 'desc']);
 
-            foreach($applies as $applies){
-                if($applies->getConfirmed() || $applies->getFinished()) {
-                    $array[] = $applies;
-                }
+        foreach($applies as $applies){
+            if($applies->getConfirmed() || $applies->getFinished()) {
+                $array[] = $applies;
             }
-        // }
+        }
 
         return isset($array) ? $array : null;
     }
@@ -139,14 +137,12 @@ class ApplyHelper extends CommonHelper
         // close offer 
         $offers->setState(true); 
         // send notification
-        $this->mailer->sendHireNotification($apply);
-        // set others to wait
+        // $this->mailer->sendHireNotification($apply);
+        // delete other applies
         $others = $this->applyRepository->getOtherApplies($student->getId(), $offers->getId());
         if($others) {
             foreach($others as $others) {
                 // send notification
-                if($others->getUnavailable() == false && $others->getRefused() == false)
-                // $others->setWait(true); // et delete apply  
                 $this->mailer->sendOtherNotification($others);
                 // delete other applies 
                 $this->manager->remove($others);   
@@ -156,17 +152,6 @@ class ApplyHelper extends CommonHelper
 
     public function agree(Apply $apply, Student $student, Offers $offers)
     {    
-        // // dd($this->applyRepository->findBy(['offers' => $offers, 'wait' => true]));
-        // $others = $this->applyRepository->findBy(['offers' => $offers, 'wait' => true]);
-        // // dd($others);
-        // if($others) {
-        //     foreach($others as $others) {
-        //         // send notification
-        //         $this->mailer->sendOtherNotification($others);
-        //         // delete other applies 
-        //         $this->manager->remove($others);   
-        //     }   
-        // }
          // agree
          $this->setAgree($apply);
          // send notification
@@ -228,26 +213,12 @@ class ApplyHelper extends CommonHelper
     {
         // close offer 
         $offers->setState(false);
-
-        // set others wait to false
-        $others = $this->applyRepository->getOtherApplies($student->getId(), $offers->getId());
-        if($others) {
-            foreach($others as $others) {
-
-                // if($others->getWait() == true){
-                //     $others->setWait(false); // et delete apply 
-                // }
-                // send notification
-                $this->mailer->sendOtherNotification($others);
-                //  delete other applies 
-                $this->manager->remove($others);   
-            }   
-        }
         // set to available
         // $helper->available($offers, $student);
         // send notification
         $this->mailer->sendDeleteNotification($offers);
     }
+
 
     // when delete offers 
     public function handleOffersApplies(Offers $offers)
