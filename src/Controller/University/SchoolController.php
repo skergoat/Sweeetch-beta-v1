@@ -13,6 +13,8 @@ use App\Repository\ApplyRepository;
 use App\Form\SchoolEditPasswordType;
 use App\Repository\SchoolRepository;
 // use App\Service\Mailer\ForgottenMailer;
+use App\Repository\RecruitRepository;
+use App\Repository\StudiesRepository;
 use App\Service\UserChecker\AdminChecker;
 use App\Service\Recruitment\RecruitHelper;
 use App\Service\UserChecker\SchoolChecker;
@@ -94,12 +96,25 @@ class SchoolController extends AbstractController
      * @Route("/{id}", name="school_show", methods={"GET"})
      * @IsGranted("ROLE_SCHOOL")
      */
-    public function show(School $school, SchoolChecker $checker): Response
+    public function show(School $school, StudiesRepository $studiesRepository, RecruitRepository $recruitRepository, SchoolChecker $checker): Response
     {
         if ($checker->schoolValid($school)) {
+            // get school studies 
+            $studies = $studiesRepository->findBy(['school' => $school]);
 
             return $this->render('school/show.html.twig', [
                 'school' => $school,
+                'studies' => $studiesRepository->findBy(['school' => $school], ['id' => 'desc']),
+                'recruits' => $recruitRepository->findBy([
+                    'studies' => $studies,
+                    'hired' => false,
+                    'agree' => false,
+                    'refused' => false,
+                    'unavailable' => false,
+                    'finished' => false,
+                ], ['date_recruit' => 'desc']),
+                'hired' => $recruitRepository->findBy(['studies' => $studies, 'hired' => true],['date_recruit' => 'desc']),
+                'agree' => $recruitRepository->findBy(['studies' => $studies, 'agree' => true],['date_recruit' => 'desc']),
             ]);
         }
     }

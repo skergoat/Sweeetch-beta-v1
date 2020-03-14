@@ -84,7 +84,7 @@
                                         {% if study.recruits | length == 0 or study.recruits | length == finished | length %}
                                         <span class="badge badge-secondary right" title="candidatures">Ouvert</span>
                                         {% else %}
-                                        <span class="badge badge-primary right" title="candidatures">Candidats : {{ study.recruits | length }} </span>
+                                        <span class="badge badge-primary right" title="candidatures">Candidats : {{ study.recruits | length - finished | length }} </span>
                                         {% endif %}
                                     {% else %}
                                     <span class="badge badge-warning right" title="candidatures">En Attente</span>
