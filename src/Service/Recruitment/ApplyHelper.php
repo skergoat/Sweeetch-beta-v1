@@ -75,7 +75,8 @@ class ApplyHelper extends CommonHelper
             'refused' => false,
             'unavailable' => false,
             'confirmed' => false,
-            'finished' => false
+            'finished' => false,
+            'wait' => false
         ], ['date_recruit' => 'desc']);
     }
 
@@ -133,15 +134,16 @@ class ApplyHelper extends CommonHelper
         // close offer 
         $offers->setState(true); 
         // send notification
-        // $this->mailer->sendHireNotification($apply);
+        $this->mailer->sendHireNotification($apply);
         // delete other applies
         $others = $this->applyRepository->getOtherApplies($student->getId(), $offers->getId());
         if($others) {
             foreach($others as $others) {
                 // send notification
-                $this->mailer->sendOtherNotification($others);
+                $others->setWait(true); // et delete apply  
+                // $this->mailer->sendOtherNotification($others);
                 // delete other applies 
-                $this->manager->remove($others);   
+                // $this->manager->remove($others);   
             }   
         }
     }
