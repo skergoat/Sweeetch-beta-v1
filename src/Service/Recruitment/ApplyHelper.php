@@ -76,7 +76,7 @@ class ApplyHelper extends CommonHelper
             'unavailable' => false,
             'confirmed' => false,
             'finished' => false
-        ]);
+        ], ['date_recruit' => 'desc']);
     }
 
     // unavailable
@@ -112,15 +112,15 @@ class ApplyHelper extends CommonHelper
     // get applies from company 
     public function findByOffersFinished($offers)
     {
-        foreach($offers as $offers){
-            $applies = $this->applyRepository->findBy(['offers' => $offers]);
+        // foreach($offers as $offers){
+            $applies = $this->applyRepository->findBy(['offers' => $offers], ['date_finished' => 'desc']);
 
             foreach($applies as $applies){
                 if($applies->getConfirmed() || $applies->getFinished()) {
                     $array[] = $applies;
                 }
             }
-        }
+        // }
 
         return isset($array) ? $array : null;
     }

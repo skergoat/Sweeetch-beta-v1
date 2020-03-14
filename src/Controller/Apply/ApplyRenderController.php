@@ -90,7 +90,7 @@ class ApplyRenderController extends AbstractController
     {     
         if($checker->companyValid($company)) {
             // get offers 
-            $offers = $offersRepository->findBy(['company' => $company], ['id' => 'desc']);
+            $offers = $offersRepository->findBy(['company' => $company]);
             // get finished or confirmed applies 
             $array = $helper->findByOffersFinished($offers);
             
@@ -121,7 +121,7 @@ class ApplyRenderController extends AbstractController
             return $this->render('apply/show_preview.html.twig', [
                 'offers' => $offer, // current single offer content 
                 'company' => $company, // company layout 
-                'applies' => $applyRepository->findBy(['offers' => $offer, 'refused' => false, 'unavailable' => false, 'confirmed' => false, 'finished' => false]),
+                'applies' => $applyRepository->findBy(['offers' => $offer, 'refused' => false, 'unavailable' => false, 'confirmed' => false, 'finished' => false], ['date_recruit' => 'desc']),
                  // infos
                  'hired' => $helper->checkHired('offers', $offers),
                  'agree' => $helper->checkAgree('offers', $offers),
@@ -142,7 +142,7 @@ class ApplyRenderController extends AbstractController
             // get all company offers
             $offers = $offersRepository->findBy(['company' => $company]);
              // get finished or confirmed applies 
-             $array = $helper->findByOffersFinished($offers);
+             $array = $helper->findByOffersFinished($offer);
         
             return $this->render('apply/show_finished.html.twig', [
                 'offers' => $offer, // current single offer content 
