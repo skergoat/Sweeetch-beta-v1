@@ -94,7 +94,7 @@ class StudiesRenderController extends AbstractController
 
     /**
      * @Route("/cursus/index/{from}/{id}", name="studies_candidate_index", methods={"GET"})
-     * @IsGranted("ROLE_RECRUIT")
+     * @IsGranted("ROLE_SUPER_STUDENT")
      */
     public function indexCandidate(StudiesRepository $studiesRepository, PaginatorInterface $paginator, Request $request, $from, $id): Response
     {
