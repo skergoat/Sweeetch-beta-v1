@@ -135,7 +135,7 @@ class ApplyHelper extends CommonHelper
         $offers->setState(true); 
         // send notification
         $this->mailer->sendHireNotification($apply);
-        // delete other applies
+        // set others to wait
         $others = $this->applyRepository->getOtherApplies($student->getId(), $offers->getId());
         if($others) {
             foreach($others as $others) {
@@ -211,6 +211,22 @@ class ApplyHelper extends CommonHelper
     {
         // close offer 
         $offers->setState(false);
+
+        // set others wait to false
+        $others = $this->applyRepository->getOtherApplies($student->getId(), $offers->getId());
+        if($others) {
+            foreach($others as $others) {
+
+                if($others->getWait() == true){
+                    $others->setWait(false); // et delete apply 
+                }
+                 // send notification
+                
+                 // $this->mailer->sendOtherNotification($others);
+                 // delete other applies 
+                 // $this->manager->remove($others);   
+            }   
+        }
         // set to available
         // $helper->available($offers, $student);
         // send notification
