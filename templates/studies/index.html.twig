@@ -27,85 +27,89 @@
 </div>
 {% endfor %}
 
-<div class="col-md-12">
-
-    <div class="card card-responsive-table">
-
-        <div class="pagination-bottom mb-4 mt-4"></div>
-
-            <div class="card-body">
-
-                <table class="table-offers table">
-                    <thead>
-                        <tr>
-                            <th>Titre</th>
-                            <th>Domaine</th>
-                            {# <th>Date de Candidature</th> #}
-                            <th>Situation 
-                                <a href="#flag-1" rel="modal:open" class="badge " title="aide" style="color:#8e8e8e;">
-                                <i class="fas fa-question-circle"></i>
-                                </a>
-                            </th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for study in studies %}
-                        <tr>
-                            <td><a href="{{ path('school_studies_show', {'id': study.id, school_id: study.school.id }) }}">{{ study.title }}</a></td>
-                            <td>{{ study.domain }}</td>
-                            <td>
-                            {# vars #}
-                            {% set hired = [] %}
-                            {% set agree = [] %}
-                            {% set finished = [] %}
-                            {# array #}
-                            {% for study in study.recruits %}
-                                {# hired #}
-                                {% if study.hired == true %}
-                                  {% set hired = hired|merge([{ hired: study }]) %}
-                                {% endif %}
-                                {# agree #}
-                                {% if study.agree == true %}
-                                  {% set agree = agree|merge([{ agree: study }]) %}
-                                {% endif %}
-                                {# confirmed #}
-                                {% if study.finished == true %}
-                                  {% set finished = finished|merge([{ finished: study }]) %}
-                                {% endif %}
-                            {% endfor %}
-                            {# loop #}
-                            {% if agree | length == 0 %}
-                                {% if hired | length == 0 %}
-                                    {% if study.recruits | length == 0 or study.recruits | length == finished | length %}
-                                    <span class="badge badge-secondary right" title="candidatures">Ouvert</span>
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-responsive-table">
+                <div class="card-header">
+                    <h3 class="card-title" style="font-weight:900;font-size:22px;">Candidatures</h3>
+                    <a href="#help-1" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                        <i class="fas fa-question-circle"></i>
+                    </a>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="school1" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Titre</th>
+                                <th>Domaine</th>
+                                {# <th>Date de Candidature</th> #}
+                                <th>Situation 
+                                    <a href="#flag-1" rel="modal:open" class="badge " title="aide" style="color:#8e8e8e;">
+                                    <i class="fas fa-question-circle"></i>
+                                    </a>
+                                </th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for study in studies %}
+                            <tr>
+                                <td><a href="{{ path('school_studies_show', {'id': study.id, school_id: study.school.id }) }}">{{ study.title }}</a></td>
+                                <td>{{ study.domain }}</td>
+                                <td>
+                                {# vars #}
+                                {% set hired = [] %}
+                                {% set agree = [] %}
+                                {% set finished = [] %}
+                                {# array #}
+                                {% for study in study.recruits %}
+                                    {# hired #}
+                                    {% if study.hired == true %}
+                                    {% set hired = hired|merge([{ hired: study }]) %}
+                                    {% endif %}
+                                    {# agree #}
+                                    {% if study.agree == true %}
+                                    {% set agree = agree|merge([{ agree: study }]) %}
+                                    {% endif %}
+                                    {# confirmed #}
+                                    {% if study.finished == true %}
+                                    {% set finished = finished|merge([{ finished: study }]) %}
+                                    {% endif %}
+                                {% endfor %}
+                                {# loop #}
+                                {% if agree | length == 0 %}
+                                    {% if hired | length == 0 %}
+                                        {% if study.recruits | length == 0 or study.recruits | length == finished | length %}
+                                        <span class="badge badge-secondary right" title="candidatures">Ouvert</span>
+                                        {% else %}
+                                        <span class="badge badge-primary right" title="candidatures">Candidats : {{ study.recruits | length }} </span>
+                                        {% endif %}
                                     {% else %}
-                                    <span class="badge badge-primary right" title="candidatures">Candidats : {{ study.recruits | length }} </span>
+                                    <span class="badge badge-warning right" title="candidatures">En Attente</span>
                                     {% endif %}
                                 {% else %}
-                                <span class="badge badge-warning right" title="candidatures">En Attente</span>
+                                <span class="badge badge-info right" title="candidatures">A Confirmer</span>
                                 {% endif %}
-                            {% else %}
-                            <span class="badge badge-info right" title="candidatures">A Confirmer</span>
-                            {% endif %}
-                            </td>
-                            <td>
-                                <a href="{{ path('studies_edit', {'id': study.id, school_id: study.school.id }) }}">
-                                    <button  title="Modifier" style="color:white;" class="btn btn-info btn-sm"> 
-                                        <i class="fas fa-edit"></i>
-                                        Modifier
-                                    </button>
-                                </a>
-                            </td>
-                        </tr>
-                    {% else %}
-                        <tr>
-                            <td colspan="4">no records found</td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-
+                                </td>
+                                <td>
+                                    <a href="{{ path('studies_edit', {'id': study.id, school_id: study.school.id }) }}">
+                                        <button  title="Modifier" style="color:white;" class="btn btn-info btn-sm"> 
+                                            <i class="fas fa-edit"></i>
+                                            Modifier
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="4">no records found</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             {% else %}
                 <br><br>
                 <div class="col-lg-8 col-sm-12 col-md-12">
@@ -121,11 +125,34 @@
             {% endif %}
 
             </div>
-
         </div>
-
     </div>
+</section>
 
-</div>
+{% endblock %}
+
+{% block javascripts %}
+
+{{ parent() }}
+<script>
+    $(function () {
+        $("#school1").DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "info": false,
+            "autoWidth": false,
+            "responsive": true,
+            "language": {
+            "emptyTable": "Aucune inscription pour le moment",
+            "paginate": {
+                "previous": "Précédent",
+                'next':'Suivant'
+                }
+            }
+        });   
+    });
+</script>
 
 {% endblock %}
