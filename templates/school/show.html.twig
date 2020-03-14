@@ -233,81 +233,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for offers in offers %}
-
-                            {% if offers.applies | length == 0 %} 
-                        
-                            <tr>
-                                <td><a href="{{ path('offers_preview', {'id': offers.id, 'company':company.id}) }}">{{ offers.title }}</a></td>
-                            
-                                <td> <span class="badge bg-secondary">Ouverte</span> </td>
-                            
-                            </tr>
-                            
-                            {% elseif offers.applies | length > 0 %}
-
-                            {% if offers.applies[0].finished == false and offers.applies[0].confirmed == false %} 
-
-                            <tr>
-                                <td><a href="{{ path('offers_preview', {'id': offers.applies[0].offers.id, 'company':company.id}) }}">{{ offers.applies[0].offers.title }}</a></td>
-                            
-                                <td>    
-                                    {# {% if offers.applies[0].confirmed == false %}
-                                        {% if offers.applies[0].agree == false %}
-                                        {% set hiredArray = [] %}
-                                        {% for applies in offers.applies %}
-                                            {% if applies.hired == true %}
-                                            {% set hiredArray = hiredArray|merge([{ hiredArray: applies }]) %}
-                                            {% endif %}
-                                        {% endfor %}
-                                        {% if hiredArray | length == 0 %}
-                                            {# count nb refused and unavailables #}
-                                            {# {% set refused = [] %}
-                                            {% set unavailable = [] %} #}
-                                            {# {% set wait = [] %} #}
-                                            {# {% for applies in offers.applies %} #}
-                                            {# refused #}
-                                            {# {% if applies.refused == true %}
-                                                {% set refused = refused|merge([{ refused: applies }]) %}
-                                            {% endif %} #}
-                                            {# unavailable #}
-                                            {# {% if applies.unavailable == true %}
-                                                {% set unavailable = unavailable|merge([{ unavailable: applies }]) %}
-                                            {% endif %} #}
-                                            {# wait #}
-                                            {# {% if applies.wait == true %}
-                                                {% set wait = wait|merge([{ wait: applies }]) %}
-                                            {% endif %} #}
-                                            {# {% endfor %} #}
-                                            {# total #}
-                                            {# {% set minus = refused|length + unavailable|length %} #}
-                                            {# render #}
-                                            {# {% if offers.applies|length - minus == 0 %}
-                                            <span class="badge badge-secondary right" title="candidatures">Ouverte</span>
-                                            {% else %}
-                                            <span class="badge badge-primary right" title="candidatures">
-                                            Candidats : {{ offers.applies|length - minus  }} 
-                                            </span>
-                                            {% endif %}
+                        {% for studies in studies %}
+                        <tr>
+                            <td>{{ studies.id }}</td>
+                            <td>
+                                {% if agree | length == 0 %}
+                                    {% if hired | length == 0 %}
+                                        {% if studies.recruits | length == 0 or studies.recruits | length == finishedVar | length %}
+                                        <span class="badge badge-secondary right" title="candidatures">Ouvert</span>
                                         {% else %}
-                                        <span class="badge bg-warning">En attente</span>
-                                        {% endif %}
-                                        {% else %}
-                                        <span class="badge bg-info">A Finaliser</span>    
+                                        <span class="badge badge-primary right" title="candidatures">Candidats : {{ studies.recruits | length - finished | length }} </span>
                                         {% endif %}
                                     {% else %}
-                                    <span class="badge bg-success">En cours</span>
-                                    {% endif %}  #}
-                                </td>
-                            
-                            </tr>
-
-                                {% endif %} 
-                        
-                            {% endif %}
-                            
-                        {% endfor %} #}
-
+                                    <span class="badge badge-warning right" title="candidatures">En Attente</span>
+                                    {% endif %}
+                                {% else %}
+                                <span class="badge badge-info right" title="candidatures">A Confirmer</span>
+                                {% endif %}
+                            </td>
+                        </td>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
