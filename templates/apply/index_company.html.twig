@@ -104,23 +104,41 @@
                       <td>    
                           {% if offers.applies[0].confirmed == false %}
                             {% if offers.applies[0].agree == false %}
-                              {% if offers.applies[0].hired == false %}
-                              {# count nb refused and unavailables#}
-                              {% set refused = [] %}
-                              {% set unavailable = [] %}
+                              {% set hired = [] %}
                               {% for applies in offers.applies %}
-                                {# refused #}
-                                {% if applies.refused == true %}
-                                  {% set refused = refused|merge([{ refused: applies }]) %}
-                                {% endif %}
-                                {# unavailable #}
-                                {% if applies.unavailable == true %}
-                                  {% set unavailable = unavailable|merge([{ refused: applies }]) %}
+                                {% if applies.hired == true %}
+                                  {% set hired = hired|merge([{ hired: applies }]) %}
                                 {% endif %}
                               {% endfor %}
-                              {# total #}
-                              {% set minus = refused|length + unavailable|length %}
-                              <span class="badge badge-primary right" title="candidatures">Candidats : {{ offers.applies|length - minus  }} </span>
+                              {% if hired | length == 0 %}
+                                {# count nb refused and unavailables #}
+                                {% set refused = [] %}
+                                {% set unavailable = [] %}
+                                {% set wait = [] %}
+                                {% for applies in offers.applies %}
+                                  {# refused #}
+                                  {% if applies.refused == true %}
+                                    {% set refused = refused|merge([{ refused: applies }]) %}
+                                  {% endif %}
+                                  {# unavailable #}
+                                  {% if applies.unavailable == true %}
+                                    {% set unavailable = unavailable|merge([{ unavailable: applies }]) %}
+                                  {% endif %}
+                                  {# wait #}
+                                  {% if applies.wait == true %}
+                                    {% set wait = wait|merge([{ wait: applies }]) %}
+                                  {% endif %}
+                                {% endfor %}
+                                {# total #}
+                                {% set minus = refused|length + unavailable|length + wait|length %}
+                                {# render #}
+                                {% if offers.applies|length - minus == 0 %}
+                                <span class="badge badge-secondary right" title="candidatures">Ouverte</span>
+                                {% else %}
+                                <span class="badge badge-primary right" title="candidatures">
+                                  Candidats : {{ offers.applies|length - minus  }} 
+                                </span>
+                                {% endif %}
                               {% else %}
                               <span class="badge bg-warning">En attente</span>
                               {% endif %}

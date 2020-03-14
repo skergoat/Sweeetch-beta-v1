@@ -103,58 +103,58 @@
                     {% if applies[0] is defined %}
 
                         {% for applies in applies %}
-                        
-                        <tr>
-                            {% if is_granted('ROLE_ADMIN') %}
-                            <td style="padding-top: 18px;"><a href="{{ path('student_show', { "id":applies.student.id }) }}">{{ applies.student.name }} {{ applies.student.lastname }}</a></td>
-                            {% else %}
-                            <td style="padding-top: 18px;"><a href="{{ path('show_applied_profile', { "id":applies.student.id, "company_id": offers.company.id, "offers":offers.id }) }}">{{ applies.student.name }} {{ applies.student.lastname }}</a></td>
-                            {% endif %}
-                            <td>{{ applies.dateRecruit|date("d/m/Y à g\\hi") }}</td>
-                            <td style="color:white;">
-                            
-                                <div class="btn-group">
-                            {% if applies.hired == false and applies.confirmed == false and applies.agree == false %}
+
+                            <tr>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                <td style="padding-top: 18px;"><a href="{{ path('student_show', { "id":applies.student.id }) }}">{{ applies.student.name }} {{ applies.student.lastname }}</a></td>
+                                {% else %}
+                                <td style="padding-top: 18px;"><a href="{{ path('show_applied_profile', { "id":applies.student.id, "company_id": offers.company.id, "offers":offers.id }) }}">{{ applies.student.name }} {{ applies.student.lastname }}</a></td>
+                                {% endif %}
+                                <td>{{ applies.dateRecruit|date("d/m/Y à g\\hi") }}</td>
+                                <td style="color:white;">
                                 
-                                    <form method="post" action="{{ path('hire', { id:applies.id }) }}" class="btn-icon-form" onsubmit="return confirm('Etes-vous certain de vouloir embaucher cet étudiant ?');">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('hire' ~ applies.id) }}">
-                                        <button class="btn btn-success btn-sm">
-                                            <i class="fas fa-user-check" title="Embaucher"></i>
-                                            Recruter
-                                        </button>
-                                    </form>
+                                    <div class="btn-group">
+                                {% if applies.hired == false and applies.confirmed == false and applies.agree == false %}
+                                    
+                                        <form method="post" action="{{ path('hire', { id:applies.id }) }}" class="btn-icon-form" onsubmit="return confirm('Etes-vous certain de vouloir embaucher cet étudiant ?');">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('hire' ~ applies.id) }}">
+                                            <button class="btn btn-success btn-sm">
+                                                <i class="fas fa-user-check" title="Embaucher"></i>
+                                                Recruter
+                                            </button>
+                                        </form>
 
-                                    <form method="post" action="{{ path('apply_refuse', {'id': applies.id }) }}" class="btn-icon-form" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette candidature ?');">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('refuse' ~ applies.id) }}">
-                                        <button class="btn btn-danger btn-sm">
-                                            <i class="fas fa-times"></i>
-                                            Refuser
-                                        </button>
-                                    </form>
+                                        <form method="post" action="{{ path('apply_refuse', {'id': applies.id }) }}" class="btn-icon-form" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette candidature ?');">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('refuse' ~ applies.id) }}">
+                                            <button class="btn btn-danger btn-sm">
+                                                <i class="fas fa-times"></i>
+                                                Refuser
+                                            </button>
+                                        </form>
 
-                            {% elseif applies.hired == true %}
-                                    <span class="badge badge-warning right">En attente d'acceptation du candidat</span>
-                            {% elseif applies.agree == true %}
+                                {% elseif applies.hired == true %}
+                                        <span class="badge badge-warning right">En attente d'acceptation du candidat</span>
+                                {% elseif applies.agree == true %}
 
-                                    <form method="post" class="btn-icon-form" action="{{ path('confirm', { id:applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir commencer la mission ?');">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('confirm' ~ applies.id) }}">
-                                        <button class="btn btn-info btn-sm">
-                                            <i class="far fa-stop-circle"></i>
-                                            Finaliser le recrutement
-                                        </button>
-                                    </form>
+                                        <form method="post" class="btn-icon-form" action="{{ path('confirm', { id:applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir commencer la mission ?');">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('confirm' ~ applies.id) }}">
+                                            <button class="btn btn-info btn-sm">
+                                                <i class="far fa-stop-circle"></i>
+                                                Finaliser le recrutement
+                                            </button>
+                                        </form>
 
-                            {# {% elseif applies.confirmed == true %}
+                                {# {% elseif applies.confirmed == true %}
 
-                                    <form method="post" class="btn-icon-form" action="{{ path('apply_finish', {'id': applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir terminer la mission ?');">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('stop' ~ applies.id) }}">
-                                        <button class="btn-icon btn-warning" title="Terminer la mission"><i class="far fa-stop-circle"></i></button>
-                                    </form>  #}
+                                        <form method="post" class="btn-icon-form" action="{{ path('apply_finish', {'id': applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir terminer la mission ?');">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('stop' ~ applies.id) }}">
+                                            <button class="btn-icon btn-warning" title="Terminer la mission"><i class="far fa-stop-circle"></i></button>
+                                        </form>  #}
 
-                            {% endif %}
-                                </div>
-                            </td>
-                        </tr>
+                                {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
                     
                         {% endfor %}
                     
