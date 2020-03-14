@@ -104,7 +104,7 @@ class CompanyController extends AbstractController
                 'company' => $company,  // company layout
                 'offers' => $offersRepository->findBy(['company' => $company], ['id' => 'desc']),
                 'applies' => $helper->checkApplies('offers', $offers),
-                'hired' => $applyRepository->findBy(['offers' => $offers, 'hired' => true, 'wait' => false],['date_recruit' => 'desc']),  // show hired 
+                'hired' => $applyRepository->findBy(['offers' => $offers, 'hired' => true],['date_recruit' => 'desc']),  // show hired 
                 'agree' => $applyRepository->findBy(['offers' => $offers, 'agree' => true],['date_recruit' => 'desc']), // find agreed applies 
                 'finished' => isset($array) ? $array : null, // find confirmed or finished applies 
                 'candidates' => $helper->nbCandidates($offers), // show nb applies 

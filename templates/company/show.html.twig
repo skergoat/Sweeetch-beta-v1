@@ -265,7 +265,7 @@
                                                 {# count nb refused and unavailables #}
                                                 {% set refused = [] %}
                                                 {% set unavailable = [] %}
-                                                {% set wait = [] %}
+                                                {# {% set wait = [] %} #}
                                                 {% for applies in offers.applies %}
                                                 {# refused #}
                                                 {% if applies.refused == true %}
@@ -276,12 +276,12 @@
                                                     {% set unavailable = unavailable|merge([{ unavailable: applies }]) %}
                                                 {% endif %}
                                                 {# wait #}
-                                                {% if applies.wait == true %}
+                                                {# {% if applies.wait == true %}
                                                     {% set wait = wait|merge([{ wait: applies }]) %}
-                                                {% endif %}
+                                                {% endif %} #}
                                                 {% endfor %}
                                                 {# total #}
-                                                {% set minus = refused|length + unavailable|length + wait|length %}
+                                                {% set minus = refused|length + unavailable|length %}
                                                 {# render #}
                                                 {% if offers.applies|length - minus == 0 %}
                                                 <span class="badge badge-secondary right" title="candidatures">Ouverte</span>
