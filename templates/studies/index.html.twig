@@ -55,11 +55,40 @@
                             <td><a href="{{ path('school_studies_show', {'id': study.id, school_id: study.school.id }) }}">{{ study.title }}</a></td>
                             <td>{{ study.domain }}</td>
                             <td>
-                                {% if study.recruit is defined %}
-                                {{ study.recruit }} 
+                            {# vars #}
+                            {% set hired = [] %}
+                            {% set agree = [] %}
+                            {% set finished = [] %}
+                            {# array #}
+                            {% for study in study.recruits %}
+                                {# hired #}
+                                {% if study.hired == true %}
+                                  {% set hired = hired|merge([{ hired: study }]) %}
                                 {% endif %}
+                                {# agree #}
+                                {% if study.agree == true %}
+                                  {% set agree = agree|merge([{ agree: study }]) %}
+                                {% endif %}
+                                {# confirmed #}
+                                {% if study.finished == true %}
+                                  {% set finished = finished|merge([{ finished: study }]) %}
+                                {% endif %}
+                            {% endfor %}
+                            {# loop #}
+                            {% if agree | length == 0 %}
+                                {% if hired | length == 0 %}
+                                    {% if study.recruits | length == 0 or study.recruits | length == finished | length %}
+                                    <span class="badge badge-secondary right" title="candidatures">Ouvert</span>
+                                    {% else %}
+                                    <span class="badge badge-primary right" title="candidatures">Candidats : {{ study.recruits | length }} </span>
+                                    {% endif %}
+                                {% else %}
+                                <span class="badge badge-warning right" title="candidatures">En Attente</span>
+                                {% endif %}
+                            {% else %}
+                            <span class="badge badge-info right" title="candidatures">A Confirmer</span>
+                            {% endif %}
                             </td>
-                            {# <td>{{ study.recruit.dateRecruit ? study.recruit.dateRecruit|date("d/m/Y à g\\hi") : '' }}</td> #}
                             <td>
                                 <a href="{{ path('studies_edit', {'id': study.id, school_id: study.school.id }) }}">
                                     <button  title="Modifier" style="color:white;" class="btn btn-info btn-sm"> 

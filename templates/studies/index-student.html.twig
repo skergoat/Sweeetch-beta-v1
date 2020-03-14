@@ -63,18 +63,7 @@
 
                     <div class="offers-index card col-lg-5 mr-2 ml-2 mt-2 mb-2">
                         <a  href="{{ path('studies_show_recruit', {id:studies.id, from:from, from_id:id}) }}" class="card-link">
-                            {# <div class="card-header" style="display:flex;">
-                                {% if offer.company.pictures.fileName is defined %}
-                                <div class="image" style="margin-right:15px;">
-                                    <img src="{{ uploaded_asset(offer.company.pictures.fileName) }}" class="profile_picture elevation-2" alt="User Image">
-                                </div>
-                                {% else %}
-                                <div style="margin-right:15px;">
-                                    <img src="https://via.placeholder.com/30" />                        
-                                </div>
-                                {% endif %}
-                                <div><h6 style="color: #6c757d !important">{{ offer.company.companyName }}</h6></div>
-                            </div> #}
+                           
                             <div class="card-body">
                                 <div class="card-text"> 
                                     <div style="margin-right:20px;">
@@ -87,35 +76,7 @@
                     </div>
 
                     {% else %}
-            {# {% for offer in offers %}
-                    {% if offer.applies[0] is not defined or offer.applies[0] is defined and offer.applies[0].hired == false and offer.applies[0].confirmed == false and offer.applies[0].finished == false %}
-
-                    <div class="offers-index card col-lg-5 mr-2 ml-2 mt-2 mb-2">
-                        <a  href="{{ path('offers_show', {'id': offer.id, 'page':page}) }}" class="card-link">
-                            <div class="card-header" style="display:flex;">
-                                {% if offer.company.pictures.fileName is defined %}
-                                <div class="image" style="margin-right:15px;">
-                                    <img src="{{ uploaded_asset(offer.company.pictures.fileName) }}" class="profile_picture elevation-2" alt="User Image">
-                                </div>
-                                {% else %}
-                                <div style="margin-right:15px;">
-                                    <img src="https://via.placeholder.com/30" />                        
-                                </div>
-                                {% endif %}
-                                <div><h6 style="color: #6c757d !important">{{ offer.company.companyName }}</h6></div>
-                            </div>
-                            <div class="card-body">
-                                <div class="card-text"> 
-                                    <div style="margin-right:20px;">
-                                        <h3>{{ offer.title }}</h3>
-                                    </div> 
-                                    <div><h5 class="card-subtitle mb-2 text-muted">{{ offer.location }}</h5></div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    {% else %} #}
+           
                     <tr>
                         <td colspan="8">
                             
@@ -132,24 +93,6 @@
                     </tr>
 
                     {% endfor %}
-                {#   {% endif %}
-                {% else %}
-                    <tr>
-                        <td colspan="8">
-            
-                            <div class="info-box mb-3" style="border:1px solid rgba(0, 0, 0, 0.125);border-radius:5px;margin-top:100px;">
-                                <span class="info-box-icon bg-warning elevation-1"><i class="fa fa-info"></i></span>
-                
-                                <div class="info-box-content">
-                                    <span class="info-box-number">Aucun emploi pour le moment</span>
-                                    <span class="info-box-text">Revenez plus tard !</span>
-                                </div>
-                            </div>
-                                    
-                        </td>
-                    </tr>
-                {% endfor %} #}
-
                 </div>
 
                 <div class="pagination-bottom">{{ knp_pagination_render(studies) }}</div> 

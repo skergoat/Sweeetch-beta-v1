@@ -92,9 +92,9 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title" style="font-weight:900;font-size:22px;">Candidatures</h3>
-                    <a href="#help-1" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                    {# <a href="#help-1" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
                         <i class="fas fa-question-circle"></i>
-                    </a>
+                    </a> #}
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -115,7 +115,7 @@
                             <tr>
                                 <td><a href="{{ path('show_student_applied', {id:recruit.student.id, school:school.id, study:study.id}) }}">{{ recruit.student.Name }} {{ recruit.student.lastName }}</a></td>
                                 <td>Le {{ recruit.dateRecruit|date("d/m/Y à g\\hi") }}</td>
-                                <td>Ouvert</td>
+                                <td> <span class="badge badge-secondary right" title="candidatures">Ouverte</span></td>
                                 <td>
                                     <div class="btn-group">
                                         {% if recruit.hired == false and recruit.agree == false and recruit.finished == false %}
@@ -134,9 +134,9 @@
                                             </button>
                                         </form>
                                         {% endif %}
-                                        <a href="#help-1" rel="modal:open" class="btn-modal btn-icon-form btn-icon btn-secondary" title="aide">
+                                        {# <a href="#help-1" rel="modal:open" class="btn-modal btn-icon-form btn-icon btn-secondary" title="aide">
                                             <i class="fas fa-question-circle"></i>
-                                        </a>
+                                        </a> #}
                                     </div>
                                 </td>
                             </tr>
@@ -175,7 +175,13 @@
                     <tr>
                         <td><a href="{{ path('show_student_applied', {id:process.student.id, school:school.id, study:study.id}) }}">{{ process.student.Name }} {{ process.student.lastName }}</a></td>
                         <td>Le {{ process.dateRecruit|date("d/m/Y à g\\hi") }}</td>
-                        <td>Ouvert</td>
+                        <td>
+                            {% if process.hired == true %}
+                            <span class="badge bg-warning">En attente de validation</span>
+                            {% elseif process.agree == true %}
+                            <span class="badge bg-info">A Finaliser</span>
+                            {% endif %}
+                        </td>
                         <td>
                             <div class="btn-group">
                                 {% if process.hired == true %}
@@ -219,8 +225,8 @@
                             <tr>
                             <tr>
                                 <th>Nom</th>
-                                <th>Etat</th>
                                 <th>Date</th>
+                                <th>Etat</th>
                                 <th>Actions</th>
                             </tr>
                             </tr>
@@ -231,27 +237,8 @@
                     <tr>
                         <td><a href="{{ path('show_student_applied', {id:finished.student.id, school:school.id, study:study.id}) }}">{{ finished.student.Name }} {{ finished.student.lastName }}</a></td>
                         <td>Le {{ finished.dateFinished|date("d/m/Y à g\\hi") }}</td>
-                        <td>Ouvert</td>
-                        <td>
-                            <div class="btn-group">
-                                {# {% if finished.hired == true %}
-                                <button class="btn-icon-form btn-icon btn-warning" title="En attente d'acceptation de l'étudiant">
-                                    <i class="fas fa-hourglass-start"></i>
-                                </button>
-                                {% elseif finished.agree == true %}
-                                <form method="post" class="btn-icon-form" action="{{ path('recruit_finish', { id:finished.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir finaliser l\'inscription ?');">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('finish' ~ finished.id) }}">
-                                    <button class="btn btn-success btn-sm">
-                                        <i class="fas fa-user-check" title="Embaucher"></i>
-                                        Recruter
-                                    </button>
-                                </form>
-                                {% endif %} #}
-                                {# <a href="#help-1" rel="modal:open" class="btn-modal btn-icon-form btn-icon btn-secondary" title="aide">
-                                    <i class="fas fa-question-circle"></i>
-                                </a> #}
-                            </div>
-                        </td>
+                        <td><span class="badge bg-success">Terminée</span></td>
+                        <td></td>
                     </tr>
                     {% endfor %}
     
