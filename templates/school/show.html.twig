@@ -239,12 +239,32 @@
                         <tr>
                             <td><a href="{{ path('school_studies_show', {'id': studies.id, school_id: studies.school.id }) }}">{{ studies.title }}</a></td>
                             <td>
-                                {% if agree | length == 0 %}
-                                    {% if hired | length == 0 %}
+                                {% set hiredVar = [] %}
+                                {% set agreeVar = [] %}
+                                {% for studies in studies.recruits %}
+                                    {# hired #}
+                                    {% if studies.hired == true %}
+                                    {% set hiredVar = agreeVar|merge([{ agreeVar: studies }]) %}
+                                    {% endif %}
+                                    {# agree #}
+                                    {% if studies.agree == true %}
+                                    {% set agreeVar = agreeVar|merge([{ agreeVar: studies }]) %}
+                                    {% endif %}
+                                    {# confirmed #}
+                                    {# {% if study.finished == true %}
+                                    {% set finished = finished|merge([{ finished: study }]) %}
+                                    {% endif %} #}
+                                {% endfor %}
+                                {% if agreeVar | length == 0 %}
+                                    {% if hiredVar | length == 0 %}
                                         {% if studies.recruits | length == 0 or finishedVar is defined and studies.recruits | length == finishedVar | length %}
                                             <span class="badge badge-secondary right" title="candidatures">Ouvert</span>
-                                        {% elseif finished is defined %}
-                                        <span class="badge badge-primary right" title="candidatures">Candidats : {{ studies.recruits | length - finished | length }} </span>
+                                        {% else %}
+                                            {% if finished is defined %}
+                                            <span class="badge badge-primary right" title="candidatures">Candidats : {{ studies.recruits | length - finished | length }} </span>
+                                            {% else %}
+                                            <span class="badge badge-primary right" title="candidatures">Candidats : {{ studies.recruits | length }} </span>
+                                            {% endif %}
                                         {% endif %}
                                     {% else %}
                                     <span class="badge badge-warning right" title="candidatures">En Attente</span>
