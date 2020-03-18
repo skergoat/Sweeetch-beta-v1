@@ -241,9 +241,9 @@
                             <td>
                                 {% if agree | length == 0 %}
                                     {% if hired | length == 0 %}
-                                        {% if studies.recruits | length == 0 or studies.recruits | length == finishedVar | length %}
-                                        <span class="badge badge-secondary right" title="candidatures">Ouvert</span>
-                                        {% else %}
+                                        {% if studies.recruits | length == 0 or finishedVar is defined and studies.recruits | length == finishedVar | length %}
+                                            <span class="badge badge-secondary right" title="candidatures">Ouvert</span>
+                                        {% elseif finished is defined %}
                                         <span class="badge badge-primary right" title="candidatures">Candidats : {{ studies.recruits | length - finished | length }} </span>
                                         {% endif %}
                                     {% else %}

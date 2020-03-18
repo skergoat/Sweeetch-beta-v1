@@ -128,7 +128,7 @@ class StudiesRenderController extends AbstractController
 
     /**
     * @Route("/show/hired/{id}/student/{student}", name="show_student_hired", methods={"GET"})
-    * @IsGranted("ROLE_STUDENT_HIRED")
+    * @IsGranted("ROLE_SUPER_STUDENT")
     * @ParamConverter("student", options={"id" = "student"})
     */
     public function showHired(Studies $studies, Student $student, ApplyRepository $applyRepository, RecruitRepository $recruitRepository)
