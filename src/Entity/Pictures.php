@@ -41,6 +41,11 @@ class Pictures
      */
     private $school;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Student", mappedBy="pictures", cascade={"persist", "remove"})
+     */
+    private $student;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -113,6 +118,24 @@ class Pictures
         $newPictures = null === $school ? null : $this;
         if ($school->getPictures() !== $newPictures) {
             $school->setPictures($newPictures);
+        }
+
+        return $this;
+    }
+
+    public function getStudent(): ?Student
+    {
+        return $this->student;
+    }
+
+    public function setStudent(?Student $student): self
+    {
+        $this->student = $student;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newPictures = null === $student ? null : $this;
+        if ($student->getPictures() !== $newPictures) {
+            $student->setPictures($newPictures);
         }
 
         return $this;
