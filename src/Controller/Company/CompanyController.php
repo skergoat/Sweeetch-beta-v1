@@ -97,7 +97,7 @@ class CompanyController extends AbstractController
         if($checker->companyValid($company)) {
             // get company offers 
             $offers = $offersRepository->findBy(['company' => $company]);
-             // get finished or confirmed applies 
+            // get finished or confirmed applies 
             $array = $helper->findByOffersFinished($offers);
 
             return $this->render('company/show.html.twig', [

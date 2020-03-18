@@ -4,25 +4,18 @@
 
 {% block body %}
 
-{# <div id="info-1" class="modal">
+<div id="info-1" class="modal">
     <div class="container" style="text-align:justify;">
         <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">Bienvenue sur votre tableau de bord !</p><br><br>
-        <p> Le tableau 
-            <span style="color:#4c4c4c !important;font-weight:900;">Candidats</span>
-            Contient la liste de toutes les personnes qui ont postulées à une de vos annonces. 
+        <p> La carte 
+            <span style="color:#4c4c4c !important;font-weight:900;">Infos du Compte </span>
+            contient les infos que vous avez renseignées lors de votre inscription.  
         </p>
+        <p>Vous pouvez les mettre à jour dans l'onglet "Infos du compte" de la barre lattérale. </p>
+        <p> Dans cet onglet vous changerez aussi vos mots de passe ou téléchargerez votre photo de profil.</p>
         <p> 
-            Votre mission : <span style="font-weight:900;">accepter ou refuser les candidats ! </span>
+            <span style="font-weight:900;">Bonne prise en main !</span> 
         </p>
-        <p> 
-            Pour cela : 
-            <ul>
-                <li>allez dans l'onglet "Annonces" de la barre lattérale</li><br>
-                <li>Cliquez sur l'annonce de votre choix pour voir apparaitre les candidats</li><br>
-                <li>Cliquez ensuite sur ... ou ...</li><br>
-            </ul>
-        </p>
-        <span style="font-weight:900;">Merci !</span> 
     </div> 
 </div>
 
@@ -30,18 +23,11 @@
     <div class="container" style="text-align:justify;">
         <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">Bienvenue sur votre tableau de bord !</p><br><br>
         <p> Le tableau 
-            <span style="color:#4c4c4c !important;font-weight:900;">Recrutements en cours </span>
-            Contient la liste des candidats que vous êtes en train de recruter.  
+            <span style="color:#4c4c4c !important;font-weight:900;">En Attente d'Acceptation</span>
+            contient la liste des candidats que vous souhaitez recruter et qui doivent accepter votre demande.  
         </p>
-        <p>Concrètement cela veut dire que vous en êtes à la signature des contrats. C'est une excellente nouvelle ! </p>
-        <p> 
-            Dès que les contrats sont signés, pensez a : 
-            <ul>
-                <li>vous rendre dans l'onglet "Annonces"</li>
-                <li>sélectionner l'annonce sur laquelle vous venez de signer le contrat</li>
-                <li>cliquer sur ... pour indiquer que le recrutement est terminé</li>
-            </ul>
-
+        <p>Prenez patience car la procédure d'inscription n'est pas loin !</p>
+        <p>
             <span style="font-weight:900;">Merci !</span> 
         </p>
     </div> 
@@ -50,29 +36,45 @@
 <div id="info-3" class="modal">
     <div class="container" style="text-align:justify;">
         <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">Bienvenue sur votre tableau de bord !</p><br><br>
-        <p> La carte 
-            <span style="color:#4c4c4c !important;font-weight:900;">Infos du Compte </span>
-            contient les infos que vous avez renseignées lors de votre inscription.  
+        <p> Le tableau 
+            <span style="color:#4c4c4c !important;font-weight:900;">Recrutements en cours </span>
+            contient la liste des candidats que vous êtes en train de recruter.  
         </p>
-        <p>Vous pouvez les mettre à jour dans l'onglet "Infos du Compte" de la barre lattérale. </p>
-        <p> Dans cet onglet vous changerez aussi vos mots de passe ou téléchargerez votre photo de profil.</p>
+        <p>Concrètement cela veut dire que vous en êtes à la procédure d'inscription. C'est une excellente nouvelle ! </p>
         <p> 
-            <span style="font-weight:900;">Bonne prise en main !</span> 
+            Dès que l'inscription est terminées, pensez à : 
+            <ul>
+                <li>vous rendre dans l'onglet "Cursus"</li>
+                <li>sélectionner le cursus sur lequel vous venez de recruter</li>
+                <li>cliquer sur <button class="btn btn-info btn-sm"><i class="far fa-stop-circle"></i> Finaliser l'inscription</button> et indiquer qu'elle est terminée</li>
+            </ul>
+
+            <span style="font-weight:900;">Merci !</span> 
         </p>
     </div> 
-</div>
+</div> 
 
 <div id="info-4" class="modal">
     <div class="container" style="text-align:justify;">
         <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">Bienvenue sur votre tableau de bord !</p><br><br>
         <p> Le tableau 
-            <span style="color:#4c4c4c !important;font-weight:900;">En Attente d'Acceptation</span>
-            Contient la liste des candidats que vous souhaitez recruter et qui doivent accepter votre demande.  
+            <span style="color:#4c4c4c !important;font-weight:900;">Candidats</span>
+            contient la liste de toutes les personnes qui ont postulées à un de vos cursus. 
         </p>
-        <p>Prenez patience car la signature du contrat n'est pas loin !</p>
-        <p>
-            <span style="font-weight:900;">Merci !</span> 
+        <p> 
+            Votre mission : <span style="font-weight:900;">accepter ou refuser les candidats ! </span>
         </p>
+        <p> 
+            Pour cela : 
+            <ul>
+                <li>allez dans l'onglet "Cursus" de la barre lattérale</li><br>
+                <li>Cliquez sur l'annonce de votre choix pour voir apparaitre les candidats</li><br>
+                <li>Cliquez ensuite sur <button class="btn btn-success btn-sm"><i class="fas fa-user-check" title="Embaucher"></i> 
+                Recruter</button> ou 
+                <button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button></li><br>
+            </ul>
+        </p>
+        <span style="font-weight:900;">Merci !</span> 
     </div> 
 </div>
 
@@ -80,15 +82,15 @@
     <div class="container" style="text-align:justify;">
         <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">Bienvenue sur votre tableau de bord !</p><br><br>
         <p> Le tableau 
-            <span style="color:#4c4c4c !important;font-weight:900;">Recrutements terminés</span>
-            Contient la liste des candidats que vous avez recrutés.  
+            <span style="color:#4c4c4c !important;font-weight:900;">Vos Cursus</span>
+            contient la liste des cursus ainsi que l'état des inscriptions sur chaque cursus.  
         </p>
-        <p>C'est un peu comme la mémoire de votre activité sur Sweeetch... <a href="">#nostalgie</a></p>
+        <p>Cliquez sur le nom d'un crusus pour vous rendre sur sa page et commencer à gérer les candidats</p>
         <p>
-            <span style="font-weight:900;">En espérant vous apporter satisfaction !</span> 
+            <span style="font-weight:900;">Merci !</span> 
         </p>
     </div> 
-</div> #}
+</div>
 
 <div class="row" style="margin-bottom:50px;">
 
@@ -142,8 +144,8 @@
                 
                 <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
                     Infos du compte
-                    <a href="#info-3" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
-                    <i class="fas fa-question-circle"></i>
+                    <a href="#info-1" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                        <i class="fas fa-question-circle"></i>
                     </a>
                 </p>
 
@@ -212,7 +214,7 @@
                 
                 <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
                     Vos Cursus
-                    <a href="#info-4" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                    <a href="#info-5" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
                     <i class="fas fa-question-circle"></i>
                     </a>
                 </p>
@@ -235,7 +237,7 @@
                     <tbody>
                         {% for studies in studies %}
                         <tr>
-                            <td>{{ studies.id }}</td>
+                            <td><a href="{{ path('school_studies_show', {'id': studies.id, school_id: studies.school.id }) }}">{{ studies.title }}</a></td>
                             <td>
                                 {% if agree | length == 0 %}
                                     {% if hired | length == 0 %}
@@ -271,7 +273,7 @@
                     <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
                         <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
                             1. Candidats 
-                            <a href="#info-1" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                            <a href="#info-4" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
                             <i class="fas fa-question-circle"></i>
                             </a>
                         </p>
@@ -314,7 +316,7 @@
                     <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
                         <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
                             3. Recrutements en cours 
-                            <a href="#info-2" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                            <a href="#info-3" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
                             <i class="fas fa-question-circle"></i>
                             </a>
                         </p>
@@ -365,7 +367,7 @@
                         
                         <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
                             2. En Attente d'Acceptation
-                            <a href="#info-4" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                            <a href="#info-2" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
                             <i class="fas fa-question-circle"></i>
                             </a>
                         </p>
