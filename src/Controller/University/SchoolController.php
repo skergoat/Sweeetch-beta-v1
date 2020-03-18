@@ -5,14 +5,16 @@ namespace App\Controller\University;
 use App\Entity\User;
 use App\Entity\School;
 use App\Entity\Student;
+use App\Entity\Pictures;
 use App\Form\SchoolType;
 use App\Form\UpdateSchoolType;
+use App\Service\UploaderHelper;
 use App\Repository\UserRepository;
 use App\Service\Mailer\UserMailer;
 use App\Repository\ApplyRepository;
+// use App\Service\Mailer\ForgottenMailer;
 use App\Form\SchoolEditPasswordType;
 use App\Repository\SchoolRepository;
-// use App\Service\Mailer\ForgottenMailer;
 use App\Repository\RecruitRepository;
 use App\Repository\StudiesRepository;
 use App\Service\UserChecker\AdminChecker;
@@ -123,7 +125,7 @@ class SchoolController extends AbstractController
      * @Route("/{id}/edit", name="school_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_SCHOOL")
      */
-    public function edit(Request $request, School $school, UserPasswordEncoderInterface $passwordEncoder, SchoolChecker $checker): Response
+    public function edit(Request $request, School $school, UserPasswordEncoderInterface $passwordEncoder, UploaderHelper $uploaderHelper, SchoolChecker $checker): Response
     {
         if ($checker->schoolValid($school)) {
 
@@ -146,6 +148,25 @@ class SchoolController extends AbstractController
                         $user->getPassword()
                     ));
                 }
+
+                $uploadedFile = $form['pictures']->getData();
+
+                if($uploadedFile) {
+
+                    if($school->getPictures() != null) {
+                        $newFilename = $uploaderHelper->uploadFile($uploadedFile, $school->getPictures()->getFileName());
+                    }
+                    else {
+                        $newFilename = $uploaderHelper->uploadFile($uploadedFile, null);
+                    }
+
+                    $document = new Pictures;
+                    $document->setFileName($newFilename);
+                    $document->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $newFilename);
+                    $document->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');                    
+                }
+
+                $school->setPictures($document);
 
                 $this->getDoctrine()->getManager()->flush();
                 $this->addFlash('success', 'Mise à jour réussie');

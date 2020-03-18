@@ -135,6 +135,11 @@ class School
      */
     private $studies;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Pictures", inversedBy="school", cascade={"persist", "remove"})
+     */
+    private $pictures;
+
 
     public function __construct()
     {
@@ -281,6 +286,18 @@ class School
                 $study->setSchool(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPictures(): ?Pictures
+    {
+        return $this->pictures;
+    }
+
+    public function setPictures(?Pictures $pictures): self
+    {
+        $this->pictures = $pictures;
 
         return $this;
     }
