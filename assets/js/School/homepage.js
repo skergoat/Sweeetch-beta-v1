@@ -20,4 +20,15 @@ import './components/edit.js';
 import './components/edit-profile.js';
 import './components/message.js';
 import './components/button_disabled.js';
+import './components/table.js';
+import './components/file.js';
 
+tinymce.init({
+    selector: 'textarea'
+});
+
+$(document).ready(function() {
+    $('.js-datepicker').datepicker({
+        format: 'dd-mm-yyyy'
+    });
+});
