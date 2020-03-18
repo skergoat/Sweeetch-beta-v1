@@ -32,9 +32,7 @@ class FrontController extends AbstractController
     {
         return $this->render("Front/conditions.html.twig");
     }
-
-
-
+    
      /**
      * @Route("/faq", name="faq")
      */
@@ -42,15 +40,6 @@ class FrontController extends AbstractController
     {
         return $this->render("Front/Faq.html.twig");
     }
-
-    //  /**
-    //  * @Route("/confidentialite", name="confidentialite")
-    //  */
-    // public function confidentialite()
-    // {
-    //     return $this->render("Front/confidentialite.html.twig");
-    // }
-
 
     /**
      * @Route("/contact", name="contact")
@@ -66,24 +55,6 @@ class FrontController extends AbstractController
 
         return new Response('OK');
     }
-
-    //  /**
-    //  * @Route("/invite", name="invite")
-    //  * @IsGranted("ROLE_ADMIN")
-    //  */
-    // public function invitation(InvitationRepository $repository,  InviteMailer $mailer) 
-    // {
-    //     $mail = $repository->findAll();
-
-    //     foreach($mail as $mail)
-    //     {
-    //         $mailer->invite($mail->getEmails());
-    //     }
-
-    //     $this->addFlash('success', 'Invitations envoyées');
-
-    //     return $this->redirectToRoute('admin');
-    // }
 
      /**
      * @Route("/invite", name="invite")

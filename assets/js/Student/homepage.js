@@ -37,5 +37,11 @@ import './component/buttons.js';
 import './component/edit.js';
 import './component/message.js';
 import './component/button_disabled.js';
+import './component/file.js';
+import './component/table.js';
 
-
+// $(document).ready(function() {
+//     $('.js-datepicker').datepicker({
+//         format: 'dd-mm-yyyy'
+//     });
+// });
