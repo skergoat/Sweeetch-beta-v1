@@ -36,6 +36,11 @@ class Pictures
      */
     private $mimeType;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\School", mappedBy="pictures", cascade={"persist", "remove"})
+     */
+    private $school;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -91,6 +96,24 @@ class Pictures
     public function setMimeType(string $mimeType): self
     {
         $this->mimeType = $mimeType;
+
+        return $this;
+    }
+
+    public function getSchool(): ?School
+    {
+        return $this->school;
+    }
+
+    public function setSchool(?School $school): self
+    {
+        $this->school = $school;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newPictures = null === $school ? null : $this;
+        if ($school->getPictures() !== $newPictures) {
+            $school->setPictures($newPictures);
+        }
 
         return $this;
     }

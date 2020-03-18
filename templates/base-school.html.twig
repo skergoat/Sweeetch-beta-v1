@@ -50,7 +50,7 @@
                     </li>
                     
                     {% if is_granted('ROLE_ADMIN') %}
-
+                    
                     <li class="nav-item d-none d-sm-inline-block" >
                         <a class="nav-link" href="{{ path('admin') }}"> Retour à l'admin </a>
                     </li>
@@ -75,8 +75,17 @@
                         <!-- <div class="image">
                           <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                         </div> -->
+                        {% if school.pictures.fileName is defined %}
+                        <div class="image">
+                          <img src="{{ uploaded_asset(school.pictures.fileName) }}" class="elevation-2" alt="User Image">
+                        </div>
+                        {% else %}
+                        <div>
+                            <img src="https://via.placeholder.com/50" />                        
+                        </div>
+                        {% endif %}
                         <div class="info">
-                          <a href="{{ path('company_show', {'id' : school.id }) }}" class="d-block">{{ app.user.email }}</a>
+                          <a href="{{ path('school_show', {'id' : school.id }) }}" class="d-block">{{ app.user.email }}</a>
                         </div>
                     </div>
 
@@ -211,6 +220,19 @@
                     selector: 'textarea'
                 });
             </script> 
+
+            <script>
+            $('.browse').click(function() {
+                var id = $(this).attr('data-url');
+                $('#' + id).click();
+
+                $('#' + id).change(function(e){
+                    var fileName = e.target.files[0].name;
+
+                    $('#browse-' + id).text(fileName);
+                });   
+            });   
+            </script>
 
             <script>
                 $(document).ready(function() {
