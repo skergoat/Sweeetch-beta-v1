@@ -3,6 +3,30 @@
 {% block title %} {{ parent() }} - Ecoles {% endblock %}
 {% block body %}
 
+<div id="help-1" class="modal">
+    <div class="container" style="text-align:justify;">
+  
+        <p><strong>L'Etat</strong> correspond à l'état du recrutement : </p>
+        <ul style="list-style-type:none;display:flex;">
+          <li style="margin-left:5px;"><span class="badge bg-secondary">Ouvert</span></li>
+          <li style="margin-left:5px;"><span class="badge bg-primary">Candidats : 1</span></li>
+          <li style="margin-left:5px;"><span class="badge bg-warning">En Attente</span></li>
+          <li style="margin-left:5px;"><span class="badge bg-info">A Confirmer</span></li>
+        </ul><br>
+        <ul>
+          <li><span class="badge bg-secondary">Ouvert</span> signifie que personne n'est encore recruté sur cette annonce et que les candidats peuvent postuler</li><br>
+          <li><span class="badge bg-primary">Candidats : 1</span> vous indique qu'il y a des candidats pour votre annonce et combien ils sont</li><br>
+          <li><span class="badge bg-warning">En Attente</span> signifie que vous avez recruté un candidat sur cette mission et qu'il doit maintenant accepter ou refuser</li><br>
+          <li><span class="badge bg-info">A Confirmer</span> signifie que l'élève a accepté votre offre et que le temps des inscriptions est maintenant venu !</li><br>
+        </ul>
+  
+        <p>Une fois l'inscription confirmée, elle est immediatement marqué comme "terminée" et consultable en bas de page</p><br>
+      
+        <p style="font-weight:900;">Bon Travail !</p>
+  
+    </div> 
+</div>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-6">
@@ -92,9 +116,9 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title" style="font-weight:900;font-size:22px;">Candidatures</h3>
-                    {# <a href="#help-1" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
+                    <a href="#help-1" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
                         <i class="fas fa-question-circle"></i>
-                    </a> #}
+                    </a>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
