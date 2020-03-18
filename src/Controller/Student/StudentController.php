@@ -7,6 +7,7 @@ use App\Entity\IdCard;
 use App\Entity\Resume;
 use App\Entity\Profile;
 use App\Entity\Student;
+use App\Entity\Pictures;
 use App\Form\StudentType;
 use App\Entity\StudentCard;
 use App\Entity\ProofHabitation;
@@ -182,6 +183,24 @@ class StudentController extends AbstractController
             if ($form->isSubmitted() && $form->isValid() || $formPassword->isSubmitted() && $formPassword->isValid() || $formDoc->isSubmitted() && $formDoc->isValid()) {
 
                 $student = $form->getData();
+
+                $uploadedFile = $form['pictures']->getData();
+
+                if($uploadedFile) {
+
+                    if($student->getPictures() != null) {
+                        $newFilename = $uploaderHelper->uploadFile($uploadedFile, $student->getPictures()->getFileName());
+                    }
+                    else {
+                        $newFilename = $uploaderHelper->uploadFile($uploadedFile, null);
+                    }
+
+                    $document = new Pictures;
+                    $document->setFileName($newFilename);
+                    $document->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $newFilename);
+                    $document->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream'); 
+                    $student->setPictures($document);                   
+                }
 
                 // get uploaded files name 
                 if($request->files->get('update_student_doc') != null) {

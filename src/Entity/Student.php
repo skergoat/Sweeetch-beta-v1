@@ -87,7 +87,7 @@ class Student
      * )
      * @Assert\NotBlank(message="Champ requis")
      * @Assert\Regex(
-     *     pattern="/^0[1-68]([-. ]?[0-9]{2}){4}$/",
+     *     pattern="/^0[1-9]([-. ]?[0-9]{2}){4}$/",
      *     message="Entrez un numéro valide svp"
      * )
      */
@@ -161,6 +161,11 @@ class Student
      * @ORM\OneToMany(targetEntity="App\Entity\Recruit", mappedBy="student", orphanRemoval=true)
      */
     private $recruits;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Pictures", inversedBy="student", cascade={"persist", "remove"})
+     */
+    private $pictures;
 
 
     public function __construct()
@@ -408,6 +413,18 @@ class Student
                 $recruit->setStudent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPictures(): ?Pictures
+    {
+        return $this->pictures;
+    }
+
+    public function setPictures(?Pictures $pictures): self
+    {
+        $this->pictures = $pictures;
 
         return $this;
     }

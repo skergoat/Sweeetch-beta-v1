@@ -163,10 +163,9 @@ class SchoolController extends AbstractController
                     $document = new Pictures;
                     $document->setFileName($newFilename);
                     $document->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $newFilename);
-                    $document->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');                    
+                    $document->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream'); 
+                    $school->setPictures($document);                   
                 }
-
-                $school->setPictures($document);
 
                 $this->getDoctrine()->getManager()->flush();
                 $this->addFlash('success', 'Mise à jour réussie');
