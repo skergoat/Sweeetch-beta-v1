@@ -27,7 +27,7 @@
                     <ul>
                         <li class="active"><a href="/">Acceuil</a></li>
                         {% if page is defined %}
-                        {# <li><a href="{{ path('offers_index', {'page':page}) }}">Emplois</a></li>#}
+                        <li><a href="{{ path('offers_index', {'page':page}) }}">Emplois</a></li>
                         {% else %}
                         <li><a href="{{ path('offers_index', {'page':1}) }}">Emplois</a></li>
                         {% endif %}
@@ -90,7 +90,7 @@
                     <option value="Tourisme">Tourisme, sports & loisirs</option>
                     <option value="Transports">Transports & logistique</option>
                 </select>
-                <input type="hidden" name="_token" value="{{ csrf_token('find' ~ page) }}">
+                <input type="hidden" name="_token" value="{{ csrf_token('find') }}">
             </p>
          </form>
     
