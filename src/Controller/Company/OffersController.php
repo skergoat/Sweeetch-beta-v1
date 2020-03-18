@@ -28,7 +28,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 class OffersController extends AbstractController
 {
     /**
-     * @Route("offers/page/{page<\d+>?1}", name="offers_index", methods={"GET", "POST"})
+     * @Route("offers/page/{page<\d+>?1}", name="offers_index", methods={"GET"})
      */
     public function index(OffersRepository $offersRepository, PaginatorInterface $paginator, Request $request, $page): Response
     {
@@ -59,7 +59,7 @@ class OffersController extends AbstractController
     }
 
      /**
-     * @Route("/find/page/{page<\d+>?1}", name="find", methods={"GET", "POST"})
+     * @Route("/find/page/{page<\d+>?1}", name="find", methods={"GET"})
      */
     public function find(OffersRepository $offersRepository, PaginatorInterface $paginator, Request $request, $page): Response
     {
@@ -69,45 +69,14 @@ class OffersController extends AbstractController
         $pagination = $paginator->paginate(
             $queryBuilder,
             $request->query->getInt('page', $page),
-            1
+            6
         );
 
         return $this->render('offers/find.html.twig', [
-            // 'form' => $form->createView(),
             'offers' => $pagination,
             'page' => $page
         ]);
     }
-    
-    // /**
-    //  * @Route("/find", name="find", methods={"POST"})
-    //  */
-    // public function find(OffersRepository $offersRepository, PaginatorInterface $paginator, Request $request): Response
-    // {
-    //     // dd($request);
-
-    //     // On initialise le formulaire
-    //     $form = $this->createForm(FindOffersType::class);
-    //     // On traite le formulaire
-    //     $form->handleRequest($request);
-
-    //     $domain = $form->getData();
-
-    //     dd($domain);
-
-    //     $queryBuilder = $offersRepository->findBy(['state' => false], ['id' => 'desc']);
-
-    //     $pagination = $paginator->paginate(
-    //         $queryBuilder,
-    //         $request->query->getInt('page', $page),
-    //         6
-    //     );
-
-    //     return $this->render('offers/index.html.twig', [
-    //         'offers' => $pagination,
-    //         'page' => $page
-    //     ]);
-    // }
 
     /**
      * @Route("company/offers/new/{id}", name="offers_new", methods={"GET","POST"})
