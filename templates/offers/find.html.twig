@@ -68,7 +68,7 @@
         </div>
         {% endfor %}
 
-        <form method="post" action="{{ path('find') }}" style="margin:auto;width:300px;">
+        <form method="get" action="{{ path('find') }}" style="margin:auto;width:300px;" id="form-options">
             <p>
                 <div style="display:flex;justify-content:center;align-items:center;">
                     <label style="text-align:center;">Quel est votre domaine ?</label><button class="btn btn-primary" style="margin:10px;"><i class="fa fa-search"></i></button>
@@ -90,7 +90,7 @@
                     <option value="Tourisme">Tourisme, sports & loisirs</option>
                     <option value="Transports">Transports & logistique</option>
                 </select>
-                <input type="hidden" name="_token" value="{{ csrf_token('find') }}">
+                <input type="hidden" name="_token" value="{{ csrf_token('find' ~ page) }}">
             </p>
          </form>
     
