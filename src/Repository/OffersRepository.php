@@ -28,16 +28,6 @@ class OffersRepository extends ServiceEntityRepository
         ->getOneOrNullResult();
     }
 
-    // public function findAllPaginatedAndOpen($order = "DESC") 
-    // {
-    //     return $this->createQueryBuilder('p')
-    //     ->andWhere('p.state = :state')
-    //     ->setParameter('state', false)
-    //     ->orderBy('p.id', $order)
-    //     ->getQuery()
-    //     ->getResult();
-    // }
-
     public function findAllPaginated($order = "DESC")
     {
         return $this->createQueryBuilder('p')
@@ -46,13 +36,4 @@ class OffersRepository extends ServiceEntityRepository
         ->getResult();
     }
 
-    // public function findAllPaginatedByCompany($order = "DESC", $company)
-    // {
-    //     return $this->createQueryBuilder('p')
-    //     ->andWhere('p.company = :company')
-    //     ->setParameter('company', $company)
-    //     ->orderBy('p.id', $order)
-    //     ->getQuery()
-    //     ->getResult();
-    // }
 }
