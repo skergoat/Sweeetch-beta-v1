@@ -27,6 +27,14 @@ import 'animate.css';
 // main scripts 
 import './components/contactform.js';
 import './components/message.js';
+import './components/find.js';
+import './components/page.js';
+import './components/success.js';
+import './components/file.js';
+
+$(document).scroll(function() {
+    $('#header.header-scrolled').css({'padding':'5px 0', 'height':'90px'});
+});
 
 // url = window.location.pathname;
 
