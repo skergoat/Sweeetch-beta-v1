@@ -75,7 +75,7 @@ class StudentController extends AbstractController
     /**
      * @Route("/new/", name="student_new", methods={"GET","POST"})
      */
-    public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder, UploaderHelper $uploaderHelper, ValidatorInterface $validator, UserMailer $mailer): Response
+    public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder, UploaderHelper $uploaderHelper, ValidatorInterface $validator, UserRepository $userRepository, UserMailer $mailer): Response
     {
         $student = new Student();
         $form = $this->createForm(StudentType::class, $student);
@@ -123,6 +123,13 @@ class StudentController extends AbstractController
             $user->setActivateToken(md5(uniqid()));
             // On génère l'e-mail
             $mailer->sendActivate($user);
+
+            // send notif to admins 
+            $admins = $userRepository->findByAdmin("ROLE_ADMIN");
+
+            foreach($admins as $admins) {
+                $mailer->sendNewUser($admins, $student);
+            }
 
             // create empty profile 
             $profile = new Profile;

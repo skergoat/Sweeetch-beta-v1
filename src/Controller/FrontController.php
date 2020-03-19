@@ -55,19 +55,4 @@ class FrontController extends AbstractController
 
         return new Response('OK');
     }
-
-     /**
-     * @Route("/invite", name="invite")
-     * @IsGranted("ROLE_ADMIN")
-     */
-    public function invite(MessageBusInterface $bus, InviteMailer $mailer)
-    {
-        // or use the shortcut
-        // $this->dispatchMessage(new SendInviteMail('sfsfsdfs'));
-        $mailer->invite('infos-dev@sweeetch.com');
-
-        $this->addFlash('success', 'Invitations envoyées');
-
-        return $this->redirectToRoute('admin');
-    }
 }

@@ -22,6 +22,20 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         parent::__construct($registry, User::class);
     }
 
+    public function findByAdmin($role) {
+
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('u')
+                ->from($this->_entityName, 'u')
+                ->where('u.roles LIKE :roles')
+                ->andWhere('u.confirmed = :confirmed')
+                ->setParameter('roles', '%"' . $role . '"%')
+                ->setParameter('confirmed', true)
+                ->orderBy('u.id', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function findByRole($role) {
 
         $qb = $this->_em->createQueryBuilder();
