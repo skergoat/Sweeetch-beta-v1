@@ -30,4 +30,19 @@ class Mailer
         
         $this->mailer->send($mail);
     }
+
+    public function sendConfirmed($email, $firstName, $lastName)
+    {
+        $mail = (new TemplatedEmail())
+            ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
+            ->to(new Address($email))
+            ->subject('Problems with docs')
+            ->htmlTemplate('email/confirmed.html.twig')
+            ->context([
+                'firstName' => $firstName,
+                'lastName' => $lastName
+            ]); 
+        
+        $this->mailer->send($mail);
+    }
 }

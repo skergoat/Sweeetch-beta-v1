@@ -195,7 +195,7 @@ class SchoolController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$school->getId(), $request->request->get('_token'))) {
             // handle recruit 
-            $helper->handleDeleteCompany($school);
+            $helper->handleDeleteSchool($school);
             // delete session
             $currentUserId = $this->getUser()->getId();
             if ($currentUserId == $school->getUser()->getId())

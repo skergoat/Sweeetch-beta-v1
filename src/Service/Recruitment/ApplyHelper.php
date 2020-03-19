@@ -30,11 +30,6 @@ class ApplyHelper extends CommonHelper
         return $this->applyRepository->findBy([$key => $param, 'hired' => 1]);
     }
 
-    // public function checkWait($key, $param)
-    // {
-    //     return $this->applyRepository->findBy([$key => $param, 'wait' => 1]);
-    // }
-
     public function checkAgree($key, $param)
     {
         return $this->applyRepository->findBy([$key => $param, 'agree' => 1]);
@@ -135,15 +130,28 @@ class ApplyHelper extends CommonHelper
         // hire
         $this->setHire($apply);
         // close offer 
-        $offers->setState(true); 
+        $offers->setState(true);
         // send notification
-        $this->mailer->sendHireNotification($apply);
+        $content = "<p>Bonne nouvelle ! Vous avez été sélectionné pour l'offre : <strong>".$offers->getTitle()."</strong>.</p><br><p>Nous vous invitons à accepter ou refuser l'embauche.</p><br>";
+        // $this->mailer->sendHireNotification($apply, $content);
+        $this->mailer->sendAppliesNotification(
+            $apply->getStudent()->getUser()->getEmail(), 
+            $apply->getStudent()->getName(),
+            $content
+        );
         // delete other applies
         $others = $this->applyRepository->getOtherApplies($student->getId(), $offers->getId());
         if($others) {
             foreach($others as $others) {
                 // send notification
-                $this->mailer->sendOtherNotification($others);
+                $content = " <p>La mission <strong>".$offers->getTitle()."</strong> a laquelle vous aviez postulé, a été attribuée à quelqu'un d'autre.</p><br>
+                <p>Ne vous decouragez pas et continuez vos recherches, vous trouverez forcément quelque chose !</p><br>";
+                // $this->mailer->sendOtherNotification($others);
+                $this->mailer->sendAppliesNotification(
+                    $others->getStudent()->getUser()->getEmail(), 
+                    $others->getStudent()->getName(),
+                    $content
+                );
                 // delete other applies 
                 $this->manager->remove($others);   
             }   
@@ -155,7 +163,12 @@ class ApplyHelper extends CommonHelper
          // agree
          $this->setAgree($apply);
          // send notification
-         $this->mailer->sendAgreeNotification($student, $offers);
+         $content = "<p>L'Etudiant à qui vous avez proposé l'offre : <strong> ".$offers->getTitle()."</strong> vient de l'accepter.</p><br><p>Nous vous invitons à prendre contact avec lui au plus vite pour signer les contrats d'embauche.</p><br>";
+         $this->mailer->sendAppliesNotification(
+            $offers->getCompany()->getUser()->getEmail(),
+            $student->getName(), 
+            $content
+        );
          // set to unavailable
          $this->unavailables($offers, $student);
     }
@@ -165,7 +178,13 @@ class ApplyHelper extends CommonHelper
         // confirm
         $this->setConfirm($apply);
         // send notification
-        $this->mailer->sendConfirmNotification($student, $offers);
+        $content = '<p>Bonne nouvelle ! L\'entreprise <strong>'.$offers->getCompany()->getCompanyName().'</strong> a confirmé vous avoir recruté sur l\'offre <strong>'.$offers->getTitle().'</strong>.</p><br><p>Vous pouvez désormais chercher une école en cliquant sur l\'onglet "Formations" de votre compte Sweeetch.</p><br>';
+        // $this->mailer->sendConfirmNotification($student, $offers, $content);
+        $this->mailer->sendAppliesNotification(
+            $student->getUser()->getEmail(),
+            $student->getName(), 
+            $content
+        );
         // set roles
         $student->getUser()->setRoles(['ROLE_STUDENT_HIRED']);
     }
@@ -204,21 +223,33 @@ class ApplyHelper extends CommonHelper
          // close offer 
         //  $offers->setState(false);
          // send notification
-         $this->mailer->sendRefuseNotification($student, $offers);
+         $content = "<p>Vous aviez postulé sur l'offre : <strong>".$offers->getTitle()."</strong></p>
+         <p>Malheureusement l'entreprise n'a pas donné suite à votre demande.</p><br>
+         <p>Ne vous découragez pas et continuez votre recherche : vous finirez bien par trouver quelque chose !</p><br>";
+        //  $this->mailer->sendRefuseNotification($student, $offers, $content);
+        $this->mailer->sendAppliesNotification(
+            $student->getUser()->getEmail(),
+            $student->getName(), 
+            $content
+        );
          // set to available
          // $helper->available($offers, $student);
     }
 
-    public function delete(Apply $apply, Student $student, Offers $offers)
+    public function delete(Apply $apply, Student $student, ?Offers $offers)
     {
         // close offer 
-        $offers->setState(false);
-        // set to available
-        // $helper->available($offers, $student);
-        // send notification
-        $this->mailer->sendDeleteNotification($offers);
+        if($offers != null) {
+            $offers->setState(false);
+            $content = "<p>L'Etudiant que vous aviez sélectionné sur l'offre : <strong>".$offers->getTitle()."</strong> n'a pas donné suite.</p><br><p>Ne vous découragez pas et continuez votre recherche : vous finirez bien par trouver quelqu'un !</p><br>";
+            // $this->mailer->sendDeleteNotification($offers, $content);
+            $this->mailer->sendAppliesNotification(
+                $offers->getCompany()->getUser()->getEmail(),
+                $offers->getCompany()->getFirstName(), 
+                $content
+            );
+        }    
     }
-
 
     // when delete offers 
     public function handleOffersApplies(Offers $offers)
@@ -232,7 +263,13 @@ class ApplyHelper extends CommonHelper
             // set to available
             $this->available($offers, $student);
             // send mail 
-            $this->mailer->sendDeleteOffersCompanyMessage($student, $offers);
+            $content = "<p>Malheureusement l'offre <strong>".$offers->getTitle()."</strong> à laquelle vous aviez postulé a été supprimée par l'entreprise qui l'avait publiée.</p><br><p>Ne vous découragez pas et continuez votre recherche : vous finirez bien par trouver quelque chose !</p><br>";
+            // $this->mailer->sendDeleteOffersCompanyMessage($student, $offers, $content);
+            $this->mailer->sendAppliesNotification(
+                $student->getUser()->getEmail(),
+                $student->getName(), 
+                $content
+            );
             // remove unfinished applies and set offers_id to null
             if($applies->getFinished() == false) {
                 $this->manager->remove($applies);
@@ -255,7 +292,13 @@ class ApplyHelper extends CommonHelper
             foreach($applies as $applies) {
                 $student = $applies->getStudent();
                 // send mail 
-                $this->mailer->sendDeleteCompanyMessage($student, $offers);
+                $content = "<p>Malheureusement l'offre <strong>".$offers->getTitle()."</strong> à laquelle vous aviez postulé a été supprimée par l'entreprise qui l'avait publiée.</p><br><p>Ne vous découragez pas et continuez votre recherche : vous finirez bien par trouver quelque chose !</p><br>";
+                // $this->mailer->sendDeleteCompanyMessage($student, $offers, $content);
+                $this->mailer->sendAppliesNotification(
+                    $student->getUser()->getEmail(),
+                    $student->getName(), 
+                    $content
+                );
                 // if applies is agree, allow student to look for another job 
                 if($this->checkConfirmed('offers', $offers) == []) {
                     $this->available($applies->getOffers(), $applies->getStudent());
@@ -285,10 +328,14 @@ class ApplyHelper extends CommonHelper
             // get offers 
             $offers = $applies->getOffers();
             // send mail 
-            // $email = $student->getUser()->getEmail();
-            // $name = $student->getName();
-            // $offerTitle = $offers->getTitle();
-            $this->mailer->sendDeleteStudentMessage($student, $offers); 
+            $content = "<p>Malheureusement l'étudiant <strong>".$student->getName()." ".$student->getLastName()."</strong> que vous souhaitiez recruté a supprimé son compte.</p><br>
+            <p>Nous nous excusons pour ce contretemps et espérons que vous trouverez rapidement quelqu'un d'autre pour le remplacer</p><br>";
+            // $this->mailer->sendDeleteStudentMessage($student, $offers, $content); 
+            $this->mailer->sendAppliesNotification(
+                $offers->getCompany()->getUser()->getEmail(),
+                $offers->getCompany()->getFirstName(), 
+                $content
+            );
 
             if($this->checkConfirmed('student', $student) == [] && $this->checkFinished('student', $student) == []) {
                 // set offers state 

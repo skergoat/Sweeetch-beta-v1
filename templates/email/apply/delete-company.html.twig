@@ -34,8 +34,7 @@
 											<div style="height:20px;">&nbsp;</div>
 											<div class="contentEditableContainer contentTextEditable">
 												<div class="contentEditable" >
-													<p>Malheureusement l'offre <strong> {{ title }} </strong> à laquelle vous aviez postulé a été supprimée par l'entreprise qui l'avait publiée.</p><br>
-													<p>Ne vous découragez pas et continuez votre recherche : vous finirez bien par trouver quelque chose !</p><br>
+													{{ content | raw }}
 													<p>Rendez-vous sur Sweeetch.com en cliquant ici : <a href="{{ url('homepage') }}" style="color:blue;">Sweeetch</a></p>
 												</div>
                                             </div>

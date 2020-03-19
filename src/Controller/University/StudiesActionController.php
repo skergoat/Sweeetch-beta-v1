@@ -58,7 +58,14 @@ class StudiesActionController extends AbstractController
 
         if($this->isCsrfTokenValid('recruit'.$student->getId(), $request->request->get('_token'))) {
             // send notification
-            $mailer->sendRecruitNotification($studies);
+            $content = "<p>Le cursus : <strong>" .$studies->getTitle(). "</strong> a déjà des inscrits ! </p><br>
+            <p>Nous vous invitons à aller voir votre compte et à répondre aux candidats aussi vite que possible.</p><br>";
+            // $mailer->sendRecruitNotification($studies, $content);
+            $mailer->sendAppliesNotification(
+                $studies->getSchool()->getUser()->getEmail(),
+                $studies->getSchool()->getFirstname(), 
+                $content
+            );
             // create entity
             $recruit = new Recruit; 
             $recruit->setHired(false);
@@ -206,7 +213,12 @@ class StudiesActionController extends AbstractController
             $student = $recruit->getStudent();
             $studies = $recruit->getStudies();
             // send notification
-            // $mailer->sendDeleteNotification($studies);
+            $content = "<p>L'Etudiant que vous aviez sélectionné sur l'offre : <strong>".$studies->getTitle()."</strong> n'a pas donné suite.</p><br><p>Ne vous découragez pas et continuez votre recherche : vous finirez bien par trouver quelqu'un !</p><br>";
+            $mailer->sendAppliesNotification(
+                $studies->getSchool()->getUser()->getEmail(),
+                $studies->getSchool()->getFirstName(), 
+                $content
+            );
             // save and delete
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($recruit);
@@ -279,11 +291,17 @@ class StudiesActionController extends AbstractController
      * @Route("/studies/{id}/{school_id}", name="studies_delete", methods={"DELETE"})
      * @ParamConverter("school", options={"id" = "school_id"})
      */
-    public function delete(Request $request, Studies $study, School $school, RecruitHelper $helper): Response
+    public function delete(Request $request, Studies $study, School $school, RecruitHelper $helper, RecruitMailer $mailer): Response
     {
         if ($this->isCsrfTokenValid('delete'.$study->getId(), $request->request->get('_token'))) {
             // handle recruit 
             $helper->handleDeleteRecruit($study, $school);
+            // $content = "<p>Malheureusement le cursus <strong>".$study->getTitle()."</strong> auquel vous aviez postulé a été supprimée par l'école qui l'avait publié.</p><br><p>Ne vous découragez pas et continuez votre recherche : vous finirez bien par trouver quelque chose !</p><br>";
+            // $mailer->sendAppliesNotification(
+            //     $study->getStudent()->getUser()->getEmail(),
+            //     $study->getStudent()->getName(), 
+            //     $content
+            // );
             // delete 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($study);
