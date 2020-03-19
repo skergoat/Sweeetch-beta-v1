@@ -12,12 +12,21 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
 </head>
     <body>
+        <br>
+        <h3>Réinitalisation du mot de passe</h3><br>
 
-        <h4>Mot de passe oublie</h4>
+        <p>Réinistialisez votre mot de passe en cliquant sur le lien ci-dessous : </p>
 
-        <p>Reinistialisez votre mot de passe en cliquant sur le lien ci-dessous : </p>
+        <p><a href="{{ url }}">{{ url }}</a></p><br>
 
-        <p><a href="{{ url }}">{{ url }}</a></p>
+        <p>Cordialement,</p>
+        <p style="font-weight:900; margin-bottom:20px;">L'équipe de Sweeetch</p>
+
+        <div>
+            <a href="{{ url('homepage') }}">
+                <img src="{{ email.image('@images/sweetch.png') }}" class="logo" alt="SpaceBar Logo" style="height:30px;width:130px;display:block:margin:auto;">
+            </a>
+        </div>
 
     </body>
 </html>

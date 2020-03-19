@@ -25,7 +25,7 @@ class ApplyMailer
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
             ->to(new Address($email, $name))
-            ->subject('Problems with docs')
+            ->subject('Candidatures')
             ->htmlTemplate('email/apply/apply.html.twig')
             ->context([
                 'title' => $title,
@@ -43,7 +43,7 @@ class ApplyMailer
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
             ->to(new Address($email, $name))
-            ->subject('Problems with docs')
+            ->subject('Recrutement')
             ->htmlTemplate('email/apply/hire.html.twig')
             ->context([
                 'title' => $title,
@@ -61,7 +61,7 @@ class ApplyMailer
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
             ->to(new Address($email, $name))
-            ->subject('Problems with docs')
+            ->subject('Recrutement')
             ->htmlTemplate('email/apply/others.html.twig')
             ->context([
                 'title' => $title,
@@ -79,7 +79,7 @@ class ApplyMailer
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
             ->to(new Address($email, $name))
-            ->subject('Problems with docs')
+            ->subject('Recrutement')
             ->htmlTemplate('email/apply/agree.html.twig')
             ->context([
                 'title' => $title,
@@ -97,32 +97,33 @@ class ApplyMailer
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
             ->to(new Address($email, $name))
-            ->subject('Problems with docs')
+            ->subject('Recrutement')
             ->htmlTemplate('email/apply/confirm.html.twig')
             ->context([
                 'title' => $title,
+                'company' => $offers->getCompany()->getCompanyName()
             ]); 
         
         $this->mailer->send($mail);
     }
 
-    public function sendFinishNotification($student, $offers)
-    {
-        $email = $student->getUser()->getEmail();
-        $name = $student->getName();
-        $title = $offers->getTitle(); 
+    // public function sendFinishNotification($student, $offers)
+    // {
+    //     $email = $student->getUser()->getEmail();
+    //     $name = $student->getName();
+    //     $title = $offers->getTitle(); 
 
-        $mail = (new TemplatedEmail())
-            ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
-            ->to(new Address($email, $name))
-            ->subject('Problems with docs')
-            ->htmlTemplate('email/apply/finish.html.twig')
-            ->context([
-                'title' => $title,
-            ]); 
+    //     $mail = (new TemplatedEmail())
+    //         ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
+    //         ->to(new Address($email, $name))
+    //         ->subject('Processus Sweeetch terminé')
+    //         ->htmlTemplate('email/apply/finish.html.twig')
+    //         ->context([
+    //             'title' => $title,
+    //         ]); 
         
-        $this->mailer->send($mail);
-    }
+    //     $this->mailer->send($mail);
+    // }
 
     public function sendRefuseNotification($student, $offers)
     {
@@ -133,7 +134,7 @@ class ApplyMailer
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
             ->to(new Address($email, $name))
-            ->subject('Problems with docs')
+            ->subject('Recrutement')
             ->htmlTemplate('email/apply/refuse.html.twig')
             ->context([
                 'title' => $title,
@@ -151,7 +152,7 @@ class ApplyMailer
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
             ->to(new Address($email, $name))
-            ->subject('Problems with docs')
+            ->subject('Recrutement')
             ->htmlTemplate('email/apply/delete.html.twig')
             ->context([
                 'title' => $title,
@@ -160,7 +161,6 @@ class ApplyMailer
         $this->mailer->send($mail);
     }
 
-    //
     public function sendDeleteCompanyMessage($student, $offers)
     {
         $email = $student->getUser()->getEmail();
@@ -170,10 +170,30 @@ class ApplyMailer
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
             ->to(new Address($email, $name))
-            ->subject('Problems with docs')
+            ->subject('Recrutement')
             ->htmlTemplate('email/apply/delete-company.html.twig')
             ->context([
                 'title' => $offerTitle,
+            ]); 
+        
+        $this->mailer->send($mail);
+    }
+
+    public function sendDeleteStudentMessage($student, $offers)
+    {
+        $email = $offers->getCompany()->getUser()->getEmail();
+        $name = $offers->getCompany()->getFirstName();
+        $offerTitle = $offers->getTitle();
+
+        $mail = (new TemplatedEmail())
+            ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
+            ->to(new Address($email, $name))
+            ->subject('Recrutement')
+            ->htmlTemplate('email/apply/delete-student.html.twig')
+            ->context([
+                'title' => $offerTitle,
+                'firstName' => $student->getName(),
+                'lastName' => $student->getLastName(),
             ]); 
         
         $this->mailer->send($mail);
@@ -188,7 +208,7 @@ class ApplyMailer
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
             ->to(new Address($email, $name))
-            ->subject('Problems with docs')
+            ->subject('Recrutement')
             ->htmlTemplate('email/apply/delete-company.html.twig')
             ->context([
                 'title' => $offerTitle,
@@ -196,5 +216,4 @@ class ApplyMailer
         
         $this->mailer->send($mail);
     }
-
 }

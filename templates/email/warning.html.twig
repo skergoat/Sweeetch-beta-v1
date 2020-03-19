@@ -1,4 +1,4 @@
-{% apply inline_css(source('@styles/_email.scss')) %}
+{% apply  inline_css(source('@styles/_email.scss')) %}
 
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -7,15 +7,15 @@
     <meta name="viewport" content="width=device-width"> <!-- Forcing initial-scale shouldn't be necessary -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- Use the latest (edge) version of IE rendering engine -->
     <meta name="x-apple-disable-message-reformatting">  <!-- Disable auto-scale in iOS 10 Mail entirely -->
-    <title>{{ email.subject }}</title> <!-- The title tag shows in email notifications, like Android 4.4. -->
+    <title></title> <!-- The title tag shows in email notifications, like Android 4.4. -->
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
 </head>
     <body>
+        <br>
+        <h3>Cher {{ email.toName }},</h3><br>
 
-        <h3>Cher {{ email.toName }},</h3>
-
-        <p>Il semblerait que les éléments suivants ne soient pas valides : </p>
+        <p>Il semblerait que les documents suivants ne soient pas valides : </p>
         
         {% if array != [] %}
         <ul>
@@ -25,16 +25,21 @@
         </ul>
         {% endif %}
         
-        <p>Pour bénéficier de toutes les fonctionnalités de votre comptes, il est très important que vous mettiez ces documents à jour.</p>
-        <p> Cordialement,</p> 
-        <p><strong>L'équipe de Sweetch</strong></p>
-        
-        {% if message != '' %}
-            <br/><h4>Note personnelle :</h4> 
-            <p>{{ message }}</p>
-        {% endif %}
+        <p>Pour bénéficier de toutes les fonctionnalités de votre compte, il est très important que vous métiez ces documents à jour.</p>
 
-        {# <img src="{{ email.image('@images/team-4.jpg') }}" /> #}
+        {% if message != '' %}
+        <br/><h4>Note personnelle :</h4> 
+        <p style="text-align:justify;">{{ message }}</p>
+        {% endif %}<br>
+
+        <p>Cordialement,</p>
+        <p style="font-weight:900; margin-bottom:20px;">L'équipe de Sweeetch</p>
+
+        <div>
+            <a href="{{ url('homepage') }}">
+                <img src="{{ email.image('@images/sweetch.png') }}" class="logo" alt="SpaceBar Logo" style="height:30px;width:130px;display:block:margin:auto;">
+            </a>
+        </div><br>
 
     </body>
 </html>

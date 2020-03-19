@@ -1,26 +1,89 @@
-{% apply inline_css(source('@styles/_email.scss')) %}
+{% apply inline_css(source('@styles/_apply.scss')) %}
 
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8"> <!-- utf-8 works for most cases -->
-    <meta name="viewport" content="width=device-width"> <!-- Forcing initial-scale shouldn't be necessary -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- Use the latest (edge) version of IE rendering engine -->
-    <meta name="x-apple-disable-message-reformatting">  <!-- Disable auto-scale in iOS 10 Mail entirely -->
-    <title>{{ email.subject }}</title> <!-- The title tag shows in email notifications, like Android 4.4. -->
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>[SUBJECT]</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
 </head>
-    <body>
+<body>
+	<table cellpadding="0" width="100%" cellspacing="0" border="0" id="backgroundTable" class='bgBody'>
+		<tr>
+			<td>
 
-        <h3>Cher {{ email.toName }},</h3>
+				<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" style="border-collapse:collapse;">
+					<tr>
+						<td class='movableContentContainer'>
+						
+							<div class='movableContent' align='center' style='text-align:center;'>
+								<table cellpadding="0" cellspacing="0" border="0" align="center" width="600">
+									<tr>
+										<td width="100%" colspan="3" align="center" style="padding-bottom:40px;padding-top:40px;">
+											<div class="contentEditableContainer contentTextEditable">
+												<div class="contentEditable"  >
+													<h2>Cher {{ email.toName }},</h2>
+												</div>
+											</div>
 
-        <p>L'etudiant que vous avez contacte pour l'offre : <strong> {{ title }} a accepte</strong> </p>
-        <p>Nous vous invitons a prendre contact avec lui et a confirmer son embauche une fois le dossier traite.</p>
-        <p> Cordialement,</p> 
-        <p><strong>L'equipe de Sweetch</strong></p>
-        
-    </body>
+										</td>
+									</tr>
+									<tr>
+										<td width="50">&nbsp;</td>
+										<td width="500" align="left">
+											<div style="height:20px;">&nbsp;</div>
+											<div class="contentEditableContainer contentTextEditable">
+												<div class="contentEditable" >
+                                                    <p>L'Etudiant que vous avez contacté pour l'offre : <strong> {{ title }} vient de l'accepter.</strong> </p><br>
+													<p>Nous vous invitons à prendre contact avec lui au plus vite pour signer les contrats d'embauche.</p><br>
+													<p>Rendez-vous sur Sweeetch.com en cliquant ici : <a href="{{ url('homepage') }}" style="color:blue;">Sweeetch</a></p>
+												</div>
+                                            </div>
+											<div style="height:20px;">&nbsp;</div>
+											<div class="contentEditableContainer contentTextEditable">
+												<div class="contentEditable" >
+                                                    <p>Cordialement,</p>
+                                                    <p style="font-weight:900; margin-bottom:20px;">L'équipe de Sweeetch</p>
+
+                                                    <div>
+                                                        <a href="{{ url('homepage') }}">
+                                                            <img src="{{ email.image('@images/sweetch.png') }}" class="logo" alt="SpaceBar Logo" style="height:30px;width:130px;display:block:margin:auto;">
+                                                        </a>
+                                                    </div>
+												</div>
+											</div>
+
+										</td>
+										<td width="50">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+
+							<div class='movableContent'>
+								<table cellpadding="0" cellspacing="0" border="0" align="center" width="600">
+									<tr>
+										<td width="60%" height="70" valign="middle" style="padding-bottom:20px;padding-top:0px;">
+                                            <hr style="height:1px;border:none;color:#333;background-color:#ddd;width:600;" />
+											<div class="contentEditableContainer contentTextEditable">
+												<div class="contentEditable" >
+													<span style="font-size:13px;color:#181818;font-family:Helvetica, Arial, sans-serif;line-height:200%;">Envoyé à {{ email.toName }} par no-reply@sweeetch.com </span>
+													<br/>
+												</div>
+											</div>
+										</td>
+									</tr>
+								</table>
+							</div>
+
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</body>
 </html>
 
 {% endapply %}

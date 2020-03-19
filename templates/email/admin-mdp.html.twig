@@ -1,4 +1,4 @@
-{% apply inline_css(source('@styles/_email.scss')) %}
+{% apply  inline_css(source('@styles/_email.scss')) %}
 
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -12,14 +12,25 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
 </head>
     <body>
+        <br>
+        <h3>Activation du compte</h3><br>
 
-        <h4>Activation du compte</h4>
+        <p>Bonne nouvelle ! Vous possédez désormais un compte admin Sweeetch.</p><br>
 
         <p>Identifiant : <strong>{{ mail }}</strong></p>
 
-        <p>Activez votre compte en modifiant votre mot de passe en cliquant sur le lien ci-dessous : </p>
+        <p>Modifiez votre mot de passe en cliquant sur le lien ci-dessous : </p>
 
-        <p><a href="{{ url }}">{{ url }}</a></p>
+        <p><a href="{{ url }}">{{ url }}</a></p><br>
+
+        <p>Cordialement,</p>
+        <p style="font-weight:900; margin-bottom:20px;">L'équipe de Sweeetch</p>
+
+        <div>
+            <a href="{{ url('homepage') }}">
+                <img src="{{ email.image('@images/sweetch.png') }}" class="logo" alt="SpaceBar Logo" style="height:30px;width:130px;display:block:margin:auto;">
+            </a>
+        </div>
 
     </body>
 </html>

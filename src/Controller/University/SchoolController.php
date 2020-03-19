@@ -79,9 +79,8 @@ class SchoolController extends AbstractController
 
             // send notif to admins 
             $admins = $userRepository->findByAdmin("ROLE_ADMIN");
-
             foreach($admins as $admins) {
-                $mailer->sendNewUser($admins);
+                $mailer->sendNewUsers($admins, $school);
             }
 
              // On génère un token et on l'enregistre

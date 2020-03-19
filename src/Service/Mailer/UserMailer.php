@@ -24,7 +24,22 @@ class UserMailer
             ->subject('Mot de passe oublié')
             ->htmlTemplate('email/signup.html.twig')
             ->context([
-                'name' => $entity->getName(),
+                'name' => $entity->getfirstName(),
+                'mail' => $entity->getUser()->getEmail()
+            ]); 
+    
+        $this->mailer->send($mail);
+    }
+
+    public function sendNewUsers($user, $entity)
+    {
+        $mail = (new TemplatedEmail())
+            ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
+            ->to(new Address($user->getEmail()))
+            ->subject('Mot de passe oublié')
+            ->htmlTemplate('email/signup.html.twig')
+            ->context([
+                'name' => $entity->getfirstName(),
                 'mail' => $entity->getUser()->getEmail()
             ]); 
     

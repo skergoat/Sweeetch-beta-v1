@@ -29,7 +29,7 @@ class SecurityHelper
         $this->router = $router;
     }
 
-    public function createResetPasswordLink($user)
+    public function createResetPasswordLink($user, $bool)
     {
         // Si l'utilisateur n'existe pas
         if ($user === null) {
@@ -54,7 +54,12 @@ class SecurityHelper
         // On génère l'URL de réinitialisation de mot de passe
         $url = $this->router->generate('app_reset_password', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
         // On génère l'e-mail
-        $this->mailer->sendAdminPassword($user, $url);  
+        if($bool) {
+            $this->mailer->sendRecoverPassword($user, $url); 
+        }
+        else {
+            $this->mailer->sendAdminPassword($user, $url);
+        }
         // On crée le message flash de confirmation
         $this->flash->add('success', 'E-mail de réinitialisation du mot de passe envoyé !');
     }

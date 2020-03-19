@@ -64,7 +64,7 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
             // create link to change password 
-            $helper->createResetPasswordLink($user);
+            $helper->createResetPasswordLink($user, false);
             // redirect
             $this->addFlash('success', 'Admin crée');
             return $this->redirectToRoute('user_new');
