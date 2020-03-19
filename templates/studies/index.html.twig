@@ -87,6 +87,8 @@
                                 {% set hired = [] %}
                                 {% set agree = [] %}
                                 {% set finished = [] %}
+                                {% set refused = [] %}
+                                {% set unavailable = [] %}
                                 {# array #}
                                 {% for study in study.recruits %}
                                     {# hired #}
@@ -101,14 +103,24 @@
                                     {% if study.finished == true %}
                                     {% set finished = finished|merge([{ finished: study }]) %}
                                     {% endif %}
+                                    {# refused #}
+                                    {% if study.refused == true %}
+                                    {% set refused = refused|merge([{ refused: study }]) %}
+                                    {% endif %}
+                                    {# unavailable #}
+                                    {% if study.unavailable == true %}
+                                    {% set unavailable = unavailable|merge([{ unavailable: study }]) %}
+                                    {% endif %}
                                 {% endfor %}
+                                {# total #}
+                                {% set minus = refused|length + unavailable|length + finished|length %}
                                 {# loop #}
                                 {% if agree | length == 0 %}
                                     {% if hired | length == 0 %}
-                                        {% if study.recruits | length == 0 or study.recruits | length == finished | length %}
+                                        {% if study.recruits | length == 0 or study.recruits | length - minus == 0 %}
                                         <span class="badge badge-secondary right" title="candidatures">Ouvert</span>
                                         {% else %}
-                                        <span class="badge badge-primary right" title="candidatures">Candidats : {{ study.recruits | length - finished | length }} </span>
+                                        <span class="badge badge-primary right" title="candidatures">Candidats : {{ study.recruits | length - minus }} </span>
                                         {% endif %}
                                     {% else %}
                                     <span class="badge badge-warning right" title="candidatures">En Attente</span>
