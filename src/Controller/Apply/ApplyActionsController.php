@@ -69,9 +69,15 @@ class ApplyActionsController extends AbstractController
         }
 
         if($this->isCsrfTokenValid('apply'.$student->getId(), $request->request->get('_token'))) {
-
             // send notification
-            $mailer->sendApplyNotification($offers);
+            $content = "<p>L'Offre : <strong>" .$offers->getTitle(). "</strong> a trouvé preneur et plusieurs personnes ont déjà postulées ! </p><br>
+            <p>Nous vous invitons à aller voir votre compte et à répondre aux candidats aussi vite que possible.</p><br>";
+            // $mailer->sendApplyNotification($offers, $content);
+            $mailer->sendAppliesNotification(
+                $offers->getCompany()->getUser()->getEmail(),
+                $student->getName(), 
+                $content
+            );
 
             $apply = new Apply; 
             $apply->setHired(false);
@@ -177,30 +183,6 @@ class ApplyActionsController extends AbstractController
             return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
         }
     }
-
-    //  /**
-    //  * @Route("/finish/{id}", name="apply_finish", methods={"POST"})
-    //  * @IsGranted("ROLE_SUPER_COMPANY")
-    //  */
-    // public function finish(Apply $apply, ApplyRepository $applyRepository, Request $request, ApplyMailer $mailer, ApplyHelper $helper, RecruitHelper $recruitHelper)
-    // {
-    //     // get other applies
-    //     $student = $apply->getStudent();
-    //     $offers = $apply->getOffers();
-
-    //     if($this->isCsrfTokenValid('stop'.$apply->getId(), $request->request->get('_token'))) {
-    //         // finish 
-    //         $helper->finish($apply, $student, $offers, false);
-    //         // save
-    //         $this->getDoctrine()->getManager()->flush();
-    //         $this->addFlash('success', 'Mission Terminée. Bravo !');
-    //         return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
-    //     }
-    //     else {
-    //         $this->addFlash('error', 'requête invalide');
-    //         return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
-    //     }
-    // }
 
      /**
      * @Route("/refuse/{id}", name="apply_refuse", methods={"POST"})

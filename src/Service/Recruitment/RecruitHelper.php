@@ -112,7 +112,13 @@ class RecruitHelper extends CommonHelper
         // set state
         $this->setHire($recruit);
         // send notification
-        $this->mailer->sendHireNotification($recruit);
+        $content = "<p>Bonne nouvelle ! Vous avez été sélectionné pour le cursus : <strong>".$studies->getTitle()."</strong>.</p><br><p>Nous vous invitons à accepter ou refuser la proposition.</p><br>";
+        // $this->mailer->sendHireNotification($recruit, $content);
+        $this->mailer->sendAppliesNotification(
+            $recruit->getStudent()->getUser()->getEmail(),
+            $recruit->getStudent()->getName(), 
+            $content
+        );
     }
 
     public function agree(Recruit $recruit, Student $student, Studies $studies)
@@ -122,7 +128,13 @@ class RecruitHelper extends CommonHelper
         // set to unavailable
         $this->unavailables($studies, $student);
         // send notification
-        $this->mailer->sendAgreeNotification($student, $studies);
+        $content = "<p>L'Etudiant à qui vous avez proposé le cursus : <strong> ".$studies->getTitle()."</strong> vient d'accepter votre proposition.</p><br><p>Nous vous invitons à prendre contact avec lui au plus vite pour remplir les papiers d'inscription.</p><br>";
+        // $this->mailer->sendAgreeNotification($student, $studies, $content);
+        $this->mailer->sendAppliesNotification(
+            $studies->getSchool()->getUser()->getEmail(),
+            $student->getName(), 
+            $content
+        );
     }
 
     public function finish(Recruit $recruit, Student $student, Studies $studies)
@@ -135,7 +147,13 @@ class RecruitHelper extends CommonHelper
          $user = $recruit->getStudent()->getUser();
          $user->setRoles(['ROLE_SUPER_STUDENT']);
          // send notification
-         $this->mailer->sendFinishNotification($student, $studies);
+         $content = "<p>Félicitations, votre parcours de recrutement Sweeetch est terminé !</p><br><p>Vous allez désormais voler de vos propres ailes... et vous allez nous manquer !</p><br>";
+        //  $this->mailer->sendFinishNotification($student, $studies, $content);
+        $this->mailer->sendAppliesNotification(
+            $student->getUser()->getEmail(),
+            $student->getName(), 
+            $content
+        );
          // set to available
         //  $this->available($studies, $student);
     }
@@ -145,27 +163,66 @@ class RecruitHelper extends CommonHelper
         // refuse
         $this->setRefuse($recruit);
         // send notification
-        $this->mailer->sendRefuseNotification($student, $studies);     
+        // $this->mailer->sendRefuseNotification($student, $studies);
+        $content = "<p>Vous aviez postulé sur l'offre : <strong>".$studies->getTitle()."</strong></p>
+        <p>Malheureusement l'entreprise n'a pas donné suite à votre demande.</p><br>
+        <p>Ne vous découragez pas et continuez votre recherche : vous finirez bien par trouver quelque chose !</p><br>";     
+        $this->mailer->sendAppliesNotification(
+            $student->getUser()->getEmail(),
+            $student->getName(), 
+            $content
+        );
     }
 
     public function handleDeleteRecruit(Studies $studies, School $school)
-    { 
-        if($this->checkAgree('studies', $studies)) {
+    {  
+        if($this->checkHired('studies', $studies)) {
+            // set available
             $this->available($studies, null);
+            // entities
+            $recruits = $this->recruitRepository->findBy(['studies' => $studies]);
+
+            foreach($recruits as $recruits) {
+                // get student
+                $student = $recruits->getStudent();
+                // send mail 
+                $content = "<p>Malheureusement l'offre <strong>".$studies->getTitle()."</strong> à laquelle vous aviez postulé a été supprimée par l'entreprise qui l'avait publiée.</p><br><p>Ne vous découragez pas et continuez votre recherche : vous finirez bien par trouver quelque chose !</p><br>";
+                // $this->mailer->sendDeleteOffersCompanyMessage($student, $offers, $content);
+                $this->mailer->sendAppliesNotification(
+                    $student->getUser()->getEmail(),
+                    $student->getName(),  
+                    $content
+                );
+            }   
         }
 
         // if recruit > mail notif if remove studies ?
         // set to null and ask student to continue research or to stop ? 
     }
 
-    public function handleDeleteCompany(School $school)
+    public function handleDeleteSchool(School $school)
     { 
         $studies = $school->getStudies();
 
         foreach($studies as $studies) 
         {
-            if($this->checkAgree('studies', $studies)) {
+            if($this->checkHired('studies', $studies)) {
                 $this->available($studies, null);
+
+                $recruits = $this->recruitRepository->findBy(['studies' => $studies]);
+
+                foreach($recruits as $recruits) {
+                    // get student
+                    $student = $recruits->getStudent();
+                    // send mail 
+                    $content = "<p>Malheureusement l'offre <strong>".$studies->getTitle()."</strong> à laquelle vous aviez postulé a été supprimée par l'entreprise qui l'avait publiée.</p><br><p>Ne vous découragez pas et continuez votre recherche : vous finirez bien par trouver quelque chose !</p><br>";
+                    // $this->mailer->sendDeleteOffersCompanyMessage($student, $offers, $content);
+                    $this->mailer->sendAppliesNotification(
+                        $student->getUser()->getEmail(),
+                        $student->getName(),  
+                        $content
+                    );
+                } 
             }
         }
 

@@ -183,11 +183,20 @@
                             </tr>
                             {% else %}
                             <tr>
-                                <td colspan="8"> 
+                                <td colspan="5"> 
                                     <span style="color:#FF5961;">Votre entreprise a supprimé son compte </span>
                                     <a href="#suppr-1" rel="modal:open" class="badge " title="aide" style="color:#8e8e8e;">
                                         <i class="fas fa-question-circle"  style="margin-left:5px;color:#8e8e8e;"></i>
                                     </a>
+                                </td>
+                                <td>
+                                    <form method="post" class="btn-icon-form" action="{{ path('apply_delete', {'id': applies.id }) }}" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cette candidature ?');">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ applies.id) }}">
+                                        <button class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                             {% endif %}
