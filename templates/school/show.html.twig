@@ -241,6 +241,9 @@
                             <td>
                                 {% set hiredVar = [] %}
                                 {% set agreeVar = [] %}
+                                {% set refused = [] %}
+                                {% set finished = [] %}
+                                {% set unavailable = [] %}
                                 {% for studies in studies.recruits %}
                                     {# hired #}
                                     {% if studies.hired == true %}
@@ -251,17 +254,27 @@
                                     {% set agreeVar = agreeVar|merge([{ agreeVar: studies }]) %}
                                     {% endif %}
                                     {# confirmed #}
-                                    {# {% if study.finished == true %}
-                                    {% set finished = finished|merge([{ finished: study }]) %}
-                                    {% endif %} #}
+                                    {% if studies.finished == true %}
+                                    {% set finished = finished|merge([{ finished: studies }]) %}
+                                    {% endif %}
+                                    {# refused #}
+                                    {% if studies.refused == true %}
+                                    {% set refused = refused|merge([{ refused: studies }]) %}
+                                    {% endif %}
+                                    {# unavailable #}
+                                    {% if studies.unavailable == true %}
+                                    {% set unavailable = unavailable|merge([{ unavailable: studies }]) %}
+                                    {% endif %}
                                 {% endfor %}
+                                {# total #}
+                                {% set minus = refused|length + unavailable|length + finished|length %}
                                 {% if agreeVar | length == 0 %}
                                     {% if hiredVar | length == 0 %}
-                                        {% if studies.recruits | length == 0 or finishedVar is defined and studies.recruits | length == finishedVar | length %}
+                                        {% if studies.recruits | length == 0 or studies.recruits | length - minus == 0 %}
                                             <span class="badge badge-secondary right" title="candidatures">Ouvert</span>
                                         {% else %}
                                             {% if finished is defined %}
-                                            <span class="badge badge-primary right" title="candidatures">Candidats : {{ studies.recruits | length - finished | length }} </span>
+                                            <span class="badge badge-primary right" title="candidatures">Candidats : {{ studies.recruits | length - minus }} </span>
                                             {% else %}
                                             <span class="badge badge-primary right" title="candidatures">Candidats : {{ studies.recruits | length }} </span>
                                             {% endif %}

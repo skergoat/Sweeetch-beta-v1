@@ -296,12 +296,6 @@ class StudiesActionController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$study->getId(), $request->request->get('_token'))) {
             // handle recruit 
             $helper->handleDeleteRecruit($study, $school);
-            // $content = "<p>Malheureusement le cursus <strong>".$study->getTitle()."</strong> auquel vous aviez postulé a été supprimée par l'école qui l'avait publié.</p><br><p>Ne vous découragez pas et continuez votre recherche : vous finirez bien par trouver quelque chose !</p><br>";
-            // $mailer->sendAppliesNotification(
-            //     $study->getStudent()->getUser()->getEmail(),
-            //     $study->getStudent()->getName(), 
-            //     $content
-            // );
             // delete 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($study);
