@@ -16,6 +16,21 @@ class UserMailer
         $this->mailer = $mailer;
     }
 
+    public function sendNewUser($user, $entity)
+    {
+        $mail = (new TemplatedEmail())
+            ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
+            ->to(new Address($user->getEmail()))
+            ->subject('Mot de passe oublié')
+            ->htmlTemplate('email/signup.html.twig')
+            ->context([
+                'name' => $entity->getName(),
+                'mail' => $entity->getUser()->getEmail()
+            ]); 
+    
+        $this->mailer->send($mail);
+    }
+
     public function sendRecoverPassword($user, $url)
     {
         $mail = (new TemplatedEmail())

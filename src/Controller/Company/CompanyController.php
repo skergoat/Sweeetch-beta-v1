@@ -8,6 +8,7 @@ use App\Entity\Pictures;
 use App\Form\CompanyType;
 use App\Form\UpdateCompanyType;
 use App\Service\UploaderHelper;
+use App\Repository\UserRepository;
 use App\Service\Mailer\UserMailer;
 use App\Repository\ApplyRepository;
 use App\Service\Mailer\ApplyMailer;
@@ -116,7 +117,7 @@ class CompanyController extends AbstractController
      * @Route("/{id}/edit", name="company_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_COMPANY")
      */
-    public function edit(Request $request, Company $company, UserPasswordEncoderInterface $passwordEncoder, OffersRepository $offersRepository, ApplyRepository $applyRepository, CompanyChecker $checker, UploaderHelper $uploaderHelper, ApplyHelper $helper): Response
+    public function edit(Request $request, Company $company, UserPasswordEncoderInterface $passwordEncoder, OffersRepository $offersRepository, ApplyRepository $applyRepository, CompanyChecker $checker, UploaderHelper $uploaderHelper, UserRepository $userRepository, ApplyHelper $helper): Response
     {
         if($checker->companyValid($company)) {
 
@@ -159,6 +160,13 @@ class CompanyController extends AbstractController
                         $user,
                         $user->getPassword()
                     ));
+                }
+
+                // send notif to admins 
+                $admins = $userRepository->findByAdmin("ROLE_ADMIN");
+
+                foreach($admins as $admins) {
+                    $mailer->sendNewUser($admins);
                 }
 
                 $this->getDoctrine()->getManager()->flush();

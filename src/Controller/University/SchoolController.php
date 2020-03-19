@@ -57,7 +57,7 @@ class SchoolController extends AbstractController
     /**
      * @Route("/new", name="school_new", methods={"GET","POST"})
      */
-    public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder, UserMailer $mailer): Response
+    public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder, UserRepository $userRepository, UserMailer $mailer): Response
     {
         $school = new School();
         $form = $this->createForm(SchoolType::class, $school);
@@ -76,6 +76,14 @@ class SchoolController extends AbstractController
                  $user,
                  $user->getPassword()
             ));
+
+            // send notif to admins 
+            $admins = $userRepository->findByAdmin("ROLE_ADMIN");
+
+            foreach($admins as $admins) {
+                $mailer->sendNewUser($admins);
+            }
+
              // On génère un token et on l'enregistre
             $user->setActivateToken(md5(uniqid()));
             // On génère l'e-mail
