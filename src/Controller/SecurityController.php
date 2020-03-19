@@ -122,7 +122,7 @@ class SecurityController extends AbstractController
             $donnees = $form->getData();
             $user = $userRepository->findOneBy(['email' => $donnees['email']]);
             // on envoie le lien de recuperation 
-            $helper->createResetPasswordLink($user);
+            $helper->createResetPasswordLink($user, true);
             // On redirige vers la page de login
             return $this->redirectToRoute('app_login');
         }

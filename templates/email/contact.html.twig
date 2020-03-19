@@ -1,4 +1,4 @@
-{% apply inline_css(source('@styles/_email.scss')) %}
+{% apply  inline_css(source('@styles/_email.scss')) %}
 
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -12,17 +12,22 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
 </head>
     <body>
-
-        <h4>New message from : </h4>
-        <ul>
-            <li>{{ name }}</li>
-            <li>{{ mail }}</li>
-        </ul>
-
-        <h4>Subject : {{ subject }} </h4>
+        <br>
+        <h3>Vous avez un nouveau message en provenance de Sweeetch.com</h3><br>
+        
+        <p><strong>De :</strong> {{ name }} / {{ mail }}</p>
+           
+        <p><strong>Sujet :</strong> {{ subject }} </p>
        
         <div>
-            <p>{{ message }}</p>
+            <h4>Message :</h4>
+            <p style="text-align:justify;">{{ message }}</p>
+        </div><br>
+
+        <div>
+            <a href="{{ url('homepage') }}">
+                <img src="{{ email.image('@images/sweetch.png') }}" class="logo" alt="SpaceBar Logo" style="height:30px;width:130px;display:block:margin:auto;">
+            </a>
         </div>
 
     </body>

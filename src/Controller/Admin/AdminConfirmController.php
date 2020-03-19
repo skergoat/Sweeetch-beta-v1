@@ -107,8 +107,6 @@ class AdminConfirmController extends AbstractController
 
         $parameters['message'] != '' ? $message = $parameters['message'] : $message = '';
 
-        dd($this->isCsrfTokenValid('warning'.$this->getUser()->getId(), $request->request->get('_token')));
-
         if($this->isCsrfTokenValid('warning'.$this->getUser()->getId(), $request->request->get('_token'))) {
             $mailer->sendWarningMessage($name, $email, $array, $message);
         }

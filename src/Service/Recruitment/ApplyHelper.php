@@ -137,7 +137,7 @@ class ApplyHelper extends CommonHelper
         // close offer 
         $offers->setState(true); 
         // send notification
-        // $this->mailer->sendHireNotification($apply);
+        $this->mailer->sendHireNotification($apply);
         // delete other applies
         $others = $this->applyRepository->getOtherApplies($student->getId(), $offers->getId());
         if($others) {
@@ -232,7 +232,7 @@ class ApplyHelper extends CommonHelper
             // set to available
             $this->available($offers, $student);
             // send mail 
-            // $this->mailer->sendDeleteOffersCompanyMessage($student, $offers);
+            $this->mailer->sendDeleteOffersCompanyMessage($student, $offers);
             // remove unfinished applies and set offers_id to null
             if($applies->getFinished() == false) {
                 $this->manager->remove($applies);
@@ -243,7 +243,7 @@ class ApplyHelper extends CommonHelper
         }
     }
 
-    // when delete company profile 
+    // when company delete profile 
     public function handleCompanyApplies($company)
     {
         // get related offers 
@@ -255,7 +255,7 @@ class ApplyHelper extends CommonHelper
             foreach($applies as $applies) {
                 $student = $applies->getStudent();
                 // send mail 
-                // $this->mailer->sendDeleteCompanyMessage($student, $offers);
+                $this->mailer->sendDeleteCompanyMessage($student, $offers);
                 // if applies is agree, allow student to look for another job 
                 if($this->checkConfirmed('offers', $offers) == []) {
                     $this->available($applies->getOffers(), $applies->getStudent());
@@ -288,7 +288,7 @@ class ApplyHelper extends CommonHelper
             // $email = $student->getUser()->getEmail();
             // $name = $student->getName();
             // $offerTitle = $offers->getTitle();
-            // $mailer->sendDeleteCompanyMessage($email, $name, $offerTitle); 
+            $this->mailer->sendDeleteStudentMessage($student, $offers); 
 
             if($this->checkConfirmed('student', $student) == [] && $this->checkFinished('student', $student) == []) {
                 // set offers state 
