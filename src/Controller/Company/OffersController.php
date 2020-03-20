@@ -113,13 +113,8 @@ class OffersController extends AbstractController
     public function show(Offers $offer, ApplyRepository $applyRepository, AuthorizationCheckerInterface $authorizationChecker, ApplyHelper $helper, $page): Response
     {
         if (!$authorizationChecker->isGranted('ROLE_ADMIN')) { // if ADMIN then ok 
-        
-            // $hired = $applyRepository->findBy(['offers' => $offer, 'hired' => 1]);
-            // $agree = $applyRepository->findBy(['offers' => $offer, 'agree' => 1]);
-            // $confirmed = $applyRepository->findBy(['offers' => $offer, 'confirmed' => 1]);
-            // $finished = $applyRepository->findBy(['offers' => $offer, 'finished' => 1]);
     
-            if($helper->checkHired('offer', $offer) || $helper->checkAgree('offer', $offer) || $helper->checkConfirmed('offer', $offer) || $helper->checkFinished('offer', $offer)) {  // if there are already applies then ... 
+            if($helper->checkHired('offers', $offer) || $helper->checkAgree('offers', $offer) || $helper->checkConfirmed('offers', $offer) || $helper->checkFinished('offers', $offer)) {  // if there are already applies then ... 
 
                 if ($authorizationChecker->isGranted('ROLE_SUPER_STUDENT')) { // if STUDENT then ok
                 
