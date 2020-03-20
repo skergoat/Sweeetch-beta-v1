@@ -25,7 +25,7 @@ class StudiesRenderController extends AbstractController
 {
      /**
      * @Route("school/studies/{id}", name="school_studies_index", methods={"GET"})
-     * @IsGranted("ROLE_SUPER_SCHOOL")
+     * @IsGranted("ROLE_SCHOOL")
      */
     public function index(StudiesRepository $studiesRepository, School $school, SchoolChecker $checker, RecruitRepository $recruitRepository, RecruitHelper $recruitHelper): Response
     {        

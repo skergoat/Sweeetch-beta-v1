@@ -21,10 +21,10 @@ class UserMailer
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
             ->to(new Address($user->getEmail()))
-            ->subject('Mot de passe oublié')
+            ->subject('Nouvel Inscrit')
             ->htmlTemplate('email/signup.html.twig')
             ->context([
-                'name' => $entity->getfirstName(),
+                'name' => $entity->getName(),
                 'mail' => $entity->getUser()->getEmail()
             ]); 
     
@@ -36,7 +36,7 @@ class UserMailer
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
             ->to(new Address($user->getEmail()))
-            ->subject('Mot de passe oublié')
+            ->subject('Nouvel Inscrit')
             ->htmlTemplate('email/signup.html.twig')
             ->context([
                 'name' => $entity->getfirstName(),

@@ -265,7 +265,6 @@ class ApplyRenderController extends AbstractController
                         'hired' => $helper->checkHired('offers', $offer),
                         'agree' => $helper->checkAgree('offers', $offer),
                         'closed' =>  $helper->checkOfferFinished($offer),
-                        //  'confirmed' => $helper->checkConfirmed('offers', $offers),
                         'finished' =>  $helper->checkFinished('offers', $offer),
                         'candidates' => $helper->nbCandidates($offer),
                     ]);

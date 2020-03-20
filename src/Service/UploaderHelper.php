@@ -2,12 +2,13 @@
 
 namespace App\Service;
 
+use App\Entity\Pictures;
 use Psr\Log\LoggerInterface;
 use Gedmo\Sluggable\Util\Urlizer;
 use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FileNotFoundException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Asset\Context\RequestStackContext;
-use League\Flysystem\FileNotFoundException;
 
 
 class UploaderHelper
@@ -34,6 +35,26 @@ class UploaderHelper
     {
         return $this->requestStackContext
             ->getBasePath().$this->publicAssetBaseUrl.'/'.$path;
+    }
+
+    // edit docs and picture
+    public function uploadEdit($uploadedFile, $entity)
+    {
+        // upload file 
+        if($uploadedFile) {
+            if($entity->getPictures() != null) {
+                $newFilename = $this->uploadFile($uploadedFile, $entity->getPictures()->getFileName());
+            }
+            else {
+                $newFilename = $this->uploadFile($uploadedFile, null);
+            }
+            // set picture entity 
+            $document = new Pictures;
+            $document->setFileName($newFilename);
+            $document->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $newFilename);
+            $document->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream'); 
+            $entity->setPictures($document);                   
+        }
     }
 
     public function uploadFile(UploadedFile $uploadedFile, ?string $existingFilename): string
@@ -125,5 +146,5 @@ class UploaderHelper
         }
         return $resource;
     }
-  
+
 }

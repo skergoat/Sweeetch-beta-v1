@@ -7,6 +7,7 @@ use App\Entity\Company;
 use App\Entity\Pictures;
 use App\Form\CompanyType;
 use App\Form\UpdateCompanyType;
+use App\Service\SecurityHelper;
 use App\Service\UploaderHelper;
 use App\Repository\UserRepository;
 use App\Service\Mailer\UserMailer;
@@ -38,57 +39,40 @@ class CompanyController extends AbstractController
      */
     public function index(CompanyRepository $companyRepository, PaginatorInterface $paginator, Request $request): Response
     {   
+        // get companies
         $queryBuilder = $companyRepository->findAllPaginated("DESC");
-
+        // paginate 
         $pagination = $paginator->paginate(
             $queryBuilder, /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
             10/*limit per page*/
         );
-
+        // render 
         return $this->render('company/index.html.twig', [
             'companies' => $pagination,
         ]);
-
     }
 
     /**
      * @Route("/new", name="company_new", methods={"GET","POST"})
      */
-    public function new(UserPasswordEncoderInterface $passwordEncoder, Request $request, UserRepository $userRepository, UserMailer $mailer): Response
+    public function new(Request $request, SecurityHelper $securityHelper): Response
     {
         $company = new Company();
         $form = $this->createForm(CompanyType::class, $company);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            // set roles 
-            $user = $company->getUser();
-            $user->setRoles(['ROLE_COMPANY']);
-            $user->setConfirmed(false);
-            $user->setPassword($passwordEncoder->encodePassword(
-                $user,
-                $user->getPassword()
-            ));
-            // On génère un token et on l'enregistre
-            $user->setActivateToken(md5(uniqid()));
-            // On génère l'e-mail
-            $mailer->sendActivate($user);
-
-            // send notif to admins 
-            $admins = $userRepository->findByAdmin("ROLE_ADMIN");
-            foreach($admins as $admins) {
-                $mailer->sendNewUsers($admins, $company);
-            }
-
+            // set user
+            $securityHelper->newUser($company, 'ROLE_COMPANY');
+            // save 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($company);
             $entityManager->flush();
-
+            // render 
             return $this->redirectToRoute('app_login');
         }
-
+        // render 
         return $this->render('company/new.html.twig', [
             'company' => $company,
             'form' => $form->createView(),
@@ -106,7 +90,7 @@ class CompanyController extends AbstractController
             $offers = $offersRepository->findBy(['company' => $company]);
             // get finished or confirmed applies 
             $array = $helper->findByOffersFinished($offers);
-
+            // render 
             return $this->render('company/show.html.twig', [
                 'company' => $company,  // company layout
                 'offers' => $offersRepository->findBy(['company' => $company], ['id' => 'desc']),
@@ -123,58 +107,30 @@ class CompanyController extends AbstractController
      * @Route("/{id}/edit", name="company_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_COMPANY")
      */
-    public function edit(Request $request, Company $company, UserPasswordEncoderInterface $passwordEncoder, OffersRepository $offersRepository, ApplyRepository $applyRepository, CompanyChecker $checker, UploaderHelper $uploaderHelper, ApplyHelper $helper): Response
+    public function edit(Request $request, Company $company, OffersRepository $offersRepository, CompanyChecker $checker, UploaderHelper $uploaderHelper, ApplyHelper $helper, SecurityHelper $securityHelper): Response
     {
         if($checker->companyValid($company)) {
-
+            // get forms 
             $form = $this->createForm(UpdateCompanyType::class, $company);
             $formPassword = $this->createForm(CompanyEditPasswordType::class, $company); 
-
             // check old pass 
             $oldPass = $company->getUser()->getPassword();
-
             $form->handleRequest($request);
             $formPassword->handleRequest($request);
-
+            // send form 
             if($form->isSubmitted() && $form->isValid() || $formPassword->isSubmitted() && $formPassword->isValid()) {
-
+                // get uploaded file 
                 $uploadedFile = $form['pictures']->getData();
-
-                if($uploadedFile) {
-
-                    if($company->getPictures() != null) {
-                        $newFilename = $uploaderHelper->uploadFile($uploadedFile, $company->getPictures()->getFileName());
-                    }
-                    else {
-                        $newFilename = $uploaderHelper->uploadFile($uploadedFile, null);
-                    }
-
-                    $document = new Pictures;
-                    $document->setFileName($newFilename);
-                    $document->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $newFilename);
-                    $document->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');                    
-                } 
-                
-                $company->setPictures($document);
-
-                // edit password 
-                $user = $formPassword->getData()->getUser();
-
-                if($user->getPassword() != $oldPass)
-                {
-                    $user->setPassword($passwordEncoder->encodePassword(
-                        $user,
-                        $user->getPassword()
-                    ));
-                }
-
+                $uploaderHelper->uploadEdit($uploadedFile, $company);
+                // edit user data 
+                $securityHelper->editUser($formPassword->getData()->getUser(), $oldPass);
                 $this->getDoctrine()->getManager()->flush();
                 $this->addFlash('success', 'Mise à jour réussie');
                 return $this->redirectToRoute('company_edit', ['id' => $company->getId() ]);
             }
-
+            // get offers
             $offers = $offersRepository->findBy(['company' => $company]);
-
+            // render 
             return $this->render('company/edit.html.twig', [
                 'company' => $company,
                 'form' => $form->createView(),
@@ -182,8 +138,6 @@ class CompanyController extends AbstractController
                 // infos 
                 'hired' => $helper->checkHired('offers', $offers),
                 'agree' => $helper->checkAgree('offers', $offers),
-                // 'confirmed' => $helper->checkConfirmed('offers', $offers),
-                // 'finished' =>  $helper->checkFinished('offers', $offers),
                 'candidates' => $helper->nbCandidates($offers),
             ]);
         }
@@ -193,7 +147,7 @@ class CompanyController extends AbstractController
      * @Route("/{id}/{from}", name="company_delete", methods={"DELETE"})
      * @IsGranted("ROLE_COMPANY")
      */
-    public function delete(Request $request, Company $company, ApplyRepository $repository, ApplyMailer $mailer, ApplyHelper $helper, $from): Response
+    public function delete(Request $request, Company $company, ApplyHelper $helper, $from): Response
     {
         if ($this->isCsrfTokenValid('delete'.$company->getId(), $request->request->get('_token'))) {
             // handle applies 
@@ -210,7 +164,7 @@ class CompanyController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($company);
             $entityManager->flush();
-
+            // render 
             $this->addFlash('success', 'Compte Supprimé');
             return $this->redirectToRoute($from);
         }
