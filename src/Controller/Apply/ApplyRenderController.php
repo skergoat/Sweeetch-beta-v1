@@ -10,8 +10,10 @@ use App\Repository\ApplyRepository;
 use App\Service\Mailer\ApplyMailer;
 use App\Repository\OffersRepository;
 use App\Repository\CompanyRepository;
+use App\Repository\RecruitRepository;
 use App\Repository\StudentRepository;
 use App\Service\Recruitment\ApplyHelper;
+use App\Service\Recruitment\RecruitHelper;
 use App\Service\UserChecker\CompanyChecker;
 use App\Service\UserChecker\StudentChecker;
 use Knp\Component\Pager\PaginatorInterface;
@@ -31,7 +33,7 @@ class ApplyRenderController extends AbstractController
      * @Route("/student/applies/{id}", name="student_apply", methods={"GET"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function indexByStudent(StudentRepository $repository, applyRepository $applyRepository, Student $student, StudentChecker $checker)
+    public function indexByStudent(StudentRepository $repository, applyRepository $applyRepository, RecruitRepository $recruitRepository, Student $student, RecruitHelper $recruitHelper, StudentChecker $checker)
     {   
         if ($checker->studentValid($student)) {    
             return $this->render('apply/index_student.html.twig', [
@@ -40,6 +42,8 @@ class ApplyRenderController extends AbstractController
                 'finished' => $applyRepository->findBy(['student' => $student, 'finished' => true]),
                 'fresh' =>  $applyRepository->findByStudentByFresh($student),
                 'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true]),
+                'freshRecruit' => $recruitRepository->findByStudentByFresh($student), // nb candidates
+                'hiredRecruit' => $recruitHelper->checkHired('student', $student), // confirm warning
             ]);
         }
     }
@@ -48,7 +52,7 @@ class ApplyRenderController extends AbstractController
      * @Route("/company/finished/student/{id}", name="student_finished", methods={"GET"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function finishedByStudent(StudentRepository $repository, applyRepository $applyRepository, Student $student, StudentChecker $checker)
+    public function finishedByStudent(StudentRepository $repository, applyRepository $applyRepository, RecruitRepository $recruitRepository, RecruitHelper $recruitHelper, Student $student, StudentChecker $checker)
     {   
         if ($checker->studentValid($student)) {
             return $this->render('apply/finished-student.html.twig', [
@@ -56,7 +60,9 @@ class ApplyRenderController extends AbstractController
                 'applies' => $applyRepository->findBy(['student' => $student, 'refused' => false, 'unavailable' => false, 'finished' => false]),
                 'finished' => $applyRepository->findBy(['student' => $student, 'finished' => true]),
                 'fresh' =>  $applyRepository->findByStudentByFresh($student),
-                'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true])
+                'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true]),
+                'freshRecruit' => $recruitRepository->findByStudentByFresh($student), // nb candidates
+                'hiredRecruit' => $recruitHelper->checkHired('student', $student), // confirm warning
             ]);
         }
     }
@@ -162,16 +168,17 @@ class ApplyRenderController extends AbstractController
      * @IsGranted("ROLE_SUPER_STUDENT")
      * @ParamConverter("student", options={"id" = "student_id"})
      */
-    public function showOfferProfile(StudentRepository $studentRepository, ApplyRepository $applyRepository, Offers $offer, Student $student, StudentChecker $checker): Response
+    public function showOfferProfile(StudentRepository $studentRepository, ApplyRepository $applyRepository, RecruitRepository $recruitRepository, RecruitHelper $recruitHelper, Offers $offer, Student $student, StudentChecker $checker): Response
     {   
        if($checker->studentApplyValid($student, $offer)) {
             return $this->render('apply/show_hired.html.twig', [
                 'offers' => $offer,
                 'student' => $student,
                 'fresh' =>  $applyRepository->findByStudentByFresh($student),
-                // 'hired' => $applyRepository->checkIfHired($student),
                 'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true]),
                 'finished' =>  $applyRepository->findBy(['student' => $student, 'finished' => true]),
+                'freshRecruit' => $recruitRepository->findByStudentByFresh($student), // nb candidates
+                'hiredRecruit' => $recruitHelper->checkHired('student', $student), // confirm warning
             ]);
         }
     }

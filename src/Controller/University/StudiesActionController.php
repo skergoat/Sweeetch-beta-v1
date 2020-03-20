@@ -236,7 +236,7 @@ class StudiesActionController extends AbstractController
      /**
      * @Route("/school/studies/new/{school}", name="studies_new", methods={"GET","POST"})
      */
-    public function new(Request $request, School $school, SchoolChecker $checker): Response
+    public function new(Request $request, School $school, StudiesRepository $studiesRepository, RecruitRepository $recruitRepository, RecruitHelper $recruitHelper, SchoolChecker $checker): Response
     {
         if ($checker->schoolValid($school)) {
 
@@ -256,10 +256,15 @@ class StudiesActionController extends AbstractController
                 return $this->redirectToRoute('school_studies_index', [ 'id' => $school->getId() ]);
             }
 
+            $studies = $studiesRepository->findBy(['school' => $school]);
+
             return $this->render('studies/new.html.twig', [
                 'study' => $study,
                 'form' => $form->createView(),
-                'school' => $school
+                'school' => $school,
+                'hired' => $recruitRepository->findBy(['studies' => $studies, 'hired' => true],['date_recruit' => 'desc']),
+                'agree' => $recruitRepository->findBy(['studies' => $studies, 'agree' => true],['date_recruit' => 'desc']), 
+                'candidates' => $recruitHelper->nbCandidates($studies), // show nb applies 
             ]);
         }
     }

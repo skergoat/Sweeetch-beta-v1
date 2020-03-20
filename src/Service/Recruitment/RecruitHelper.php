@@ -54,6 +54,11 @@ class RecruitHelper extends CommonHelper
         // }
     }
 
+    public function nbCandidates($studies)
+    {
+        return $this->recruitRepository->findBy(['studies' => $studies, 'refused' => 0, 'unavailable' => 0, 'finished' => 0]);
+    }
+
     // has no job but has school
     // public function hasRecruit($student)
     // {
