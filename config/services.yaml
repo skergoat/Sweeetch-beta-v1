@@ -11,6 +11,7 @@ parameters:
     # maintenance:
     #     statut: true
     #     ipAuthorized: ["::1","192.168.1.101"]
+    google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
 
 services:
     # default configuration for services in *this* file
