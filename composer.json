@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/annotations": "^1.8",
+        "excelwebzone/recaptcha-bundle": "^1.5",
         "gedmo/doctrine-extensions": "^2.4",
         "knplabs/knp-paginator-bundle": "^5.1",
         "league/html-to-markdown": "^4.9",
