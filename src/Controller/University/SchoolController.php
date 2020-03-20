@@ -8,11 +8,11 @@ use App\Entity\Student;
 use App\Entity\Pictures;
 use App\Form\SchoolType;
 use App\Form\UpdateSchoolType;
+use App\Service\SecurityHelper;
 use App\Service\UploaderHelper;
 use App\Repository\UserRepository;
 use App\Service\Mailer\UserMailer;
 use App\Repository\ApplyRepository;
-// use App\Service\Mailer\ForgottenMailer;
 use App\Form\SchoolEditPasswordType;
 use App\Repository\SchoolRepository;
 use App\Repository\RecruitRepository;
@@ -39,7 +39,7 @@ class SchoolController extends AbstractController
      * @Route("/", name="school_index", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function index(SchoolRepository $schoolRepository, PaginatorInterface $paginator, Request $request, AdminChecker $checker): Response
+    public function index(SchoolRepository $schoolRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $queryBuilder = $schoolRepository->findAllPaginated("DESC");
 
@@ -57,44 +57,25 @@ class SchoolController extends AbstractController
     /**
      * @Route("/new", name="school_new", methods={"GET","POST"})
      */
-    public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder, UserRepository $userRepository, UserMailer $mailer): Response
+    public function new(Request $request, SecurityHelper $securityHelper): Response
     {
         $school = new School();
         $form = $this->createForm(SchoolType::class, $school);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            // get school
             $school = $form->getData();
-
-             // set roles 
-             $user = $school->getUser();
-             // $user->setRoles(['ROLE_STUDENT', 'ROLE_NEW']);
-             $user->setRoles(['ROLE_SCHOOL']);
-             $user->setConfirmed(false);
-             $user->setPassword($passwordEncoder->encodePassword(
-                 $user,
-                 $user->getPassword()
-            ));
-
-            // send notif to admins 
-            $admins = $userRepository->findByAdmin("ROLE_ADMIN");
-            foreach($admins as $admins) {
-                $mailer->sendNewUsers($admins, $school);
-            }
-
-             // On génère un token et on l'enregistre
-            $user->setActivateToken(md5(uniqid()));
-            // On génère l'e-mail
-            $mailer->sendActivate($user);
-
+            // set user
+            $securityHelper->newUser($school, 'ROLE_SCHOOL');
+            // save
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($school);
             $entityManager->flush();
-
+            // render 
             return $this->redirectToRoute('app_login');
         }
-
+        // render 
         return $this->render('school/new.html.twig', [
             'school' => $school,
             'form' => $form->createView(),
@@ -110,7 +91,7 @@ class SchoolController extends AbstractController
         if ($checker->schoolValid($school)) {
             // get school studies 
             $studies = $studiesRepository->findBy(['school' => $school]);
-
+            // render 
             return $this->render('school/show.html.twig', [
                 'school' => $school,
                 'studies' => $studiesRepository->findBy(['school' => $school], ['id' => 'desc']),
@@ -133,55 +114,32 @@ class SchoolController extends AbstractController
      * @Route("/{id}/edit", name="school_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_SCHOOL")
      */
-    public function edit(Request $request, School $school, UserPasswordEncoderInterface $passwordEncoder, UploaderHelper $uploaderHelper, RecruitRepository $recruitRepository, StudiesRepository $studiesRepository, RecruitHelper $recruitHelper, SchoolChecker $checker): Response
+    public function edit(Request $request, School $school, UserPasswordEncoderInterface $passwordEncoder, RecruitRepository $recruitRepository, StudiesRepository $studiesRepository, RecruitHelper $recruitHelper, UploaderHelper $uploaderHelper, SecurityHelper $securityHelper, SchoolChecker $checker): Response
     {
         if ($checker->schoolValid($school)) {
-
+            // get form 
             $form = $this->createForm(UpdateSchoolType::class, $school);
             $formPassword = $this->createForm(SchoolEditPasswordType::class, $school); 
             // check old pass 
             $oldPass = $school->getUser()->getPassword();
-
+            // handle form 
             $form->handleRequest($request);
             $formPassword->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid() || $formPassword->isSubmitted() && $formPassword->isValid()) {
-                // edit password 
-                $user = $formPassword->getData()->getUser();
-
-                if($user->getPassword() != $oldPass)
-                {
-                    $user->setPassword($passwordEncoder->encodePassword(
-                        $user,
-                        $user->getPassword()
-                    ));
-                }
-
+                // edit user data 
+                $securityHelper->editUser($formPassword->getData()->getUser(), $oldPass);
+                // upload file 
                 $uploadedFile = $form['pictures']->getData();
-
-                if($uploadedFile) {
-
-                    if($school->getPictures() != null) {
-                        $newFilename = $uploaderHelper->uploadFile($uploadedFile, $school->getPictures()->getFileName());
-                    }
-                    else {
-                        $newFilename = $uploaderHelper->uploadFile($uploadedFile, null);
-                    }
-
-                    $document = new Pictures;
-                    $document->setFileName($newFilename);
-                    $document->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $newFilename);
-                    $document->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream'); 
-                    $school->setPictures($document);                   
-                }
-
+                $uploaderHelper->uploadEdit($uploadedFile, $school);
+                // save 
                 $this->getDoctrine()->getManager()->flush();
                 $this->addFlash('success', 'Mise à jour réussie');
                 return $this->redirectToRoute('school_edit', ['id' => $school->getId() ]);
             }
-
+            // get studies
             $studies = $studiesRepository->findBy(['school' => $school]);
-
+            // render 
             return $this->render('school/edit.html.twig', [
                 'school' => $school,
                 'form' => $form->createView(),

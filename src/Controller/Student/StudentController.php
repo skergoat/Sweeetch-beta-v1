@@ -10,8 +10,10 @@ use App\Entity\Student;
 use App\Entity\Pictures;
 use App\Form\StudentType;
 use App\Entity\StudentCard;
+use App\Service\StudentHelper;
 use App\Entity\ProofHabitation;
 use App\Form\UpdateStudentType;
+use App\Service\SecurityHelper;
 use App\Service\UploaderHelper;
 use Gedmo\Sluggable\Util\Urlizer;
 use App\Form\UpdateStudentDocType;
@@ -49,7 +51,6 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
  */
 class StudentController extends AbstractController
 {
-
     private $entities = ['Resume', 'IdCard', 'StudentCard', 'ProofHabitation'];
 
     /**
@@ -58,85 +59,39 @@ class StudentController extends AbstractController
      */
     public function index(StudentRepository $studentRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        // if($checker->adminValid($user)) 
-        // {
-            $queryBuilder = $studentRepository->findAllPaginated("DESC");
+        $queryBuilder = $studentRepository->findAllPaginated("DESC");
 
-            $pagination = $paginator->paginate(
-                $queryBuilder,
-                $request->query->getInt('page', 1),
-                10
-            );
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page', 1),
+            10
+        );
 
-            return $this->render('student/index.html.twig', [
-                'students' => $pagination,
-            ]);
-        // }
+        return $this->render('student/index.html.twig', [
+            'students' => $pagination,
+        ]);
     }
 
     /**
      * @Route("/new/", name="student_new", methods={"GET","POST"})
      */
-    public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder, UploaderHelper $uploaderHelper, ValidatorInterface $validator, UserRepository $userRepository, UserMailer $mailer): Response
+    public function new(Request $request, StudentHelper $studentHelper, SecurityHelper $securityHelper): Response
     {
         $student = new Student();
         $form = $this->createForm(StudentType::class, $student);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            // get student 
             $student = $form->getData();
-
-            // get uploaded files name 
+            // upload files 
             $keys = array_keys($request->files->get('student'));
-          
-            foreach($keys as $key) {
-
-                $uploadedFile = $form[$key]['file']->getData();
-
-                $entity = $form[$key]->getName();
-                $get = 'get' . ucfirst($entity); 
-                $set = 'set' . ucfirst($entity);
-                $class = "App\Entity\\" . ucfirst($entity);
-
-                if($uploadedFile) {
-                    $newFilename = $uploaderHelper->uploadPrivateFile($uploadedFile, $student->$get()->getFileName());
-                    
-                    $document = new $class;
-                    $document->setFileName($newFilename);
-                    $document->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $newFilename);
-                    $document->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');                    
-                } 
-                
-                $student->$set($document);
-            }  
-            
-            // set roles 
-            $user = $student->getUser();
-
-            // $user->setRoles(['ROLE_STUDENT', 'ROLE_NEW']);
-            $user->setRoles(['ROLE_STUDENT']);
-            $user->setConfirmed(false);
-            $user->setPassword($passwordEncoder->encodePassword(
-                $user,
-                $user->getPassword()
-            ));
-            // On génère un token et on l'enregistre
-            $user->setActivateToken(md5(uniqid()));
-            // On génère l'e-mail
-            $mailer->sendActivate($user);
-
-            // send notif to admins 
-            $admins = $userRepository->findByAdmin("ROLE_ADMIN");
-
-            foreach($admins as $admins) {
-                $mailer->sendNewUser($admins, $student);
-            }
-
+            $studentHelper->uploadNew($form, $keys, $student);
+            // set user
+            $securityHelper->newUser($student, 'ROLE_STUDENT');
             // create empty profile 
             $profile = new Profile;
             $student->setProfile($profile);
-
             // persist
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($profile);
@@ -176,105 +131,35 @@ class StudentController extends AbstractController
      * @Route("/{id}/edit", name="student_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function edit(Request $request, Student $student, UserPasswordEncoderInterface $passwordEncoder, UploaderHelper $uploaderHelper, ApplyRepository $applyRepository, RecruitRepository $recruitRepository,  RecruitHelper $recruitHelper, StudentChecker $checker): Response
+    public function edit(Request $request, Student $student, ApplyRepository $applyRepository, RecruitRepository $recruitRepository, SecurityHelper $securityHelper, StudentHelper $studentHelper, RecruitHelper $recruitHelper, UploaderHelper $uploaderHelper, StudentChecker $checker): Response
     {
         if ($checker->studentValid($student)) {
-
+            // get forms 
             $form = $this->createForm(UpdateStudentGeneralType::class, $student);
             $formDoc = $this->createForm(UpdateStudentDocType::class, $student);
             $formPassword = $this->createForm(StudentEditPasswordType::class, $student); 
-
-            // check old pass 
+            // check old password
             $oldPass = $student->getUser()->getPassword();
-
+            // handle forms
             $form->handleRequest($request);
             $formPassword->handleRequest($request);
             $formDoc->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid() || $formPassword->isSubmitted() && $formPassword->isValid() || $formDoc->isSubmitted() && $formDoc->isValid()) {
-
+                // get student 
                 $student = $form->getData();
-
+                // upload identity picture 
                 $uploadedFile = $form['pictures']->getData();
-
-                if($uploadedFile) {
-
-                    if($student->getPictures() != null) {
-                        $newFilename = $uploaderHelper->uploadFile($uploadedFile, $student->getPictures()->getFileName());
-                    }
-                    else {
-                        $newFilename = $uploaderHelper->uploadFile($uploadedFile, null);
-                    }
-
-                    $document = new Pictures;
-                    $document->setFileName($newFilename);
-                    $document->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $newFilename);
-                    $document->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream'); 
-                    $student->setPictures($document);                   
+                $uploaderHelper->uploadEdit($uploadedFile, $student);
+                // upload docs 
+                if($request->files->get('update_student_doc') != null) { 
+                    $studentHelper->editStudentDocs($formDoc, $form, $student, $request);
                 }
-
-                // get uploaded files name 
-                if($request->files->get('update_student_doc') != null) {
-                    $keys = array_keys($request->files->get('update_student_doc'));
-                
-                    foreach($keys as $key) {
-
-                        $uploadedFile = $formDoc[$key]->getData();
-
-                        $entity = $formDoc[$key]->getName();
-
-                        switch($entity) {
-                            case 'resumes':
-                                $entity = 'resume';
-                                $document = $form->getData()->getResume();
-                            break;
-                            case 'idCards':
-                                $entity = 'idCard';
-                                $document = $form->getData()->getIdCard();
-                            break;
-                            case 'studentCards':
-                                $entity = 'studentCard';
-                                $document = $form->getData()->getStudentCard();
-                            break;
-                            case 'proofHabitations':
-                                $entity = 'proofHabitation';
-                                $document = $form->getData()->getProofHabitation();
-                            break;
-                        }
-
-                        $get = 'get' . ucfirst($entity); 
-                        $set = 'set' . ucfirst($entity);
-                        $class = "App\Entity\\" . ucfirst($entity);
-
-                        if($uploadedFile) {
-                            $newFilename = $uploaderHelper->uploadPrivateFile($uploadedFile, $student->$get()->getFileName());
-                            
-                            $document->setFileName($newFilename);
-                            $document->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $newFilename);
-                            $document->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');                    
-                        } 
-
-                        if($uploadedFile != null) {
-                            $student->$set($document);
-                        } 
-                    }
-                }
-                
-                // edit password 
-                $user = $formPassword->getData()->getUser();
-
-                if($user->getPassword() != $oldPass)
-                {
-                    $user->setPassword($passwordEncoder->encodePassword(
-                        $user,
-                        $user->getPassword()
-                    ));
-                }
-
+                // edit user data 
+                $securityHelper->editUser($formPassword->getData()->getUser(), $oldPass);
+                // save and redirect
                 $manager = $this->getDoctrine()->getManager()->flush();
-
                 $this->addFlash('success', 'Mise à jour réussie');
-
                 return $this->redirectToRoute('student_edit', ['id' => $student->getId()]);
             }
 
@@ -288,7 +173,6 @@ class StudentController extends AbstractController
                 'freshRecruit' => $recruitRepository->findByStudentByFresh($student), // nb candidates
                 'hiredRecruit' => $recruitHelper->checkHired('student', $student), // confirm warning
             ]);
-
         }   
     }
 
@@ -314,9 +198,9 @@ class StudentController extends AbstractController
             $currentUserId = $this->getUser()->getId();
             if ($currentUserId == $student->getUser()->getId())
             {
-            $session = $this->get('session');
-            $session = new Session();
-            $session->invalidate();
+                $session = $this->get('session');
+                $session = new Session();
+                $session->invalidate();
             }
             // save 
             $entityManager = $this->getDoctrine()->getManager();

@@ -86,7 +86,6 @@ class ApplyActionsController extends AbstractController
             $apply->setRefused(false);
             $apply->setUnavailable(false);
             $apply->setFinished(false);
-            // $apply->setWait(false);
             $apply->setDateRecruit(new \DateTime('now', new DateTimeZone('Europe/Paris')));
             $apply->setDateFinished(new \DateTime('now', new DateTimeZone('Europe/Paris')));
             $apply->setOffers($offers);
