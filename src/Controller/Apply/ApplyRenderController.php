@@ -251,20 +251,34 @@ class ApplyRenderController extends AbstractController
     {   
         if($checker->studentProfileValid($company, $offers, $student)) {
 
-            $offer = $offersRepository->findBy(['company' => $company]);
+            if($helper->checkUnavailable($offers, $student) == false) {
 
-            return $this->render('apply/show_applied_finished.html.twig', [
-                'student' => $student,
-                'company' => $company,
-                'offers' => $offers,
-                 // infos 
-                 'hired' => $helper->checkHired('offers', $offer),
-                 'agree' => $helper->checkAgree('offers', $offer),
-                 'closed' =>  $helper->checkOfferFinished($offer),
-                //  'confirmed' => $helper->checkConfirmed('offers', $offers),
-                 'finished' =>  $helper->checkFinished('offers', $offer),
-                 'candidates' => $helper->nbCandidates($offer),
-            ]);
+                if($helper->checkRefused($offers, $student) == false) {
+
+                    $offer = $offersRepository->findBy(['company' => $company]);
+
+                    return $this->render('apply/show_applied_finished.html.twig', [
+                        'student' => $student,
+                        'company' => $company,
+                        'offers' => $offers,
+                        // infos 
+                        'hired' => $helper->checkHired('offers', $offer),
+                        'agree' => $helper->checkAgree('offers', $offer),
+                        'closed' =>  $helper->checkOfferFinished($offer),
+                        //  'confirmed' => $helper->checkConfirmed('offers', $offers),
+                        'finished' =>  $helper->checkFinished('offers', $offer),
+                        'candidates' => $helper->nbCandidates($offer),
+                    ]);
+                }
+                else {
+                    $this->addFlash('error', 'Requête Invalide');
+                    return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $company->getId()]);
+                }
+            }
+            else {
+                $this->addFlash('error', 'Requête Invalide');
+                return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $company->getId()]);
+            }
         }
     }
 }
