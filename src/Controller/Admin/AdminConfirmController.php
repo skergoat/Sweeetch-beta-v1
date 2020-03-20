@@ -51,6 +51,7 @@ class AdminConfirmController extends AbstractController
      */
     public function sendWarning(Mailer $mailer, User $user, Request $request, $from)
     {
+        // go back in roles 
         if($user->getRoles() == ['ROLE_SUPER_STUDENT']) {
             $user->setRoles(['ROLE_STUDENT']); 
             $this->getDoctrine()->getManager()->flush();
@@ -65,7 +66,7 @@ class AdminConfirmController extends AbstractController
             $user->setRoles(['ROLE_SCHOOL']); 
             $this->getDoctrine()->getManager()->flush();
         }
-
+        // get name 
         if($user->getStudent() != null)
         {
             $name = $user->getStudent()->getName();
@@ -78,12 +79,11 @@ class AdminConfirmController extends AbstractController
         {
             $name = $user->getSchool()->getFirstname();
         }
-
         $parameters = $request->request->all();
-       
+        // get mail 
         $email = $parameters['email'];
+        // get documents  
         $array = [];
-
         if(isset($parameters['resume']) && $parameters['resume'] != NULL) {
             $array[] = 'CV';
         }
@@ -103,16 +103,16 @@ class AdminConfirmController extends AbstractController
         if( isset($parameters['siret']) && $parameters['siret'] != NULL) {
             $array[] = 'numero de siret';
         }
-
+        // set message 
         $parameters['message'] != '' ? $message = $parameters['message'] : $message = '';
-
+        // save 
         if($this->isCsrfTokenValid('warning'.$this->getUser()->getId(), $request->request->get('_token'))) {
             $mailer->sendWarningMessage($name, $email, $array, $message);
         }
         else {
             throw new \Exception('Demande Invalide');
         }
-
+        // render 
         $this->addFlash('success', 'Message Envoyé');
 
         if($from == 'admin' || $from == 'student_index' || $from == 'company_index' || $from == 'school_index') {

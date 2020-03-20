@@ -94,6 +94,7 @@ class SecurityHelper
         }
     }
 
+    // edit user password 
     public function editUser($user, $oldPass)
     {
         if($user->getPassword() != $oldPass)
