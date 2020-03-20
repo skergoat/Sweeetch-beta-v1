@@ -32,18 +32,7 @@ class OffersController extends AbstractController
      */
     public function index(OffersRepository $offersRepository, PaginatorInterface $paginator, Request $request, $page): Response
     {
-        // On initialise le formulaire
-        // $form = $this->createForm(FindOffersType::class);
-        // // On traite le formulaire
-        // $form->handleRequest($request);
-        // Si le formulaire est valide
-        // if ($form->isSubmitted() && $form->isValid()) {
-        //     $domain = $form->getData();
-        //     $queryBuilder = $offersRepository->findBy(['state' => false, 'domain' => $domain], ['domain' => 'desc']);
-        // }
-        // else {
-            $queryBuilder = $offersRepository->findBy(['state' => false], ['id' => 'desc']);
-        // } 
+        $queryBuilder = $offersRepository->findBy(['state' => false], ['id' => 'desc']);
 
         $pagination = $paginator->paginate(
             $queryBuilder,
@@ -52,7 +41,6 @@ class OffersController extends AbstractController
         );
 
         return $this->render('offers/index.html.twig', [
-            // 'form' => $form->createView(),
             'offers' => $pagination,
             'page' => $page
         ]);
@@ -93,7 +81,6 @@ class OffersController extends AbstractController
             if ($form->isSubmitted() && $form->isValid()) {
 
                 $offer = $form->getData();
-
                 $offer->setCompany($company);
                 $offer->setState(false);
 
@@ -102,7 +89,6 @@ class OffersController extends AbstractController
                 $entityManager->flush();
 
                 $this->addFlash('success', 'Emploi crée !');
-
                 return $this->redirectToRoute('offers_new', ['id' => $company->getId()]);
             }
 
@@ -124,16 +110,16 @@ class OffersController extends AbstractController
     /**
      * @Route("offers/{id}/{page<\d+>?1}", name="offers_show", methods={"GET"})
      */
-    public function show(Offers $offer, ApplyRepository $applyRepository, AuthorizationCheckerInterface $authorizationChecker, $page): Response
+    public function show(Offers $offer, ApplyRepository $applyRepository, AuthorizationCheckerInterface $authorizationChecker, ApplyHelper $helper, $page): Response
     {
         if (!$authorizationChecker->isGranted('ROLE_ADMIN')) { // if ADMIN then ok 
         
-            $hired = $applyRepository->findBy(['offers' => $offer, 'hired' => 1]);
-            $agree = $applyRepository->findBy(['offers' => $offer, 'agree' => 1]);
-            $confirmed = $applyRepository->findBy(['offers' => $offer, 'confirmed' => 1]);
-            $finished = $applyRepository->findBy(['offers' => $offer, 'finished' => 1]);
+            // $hired = $applyRepository->findBy(['offers' => $offer, 'hired' => 1]);
+            // $agree = $applyRepository->findBy(['offers' => $offer, 'agree' => 1]);
+            // $confirmed = $applyRepository->findBy(['offers' => $offer, 'confirmed' => 1]);
+            // $finished = $applyRepository->findBy(['offers' => $offer, 'finished' => 1]);
     
-            if($hired || $agree || $confirmed || $finished) {  // if there are already applies then ... 
+            if($helper->checkHired('offer', $offer) || $helper->checkAgree('offer', $offer) || $helper->checkConfirmed('offer', $offer) || $helper->checkFinished('offer', $offer)) {  // if there are already applies then ... 
 
                 if ($authorizationChecker->isGranted('ROLE_SUPER_STUDENT')) { // if STUDENT then ok
                 
