@@ -19,6 +19,22 @@ class RecruitRepository extends ServiceEntityRepository
         parent::__construct($registry, Recruit::class);
     }
 
+    public function findByStudentByFresh($student) 
+    {
+        return $this->createQueryBuilder('u')
+            ->select('count(u.id)')
+            ->andWhere('u.student = :student AND u.refused = :refused AND u.unavailable = :unavailable AND u.hired = :hired AND u.agree = :agree AND u.finished = :finished')
+            ->setParameter('student', $student)
+            ->setParameter('refused', false)
+            ->setParameter('unavailable', false)
+            ->setParameter('hired', false)
+            ->setParameter('agree', false)
+            ->setParameter('finished', false)
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
+
     public function setToUnavailables($studies, $student) {
 
         if($student == null)

@@ -8,6 +8,8 @@ use App\Entity\Language;
 use App\Form\ProfileType;
 use App\Repository\ApplyRepository;
 use App\Repository\ProfileRepository;
+use App\Repository\RecruitRepository;
+use App\Service\Recruitment\RecruitHelper;
 use App\Service\UserChecker\StudentChecker;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,7 +30,7 @@ class ProfileController extends AbstractController
      * @IsGranted("ROLE_STUDENT")
      * @ParamConverter("student", options={"id" = "student_id"})
      */
-    public function edit(Request $request, Profile $profile, Student $student, ApplyRepository $applyRepository, StudentChecker $checker): Response
+    public function edit(Request $request, Profile $profile, Student $student, ApplyRepository $applyRepository, RecruitRepository $recruitRepository, RecruitHelper $recruitHelper, StudentChecker $checker): Response
     {
         if ($checker->studentProfileValid($student, $profile)) {
 
@@ -49,8 +51,9 @@ class ProfileController extends AbstractController
                 'form' => $form->createView(),
                 'student' => $student,
                 'fresh' =>  $applyRepository->findByStudentByFresh($student),
-                // 'hired' => $applyRepository->checkIfHired($student)
-                'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true])
+                'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true]),
+                'freshRecruit' => $recruitRepository->findByStudentByFresh($student), // nb candidates
+                'hiredRecruit' => $recruitHelper->checkHired('student', $student), // confirm warning
             ]);
         }  
     }

@@ -21,10 +21,12 @@ use App\Service\Mailer\UserMailer;
 use App\Repository\ApplyRepository;
 use App\Repository\ResumeRepository;
 use App\Form\StudentEditPasswordType;
+use App\Repository\RecruitRepository;
 use App\Repository\StudentRepository;
 use App\Form\UpdateStudentGeneralType;
 use App\Service\Recruitment\ApplyHelper;
 use App\Service\UserChecker\AdminChecker;
+use App\Service\Recruitment\RecruitHelper;
 use App\Service\UserChecker\StudentChecker;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -154,7 +156,7 @@ class StudentController extends AbstractController
      * @Route("/{id}", name="student_show", methods={"GET"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function show(Student $student, ApplyRepository $applyRepository, StudentChecker $checker, ApplyHelper $helper): Response
+    public function show(Student $student, ApplyRepository $applyRepository, RecruitRepository $recruitRepository, StudentChecker $checker, ApplyHelper $helper, RecruitHelper $recruitHelper): Response
     {
         if ($checker->studentValid($student)) {
 
@@ -163,7 +165,9 @@ class StudentController extends AbstractController
                 'applies' => $helper->checkApplies('student', $student),    // open applies 
                 'process' => $applyRepository->findByStudentProcess($student),  // processing applies 
                 'fresh' => $applyRepository->findByStudentByFresh($student), // nb candidates
-                'hired' => $helper->checkHired('student', $student), // confirm warning 
+                'hired' => $helper->checkHired('student', $student), // confirm warning
+                'freshRecruit' => $recruitRepository->findByStudentByFresh($student), // nb candidates
+                'hiredRecruit' => $recruitHelper->checkHired('student', $student), // confirm warning 
             ]);
         }  
     }
@@ -172,7 +176,7 @@ class StudentController extends AbstractController
      * @Route("/{id}/edit", name="student_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function edit(Request $request, Student $student, UserPasswordEncoderInterface $passwordEncoder, UploaderHelper $uploaderHelper, ApplyRepository $applyRepository, StudentChecker $checker): Response
+    public function edit(Request $request, Student $student, UserPasswordEncoderInterface $passwordEncoder, UploaderHelper $uploaderHelper, ApplyRepository $applyRepository, RecruitRepository $recruitRepository,  RecruitHelper $recruitHelper, StudentChecker $checker): Response
     {
         if ($checker->studentValid($student)) {
 
@@ -280,8 +284,9 @@ class StudentController extends AbstractController
                 'formDoc' => $formDoc->createView(),
                 'formPassword' => $formPassword->createView(),
                 'fresh' => $applyRepository->findByStudentByFresh($student),
-                // 'hired' => $applyRepository->checkIfHired($student)
-                'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true])
+                'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true]),
+                'freshRecruit' => $recruitRepository->findByStudentByFresh($student), // nb candidates
+                'hiredRecruit' => $recruitHelper->checkHired('student', $student), // confirm warning
             ]);
 
         }   

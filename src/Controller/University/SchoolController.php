@@ -105,7 +105,7 @@ class SchoolController extends AbstractController
      * @Route("/{id}", name="school_show", methods={"GET"})
      * @IsGranted("ROLE_SCHOOL")
      */
-    public function show(School $school, StudiesRepository $studiesRepository, RecruitRepository $recruitRepository, SchoolChecker $checker): Response
+    public function show(School $school, StudiesRepository $studiesRepository, RecruitRepository $recruitRepository, SchoolChecker $checker, RecruitHelper $recruitHelper): Response
     {
         if ($checker->schoolValid($school)) {
             // get school studies 
@@ -123,7 +123,8 @@ class SchoolController extends AbstractController
                     'finished' => false,
                 ], ['date_recruit' => 'desc']),
                 'hired' => $recruitRepository->findBy(['studies' => $studies, 'hired' => true],['date_recruit' => 'desc']),
-                'agree' => $recruitRepository->findBy(['studies' => $studies, 'agree' => true],['date_recruit' => 'desc']),
+                'agree' => $recruitRepository->findBy(['studies' => $studies, 'agree' => true],['date_recruit' => 'desc']), 
+                'candidates' => $recruitHelper->nbCandidates($studies), // show nb applies 
             ]);
         }
     }
@@ -132,7 +133,7 @@ class SchoolController extends AbstractController
      * @Route("/{id}/edit", name="school_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_SCHOOL")
      */
-    public function edit(Request $request, School $school, UserPasswordEncoderInterface $passwordEncoder, UploaderHelper $uploaderHelper, SchoolChecker $checker): Response
+    public function edit(Request $request, School $school, UserPasswordEncoderInterface $passwordEncoder, UploaderHelper $uploaderHelper, RecruitRepository $recruitRepository, StudiesRepository $studiesRepository, RecruitHelper $recruitHelper, SchoolChecker $checker): Response
     {
         if ($checker->schoolValid($school)) {
 
@@ -179,10 +180,15 @@ class SchoolController extends AbstractController
                 return $this->redirectToRoute('school_edit', ['id' => $school->getId() ]);
             }
 
+            $studies = $studiesRepository->findBy(['school' => $school]);
+
             return $this->render('school/edit.html.twig', [
                 'school' => $school,
                 'form' => $form->createView(),
                 'formPassword' => $formPassword->createView(),
+                'hired' => $recruitRepository->findBy(['studies' => $studies, 'hired' => true],['date_recruit' => 'desc']),
+                'agree' => $recruitRepository->findBy(['studies' => $studies, 'agree' => true],['date_recruit' => 'desc']), 
+                'candidates' => $recruitHelper->nbCandidates($studies), // show nb applies 
             ]);
         }
     }

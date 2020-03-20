@@ -113,6 +113,16 @@
                                     <i class="nav-icon fa fa-graduation-cap"></i>
                                     <p>
                                         Cursus
+
+                                        {% if agree is defined or hired is defined or closed is defined %}
+                                            {% if agree | length > 0 %}
+                                            <span class="badge badge-info right" title="candidatures">A Finaliser : {{ agree | length }}</span>
+                                            {% elseif hired | length > 0 %}
+                                            <span class="badge badge-warning right" title="candidatures">En attente : {{ hired | length }}</span>
+                                            {% elseif candidates| length > 0 %}
+                                            <span class="badge badge-primary right" title="candidatures">Candidats : {{ candidates | length }}</span>
+                                            {% endif %}
+                                        {% endif %}
                                     </p>
                                 </a>
                                 {% if is_granted('ROLE_SUPER_SCHOOL') %}

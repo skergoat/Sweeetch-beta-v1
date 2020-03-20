@@ -196,6 +196,11 @@
                                     <i class="nav-icon fa fa-university"></i>
                                     <p>
                                         Formations 
+                                        {% if hiredRecruit == true %}
+                                        <span class="right badge badge-warning" title="mission à confirmer">à valider</span>
+                                        {% elseif freshRecruit > 0 %}
+                                        <span class="badge badge-primary right" title="candidatures">{{ freshRecruit }}</span> 
+                                        {% endif %}   
                                     </p>
                                 </a>
 
