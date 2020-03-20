@@ -121,18 +121,18 @@ class ApplyRenderController extends AbstractController
     public function showByCompany(ApplyRepository $applyRepository, Offers $offer, Company $company, OffersRepository $offersRepository, CompanyChecker $checker, ApplyHelper $helper): Response
     {   
         if($checker->companyOffersValid($company, $offer)) {
-            // get all company offers
+            
             $offers = $offersRepository->findBy(['company' => $company]);
 
             return $this->render('apply/show_preview.html.twig', [
                 'offers' => $offer, // current single offer content 
                 'company' => $company, // company layout 
                 'applies' => $applyRepository->findBy(['offers' => $offer, 'refused' => false, 'unavailable' => false, 'confirmed' => false, 'finished' => false], ['date_recruit' => 'desc']),
-                 // infos
-                 'hired' => $helper->checkHired('offers', $offers),
-                 'agree' => $helper->checkAgree('offers', $offers),
-                 'closed' =>  $helper->checkOfferFinished($offers),
-                 'candidates' => $helper->nbCandidates($offers),
+                // infos
+                'hired' => $helper->checkHired('offers', $offers),
+                'agree' => $helper->checkAgree('offers', $offers),
+                'closed' =>  $helper->checkOfferFinished($offers),
+                'candidates' => $helper->nbCandidates($offers),
             ]);
         }
     }
@@ -171,15 +171,31 @@ class ApplyRenderController extends AbstractController
     public function showOfferProfile(StudentRepository $studentRepository, ApplyRepository $applyRepository, RecruitRepository $recruitRepository, RecruitHelper $recruitHelper, Offers $offer, Student $student, StudentChecker $checker): Response
     {   
        if($checker->studentApplyValid($student, $offer)) {
-            return $this->render('apply/show_hired.html.twig', [
-                'offers' => $offer,
-                'student' => $student,
-                'fresh' =>  $applyRepository->findByStudentByFresh($student),
-                'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true]),
-                'finished' =>  $applyRepository->findBy(['student' => $student, 'finished' => true]),
-                'freshRecruit' => $recruitRepository->findByStudentByFresh($student), // nb candidates
-                'hiredRecruit' => $recruitHelper->checkHired('student', $student), // confirm warning
-            ]);
+
+            if($helper->checkUnavailable($offer, $student) == false) {
+
+                if($helper->checkRefused($offer, $student) == false) {
+
+                    return $this->render('apply/show_hired.html.twig', [
+                        'offers' => $offer,
+                        'student' => $student,
+                        'fresh' =>  $applyRepository->findByStudentByFresh($student),
+                        'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true]),
+                        'finished' =>  $applyRepository->findBy(['student' => $student, 'finished' => true]),
+                        'freshRecruit' => $recruitRepository->findByStudentByFresh($student), // nb candidates
+                        'hiredRecruit' => $recruitHelper->checkHired('student', $student), // confirm warning
+                    ]);
+
+                }
+                else {
+                    $this->addFlash('error', 'Requête Invalide');
+                    return $this->redirectToRoute('school_student_index', ['id' => $student->getId()]);
+                }
+            }
+            else {
+                $this->addFlash('error', 'Requête Invalide');
+                return $this->redirectToRoute('school_student_index', ['id' => $student->getId()]);
+            }
         }
     }
 
@@ -193,21 +209,35 @@ class ApplyRenderController extends AbstractController
     {   
         if($checker->studentProfileValid($company, $offers, $student)) {
 
-            $offer = $offersRepository->findBy(['company' => $company]);
+            if($helper->checkUnavailable($offers, $student) == false) {
 
-            return $this->render('apply/show_applied.html.twig', [
-                'student' => $student,
-                'company' => $company,
-                'offers' => $offers,
-                 // infos 
-                 'hired' => $helper->checkHired('offers', $offer),
-                 'agree' => $helper->checkAgree('offers', $offer),
-                 'closed' =>  $helper->checkOfferFinished($offer),
+                if($helper->checkRefused($offers, $student) == false) {
 
-                //  'confirmed' => $helper->checkConfirmed('offers', $offers),
-                'finished' =>  $helper->checkFinished('offers', $offer),
-                'candidates' => $helper->nbCandidates($offer),
-            ]);
+                    $offer = $offersRepository->findBy(['company' => $company]);
+
+                    return $this->render('apply/show_applied.html.twig', [
+                        'student' => $student,
+                        'company' => $company,
+                        'offers' => $offers,
+                        // infos 
+                        'hired' => $helper->checkHired('offers', $offer),
+                        'agree' => $helper->checkAgree('offers', $offer),
+                        'closed' =>  $helper->checkOfferFinished($offer),
+
+                        //  'confirmed' => $helper->checkConfirmed('offers', $offers),
+                        'finished' =>  $helper->checkFinished('offers', $offer),
+                        'candidates' => $helper->nbCandidates($offer),
+                    ]);
+                }
+                else {
+                    $this->addFlash('error', 'Requête Invalide');
+                    return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $company->getId()]);
+                }
+            }
+            else {
+                $this->addFlash('error', 'Requête Invalide');
+                return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $company->getId()]);
+            }
         }
     }
 

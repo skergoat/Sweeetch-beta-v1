@@ -214,11 +214,54 @@
                                 <tr>
                                    <td><strong><a href="{{ path('offers_preview', {'id': applies.offers.id, 'company':applies.offers.company.id}) }}" >{{ applies.Offers.title }}</a></strong></td>
                                    {% if applies.hired == true %}
-                                   <td><span class="badge badge-danger" title="l'etudiant doit confirmer sa mission">En attente</span></td>
+                                   <td><span class="badge badge-warning" title="l'etudiant doit confirmer sa mission">En attente</span></td>
                                    {% elseif applies.agree == true %}
-                                   <td><span class="badge badge-warning" title="embauche en cours">Dossier en cours</span></td>
-                                   {% elseif applies.confirmed == true %}
-                                   <td><span class="badge badge-success" title="mission en cours">Mission en cours</span></td>
+                                   <td><span class="badge badge-info" title="embauche en cours">A confirmer</span></td>
+                                  {# {% elseif applies.confirmed == true %}
+                                   <td><span class="badge badge-success" title="mission en cours">Mission en cours</span></td>#}
+                                   {% endif %}
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="5">Aucun Elément</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card col-lg-12" style="padding:0px;">
+            <div class="card-header border-transparent">
+                <h3 class="card-title">Inscriptions aux écoles en cours</h3>
+        
+                <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                </div>
+            </div>
+        
+            <div class="card-body p-0 card-dashboard">
+                <div class="table-responsive">
+                    <table class="table m-0">
+                        <thead>
+                            <tr>
+                                <th>Mission</th>
+                                <th id="last-left">State</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for recruits in recruits %}
+                                <tr>
+                                   <td><strong><a href="{{ path('school_studies_show', {id:recruits.studies.id, school_id:recruits.studies.school.id}) }}" >{{ recruits.studies.title }}</a></strong></td>
+                                   {% if recruits.hired == true %}
+                                   <td><span class="badge badge-warning" title="l'etudiant doit confirmer sa mission">En attente</span></td>
+                                   {% elseif recruits.agree == true %}
+                                   <td><span class="badge badge-info" title="embauche en cours">A confirmer</span></td>
+                                   {# {% elseif recruits.finioshed == true %}
+                                   <td><span class="badge badge-success" title="mission en cours">Mission en cours</span></td>#}
                                    {% endif %}
                                 </tr>
                             {% else %}

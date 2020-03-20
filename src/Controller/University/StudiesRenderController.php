@@ -78,9 +78,9 @@ class StudiesRenderController extends AbstractController
                 'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true]),
                 'freshRecruit' => $recruitRepository->findByStudentByFresh($student), // nb candidates
                 'hiredRecruit' => $recruitHelper->checkHired('student', $student), // confirm warning
-                'hired' => $recruitRepository->findBy(['studies' => $studies, 'hired' => true],['date_recruit' => 'desc']),
-                'agree' => $recruitRepository->findBy(['studies' => $studies, 'agree' => true],['date_recruit' => 'desc']), 
-                'candidates' => $recruitHelper->nbCandidates($studies), // show nb applies 
+                'hired' => $recruitRepository->findBy(['studies' => $student, 'hired' => true],['date_recruit' => 'desc']),
+                'agree' => $recruitRepository->findBy(['studies' => $student, 'agree' => true],['date_recruit' => 'desc']), 
+                'candidates' => $recruitHelper->nbCandidates($student), // show nb applies 
             ]);
         } 
     }
@@ -148,19 +148,37 @@ class StudiesRenderController extends AbstractController
     * @IsGranted("ROLE_SUPER_STUDENT")
     * @ParamConverter("student", options={"id" = "student"})
     */
-    public function showHired(Studies $studies, Student $student, ApplyRepository $applyRepository, RecruitRepository $recruitRepository, RecruitHelper $recruitHelper)
+    public function showHired(Studies $studies, Student $student, ApplyRepository $applyRepository, RecruitRepository $recruitRepository, RecruitHelper $recruitHelper, SchoolChecker $checker)
     {
         // si autorise que pour son id et celle de ses ecoles ca devrait etre ok !!!!
         // attention a ce qu'il voit pas les unavailables pendant le recrutement !!!!
-        return $this->render('studies/show_hired.html.twig', [
-            'studies' => $studies,
-            'student' => $student,
-            'fresh' => $applyRepository->findByStudentByFresh($student),
-            'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true]),
-            'finished' => $recruitRepository->findBy(['student' => $student, 'finished' => true]),
-            'freshRecruit' => $recruitRepository->findByStudentByFresh($student), // nb candidates
-            'hiredRecruit' => $recruitHelper->checkHired('student', $student), // confirm warning
-        ]);  
+
+        if ($checker->schoolshowHireddValid($student, $studies)) {
+
+            if($recruitHelper->checkUnavailable($studies, $student) == false) {
+
+                if($recruitHelper->checkRefused($studies, $student) == false) {
+
+                    return $this->render('studies/show_hired.html.twig', [
+                        'studies' => $studies,
+                        'student' => $student,
+                        'fresh' => $applyRepository->findByStudentByFresh($student),
+                        'hired' => $applyRepository->findBy(['student' => $student, 'hired' => true]),
+                        'finished' => $recruitRepository->findBy(['student' => $student, 'finished' => true]),
+                        'freshRecruit' => $recruitRepository->findByStudentByFresh($student), // nb candidates
+                        'hiredRecruit' => $recruitHelper->checkHired('student', $student), // confirm warning
+                    ]); 
+                }
+                else {
+                    $this->addFlash('error', 'Requête Invalide');
+                    return $this->redirectToRoute('school_student_index', ['id' => $student->getId()]);
+                }
+            }
+            else {
+                $this->addFlash('error', 'Requête Invalide');
+                return $this->redirectToRoute('school_student_index', ['id' => $student->getId()]);
+            }
+        } 
     }
 
     /**
@@ -169,17 +187,34 @@ class StudiesRenderController extends AbstractController
     * @ParamConverter("school", options={"id" = "school"})
     * @ParamConverter("study", options={"id" = "study"})
     */
-    public function showApplied(Student $student, School $school, Studies $study, SchoolChecker $checkerRecruitRepository, RecruitRepository $recruitRepository, RecruitHelper $recruitHelper, SchoolChecker $checker)
+    public function showApplied(Student $student, School $school, Studies $study, SchoolChecker $checkerRecruitRepository, StudiesRepository $studiesRepository,RecruitRepository $recruitRepository, RecruitHelper $recruitHelper, SchoolChecker $checker)
     {
         if ($checker->schoolshowAppliedValid($student, $school, $study)) {
-            return $this->render('studies/show-applied.html.twig', [
-                'student' => $student,
-                'school' => $school,
-                'study' => $study,
-                'hired' => $recruitRepository->findBy(['studies' => $study, 'hired' => true],['date_recruit' => 'desc']),
-                'agree' => $recruitRepository->findBy(['studies' => $study, 'agree' => true],['date_recruit' => 'desc']), 
-                'candidates' => $recruitHelper->nbCandidates($study), // show nb applies 
-            ]);
+
+            if($recruitHelper->checkUnavailable($study, $student) == false) {
+
+                if($recruitHelper->checkRefused($study, $student) == false) {
+
+                    $studies = $studiesRepository->findBy(['school' => $school]);
+
+                    return $this->render('studies/show-applied.html.twig', [
+                        'student' => $student,
+                        'school' => $school,
+                        'study' => $study,
+                        'hired' => $recruitRepository->findBy(['studies' => $studies, 'hired' => true],['date_recruit' => 'desc']),
+                        'agree' => $recruitRepository->findBy(['studies' => $studies, 'agree' => true],['date_recruit' => 'desc']), 
+                        'candidates' => $recruitHelper->nbCandidates($studies), // show nb applies 
+                    ]);
+                }
+                else {
+                    $this->addFlash('error', 'Requête Invalide');
+                    return $this->redirectToRoute('school_studies_show', ['id' => $study->getId(), 'school_id' => $school->getId()]);
+                }
+            }
+            else {
+                $this->addFlash('error', 'Requête Invalide');
+                return $this->redirectToRoute('school_studies_show', ['id' => $study->getId(), 'school_id' => $school->getId()]);
+            }
         }
     } 
 }

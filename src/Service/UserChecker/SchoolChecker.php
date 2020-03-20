@@ -56,6 +56,21 @@ class SchoolChecker
         }
     }
 
+    // show hired 
+    public function schoolshowHireddValid($student, $studies)
+    {    
+        $userRequired = $student->getUser()->getId();
+
+        if($this->isAdmin() 
+        || $this->user->getId() == $userRequired 
+        AND $this->recruitRepository->findBy(['studies' => $studies,'student' => $student])) {
+            return true;
+        }
+        else {
+            $this->Exception() ;
+        }
+    }
+
     // show applied
     public function schoolshowAppliedValid($student, $school, $studies)
     {
