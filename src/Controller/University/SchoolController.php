@@ -114,7 +114,7 @@ class SchoolController extends AbstractController
      * @Route("/{id}/edit", name="school_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_SCHOOL")
      */
-    public function edit(Request $request, School $school, UserPasswordEncoderInterface $passwordEncoder, RecruitRepository $recruitRepository, StudiesRepository $studiesRepository, RecruitHelper $recruitHelper, UploaderHelper $uploaderHelper, SecurityHelper $securityHelper, SchoolChecker $checker): Response
+    public function edit(Request $request, School $school,  RecruitRepository $recruitRepository, StudiesRepository $studiesRepository, RecruitHelper $recruitHelper, UploaderHelper $uploaderHelper, SecurityHelper $securityHelper, SchoolChecker $checker): Response
     {
         if ($checker->schoolValid($school)) {
             // get form 
