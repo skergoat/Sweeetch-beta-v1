@@ -7,6 +7,7 @@ use App\Form\UserType;
 use App\Service\SecurityHelper;
 use App\Repository\UserRepository;
 use App\Repository\ApplyRepository;
+use App\Repository\RecruitRepository;
 use App\Service\UserChecker\AdminChecker;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -79,13 +80,14 @@ class UserController extends AbstractController
     /**
      * @Route("/", name="admin", methods={"GET"})
      */
-    public function show(UserRepository $userRepository, ApplyRepository $applyRepository, AdminChecker $checker): Response
+    public function show(UserRepository $userRepository, ApplyRepository $applyRepository, RecruitRepository $recruitRepository, AdminChecker $checker): Response
     {   
         return $this->render('back/index.html.twig', [
             'students' => $userRepository->findByRole('ROLE_STUDENT'),
             'company' => $userRepository->findByRole('ROLE_COMPANY'),
             'school' => $userRepository->findByRole('ROLE_SCHOOL'),
-            'applies' => $applyRepository->getHired()
+            'applies' => $applyRepository->getHired(),
+            'recruits' => $recruitRepository->getHired(),
         ]);
     }
 

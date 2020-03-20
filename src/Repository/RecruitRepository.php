@@ -71,4 +71,15 @@ class RecruitRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getHired()
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.hired = :hired OR u.agree = :agree')
+            ->setParameter('hired', true)
+            ->setParameter('agree', true)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

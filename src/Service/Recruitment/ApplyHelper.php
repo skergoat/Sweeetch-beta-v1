@@ -55,6 +55,11 @@ class ApplyHelper extends CommonHelper
         return $this->applyRepository->findBy(['offers' => $offers, 'student' => $student, 'refused' => true]);
     }
 
+    public function checkUnavailable($offers, $student)
+    {
+        return $this->applyRepository->findBy(['offers' => $offers, 'student' => $student, 'unavailable' => true]);
+    }
+
     public function checkApply($offers, $student)
     {
         return $this->applyRepository->findBy(['offers' => $offers, 'student' => $student]);

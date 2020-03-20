@@ -46,6 +46,11 @@ class RecruitHelper extends CommonHelper
         return $this->recruitRepository->findBy(['studies' => $studies, 'student' => $student, 'refused' => true]);
     }
 
+    public function checkUnavailable($studies, $student)
+    {
+        return $this->recruitRepository->findBy(['studies' => $studies, 'student' => $student, 'unavailable' => true]);
+    }
+
     public function checkRecruit($studies, $student)
     {
         return $this->recruitRepository->findBy(['studies' => $studies, 'student' => $student]);
