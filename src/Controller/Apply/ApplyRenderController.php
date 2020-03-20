@@ -168,7 +168,7 @@ class ApplyRenderController extends AbstractController
      * @IsGranted("ROLE_SUPER_STUDENT")
      * @ParamConverter("student", options={"id" = "student_id"})
      */
-    public function showOfferProfile(StudentRepository $studentRepository, ApplyRepository $applyRepository, RecruitRepository $recruitRepository, RecruitHelper $recruitHelper, Offers $offer, Student $student, StudentChecker $checker): Response
+    public function showOfferProfile(StudentRepository $studentRepository, ApplyRepository $applyRepository, RecruitRepository $recruitRepository, RecruitHelper $recruitHelper, ApplyHelper $helper, Offers $offer, Student $student, StudentChecker $checker): Response
     {   
        if($checker->studentApplyValid($student, $offer)) {
 
@@ -189,12 +189,12 @@ class ApplyRenderController extends AbstractController
                 }
                 else {
                     $this->addFlash('error', 'Requête Invalide');
-                    return $this->redirectToRoute('school_student_index', ['id' => $student->getId()]);
+                    return $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
                 }
             }
             else {
                 $this->addFlash('error', 'Requête Invalide');
-                return $this->redirectToRoute('school_student_index', ['id' => $student->getId()]);
+                return $this->redirectToRoute('student_apply', ['id' => $student->getId()]);
             }
         }
     }
