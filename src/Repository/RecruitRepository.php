@@ -42,7 +42,6 @@ class RecruitRepository extends ServiceEntityRepository
             return $this->createQueryBuilder('u')
                 ->andWhere('u.studies != :studies')
                 ->setParameter('studies', $studies)
-                // ->setParameter('student', $student)
                 ->getQuery()
                 ->getResult()
             ;

@@ -1,5 +1,7 @@
 <?php
 
+// create "activate email" header message 
+
 namespace App\Activate;
 
 use App\Entity\User;
@@ -11,8 +13,6 @@ class ActivateHTMLAdder
   public function addActivate(Response $response, User $user)
   {
     $content = $response->getContent();
-
-    // dd($user->getRoles());
 
     switch($user->getRoles())
     {
@@ -49,9 +49,6 @@ class ActivateHTMLAdder
 
     // Modification du contenu dans la réponse
     $response->setContent($content);
-
-    // dd($response);
-
 
     return $response;
   }
