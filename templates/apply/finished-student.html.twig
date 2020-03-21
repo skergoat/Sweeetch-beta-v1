@@ -1,10 +1,11 @@
+{# index of all finished applies for student profil #}
 
 {% extends 'base-student.html.twig' %}
 
 {% block title %} {{ parent() }} - Etudiants {% endblock %}
 
 {% block body %}
-
+{# success or error message #}
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-6">
@@ -12,83 +13,74 @@
         </div>
     </div>
 </div> <br>
-
+{# table #}
 <section class="content">
     <div class="row">
         <div class="col-12">
             <div class="card card-responsive-table">
-                {# <div class="card-header">
-                    <h3 class="card-title" style="font-weight:900;font-size:22px;">Candidatures</h3>
-                    <a href="#help-1" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
-                        <i class="fas fa-question-circle"></i>
-                    </a>
-                </div> #}
-                <!-- /.card-header -->
                 <div class="card-body">
                     <table id="finish1" class="table table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th>Titre</th>
-                        <th>Lieu</th>
-                        <th>Domaine</th>
-                        <th>Situation</th>
-                    </tr>
-                </thead>
-                <tbody>
+                        <thead>
+                            <tr>
+                                <th>Titre</th>
+                                <th>Lieu</th>
+                                <th>Domaine</th>
+                                <th>Situation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                {% if finished is not empty %}
+                        {% if finished is not empty %}
 
-                    {% for finished in finished %}
+                            {% for finished in finished %}
 
-                        {% if finished.offers.id is defined %}
-                    <tr>
-                        <td>
-                            {% if is_granted('ROLE_ADMIN') %}
-                            <a href="{{ path('offers_show_hired', {'id': finished.offers.id, 'student_id' : student.id}) }}"> {{ finished.offers.title }} </a> 
+                                {% if finished.offers.id is defined %}
+                            <tr>
+                                <td>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                    <a href="{{ path('offers_show_hired', {'id': finished.offers.id, 'student_id' : student.id}) }}"> {{ finished.offers.title }} </a> 
+                                    {% else %}
+                                    <a href="{{ path('offers_show_hired', {'id': finished.offers.id, 'student_id' : student.id}) }}">{{ finished.offers.title }}</a>
+                                    {% endif %}
+                                </td>
+                                <td>{{ finished.offers.location }}</td>
+                                <td>{{ finished.offers.domain }}</td> 
+                                <td> 
+                                    <span class="badge bg-warning">Terminée</span>
+                                </td>
+                            </tr>
                             {% else %}
-                            <a href="{{ path('offers_show_hired', {'id': finished.offers.id, 'student_id' : student.id}) }}">{{ finished.offers.title }}</a>
-                            {% endif %}
-                        </td>
-                        <td>{{ finished.offers.location }}</td>
-                        <td>{{ finished.offers.domain }}</td> 
-                        <td> 
-                            <span class="badge bg-warning">Terminée</span>
-                        </td>
-                    </tr>
-                    {% else %}
-                    <tr>
-                        <td colspan="2">
-                            <p style="color:red;">Le profil de l'entreprise a été détruit</p>
-                        </td>
-                        <td colspan="2">
-                            <form method="post" action="{{ path('delete_empty_studentSide', {'id': finished.id }) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-                                <input type="hidden" name="_method" value="DELETE">
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ finished.id) }}">
-                                <button class="btn btn-danger">Supprimer</button>
-                            </form>
-                        </td>
-                    </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <p style="color:red;">Le profil de l'entreprise a été détruit</p>
+                                </td>
+                                <td colspan="2">
+                                    <form method="post" action="{{ path('delete_empty_studentSide', {'id': finished.id }) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ finished.id) }}">
+                                        <button class="btn btn-danger">Supprimer</button>
+                                    </form>
+                                </td>
+                            </tr>
+                                {% endif %}
+
+                            {% endfor %}
+
                         {% endif %}
 
-                    {% endfor %}
-
-                {% endif %}
-
-                </tbody>
-            </table>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-<!-- /.card-body -->
     </div>
-<!-- /.card -->
-</div>
-<!-- /.col -->
-</div>
-<!-- /.row -->
 </section>
  
 {% endblock %}
 
 {% block javascripts %}
+
+    {# activate dataTable #}
 
     {{ parent() }}
 

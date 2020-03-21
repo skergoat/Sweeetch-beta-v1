@@ -8,30 +8,20 @@
         <meta content="" name="keywords">
         <meta content="" name="@">
 
-        <!-- Favicons -->
         <link href="{{ asset('build/favicon.png') }}" rel="icon">
         <link href="{{ asset('build/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
-         <!-- fontawesome provisoire -->
-        <script src="https://kit.fontawesome.com/1596c4b58a.js" crossorigin="anonymous"></script>  
-
         {% block stylesheets %}
-            <!-- Google Fonts -->
+            <script src="https://kit.fontawesome.com/1596c4b58a.js" crossorigin="anonymous"></script>  
             <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,500,600,700,700i|Montserrat:300,400,500,600,700" rel="stylesheet">
-
-            <!-- bootstrap and custom styles -->    
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
             <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-
             {{ encore_entry_link_tags('student') }}
-
         {% endblock %}
-
-
     </head>
     <body>
-
+        {# modal message #}
         <div id="help-1" class="modal">
             <div class="container" style="text-align:justify;">
                 <h5>L'embauche se déroule en 5 étapes :</h5>
@@ -66,23 +56,18 @@
                 <p style="font-weight:900;">Toutes nos excuses pour le désagrement !</p>
             </div> 
         </div>
-
+        {# warning form #}
         <div id="ex1" class="modal">
             {{ include('back/_warning_form.html.twig') }}
         </div>
-
+        {# admin nav #}
         <div class="wrapper">
-
-            <!-- Navbar -->
             <nav class="main-header navbar navbar-expand navbar-light">
-                <!-- Left navbar links -->
+
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
                     </li>
-                    {# <li class="nav-item d-none d-sm-inline-block">
-                        <a class="nav-link" href="{{ path('offers_index') }}">Chercher un Emploi</a>
-                    </li>#}
                     <li class="nav-item d-sm-inline-block">
                         <a href="/logout" class="nav-link">Déconnexion</a>
                     </li>
@@ -95,22 +80,18 @@
                     <li class="nav-item d-none d-sm-inline-block">
                         <a class="nav-link" href="{{ path('student_index') }}">Liste des étudiants</a>
                     </li>
-
                     {% endif %}
                 </ul>
 
             </nav>
         
             <aside class="main-sidebar sidebar-light-primary elevation-4">
-                <!-- Brand Logo -->
                 <a href="{{ path('homepage') }}" class="brand-link">
                     <img src="{{ asset('build/favicon.png') }}" alt="AdminLTE Logo" class="brand-image" style="opacity: .8">
                     <span class="brand-text font-weight-light"> Etudiant</span>
                 </a>
-
-                <!-- Sidebar -->
                 <div class="sidebar">
-
+                    {# student infos #}
                     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                         {% if student.pictures.fileName is defined %}
                         <div class="image">
@@ -125,9 +106,8 @@
                           <a href="{{ path('student_show', {'id' : student.id }) }}" class="d-block">{{ app.user.email }}</a>
                         </div>
                     </div>
-                    <!-- Sidebar Menu -->
                     <nav class="mt-2">
-
+                        {# sidebar left #}
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                             <li class="nav-item has-treeview">
                                 <a class="nav-link" href="{{ path('student_show', {'id' : student.id }) }}">
@@ -157,7 +137,8 @@
                                 <a class="nav-link" href="{{ path('student_apply', { id:student.id }) }}">
                                     <i class="nav-icon fa fa-bookmark"></i>
                                     <p>
-                                        Candidatures                                     
+                                        Candidatures  
+                                        {# applies infos #}                                   
                                         {% if hired == true %}
                                         <span class="right badge badge-warning" title="mission à confirmer">à valider</span>
                                         {% elseif fresh > 0 %}
@@ -168,25 +149,26 @@
                                 {% if is_granted('ROLE_SUPER_STUDENT') %}
                                     {% if app.request.get('_route') == 'student_apply' or app.request.get('_route') == 'offers_show_hired' or app.request.get('_route') == 'student_finished' %}
 
-                                <li class="nav nav-tree">
-                                    <li class="nav-item">
-                                        <a href="{{ path('student_apply', {id:student.id}) }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Toutes</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ path('student_finished', {id:student.id}) }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Terminées</p>
-                                        {% if finished is defined %}
-                                            {% if finished | length > 0 %}
-                                        <span class="right badge badge-warning">{{ finished | length }}</span>
-                                            {% endif %}
-                                        {% endif %}
-                                        </a>
-                                    </li>
-                                </li>
+                                        <li class="nav nav-tree">
+                                            <li class="nav-item">
+                                                <a href="{{ path('student_apply', {id:student.id}) }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Toutes</p>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{{ path('student_finished', {id:student.id}) }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Terminées</p>
+                                                {# finished applies infos #}
+                                                {% if finished is defined %}
+                                                    {% if finished | length > 0 %}
+                                                <span class="right badge badge-warning">{{ finished | length }}</span>
+                                                    {% endif %}
+                                                {% endif %}
+                                                </a>
+                                            </li>
+                                        </li>
 
                                     {% endif %} 
                                 {% endif %}
@@ -196,6 +178,7 @@
                                     <i class="nav-icon fa fa-university"></i>
                                     <p>
                                         Formations 
+                                        {# recruits infos #}
                                         {% if hiredRecruit == true %}
                                         <span class="right badge badge-warning" title="mission à confirmer">à valider</span>
                                         {% elseif freshRecruit > 0 %}
@@ -207,25 +190,26 @@
                                 {% if is_granted('ROLE_SUPER_STUDENT') %}
                                     {% if app.request.get('_route') == 'school_student_index' or app.request.get('_route') == 'show_student_hired' or app.request.get('_route') == 'school_student_finished'  %}
 
-                                <li class="nav nav-tree">
-                                    <li class="nav-item">
-                                        <a href="{{ path('school_student_index', { id:student.id }) }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Toutes</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ path('school_student_finished', {id:student.id}) }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Terminées</p>
-                                        {% if finished is defined %}
-                                            {% if finished | length > 0 %}
-                                        <span class="right badge badge-warning">{{ finished | length }}</span>
-                                            {% endif %}
-                                        {% endif %}
-                                        </a>
-                                    </li>
-                                </li>
+                                        <li class="nav nav-tree">
+                                            <li class="nav-item">
+                                                <a href="{{ path('school_student_index', { id:student.id }) }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Toutes</p>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="{{ path('school_student_finished', {id:student.id}) }}" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Terminées</p>
+                                                {# finished recruits infos #}
+                                                {% if finished is defined %}
+                                                    {% if finished | length > 0 %}
+                                                <span class="right badge badge-warning">{{ finished | length }}</span>
+                                                    {% endif %}
+                                                {% endif %}
+                                                </a>
+                                            </li>
+                                        </li>
 
                                     {% endif %} 
                                 {% endif %}
@@ -234,24 +218,23 @@
                     </nav>
                 </div>
             </aside>
+            {# content #}
             <div class="content-wrapper">
                <section class="content content-back">
                     {% block body %}{% endblock %}
                 </section>
             </div>
+            {# footer #}
             <footer class="main-footer">
                 <strong>Sweeetch - Etudiant</strong>
             </footer>
         </div>
 
         {% block javascripts %}
-
         {{ encore_entry_script_tags('student') }}
-
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-
         {% endblock %}
 
     </body>

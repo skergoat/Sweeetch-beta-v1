@@ -1,20 +1,7 @@
-/*
- * Welcome to your app's main JavaScript file!
- *
- * We recommend including the built version of this JavaScript file
- * (and its CSS file) in your base layout (base.html.twig).
- */
+/** admin js and css */
 
-// any CSS you import will output into a single css file (app.css in this case)
+// css
 import "../../css/back/homepage.scss";
-
-// console log test
-// import Message from './components/test';
-// console.log(Message);
-
-// app script
-// import Test from './components/test/class';
-// import './components/test/event';
 
 // JQuery
 import $ from "jquery";
@@ -26,8 +13,8 @@ global.jQuery = $;
 import "bootstrap";
 import 'admin-lte';
 
-import './components/warning';
-import './components/message';
+import './components/warning';  // when doc is missing 
+import '../components/message'; // hide success or error message 
 
 
 

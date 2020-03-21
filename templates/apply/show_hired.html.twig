@@ -1,3 +1,5 @@
+{# show offers info to student #}
+
 {% extends 'base-student.html.twig' %} 
 
 {% block title %} {{ parent() }} - Etudiants {% endblock %}
@@ -9,6 +11,7 @@
             <div class="col-sm-6">
                 <h1 class="m-0 titles-front">{{ offers.title }}</h1> <br>
                 <div>
+                    {# "go back" button #}
                     {% if offers.applies[0] is defined %}
                         {% if offers.applies[0].finished == false %}
                         <a href="{{ path('student_apply', {id:student.id}) }}" class="btn btn-sm btn-sm-1 btn-labeled btn-default">
@@ -31,7 +34,7 @@
             </div>
         </div>
     </div> <br>
-    
+    {# success message #}
     {% for message in app.flashes('success') %}
     <div class="alert alert-success">
         {{ message }}
@@ -42,7 +45,7 @@
         <div class="card-responsive card">
     
             <div class="Password card col-lg-12">
-    
+                {# offers infos #}
                 <div class="col-lg-12">
                     <h3 class="mb-3 mt-3 pl-3-responsive titles-front">Détail de l'Offre</h3>
                 </div>
@@ -90,7 +93,7 @@
                     </div>
                     
                 </div>
-
+                {# company infos #}
                 <div class="col-lg-12">
                     <h3 class="mb-3 mt-3 pl-3-responsive titles-front">Profil de l'Entreprise</h3>
                 </div>

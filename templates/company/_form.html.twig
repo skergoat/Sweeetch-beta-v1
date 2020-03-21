@@ -1,11 +1,4 @@
-{# <div class="choice">
-    <h6>Vous êtes : </h6>
-    <ul class="choice-list">
-        <li>Un Etudiant<input type="radio" name="choice" value="student" class="signup" id="student"></li>
-        <li>Une Entreprise<input type="radio" name="choice"  value="company" class="signup" id="company"></li>
-        <li>Une Ecole<input type="radio" name="choice"  value="school" class="signup" id="school"></li>
-    </ul>
-</div>#}
+
 {{ form_start(form) }}
     
     <div class="row form-center--signin">
@@ -108,7 +101,6 @@
         </div>
 
         <div class="col-lg-5 col-md-12 col-sm-12 margin-left">
-            <!-- <div class="row"> -->
                 <div class="form-group">
                     {{ form_label(form.user.email, 'Email') }}
                     {% if form.user.email.vars.errors | length == 0 %}
@@ -142,7 +134,6 @@
                         {{ form_errors(form.user.password.second) }}
                     </div>  
                 </div> 
-            <!-- </div> -->
             <div class="row">
                 <div class="col-lg-12 col-lg-button" style="margin-top:30px;">
                     <button class="btn btn-primary">{{ button_label|default('Envoyer') }}</button>

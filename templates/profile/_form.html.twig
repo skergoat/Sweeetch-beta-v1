@@ -1,3 +1,6 @@
+{# edit student profile #}
+
+{# macro 1 : student language #}
 {% macro printLanguageFormRow(lang) %}
     <div href="#" class="js-remove-profile-item language-card"> 
         <a href="#" class="js-remove-data pull-right">
@@ -11,7 +14,7 @@
         </div>
     </div>
 {% endmacro %}
-
+{# macro : student education #}
 {% macro printEducationFormRow(educ) %}
     <div href="#" class="js-remove-profile-item language-card">
         <a href="#" class="js-remove-data pull-right">
@@ -51,7 +54,7 @@
         
     </div>
 {% endmacro %}
-
+{# import macro #}
 {% import _self as formLanguageMacros %}
 {% import _self as formEducationMacros %}
 
@@ -66,7 +69,7 @@
             </div>
            
             <div class="card-body body-row">
-  
+                {# menu #}
                 <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link edit-items" id="custom-content-below-home-tab" data-toggle="pill" href="#custom-content-below-home" role="tab" aria-controls="custom-content-below-home" aria-selected="true">Général</a>
@@ -78,7 +81,7 @@
                     <a class="nav-link edit-items" id="custom-content-below-messages-tab" data-toggle="pill" href="#custom-content-below-messages" role="tab" aria-controls="custom-content-below-messages" aria-selected="false">Formations</a>
                     </li>
                 </ul>
-  
+                {# choose domain #}
                 <div class="tab-content" id="custom-content-below-tabContent">
                     <div class="tab-pane fade" id="custom-content-below-home" role="tabpanel" aria-labelledby="custom-content-below-home-tab">
                         
@@ -97,6 +100,7 @@
                         </div>
                        
                     </div>
+                    {# add language #}
                     <div class="tab-pane fade" id="custom-content-below-profile" role="tabpanel" aria-labelledby="custom-content-below-profile-tab">
                         
                         <div class="col-lg-6 js-profile-wrapper" id="languages-wrapper" data-prototype="{{ formLanguageMacros.printLanguageFormRow(form.languages.vars.prototype)|e('html_attr') }}"  data-index="{{ form.languages|length }}" style="margin:auto;">
@@ -116,6 +120,7 @@
                         </div>
 
                     </div>
+                    {# add education #}
                     <div class="tab-pane fade" id="custom-content-below-messages" role="tabpanel" aria-labelledby="custom-content-below-messages-tab">
                      
                         <div class="col-lg-6 js-profile-wrapper" id="education-wrapper" data-prototype="{{ formEducationMacros.printEducationFormRow(form.education.vars.prototype)|e('html_attr') }}"  data-index="{{ form.education|length }}" style="margin:auto;">

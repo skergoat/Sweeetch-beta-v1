@@ -1,3 +1,4 @@
+{# edit account #}
 {% extends 'base-student.html.twig' %}
 
 {% block title %} {{ parent() }} - Etudiants {% endblock %}
@@ -5,7 +6,7 @@
 {% block body %}
 
 <h1>Mes Informations</h1>
-
+{# success or error message #}
 {% for message in app.flashes('success') %}
   <div class="alert alert-success">
       {{ message }}
@@ -17,7 +18,7 @@
 
     <div class="card-outline body-row">    
       <div class="card-body body-row">
-
+        {# menu #}
         <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
           <li class="nav-item">
             <a class="nav-link edit-items" id="custom-content-below-home-tab" data-toggle="pill" href="#custom-content-below-home" role="tab" aria-controls="custom-content-below-home" aria-selected="true">Général</a>
@@ -32,14 +33,17 @@
 
         <div class="tab-content" id="custom-content-below-tabContent">
             <div class="tab-pane fade" id="custom-content-below-home" role="tabpanel" aria-labelledby="custom-content-below-home-tab">
+            {# edit profile form #}
             {{ include('student/_form-edit.html.twig', {'button_label': 'Update'}) }}
             <div style="display:flex;justify-content:flex-end;">{{ include('student/_delete_form.html.twig') }}</div>
 
           </div>
           <div class="tab-pane fade" id="custom-content-below-profile" role="tabpanel" aria-labelledby="custom-content-below-profile-tab">
+            {# edit documents forms #}
             {{ include('student/_form-doc.html.twig', {'button_label': 'Update'}) }}
           </div>
           <div class="tab-pane fade" id="custom-content-below-messages" role="tabpanel" aria-labelledby="custom-content-below-messages-tab">
+            {# edit password form #}
             {{ include('student/_form-password.html.twig', {'button_label': 'Update'}) }}
           </div>
         </div>

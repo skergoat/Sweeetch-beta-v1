@@ -1,4 +1,4 @@
-// edit sections 
+// show edit account or profile sections 
 $('.nav-link.edit-items').click(function() {
     var id = $(this).attr('id');
     sessionStorage.setItem('test', '#' + id);

@@ -1,3 +1,5 @@
+{# show studies to student #}
+
 {% extends 'base-front.html.twig' %}
 
 {% block title %} {{ parent() }} - Ecoles {% endblock %}
@@ -6,40 +8,14 @@
 
 <div class="background-jobs">
     <div class="container container-jobs">
-
+        {# title #}
         <header id="header">
-
-            {# <div id="topbar">
-            <div class="container">
-                <div class="social-links">
-                <a href="https://twitter.com/SweeetchA" target="_blank" class="twitter"><i class="fa fa-twitter"></i></a>
-                <a href="https://www.facebook.com/sweeetch.ton.alternance/" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a>
-                <a href="https://fr.linkedin.com/company/sweetchmontpellier?trk=public_profile_topcard_current_company" target="_blank" class="linkedin"><i class="fa fa-linkedin"></i></a>
-                <a href="https://www.instagram.com/sweeetch_alternance/" target="_blank" class="instagram"><i class="fa fa-instagram"></i></a>
-                </div>
-            </div>
-            </div>#}
-        
             <div class="container nav-desktop">
                 <nav class="nav-jobs main-nav d-none d-lg-block">
                     <ul>
                         <li><a href="{{ path('studies_candidate_index', {from:from, id:from_id}) }}">
                             Retour
                         </a></li>
-                       {# {% if page is defined %}
-                        <li><a href="{{ path('offers_index', {'page':page}) }}">Emplois</a></li>
-                        {% else %}
-                        <li><a href="{{ path('offers_index', {'page':1}) }}">Emplois</a></li>
-                        {% endif %} 
-                        {% if is_granted('ROLE_ADMIN') %}
-                        <li><a href="/admin">ADMIN</a></li>
-                        {% elseif  is_granted('ROLE_STUDENT') %}
-                        <li><a href="{{ path('student_show', {'id': app.user.student.id}) }}">MON PROFILE</a></li>
-                        {% elseif  is_granted('ROLE_COMPANY') %}
-                        <li><a href="{{ path('company_show', {'id': app.user.company.id}) }}">MON ENTREPRISE</a></li>
-                        {% elseif  is_granted('ROLE_SCHOOL') %}
-                        <li><a href="{{ path('school_show', {'id': app.user.school.id}) }}">MON ECOLE</a></li>
-                        {% endif %} #}
                     </ul>
                 </nav>
             </div>
@@ -48,7 +24,7 @@
 
         <h1 class="titles-front">{{ study.title }}</h1>
         <h4 class="card-subtitle mb-2 text-muted">{{ study.domain }}</h4>
-
+        {# error and success message #}
         {% for message in app.flashes('success') %}
         <div class="alert alert-success">
             {{ message }}
@@ -60,30 +36,11 @@
             {{ message }}
         </div>
         {% endfor %}
-
+        {# school details #}
         <div class="Password card col-lg-12">
             <div class="card-body">
                 <table class="table offers-show col-lg-5 col-md-5 col-sm-12 col-xs-12">
                     <tbody>
-                        {# <tr>
-                            <th>Entreprise</th>
-                            <td style="display:flex;">
-                                {% if offers.company.pictures.fileName is defined %}
-                                <div class="image" style="margin-right:15px;">
-                                    <img src="{{ uploaded_asset(offers.company.pictures.fileName) }}" class="profile_picture elevation-2" alt="User Image">
-                                </div>
-                                {% else %}
-                                <div style="margin-right:15px;">
-                                    <img src="https://via.placeholder.com/30" />                        
-                                </div>
-                                {% endif %}
-                                 {{ offers.company.companyName }}
-                            </td>
-                        </tr> 
-                        <tr>
-                            <th>Lieu</th>
-                            <td>{{ offers.location }}</td>
-                        </tr>#}
                         <tr>
                             <th>Ecole</th>
                             <td>{{ study.school.companyName }}</td>
@@ -96,80 +53,27 @@
                             <th>Domaine</th>
                             <td>{{ study.domain }}</td>
                         </tr>
-                        {# <tr>
-                            <th>Du</th>
-                            <td>{{ offers.dateStart ? offers.dateStart|date('d-m-Y') : '' }}</td>
-                        </tr>
-                        <tr>
-                            <th>Au</th>
-                            <td>{{ offers.dateEnd ? offers.dateEnd|date('d-m-Y') : '' }}</td>
-                        </tr> #}
                     </tbody>
                 </table>
 
                 <div class="description">
                     <h5>Description</h5>
-                    {# {% if is_granted('ROLE_USER') %}
-                    <p>{{ offers.description|raw }}</p>
-                    {% else %} #}
                     <div>
                         <p>{{ study.description | raw }}</p>
                     </div>
-                   {# {% endif %} #}
-
-                {# {% if is_granted('ROLE_USER') %}
-
-                    {% if app.user.student.id is defined %}
-
-                        {% if is_granted('ROLE_SUPER_STUDENT') %}
-                            {% if offers.state == false %}
-                            <form method="post" action="{{ path('apply', { id:offers.id, student_id:app.user.student.id, page:page }) }}">
-                                <input type="hidden" name="_method" value="POST">
-                                <input type="hidden" name="_token" value="{{ csrf_token('apply' ~ app.user.student.id) }}">
-                                <button class="btn btn-success">Postuler</button>
-                            </form> 
-                            {% else %}
-                            <div class="col-12 col-sm-6 col-md-6">
-                                <div class="info-box mb-3">
-                                <span class="info-box-icon bg-warning elevation-1"><i class="fa fa-info"></i></span>
-                    
-                                <div class="info-box-content">
-                                    <span class="info-box-number">Dossier en cours</span>
-                                    <span class="info-box-text">Controllez votre profil</span>
-                                </div>
-                                </div>
-                            </div>
-                            {% endif %}
-                        {% elseif is_granted('ROLE_STUDENT') %}
-                        <div class="col-12 col-sm-6 col-md-6">
-                            <div class="info-box mb-3">
-                            <span class="info-box-icon bg-danger elevation-1"><i class="fa fa-exclamation-triangle"></i></span>
-                
-                            <div class="info-box-content">
-                                <span class="info-box-number">Validation en attente</span>
-                                <span class="info-box-text">Votre compte doit être validé pour pouvoir postuler</span>
-                            </div>
-                            </div>
-                        </div>
-                        {% endif %}
-
-                    {% endif %}
-                    
-                {% else %} #}
-            {% if app.user.student.id is defined %}
+                {% if app.user.student.id is defined %}
                     <form method="post" action="{{ path('recruit', { id:study.id, student_id:app.user.student.id }) }}">
                         <input type="hidden" name="_method" value="POST">
                         <input type="hidden" name="_token" value="{{ csrf_token('recruit' ~ app.user.student.id) }}">
                         <button class="btn btn-success">Postuler</button>
                     </form>
+                {% endif %}
                 </div>
-            {% endif %}
             </div>
         </div>
-
     </div>
 </div>
-
+{# footer #}
 <footer id="footer" class="section-bg">
     <div class="container">
         <div class="copyright">

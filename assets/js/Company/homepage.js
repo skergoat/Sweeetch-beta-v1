@@ -1,3 +1,5 @@
+/** company profil js and css */
+
 // css
 import "../../css/company/homepage.scss";
 
@@ -18,6 +20,9 @@ import '../components/file.js'; // file name
 import '../components/message.js'; // success or error message 
 import '../components/table.js'; // dataTable 
 
+// show page table 
+import './table.js'; // dataTable 
+
 // tinymce 
 tinymce.init({
     selector: 'textarea'
@@ -29,3 +34,4 @@ $(document).ready(function() {
         format: 'dd-mm-yyyy'
     });
 });
+

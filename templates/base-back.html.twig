@@ -9,24 +9,15 @@
         <meta content="" name="keywords">
         <meta content="" name="@">
         
-        <!-- fontawesome provisoire -->
-        <script src="https://kit.fontawesome.com/1596c4b58a.js" crossorigin="anonymous"></script> 
-
-         <!-- Favicons -->
-         <link href="{{ asset('build/favicon.png') }}" rel="icon">
-         <link href="{{ asset('build/apple-touch-icon.png') }}" rel="apple-touch-icon">
+        <link href="{{ asset('build/favicon.png') }}" rel="icon">
+        <link href="{{ asset('build/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
         {% block stylesheets %}
-        
-            <!-- Google Fonts -->
+            <script src="https://kit.fontawesome.com/1596c4b58a.js" crossorigin="anonymous"></script> 
             <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,500,600,700,700i|Montserrat:300,400,500,600,700" rel="stylesheet">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css"/>
-
-            <!-- bootstrap and custom styles -->    
             {{ encore_entry_link_tags('back') }}
-
         {% endblock %}
-
     </head>
     <body>
 
@@ -36,46 +27,31 @@
 
         <div class="wrapper">
 
-            <!-- Navbar -->
             <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-                <!-- Left navbar links -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
                     </li>
-                    {# <li class="nav-item d-none d-sm-inline-block">
-                        <a href="{{ path('admin') }}" class="nav-link">Dashboard</a>
-                    </li> #}
                     <li class="nav-item d-sm-inline-block">
                         <a href="/logout" class="nav-link">Déconnexion</a>
                     </li>
                 </ul>
-
             </nav>
-            <!-- /.navbar -->
 
-            <!-- Main Sidebar Container -->
             <aside class="main-sidebar sidebar-dark-primary elevation-4">
-                <!-- Brand Logo -->
                 <a href="{{ path('homepage') }}" class="brand-link">
                     <img src="{{ asset('build/favicon.png') }}" alt="AdminLTE Logo" class="brand-image" style="opacity: .8">
                     <span class="brand-text font-weight-light"> Admin</span>
                 </a>
-
-                <!-- Sidebar -->
+                {# sidebar left #}
                 <div class="sidebar">
 
                     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                        <!-- <div class="image">
-                          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-                        </div> -->
                         <div class="info">
                           <a href="{{ path('user_edit', {'id': app.user.id}) }}" class="d-block">{{ app.user.email }}</a>
                         </div>
                     </div>
-                    <!-- Sidebar Menu -->
                     <nav class="mt-2">
-
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                             <li class="nav-item has-treeview">
                                 <a href="{{ path('admin') }}" class="nav-link">
@@ -141,28 +117,20 @@
                     </nav>
                 </div>
             </aside>
-
-            <!-- Content Wrapper. Contains page content -->
+            {# content #}
             <div class="content-wrapper">
-                <!-- Main content -->
                 <section class="content content-back">
                     {% block body %}{% endblock %}
                 </section>
-                <!-- /.content -->
             </div>
-            <!-- /.content-wrapper -->
             <footer class="main-footer">
                 <strong>Sweeetch - Admin</strong>
             </footer>
 
         </div>
-        <!-- scripts -->
         {% block javascripts %}
-
         {{ encore_entry_script_tags('back') }}
-
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-        
         {% endblock %}
 
     </body>

@@ -1,9 +1,11 @@
+{# school homepage #}
+
 {% extends 'base-school.html.twig' %}
 
 {% block title %} {{ parent() }} - Ecoles {% endblock %}
 
 {% block body %}
-
+{# modal messages #}
 <div id="info-1" class="modal">
     <div class="container" style="text-align:justify;">
         <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">Bienvenue sur votre tableau de bord !</p><br><br>
@@ -103,7 +105,7 @@
     </div>
 
     <div class="col-lg-8">
-
+{# account state #}
         <div class="row">
             {% if school.user.confirmed == true %}
             <div class="col-12 col-sm-6 col-md-6">
@@ -135,11 +137,9 @@
 </div> 
 
 <div class="row">
-
     <div class="col-lg-6">
-
         <div class="card col-lg-" id="card-1" style="padding:0px;">
-
+{# account infos #}
             <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
                 
                 <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
@@ -209,7 +209,7 @@
 
     <div class="col-lg-12">
         <div class="card" style="padding:0px;">
-
+{# studies #}
             <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
                 
                 <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
@@ -238,6 +238,7 @@
                         {% for studies in studies %}
                         <tr>
                             <td><a href="{{ path('school_studies_show', {'id': studies.id, school_id: studies.school.id }) }}">{{ studies.title }}</a></td>
+                           {# studies state #}
                             <td>
                                 {% set hiredVar = [] %}
                                 {% set agreeVar = [] %}
@@ -294,7 +295,7 @@
         </div>
 
     </div>
-
+{# recruits #}
     <div class="col-lg-12">
         <h3 style="color:#4C4C4C !important;">Candidatures</h3><br>
         <div class="row">
@@ -341,7 +342,7 @@
                         </table>
                     </div>
                 </div>
-
+{# recruits in progress #}
             </div>
             <div class="col-lg-6">
                 <div class="card" style="padding:0px;">
@@ -391,7 +392,7 @@
             </div>
         </div>
         <div class="row">
-
+{# waiting for agree #}
             <div class="col-lg-6">
 
                 <div class="card" style="padding:0px;">
@@ -451,111 +452,11 @@
 {% block javascripts %}
 
 {{ parent() }}
-
+{# close card 1 #}
 <script>
     $(document).ready(function() {
         $('#card-1').CardWidget('toggle');
-        // $('#card-2').CardWidget('toggle');
-        // $('#card-3').CardWidget('toggle');
     });
 </script>
-
-<script>
-        $(function () {   
-        // $(function () {
-            $("#dash1").DataTable({
-                "paging": true,
-                "pageLength": 5,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": false,
-                "info": false,
-                "autoWidth": false,
-                "responsive": true,
-                "language": {
-                "emptyTable": "Aucun candidat pour l'instant",
-                "paginate": {
-                    "previous": "Précédent",
-                    'next':'Suivant'
-                    }
-                }
-            });   
-        // });
-
-        // $(function () {
-            $("#dash2").DataTable({
-                "paging": true,
-                "pageLength": 5,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": false,
-                "info": false,
-                "autoWidth": false,
-                "responsive": true,
-                "language": {
-                "emptyTable": "Aucun recrutement en cours",
-                "paginate": {
-                    "previous": "Précédent",
-                    'next':'Suivant'
-                    }
-                }
-            });
-            
-            $("#dash3").DataTable({
-                "paging": true,
-                "pageLength": 5,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": false,
-                "info": false,
-                "autoWidth": false,
-                "responsive": true,
-                "language": {
-                "emptyTable": "Aucune attente d'acceptation",
-                "paginate": {
-                    "previous": "Précédent",
-                    'next':'Suivant'
-                    }
-                }
-            });
-
-            $("#dash4").DataTable({
-                "paging": true,
-                "pageLength": 5,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": false,
-                "info": false,
-                "autoWidth": false,
-                "responsive": true,
-                "language": {
-                "emptyTable": "Aucune recrutement terminé",
-                "paginate": {
-                    "previous": "Précédent",
-                    'next':'Suivant'
-                    }
-                }
-            });
-
-            $("#dash5").DataTable({
-                "paging": true,
-                "pageLength": 5,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": false,
-                "info": false,
-                "autoWidth": false,
-                "responsive": true,
-                "language": {
-                "emptyTable": "Aucune recrutement terminé",
-                "paginate": {
-                    "previous": "Précédent",
-                    'next':'Suivant'
-                    }
-                }
-            });
-        });
-
-    </script>
             
 {% endblock %}

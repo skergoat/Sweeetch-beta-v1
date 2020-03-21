@@ -1,9 +1,10 @@
+{# show company homepage #}
 {% extends 'base-company.html.twig' %}
 
 {% block title %} {{ parent() }} - Entreprises {% endblock %}
 
 {% block body %}
-
+    {# modal messages #}
     <div id="info-1" class="modal">
         <div class="container" style="text-align:justify;">
             <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">Bienvenue sur votre tableau de bord !</p><br><br>
@@ -91,7 +92,7 @@
             </p>
         </div> 
     </div>
-
+    {# account state #}
     <div class="row" style="margin-bottom:50px;">
 
         <div class="col-lg-4">
@@ -139,7 +140,7 @@
         <div class="col-lg-6">
 
             <div class="card col-lg-" id="card-1" style="padding:0px;">
-
+                {# account info #}
                 <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
                     
                     <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
@@ -208,9 +209,8 @@
     <div class="row">
 
         <div class="col-lg-12">
-            {# <h3 style="color:#4C4C4C !important;">Annonces</h3><br> #}
             <div class="card" style="padding:0px;">
-
+                {# your offers #}
                 <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
                     
                     <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
@@ -254,7 +254,7 @@
                                 <tr>
                                     <td><a href="{{ path('offers_preview', {'id': offers.applies[0].offers.id, 'company':company.id}) }}">{{ offers.applies[0].offers.title }}</a></td>
                                 
-                                    <td>    
+                                    <td>  {# offer state #}  
                                         {% if offers.applies[0].confirmed == false %}
                                             {% if offers.applies[0].agree == false %}
                                             {% set hiredArray = [] %}
@@ -269,18 +269,14 @@
                                                 {% set unavailable = [] %}
                                                 {# {% set wait = [] %} #}
                                                 {% for applies in offers.applies %}
-                                                {# refused #}
-                                                {% if applies.refused == true %}
-                                                    {% set refused = refused|merge([{ refused: applies }]) %}
-                                                {% endif %}
-                                                {# unavailable #}
-                                                {% if applies.unavailable == true %}
-                                                    {% set unavailable = unavailable|merge([{ unavailable: applies }]) %}
-                                                {% endif %}
-                                                {# wait #}
-                                                {# {% if applies.wait == true %}
-                                                    {% set wait = wait|merge([{ wait: applies }]) %}
-                                                {% endif %} #}
+                                                    {# refused #}
+                                                    {% if applies.refused == true %}
+                                                        {% set refused = refused|merge([{ refused: applies }]) %}
+                                                    {% endif %}
+                                                    {# unavailable #}
+                                                    {% if applies.unavailable == true %}
+                                                        {% set unavailable = unavailable|merge([{ unavailable: applies }]) %}
+                                                    {% endif %}
                                                 {% endfor %}
                                                 {# total #}
                                                 {% set minus = refused|length + unavailable|length %}
@@ -317,7 +313,7 @@
             </div>
 
         </div>
-
+    {# candidates #}
         <div class="col-lg-12">
             <h3 style="color:#4C4C4C !important;">Candidatures</h3><br>
             <div class="row">
@@ -368,7 +364,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="card" style="padding:0px;">
-
+    {# apply in progress #}
                         <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
                             <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
                                 3. Recrutements en cours 
@@ -420,7 +416,7 @@
                     <div class="card" style="padding:0px;">
 
                         <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
-                            
+{# waiting for agree #}
                             <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
                                 2. En Attente d'Acceptation
                                 <a href="#info-4" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
@@ -466,7 +462,7 @@
                     <div class="card" style="padding:0px;">
 
                         <div class="card-header-color card-header border-transparent" style="background:rgba(0,0,0,.03);">
-                            
+{# finished applies #}
                             <p class="card-title" style="color:#4c4c4c !important;font-weight:900;">
                                 4. Recrutements terminés
                                 <a href="#info-5" rel="modal:open" class="badge " title="aide" style="margin-left:5px;color:#8e8e8e;">
@@ -492,7 +488,6 @@
                                 </thead>
                                 <tbody>
                                     {% for finished in finished %}
-                                        {# {% if finished.offers.id is defined %} #}
                                     <tr class="border-top">
                                         <td>{{ finished.student.name }} {{ finished.student.lastName }}</td>
                                         <td><a href="{{ path('offers_preview', {id:finished.offers.id, company:company.id}) }}" class="action-link">{{ finished.offers.title }}</a></td>
@@ -500,16 +495,12 @@
                                             <span class="badge badge-success right">Recruté</span>
                                         </td>
                                     </tr>
-                                        {# {% endif %} #}
                                     {% endfor %} 
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
         </div>
     </div>
@@ -523,108 +514,8 @@
 <script>
     $(document).ready(function() {
         $('#card-1').CardWidget('toggle');
-        // $('#card-2').CardWidget('toggle');
-        // $('#card-3').CardWidget('toggle');
     });
 </script>
-
-<script>
-        $(function () {   
-        // $(function () {
-            $("#dash1").DataTable({
-                "paging": true,
-                "pageLength": 5,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": false,
-                "info": false,
-                "autoWidth": false,
-                "responsive": true,
-                "language": {
-                "emptyTable": "Aucun candidat pour l'instant",
-                "paginate": {
-                    "previous": "Précédent",
-                    'next':'Suivant'
-                    }
-                }
-            });   
-        // });
-
-        // $(function () {
-            $("#dash2").DataTable({
-                "paging": true,
-                "pageLength": 5,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": false,
-                "info": false,
-                "autoWidth": false,
-                "responsive": true,
-                "language": {
-                "emptyTable": "Aucun recrutement en cours",
-                "paginate": {
-                    "previous": "Précédent",
-                    'next':'Suivant'
-                    }
-                }
-            });
-            
-            $("#dash3").DataTable({
-                "paging": true,
-                "pageLength": 5,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": false,
-                "info": false,
-                "autoWidth": false,
-                "responsive": true,
-                "language": {
-                "emptyTable": "Aucune attente d'acceptation",
-                "paginate": {
-                    "previous": "Précédent",
-                    'next':'Suivant'
-                    }
-                }
-            });
-
-            $("#dash4").DataTable({
-                "paging": true,
-                "pageLength": 5,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": false,
-                "info": false,
-                "autoWidth": false,
-                "responsive": true,
-                "language": {
-                "emptyTable": "Aucune recrutement terminé",
-                "paginate": {
-                    "previous": "Précédent",
-                    'next':'Suivant'
-                    }
-                }
-            });
-
-            $("#dash5").DataTable({
-                "paging": true,
-                "pageLength": 5,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": false,
-                "info": false,
-                "autoWidth": false,
-                "responsive": true,
-                "language": {
-                "emptyTable": "Aucune recrutement terminé",
-                "paginate": {
-                    "previous": "Précédent",
-                    'next':'Suivant'
-                    }
-                }
-            });
-        });
-
-    </script>
-            
+   
 {% endblock %}
 

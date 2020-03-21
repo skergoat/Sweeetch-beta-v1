@@ -1,3 +1,4 @@
+{# index of all applies by student #}
 
 {% extends 'base-student.html.twig' %}
 
@@ -10,7 +11,7 @@
 <div class="row row-top">
 
     <div class="col-lg-6">
-
+        {# title #}
          <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
@@ -22,7 +23,7 @@
             </div>
         </div> <br>
      </div>
-
+     {# timeline #}
      <div class="col-timeline col-lg-6">
 
      {% if applies[0] is defined %}
@@ -81,13 +82,13 @@
      </div>
 
  </div>
-
+{# success message #}
 {% for message in app.flashes('success') %}
 <div class="alert alert-success">
     {{ message }}
 </div>
 {% endfor %}
-
+{# table #}
 <section class="content">
     <div class="row">
         <div class="col-12">
@@ -98,7 +99,6 @@
                         <i class="fas fa-question-circle"></i>
                     </a>
                 </div>
-                <!-- /.card-header -->
                 <div class="card-body">
                     <table id="index1" class="table table-bordered table-hover">
                         <thead>
@@ -175,9 +175,6 @@
                                             <i class="fas fa-hourglass-start"></i>
                                         </button>
                                         {% endif %}
-                                        {# <a href="#help-1" rel="modal:open" class="btn-modal btn-icon-form btn-icon btn-secondary" title="aide">
-                                            <i class="fas fa-question-circle"></i>
-                                        </a> #}
                                     </div>
                                 </td>
                             </tr>
@@ -205,17 +202,13 @@
                         </tbody>
                     </table>
                 </div>
-<!-- /.card-body -->
             </div>
-<!-- /.card -->
         </div>
-<!-- /.col -->
     </div>
-<!-- /.row -->
 </section>
 
 {% else %}
-
+{# warning message if account not confirmed #}
 <br><br>
 <div class="col-lg-10 col-sm-12 col-md-12">
     <div class="info-box mb-3 overflow-box">
@@ -233,6 +226,8 @@
 {% endblock %}
 
 {% block javascripts %}
+
+    {# enable dataTable #}
 
     {{ parent() }}
 
