@@ -8,31 +8,17 @@
         <meta content="" name="keywords">
         <meta content="" name="@">
 
-        <!-- Favicons -->
         <link href="{{ asset('build/favicon.png') }}" rel="icon">
         <link href="{{ asset('build/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
-        {#<script src="https://cdn.tiny.cloud/1/wscb7rdrlan56zedv3ooukb16xb5136jcxtqv1u85x1lfu9f/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>#}
-
-        {#<script src="https://cdn.ckeditor.com/ckeditor5/17.0.0/classic/ckeditor.js"></script>#}
-    
-       <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script> 
-        <!-- // <script src="//cdn.ckeditor.com/4.13.1/full/ckeditor.js"></script> -->
-
         {% block stylesheets %}
-
-            <!-- fontawesome provisoire -->
+            <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script> 
             <script src="https://kit.fontawesome.com/1596c4b58a.js" crossorigin="anonymous"></script>
-        
-            <!-- Google Fonts -->
             <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,500,600,700,700i|Montserrat:300,400,500,600,700" rel="stylesheet">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
             <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-
-            <!-- bootstrap and custom styles -->    
             {{ encore_entry_link_tags('school') }}
- 
         {% endblock %}
 
     </head>
@@ -72,9 +58,6 @@
                 <div class="sidebar">
 
                     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                        <!-- <div class="image">
-                          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-                        </div> -->
                         {% if school.pictures.fileName is defined %}
                         <div class="image">
                           <img src="{{ uploaded_asset(school.pictures.fileName) }}" class="elevation-2" alt="User Image">
@@ -158,15 +141,11 @@
             </footer>
         </div>
 
-        <!-- scripts -->
         {% block javascripts %}
-
             {{ encore_entry_script_tags('school') }}
-
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
             <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-
         {% endblock %}
 
     </body>

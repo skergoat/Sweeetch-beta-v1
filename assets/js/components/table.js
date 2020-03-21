@@ -1,3 +1,4 @@
+// enable jquery dataTable 
 $(function () {
     $("#example1").DataTable({
         "paging": true,

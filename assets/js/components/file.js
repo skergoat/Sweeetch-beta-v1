@@ -1,3 +1,4 @@
+// select file to upload 
 $('.browse').click(function() {
     var id = $(this).attr('data-url');
     $('#' + id).click();

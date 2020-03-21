@@ -1,3 +1,5 @@
+// homepage template js and css
+
 // css
 import '../../css/front/homepage.scss';
 

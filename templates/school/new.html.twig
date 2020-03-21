@@ -1,3 +1,4 @@
+
 {% extends 'base-front.html.twig' %}
 
 {% block title %} {{ parent() }} - Ecoles {% endblock %}
@@ -20,7 +21,7 @@
                 </div>
             </div>
             </div>
-        
+            {# menu #}
             <div class="container nav-desktop">
         
                 <nav class="nav-jobs main-nav d-none d-lg-block">
@@ -42,13 +43,13 @@
         </header>
 
         <h1 class="titles-front">Ecoles</h1>
-
+        {# form #}
         {{ include('school/_form.html.twig') }}
 
     </div>
     
 </div>
-
+{# footer #}
 <footer id="footer" class="section-bg">
     <div class="container">
         <div class="copyright">

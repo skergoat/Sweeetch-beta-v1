@@ -3,7 +3,7 @@
 {% block title %} {{ parent() }} - Admin {% endblock %}
 
 {% block body %}
-
+{# template #}
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -17,13 +17,13 @@
         </div>
     </div>
 </div>
-
+{# message #}
 {% for message in app.flashes('success') %}
   <div class="alert alert-success">
       {{ message }}
   </div>
 {% endfor %}
-
+{# edit #}
 <div class="row">
     <div class="col-md-12">
         <div class="card card-action">

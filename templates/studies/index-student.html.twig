@@ -1,3 +1,4 @@
+{# studies list by student #}
 {% extends 'base-front.html.twig' %}
 
 {% block title %} {{ parent() }} - Formations {% endblock %}
@@ -7,24 +8,11 @@
     {% if is_granted('ROLE_SUPER_SCHOOL') or is_granted('ROLE_STUDENT_HIRED') %}
 
     <div class="background-jobs">
-
         <div class="container-fluid container-jobs">
 
             <header id="header">
-
-                {# <div id="topbar">
-                <div class="container">
-                    <div class="social-links">
-                    <a href="https://twitter.com/SweeetchA" target="_blank" class="twitter"><i class="fa fa-twitter"></i></a>
-                    <a href="https://www.facebook.com/sweeetch.ton.alternance/" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a>
-                    <a href="https://fr.linkedin.com/company/sweetchmontpellier?trk=public_profile_topcard_current_company" target="_blank" class="linkedin"><i class="fa fa-linkedin"></i></a>
-                    <a href="https://www.instagram.com/sweeetch_alternance/" target="_blank" class="instagram"><i class="fa fa-instagram"></i></a>
-                    </div>
-                </div>
-                </div>#}
-            
                 <div class="container nav-desktop">
-            
+                    {# nav #}
                     <nav class="nav-jobs main-nav d-none d-lg-block">
                         <ul>
                             <li><a href="{{ path('homepage') }}">Accueil</a></li>
@@ -41,22 +29,21 @@
                             {% endif %}
                         </ul>
                     </nav>
-                
                 </div>
             </header>
 
             <div class="jobs-container">
 
                 <h1>Formations disponibles</h1>
-
+                {# success message #}
                 {% for message in app.flashes('error') %}
                 <div class="alert alert-danger">
                     {{ message }}
                 </div>
                 {% endfor %}
-
+                {# paginate #}
                 <div class="pagination-top">{{ knp_pagination_render(studies) }}</div>
-
+                {# studies list #}
                 <div class="row">
 
                     {% for studies in studies %}
@@ -74,33 +61,15 @@
                             </div>
                         </a>
                     </div>
-
-                    {% else %}
-           
-                    <tr>
-                        <td colspan="8">
-                            
-                            <div class="info-box mb-3" style="border:1px solid rgba(0, 0, 0, 0.125);border-radius:5px;margin-top:100px;">
-                                <span class="info-box-icon bg-warning elevation-1"><i class="fa fa-info"></i></span>
-                
-                                <div class="info-box-content">
-                                    <span class="info-box-number">Aucune formation pour le moment</span>
-                                    <span class="info-box-text">Revenez plus tard !</span>
-                                </div>
-                            </div>
-
-                        </td>
-                    </tr>
-
                     {% endfor %}
                 </div>
-
+                {# paginate #}
                 <div class="pagination-bottom">{{ knp_pagination_render(studies) }}</div> 
 
             </div>
         </div>
     </div>
-
+    {# footer #}
     <footer id="footer" class="section-bg">
         <div class="container">
             <div class="copyright">

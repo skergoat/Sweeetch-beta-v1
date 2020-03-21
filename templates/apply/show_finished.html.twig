@@ -1,9 +1,10 @@
+{# show offer to company when it is finished #}
 {% extends 'base-company.html.twig' %}
 
 {% block title %} {{ parent() }} - Entreprises {% endblock %}
 
 {% block body %}
-
+{# title #}
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-6">
@@ -17,7 +18,7 @@
         </div>
     </div>
 </div> <br>
-
+{# success message or error message #}
 {% for message in app.flashes('success') %}
 <div class="alert alert-success">
     {{ message }}
@@ -44,7 +45,7 @@
                         </button>
                     </div>
                 </div>
-                <!-- /.card-header -->
+                {# offer infos #}
                 <div class="card-body">
                     <table class="table offers-show col-lg-5 col-md-5 col-sm-12 col-xs-12">
     
@@ -69,7 +70,7 @@
                 </table>
 
             </table>
-
+            {# offer description #}
             <div class="card description" style="padding:10px;">
                 <h5 class="mb-3">Description</h5>
                 <p>{{ offers.description |raw }}</p>
@@ -84,6 +85,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
+                {# candidates #}
                 <div class="card-header">
                     <h3 class="card-title" style="font-weight:900;font-size:22px;">Candidatures</h3>
                 </div>
@@ -100,6 +102,7 @@
 
                             {% for finished in finished %}         
                             <tr>
+                                {# student name #}
                                 {% if finished.student.id is defined %}
                                     {% if is_granted('ROLE_ADMIN') %}
                                     <td style="padding-top: 18px;"><a href="{{ path('student_show', { "id":finished.student.id }) }}">{{ finished.student.name }} {{ finished.student.lastname }}</a></td>
@@ -108,6 +111,7 @@
                                     {% endif %}
                                     <td></td>
                                 {% else %}
+                                    {# if finished and student profile is deleted #}
                                     <td>
                                         <p style="color:#FF475B;">Le profil de l'étudiant a été détruit</p>
                                     </td>
@@ -126,13 +130,9 @@
                         </tbody>
                     </table>
                 </div>
-        <!-- /.card-body -->
             </div>
-        <!-- /.card -->
         </div>
-    <!-- /.col -->
     </div>
-<!-- /.row -->
 </section>
 
 {% endblock %}
@@ -142,13 +142,12 @@
 {{ parent() }}
 
 <script>
+    // close card 1 
     $(document).ready(function() {
         $('#card-1').CardWidget('toggle');
-        // $('#card-2').CardWidget('toggle');
-        // $('#card-3').CardWidget('toggle');
     });
-
-        $(function () {
+    // enable dataTable
+    $(function () {
         $("#finish1").DataTable({
             "paging": true,
             "lengthChange": false,

@@ -1,3 +1,5 @@
+/** student profil js and css */
+
 // css
 import '../../css/student/homepage.scss';
 
@@ -23,3 +25,41 @@ import './component/edit-profile.js'; // edit languages or studies
 import './component/timeline.js'; // timeline 
 // import './component/buttons.js'; 
 
+// dataTables
+$(function () {
+    $("#applies1").DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "pageLength": 5,
+        "searching": false,
+        "ordering": false,
+        "info": false,
+        "autoWidth": false,
+        "responsive": true,
+        "language": {
+        "emptyTable": "Aucune candidature pour le moment",
+        "paginate": {
+            "previous": "Précédent",
+            'next':'Suivant'
+            }
+        }
+    });
+
+    $('#applies2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "pageLength": 5,
+        "searching": false,
+        "ordering": true,
+        "info": false,
+        "autoWidth": false,
+        "responsive": true,
+        "language": {
+        "emptyTable": "Aucun recrutement pour le moment",
+        "paginate": {
+            "previous": "Précédent",
+            'next':'Suivant'
+            }
+        }
+    });   
+});

@@ -1,9 +1,10 @@
+{# new admin #}
 {% extends 'base-back.html.twig' %}
 
 {% block title %} {{ parent() }} - Admin {% endblock %}
 
 {% block body %}
-
+    {# title #}
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -17,13 +18,13 @@
             </div>
         </div>
     </div>
-
+    {# message #}
     {% for message in app.flashes('success') %}
     <div class="alert alert-success">
         {{ message }}
     </div>
     {% endfor %}
-
+    {# new form #}
     <div class="row">
         <div class="col-md-12">
             <div class="card card-action">

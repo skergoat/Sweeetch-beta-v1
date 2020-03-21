@@ -1,3 +1,5 @@
+{# index of all finished applies for companies profil #}
+
 {% extends 'base-company.html.twig' %}
 
 {% block title %} {{ parent() }} - Entreprises {% endblock %}
@@ -5,7 +7,7 @@
 {% block body %}
 
 {% if is_granted('ROLE_SUPER_COMPANY') %}
-
+{# title #}
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-6">
@@ -13,13 +15,13 @@
         </div>
     </div>
 </div> 
-
+{# success or error message #}
 {% for message in app.flashes('success') %}
 <div class="alert alert-success">
     {{ message }}
 </div>
 {% endfor %}
-
+{# table #}
 <section class="content">
     <div class="row">
         <div class="col-12">
@@ -27,43 +29,33 @@
     
                 <div class="card-body">
                     <table id="example2" class="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th>Titre</th>
-                            <th>Lieu</th>
-                            <th>Domaine</th>
-                            <th>Fermée le</th>
-                            {# <th>Début</th>
-                            <th>Fin</th> #}
-                            <th>Situation</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            
-                    {% for applies in applies %}
-                        {# {% if finished.offers.id is defined %} #}
-                        <tr>
-                            <td><a href="{{ path('show_finished', {'id': applies.offers.id, 'company':company.id}) }}">{{ applies.offers.title }}</a></td>
-                            <td>{{ applies.offers.location }}</td>
-                            <td>{{ applies.offers.domain }}</td>
-                            <td>{{ applies.dateRecruit|date("d/m/Y à g\\hi") }}</td>
-                            {# <td>{{ applies.offers.dateStart ? applies.offers.dateStart|date('Y-m-d H:i:s') : '' }}</td>
-                            <td>{{ applies.offers.dateEnd ? applies.offers.dateEnd|date('Y-m-d H:i:s') : '' }}</td> #}
-                            <td> <span class="badge bg-success">Recruté</span> </td>
-                        </tr>
-                        {# {% endif %} #}
-                    {% endfor %}
-                                                    
-                </tbody>
-            </table>
+                        <thead>
+                            <tr>
+                                <th>Titre</th>
+                                <th>Lieu</th>
+                                <th>Domaine</th>
+                                <th>Fermée le</th>
+                                <th>Situation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                
+                        {% for applies in applies %}
+                            <tr>
+                                <td><a href="{{ path('show_finished', {'id': applies.offers.id, 'company':company.id}) }}">{{ applies.offers.title }}</a></td>
+                                <td>{{ applies.offers.location }}</td>
+                                <td>{{ applies.offers.domain }}</td>
+                                <td>{{ applies.dateRecruit|date("d/m/Y à g\\hi") }}</td>
+                                <td> <span class="badge bg-success">Recruté</span> </td>
+                            </tr>
+                        {% endfor %}
+                                                        
+                        </tbody>
+                    </table>
+                </div>
             </div>
-<!-- /.card-body -->
         </div>
-    <!-- /.card -->
-        </div>
-    <!-- /.col -->
     </div>
-    <!-- /.row -->
 </section>
 
 {% endif %}

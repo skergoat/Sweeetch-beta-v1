@@ -1,3 +1,4 @@
+{# show single offer #}
 {% extends 'base-front.html.twig' %}
 
 {% block title %} {{ parent() }} - Emploi {% endblock %}
@@ -19,7 +20,7 @@
                 </div>
             </div>
             </div>
-        
+            {# nav #}
             <div class="container nav-desktop">
                 <nav class="nav-jobs main-nav d-none d-lg-block">
                     <ul>
@@ -44,7 +45,7 @@
 
         <h1 class="titles-front">{{ offers.title }}</h1>
         <h4 class="card-subtitle mb-2 text-muted">{{ offers.location }}</h4>
-
+        {# success or error message #}
         {% for message in app.flashes('success') %}
         <div class="alert alert-success">
             {{ message }}
@@ -56,7 +57,7 @@
             {{ message }}
         </div>
         {% endfor %}
-
+        {# offers infos #}
         <div class="Password card col-lg-12">
             <div class="card-body">
                 <table class="table offers-show col-lg-5 col-md-5 col-sm-12 col-xs-12">
@@ -119,7 +120,7 @@
                     </div>
                     {% endif %}
                 </div>
-        
+                {# apply options #}
                 {% if is_granted('ROLE_USER') %}
 
                     {% if app.user.student.id is defined %}
@@ -153,11 +154,7 @@
                             <div class="info-box-content">
                                 <span class="info-box-number">Validation en attente</span>
                                 <span class="info-box-text">
-                                    {# {% if app.user.activateToken | length > 0 %} #}
                                     Vous devez valider votre email et attendre que Sweeetch valide votre compte pour pouvoir postuler
-                                    {# {% else %}
-                                    Vous devez attendre que Sweeetch valide votre compte pour pouvoir postuler
-                                    {% endif %} #}
                                 </span>
                             </div>
                             </div>
@@ -174,7 +171,7 @@
 
     </div>
 </div>
-
+{# footer #}
 <footer id="footer" class="section-bg">
     <div class="container">
         <div class="copyright">

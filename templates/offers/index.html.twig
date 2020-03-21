@@ -1,3 +1,4 @@
+{# offers index #}
 {% extends 'base-front.html.twig' %}
 
 {% block title %} {{ parent() }} - Emplois {% endblock %}
@@ -20,14 +21,13 @@
                 </div>
             </div>
             </div>
-        
+            {# nav #}
             <div class="container nav-desktop">
         
                 <nav class="nav-jobs main-nav d-none d-lg-block">
                     <ul>
                         <li class="active"><a href="/">Acceuil</a></li>
                         {% if page is defined %}
-                        {# <li><a href="{{ path('offers_index', {'page':page}) }}">Emplois</a></li>#}
                         {% else %}
                         <li><a href="{{ path('offers_index', {'page':1}) }}">Emplois</a></li>
                         {% endif %}
@@ -61,13 +61,13 @@
     <div class="jobs-container">
 
         <h1>Offres d'emploi</h1><br>
-
+        {# success message #}
         {% for message in app.flashes('error') %}
         <div class="alert alert-danger">
             {{ message }}
         </div>
         {% endfor %}
-
+        {# option menu #}
         <form method="get" action="{{ path('find') }}" style="margin:auto;width:300px;" id="form-options">
             <p>
                 <div style="display:flex;justify-content:center;align-items:center;">
@@ -93,13 +93,13 @@
                 <input type="hidden" name="_token" value="{{ csrf_token('find' ~ page) }}">
             </p>
          </form>
-    
+        {# paginate #}
         <div class="pagination-top">{{ knp_pagination_render(offers) }}</div>
 
         <div class="row">
         {% for offer in offers %}
             {% if offer.applies[0] is not defined or offer.applies[0] is defined and offer.applies[0].hired == false and offer.applies[0].confirmed == false and offer.applies[0].finished == false %}
-
+            {# render offers #}
             <div class="offers-index card col-lg-5 mr-2 ml-2 mt-2 mb-2">
                 <a  href="{{ path('offers_show', {'id': offer.id, 'page':page}) }}" class="card-link">
                     <div class="card-header" style="display:flex;">
@@ -127,7 +127,7 @@
                     </div>
                 </a>
             </div>
-
+            {# no offers #}
             {% else %}
             <tr>
                 <td colspan="8">
@@ -165,8 +165,7 @@
 
     </div>
 </div>
-
-
+{# footer #}
 <footer id="footer" class="section-bg">
     <div class="container">
         <div class="copyright">

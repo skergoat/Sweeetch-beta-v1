@@ -1,13 +1,12 @@
+{# maintenance page #}
+
 {% extends 'base-front.html.twig' %}
 
 {% block title %} {{ parent() }} - home {% endblock %}
 
 {% block stylesheets %}
-    <!-- import assets from assets/js/app.js -->
     {{ parent() }}
-
     <link href="{{ asset('lib/ionicons/css/ionicons.min.css') }}" rel="stylesheet">
-    <!-- Main Stylesheet File -->
      <style>
       .sf-toolbar.sf-error-toolbar { display:none;} 
     </style>
@@ -33,9 +32,7 @@
       <div class="container">
   
         <div class="logo float-left"> 
-          <!-- LOGO HOME IMAGE -->
          <h1 class="text-light"><a href="#intro" class="scrollto"><span>SWEEETCH</span></a></h1>
-  
         </div> 
         
       </div>
@@ -62,8 +59,7 @@
   
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script>
-            
-        
+             
       $(window).scroll(function (event) {
           var scroll = $(window).scrollTop();
          
@@ -73,7 +69,6 @@
           else if(scroll <= 0) {
               $('#header').css('background', 'transparent');
           }
-  
       });
   
     </script>

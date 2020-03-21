@@ -1,3 +1,5 @@
+{# list of all applies by company #}
+
 {% extends 'base-company.html.twig' %}
 
 {% block title %} {{ parent() }} - Entreprises {% endblock %}
@@ -5,7 +7,7 @@
 {% block body %}
 
 {% if is_granted('ROLE_SUPER_COMPANY') %}
-
+{# modal message #}
 <div id="help-1" class="modal">
   <div class="container" style="text-align:justify;">
 
@@ -29,7 +31,7 @@
 
   </div> 
 </div>
-
+{# title #}
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-6">
@@ -38,153 +40,136 @@
         </div>
     </div>
 </div> <br>
-
+{# success or error message #}
 {% for message in app.flashes('success') %}
 <div class="alert alert-success">
     {{ message }}
 </div>
 {% endfor %}
-
 {% for message in app.flashes('error') %}
 <div class="alert alert-danger">
     {{ message }}
 </div>
 {% endfor %}
-
+{# table #}
 <section class="content">
   <div class="row">
       <div class="col-12">
           <div class="card card-responsive-table">
     
-              <!-- /.card-header -->
-              <div class="card-body">
-                  <table id="example1" class="table table-bordered table-hover">
-              <thead>
-                  <tr>
-                      <th>Titre</th>
-                      <th>Lieu</th>
-                      <th>Début</th>
-                      <th>Situation 
-                        <a href="#flag-1" rel="modal:open" class="badge " title="aide" style="color:#8e8e8e;">
-                          <i class="fas fa-question-circle"></i>
-                        </a>
-                      </th>
-                      <th>Actions</th>
-                  </tr>
-              </thead>
-              <tbody>
-
-              {% for offers in offers %}
-
-                {% if offers.applies | length == 0 %} 
-              
-                  <tr>
-                      <td><a href="{{ path('offers_preview', {'id': offers.id, 'company':company.id}) }}">{{ offers.title }}</a></td>
-                      <td>{{ offers.location }}</td>
-                      <td>{{ offers.dateStart ? offers.dateStart|date("d/m/Y à g\\hi") : '' }}</td>
-                      <td> <span class="badge bg-secondary">Ouverte</span> </td>
-                      <td>
-                          <a href="{{ path('offers_edit', {'id': offers.id, 'company':company.id}) }}" title="Modifier"> 
-                            <button class="btn btn-info btn-sm">
-                              <i class="fas fa-edit"></i>
-                            Modifier
-                            </button>
+            <div class="card-body">
+              <table id="example1" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Lieu</th>
+                        <th>Début</th>
+                        <th>Situation 
+                          <a href="#flag-1" rel="modal:open" class="badge " title="aide" style="color:#8e8e8e;">
+                            <i class="fas fa-question-circle"></i>
                           </a>
-                      </td> 
-                  </tr>
-                  
-                {% elseif offers.applies | length > 0 %}
+                        </th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                  {% if offers.applies[0].finished == false and offers.applies[0].confirmed == false %} 
+                {% for offers in offers %}
 
-                  <tr>
-                      <td><a href="{{ path('offers_preview', {'id': offers.applies[0].offers.id, 'company':company.id}) }}">{{ offers.applies[0].offers.title }}</a></td>
-                      <td>{{ offers.applies[0].offers.location }}</td>
-                      <td>{{ offers.applies[0].offers.dateStart ? offers.applies[0].offers.dateStart|date("d/m/Y à g\\hi") : '' }}</td>
-                      <td>    
-                          {% if offers.applies[0].confirmed == false %}
-                            {% if offers.applies[0].agree == false %}
-                              {% set hired = [] %}
-                              {% for applies in offers.applies %}
-                                {% if applies.hired == true %}
-                                  {% set hired = hired|merge([{ hired: applies }]) %}
-                                {% endif %}
-                              {% endfor %}
-                              {% if hired | length == 0 %}
-                                {# count nb refused and unavailables #}
-                                {% set refused = [] %}
-                                {% set unavailable = [] %}
-                                {# {% set wait = [] %} #}
+                  {% if offers.applies | length == 0 %} 
+                
+                    <tr>
+                        <td><a href="{{ path('offers_preview', {'id': offers.id, 'company':company.id}) }}">{{ offers.title }}</a></td>
+                        <td>{{ offers.location }}</td>
+                        <td>{{ offers.dateStart ? offers.dateStart|date("d/m/Y à g\\hi") : '' }}</td>
+                        <td> <span class="badge bg-secondary">Ouverte</span> </td>
+                        <td>
+                            <a href="{{ path('offers_edit', {'id': offers.id, 'company':company.id}) }}" title="Modifier"> 
+                              <button class="btn btn-info btn-sm">
+                                <i class="fas fa-edit"></i>
+                              Modifier
+                              </button>
+                            </a>
+                        </td> 
+                    </tr>
+                    
+                  {% elseif offers.applies | length > 0 %}
+
+                    {% if offers.applies[0].finished == false and offers.applies[0].confirmed == false %} 
+
+                    <tr>
+                        <td><a href="{{ path('offers_preview', {'id': offers.applies[0].offers.id, 'company':company.id}) }}">{{ offers.applies[0].offers.title }}</a></td>
+                        <td>{{ offers.applies[0].offers.location }}</td>
+                        <td>{{ offers.applies[0].offers.dateStart ? offers.applies[0].offers.dateStart|date("d/m/Y à g\\hi") : '' }}</td>
+                        <td>    
+                            {% if offers.applies[0].confirmed == false %}
+                              {% if offers.applies[0].agree == false %}
+                                {% set hired = [] %}
                                 {% for applies in offers.applies %}
-                                  {# refused #}
-                                  {% if applies.refused == true %}
-                                    {% set refused = refused|merge([{ refused: applies }]) %}
+                                  {% if applies.hired == true %}
+                                    {% set hired = hired|merge([{ hired: applies }]) %}
                                   {% endif %}
-                                  {# unavailable #}
-                                  {% if applies.unavailable == true %}
-                                    {% set unavailable = unavailable|merge([{ unavailable: applies }]) %}
-                                  {% endif %}
-                                  {# wait #}
-                                  {# {% if applies.wait == true %}
-                                    {% set wait = wait|merge([{ wait: applies }]) %}
-                                  {% endif %} #}
                                 {% endfor %}
-                                {# total #}
-                                {% set minus = refused|length + unavailable|length %}
-                                {# render #}
-                                {% if offers.applies|length - minus == 0 %}
-                                <span class="badge badge-secondary right" title="candidatures">Ouverte</span>
+                                {% if hired | length == 0 %}
+                                  {# count nb refused and unavailables #}
+                                  {% set refused = [] %}
+                                  {% set unavailable = [] %}
+                                  {# {% set wait = [] %} #}
+                                  {% for applies in offers.applies %}
+                                    {# refused #}
+                                    {% if applies.refused == true %}
+                                      {% set refused = refused|merge([{ refused: applies }]) %}
+                                    {% endif %}
+                                    {# unavailable #}
+                                    {% if applies.unavailable == true %}
+                                      {% set unavailable = unavailable|merge([{ unavailable: applies }]) %}
+                                    {% endif %}
+                                  {% endfor %}
+                                  {# total #}
+                                  {% set minus = refused|length + unavailable|length %}
+                                  {# render #}
+                                  {% if offers.applies|length - minus == 0 %}
+                                  <span class="badge badge-secondary right" title="candidatures">Ouverte</span>
+                                  {% else %}
+                                  <span class="badge badge-primary right" title="candidatures">
+                                    Candidats : {{ offers.applies|length - minus  }} 
+                                  </span>
+                                  {% endif %}
                                 {% else %}
-                                <span class="badge badge-primary right" title="candidatures">
-                                  Candidats : {{ offers.applies|length - minus  }} 
-                                </span>
+                                <span class="badge bg-warning">En attente</span>
                                 {% endif %}
                               {% else %}
-                              <span class="badge bg-warning">En attente</span>
+                                <span class="badge bg-info">A Finaliser</span>    
                               {% endif %}
                             {% else %}
-                              <span class="badge bg-info">A Finaliser</span>    
-                            {% endif %}
-                          {% else %}
-                          <span class="badge bg-success">En cours</span>
-                          {% endif %} 
-                      </td>
-                      <td>
-                        <a href="{{ path('offers_edit', {'id': offers.applies[0].offers.id, 'company':company.id}) }}">
-                          <button  title="Modifier" style="color:white;" class="btn btn-info btn-sm"> 
-                            <i class="fas fa-edit"></i>
-                            Modifier
-                          </button>
-                        </a>
-                      </td>
-                  </tr>
+                            <span class="badge bg-success">En cours</span>
+                            {% endif %} 
+                        </td>
+                        <td>
+                          <a href="{{ path('offers_edit', {'id': offers.applies[0].offers.id, 'company':company.id}) }}">
+                            <button  title="Modifier" style="color:white;" class="btn btn-info btn-sm"> 
+                              <i class="fas fa-edit"></i>
+                              Modifier
+                            </button>
+                          </a>
+                        </td>
+                    </tr>
 
-                  {% endif %} 
-       
-              {% endif %}
-              
-              {% endfor %}
-              </tbody>
-            </table>
-          </div>
-  <!-- /.card-body -->
-      </div>
-  <!-- /.card -->
+                    {% endif %} 
+        
+                {% endif %}
+                
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
   </div>
-<!-- /.col -->
-</div>
-<!-- /.row -->
 </section>
-          {# </table>
-      </div>
-
-      <div class="pagination-bottom mt-5">{{ knp_pagination_render(offers) }}</div> 
-
-  </div>      
-</div> #}
 
 {% else %}
-
+{# alert message if account non validated #}
 <br><br>
 <div class="col-12 col-sm-6 col-md-6">
     <div class="info-box mb-3 overflow-box">

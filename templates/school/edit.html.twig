@@ -1,3 +1,4 @@
+{# edit school #}
 {% extends 'base-school.html.twig' %}
 
 {% block title %} {{ parent() }} - Ecoles {% endblock %}
@@ -5,7 +6,7 @@
 {% block body %}
 
 <h1>Informations de l'Ecole</h1>
-
+{# error and success message #}
 {% for message in app.flashes('success') %}
   <div class="alert alert-success">
       {{ message }}
@@ -20,32 +21,28 @@
 
 <div class="card card-primary">
   <div class="card-body body-row">
+    {# menu #}
+    <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link edit-items" id="custom-content-below-home-tab" data-toggle="pill" href="#custom-content-below-home" role="tab" aria-controls="custom-content-below-home" aria-selected="true">Général</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link edit-items" id="custom-content-below-profile-tab" data-toggle="pill" href="#custom-content-below-profile" role="tab" aria-controls="custom-content-below-profile" aria-selected="false">Mot de Passe</a>
+      </li>
+    </ul>
 
-    {# <div class="card card-outline body-row">    
-      <div class="card-body body-row"> #}
-
-        <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
-          <li class="nav-item">
-            <a class="nav-link edit-items" id="custom-content-below-home-tab" data-toggle="pill" href="#custom-content-below-home" role="tab" aria-controls="custom-content-below-home" aria-selected="true">Général</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link edit-items" id="custom-content-below-profile-tab" data-toggle="pill" href="#custom-content-below-profile" role="tab" aria-controls="custom-content-below-profile" aria-selected="false">Mot de Passe</a>
-          </li>
-        </ul>
-
-        <div class="tab-content" id="custom-content-below-tabContent">
-            <div class="tab-pane fade" id="custom-content-below-home" role="tabpanel" aria-labelledby="custom-content-below-home-tab">
-           {{ include('school/_form-edit.html.twig', {'button_label': 'Update'}) }} 
-            <div style="display:flex;justify-content:flex-end;">{{ include('school/_delete_form.html.twig') }}</div>
-          </div>
-          <div class="tab-pane fade" id="custom-content-below-profile" role="tabpanel" aria-labelledby="custom-content-below-profile-tab">
-            {{ include('school/_form-password.html.twig', {'button_label': 'Update'}) }} 
-          </div>
-        </div>
-
-      {# </div>
-    </div> #}
-
+    <div class="tab-content" id="custom-content-below-tabContent">
+        <div class="tab-pane fade" id="custom-content-below-home" role="tabpanel" aria-labelledby="custom-content-below-home-tab">
+        {# account edit form #}
+        {{ include('school/_form-edit.html.twig', {'button_label': 'Update'}) }} 
+        <div style="display:flex;justify-content:flex-end;">{{ include('school/_delete_form.html.twig') }}</div>
+      </div>
+      <div class="tab-pane fade" id="custom-content-below-profile" role="tabpanel" aria-labelledby="custom-content-below-profile-tab">
+        {# passwors edit form #}
+        {{ include('school/_form-password.html.twig', {'button_label': 'Update'}) }} 
+      </div>
+    </div>
+    
   </div>
 </div>
 

@@ -1,3 +1,4 @@
+// display timeline when apply process is on 
 $('.time-icon').mouseover(function() {
     var data = $(this).attr('data-url');
     var text;

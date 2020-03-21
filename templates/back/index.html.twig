@@ -1,8 +1,12 @@
+{# admin homepage #}
+
 {% extends 'base-back.html.twig' %}
 
 {% block title %} {{ parent() }} - Admin {% endblock %}
 
 {% block body %}
+
+{# main title #}
 
 <div class="content-header">
     <div class="container-fluid">
@@ -14,6 +18,8 @@
     </div>
 </div>
 
+{# success message #}
+
 {% for message in app.flashes('success') %}
   <div class="alert alert-success">
       {{ message }}
@@ -23,7 +29,7 @@
 <div class="row">
 
     <div class="col-lg-6">
-
+        {# student to confirm #}
         <div class="card col-lg-12" style="padding:0px;">
             <div class="card-header border-transparent">
                 <h3 class="card-title">Etudiants à confirmer</h3>
@@ -77,7 +83,7 @@
                 </div>
             </div>
         </div>
-        
+         {# companies to confirm #}
         <div class="card col-lg-12" style="padding:0px;">
             <div class="card-header border-transparent">
                 <h3 class="card-title">Entreprises à confirmer</h3>
@@ -88,7 +94,6 @@
                 </button>
                 </div>
             </div>
-                <!-- /.card-header -->
             <div class="card-body p-0 card-dashboard">
                 <div class="table-responsive">
                     <table class="table m-0">
@@ -131,7 +136,7 @@
                 </div>
             </div>
         </div>
-        
+         {# schools to confirm #}
         <div class="card col-lg-12" style="padding:0px;">
             <div class="card-header border-transparent">
                 <h3 class="card-title">Ecoles à confirmer</h3>
@@ -142,7 +147,6 @@
                 </button>
                 </div>
             </div>
-                <!-- /.card-header -->
             <div class="card-body p-0 card-dashboard">
                 <div class="table-responsive">
                     <table class="table m-0">
@@ -186,9 +190,9 @@
             </div>
         </div>
     </div>
-<!-- -->
-    <div class="col-lg-6">
 
+    <div class="col-lg-6">
+        {# current applies #}
        <div class="card col-lg-12" style="padding:0px;">
             <div class="card-header border-transparent">
                 <h3 class="card-title">Embauches en cours</h3>
@@ -217,8 +221,6 @@
                                    <td><span class="badge badge-warning" title="l'etudiant doit confirmer sa mission">En attente</span></td>
                                    {% elseif applies.agree == true %}
                                    <td><span class="badge badge-info" title="embauche en cours">A confirmer</span></td>
-                                  {# {% elseif applies.confirmed == true %}
-                                   <td><span class="badge badge-success" title="mission en cours">Mission en cours</span></td>#}
                                    {% endif %}
                                 </tr>
                             {% else %}
@@ -231,7 +233,7 @@
                 </div>
             </div>
         </div>
-
+        {# current recruits #}
         <div class="card col-lg-12" style="padding:0px;">
             <div class="card-header border-transparent">
                 <h3 class="card-title">Inscriptions aux écoles en cours</h3>
@@ -260,8 +262,6 @@
                                    <td><span class="badge badge-warning" title="l'etudiant doit confirmer sa mission">En attente</span></td>
                                    {% elseif recruits.agree == true %}
                                    <td><span class="badge badge-info" title="embauche en cours">A confirmer</span></td>
-                                   {# {% elseif recruits.finioshed == true %}
-                                   <td><span class="badge badge-success" title="mission en cours">Mission en cours</span></td>#}
                                    {% endif %}
                                 </tr>
                             {% else %}

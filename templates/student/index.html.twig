@@ -1,9 +1,10 @@
+{# list of student for admin #}
 {% extends 'base-back.html.twig' %}
 
 {% block title %} {{ parent() }} - Admin {% endblock %}
 
 {% block body %}
-
+    {# title #}
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -13,13 +14,13 @@
             </div>
         </div>
     </div>
-
+    {# success message #}
     {% for message in app.flashes('success') %}
         <div class="alert alert-success">
             {{ message }}
         </div>
     {% endfor %}
-
+    {# table #}
     <div class="card">
         <div class="card-body p-0">
             <div class="table-responsive">
@@ -67,7 +68,7 @@
             </div>
         </div>
     </div>
-
+    {# paginate #}
     <div style="max-width:100%;overflow:scroll;">{{ knp_pagination_render(students) }}</div>
 
 {% endblock %}
