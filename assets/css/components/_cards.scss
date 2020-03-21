@@ -1,4 +1,4 @@
-/* card layout */
+// profil cards style 
 
 .card-body.p-0 .table thead > tr > th:last-of-type, .card-body.p-0 .table thead > tr > td:last-of-type, .card-body.p-0 .table tbody > tr > th:last-of-type, .card-body.p-0 .table tbody > tr > td:last-of-type,
 .card-body.p-0 .table thead > tr > th:first-of-type, .card-body.p-0 .table thead > tr > td:first-of-type, .card-body.p-0 .table tbody > tr > th:first-of-type, .card-body.p-0 .table tbody > tr > td:first-of-type,    
@@ -12,8 +12,6 @@
 }
 
 .card {
-    // padding:25px;
-    // padding-top:20px;
     margin-bottom:30px;
 
     &-dashboard {
