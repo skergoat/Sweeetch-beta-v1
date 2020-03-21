@@ -3,15 +3,14 @@
 @import "~admin-lte";
 
 // common styles 
-@import "../components/helpers";
-@import "../components/table";
-@import "../components/warning";
-@import "../components/form";
+@import "../components/helpers";    // colors 
+@import "../components/table";  // all tables 
+@import "../components/form";   // admin forms 
 
 
 // particular styles
-@import "/components/buttons";
-@import "/components/nav";
+@import "/components/buttons";  
+@import "/components/nav";  // left sidebar 
 @import "/components/card";
 @import "/components/icons";
 @import "/components/layout";

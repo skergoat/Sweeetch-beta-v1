@@ -1,17 +1,23 @@
+/**** librairies ****/
+
 @import '~bootstrap';
 @import '~font-awesome';
 @import "~admin-lte";
 
+/**** template ****/
+
+// fonts and colors helpers 
 @import './helpers/colors';
 @import './helpers/font-family';
-
+// template fonts and colors 
 @import './layout/colors';
 @import './layout/general';
 @import './layout/topbar';
-
+// template header and footer 
 @import './layout/navigation';
 @import './layout/footer';
-
+// template layout
+@import './layout/layout';
 @import './homepage/header';
 @import './homepage/intro-section';
 @import './homepage/section-header';
@@ -25,19 +31,13 @@
 @import './homepage/customer';
 @import './homepage/pricing';
 @import './homepage/questions';
-
-@import '../components/form';
-@import '../components/layout';
-
-@import './layout/login';
-
-@import './modify';
-
+// contact form 
+@import '../components/form';  
+// template responsive 
 @import './homepage/media-queries';
-@import '../components/media-queries';
 
-#intro .intro-info .btn-get-started, #intro .intro-info .btn-services {
-    display: block;
-    width: 200px;
-    margin: auto;
-}
+/***** custom styles *****/ 
+
+@import './layout/login';   // login page 
+@import './modify'; 
+@import './layout/media-queries'; // custom responsive 
