@@ -2,12 +2,15 @@
 @import "~font-awesome";
 @import "~admin-lte";
 
-@import "../components/form";
+// common styles 
+@import "../components/helpers";
 @import "../components/table";
 @import "../components/warning";
+@import "../components/form";
 
+
+// particular styles
 @import "/components/buttons";
-@import "/components/form";
 @import "/components/nav";
 @import "/components/card";
 @import "/components/icons";

@@ -16,9 +16,7 @@ $(function () {
             }
         }
     });   
-// });
 
-// $(function () {
     $("#example2").DataTable({
         "paging": true,
         "lengthChange": false,
@@ -35,6 +33,23 @@ $(function () {
             'next':'Suivant'
             }
         }
-    });   
-// })  
+    });
+    
+    $("#example3").DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "pageLength": 5,
+        "searching": false,
+        "ordering": false,
+        "info": false,
+        "autoWidth": false,
+        "responsive": true,
+        "language": {
+        "emptyTable": "Aucune mission terminée",
+        "paginate": {
+            "previous": "Précédent",
+            'next':'Suivant'
+            }
+        }
+    });
 });
