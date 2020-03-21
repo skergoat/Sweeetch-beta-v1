@@ -1,5 +1,7 @@
 <?php 
 
+// listen and generate "confirm email" message 
+
 namespace App\EventListener;
 
 use App\Activate\ActivateHTMLAdder;

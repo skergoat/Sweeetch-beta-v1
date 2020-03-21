@@ -72,12 +72,7 @@ class UserControllerAuthenticator extends AbstractFormLoginAuthenticator impleme
             // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('Email could not be found.');
         }
-
-        // error if profile and docs not confirmed 
-        // if ($user->getConfirmed() == false) {
-        //     throw new CustomUserMessageAuthenticationException('Votre compte n\'est pas encore confirmé. Patience !');
-        // }
-
+        
         return $user;
     }
 

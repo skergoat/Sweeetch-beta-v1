@@ -18,33 +18,4 @@ class FileNameRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, FileName::class);
     }
-
-    // /**
-    //  * @return FileName[] Returns an array of FileName objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('f.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?FileName
-    {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
