@@ -1,10 +1,32 @@
-.timeline::before {
-    width: 80%;
-    height:4px;
-    top:50px;
-    left:0px;
+// student offers timeline 
+
+// grey line 
+// .timeline::before {
+//     width: 80%;
+//     height:4px;
+//     top:50px;
+//     left:0px;
+// }
+
+// grey line 
+.timeline {
+    margin:0px;
+    
+    &::before {
+        width:95%;
+        width: 80%;
+        height:4px;
+        top:50px;
+        left:0px;
+    }
+
+    & > div > .timeline-item {
+        margin:0px;
+        margin:auto;
+    }
 }
 
+// icons 
 .time-icon {
     &:first-child {
         position:relative;
@@ -19,8 +41,6 @@
 
     &:nth-child(2) {
         position:relative;
-        // top:0px;
-        // left:30%;
         top:-10px;
         width:20px;
         left:43%;
@@ -50,31 +70,9 @@
     }
 }
 
-.timeline {
-    margin:0px;
-    
-    &::before {
-        width:95%;
-    }
-
-    & > div > .timeline-item {
-        margin:0px;
-        margin:auto;
-    }
-}
-
-// .time-icon:nth-child(3) {
-//     left:90%;
-// }
-
-// .time-icon:nth-child(2) {
-//     left:43%;
-// }
-
+// message 
 .timeline > .message {
-    // position:absolute;
     opacity:0;
-    // top:50px;
     top:-40px;
     margin:auto;
     max-width:400px;

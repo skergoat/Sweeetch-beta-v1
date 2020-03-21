@@ -1,67 +1,67 @@
-.table {
+// .table {
     
-    &-scroll {
-        overflow:scroll;
-        padding:0px;
+//     &-scroll {
+//         overflow:scroll;
+//         padding:0px;
 
-        &-card-width {
-            width:50vw;
-        }
-    }
-}
+//         &-card-width {
+//             width:50vw;
+//         }
+//     }
+// }
 
-table {
+// table {
 
-    & tr td a, & tr td a:hover  {
-        color:#20A9DA;
-    } 
+//     & tr td a, & tr td a:hover  {
+//         color:#20A9DA;
+//     } 
 
-    & tr td a:first-child:hover {
-        text-decoration: none;
-        border:0px;
-    }
-}
+//     & tr td a:first-child:hover {
+//         text-decoration: none;
+//         border:0px;
+//     }
+// }
 
-.th-centered {
-    text-align:center;
-}
+// .th-centered {
+//     text-align:center;
+// }
 
-.table-offers tr td, .table-offers tr th  {
-    text-align:center;
-}
+// .table-offers tr td, .table-offers tr th  {
+//     text-align:center;
+// }
 
-.table-offers tr td:first-child:hover {
-    cursor:pointer;
-    animation-name: example;
-    animation-duration: 0.2s;
-    animation-fill-mode: forwards; 
-}
+// .table-offers tr td:first-child:hover {
+//     cursor:pointer;
+//     animation-name: example;
+//     animation-duration: 0.2s;
+//     animation-fill-mode: forwards; 
+// }
 
-@keyframes example {
-    from {transform:scale(1);}
-    to {transform:scale(1.05);}
-}
+// @keyframes example {
+//     from {transform:scale(1);}
+//     to {transform:scale(1.05);}
+// }
 
-// dataTables pagination
-.dataTables_wrapper .dataTables_paginate .paginate_button{
+// // dataTables pagination
+// .dataTables_wrapper .dataTables_paginate .paginate_button{
 
-    &.current {
-        border:1px solid #4c4c4c !important;
-        padding:3px 10px;
-        // border-radius:3px;
-        background:transparent;
-        color:$darkerBlue;
-    }
+//     &.current {
+//         border:1px solid #4c4c4c !important;
+//         padding:3px 10px;
+//         // border-radius:3px;
+//         background:transparent;
+//         color:$darkerBlue;
+//     }
     
-    &:hover {
-        color: $linkBlue;
-        border:0px;
-        background:transparent;
-    }
+//     &:hover {
+//         color: $linkBlue;
+//         border:0px;
+//         background:transparent;
+//     }
 
-    &.previous, &.next{
-        display:none;
-    }
-}
+//     &.previous, &.next{
+//         display:none;
+//     }
+// }
 
 
