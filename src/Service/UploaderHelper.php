@@ -18,7 +18,6 @@ class UploaderHelper
     private $publicAssetBaseUrl; 
     private $privateFilesystem; #
 
-    // const STUDENT_IMAGE = 'student_image';
     const STUDENT_DOCUMENT = 'student_document';
     const PROFILE_PICTURES = 'profile_pictures';
 
@@ -129,7 +128,6 @@ class UploaderHelper
             $result = $this->privateFilesystem->delete($fileName);
 
         } catch (FileNotFoundException $e) {
-            // throw new \Exception('pas possible');
             $this->logger->alert(sprintf('Old uploaded file "%s" was missing when trying to delete', $fileName));
         }
     }

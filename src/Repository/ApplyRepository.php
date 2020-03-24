@@ -115,7 +115,6 @@ class ApplyRepository extends ServiceEntityRepository
         {
             return $this->createQueryBuilder('u')
             ->andWhere('u.student = :student')
-            // ->setParameter('offers', $offers)
             ->setParameter('student', $student)
             ->getQuery()
             ->getResult();
