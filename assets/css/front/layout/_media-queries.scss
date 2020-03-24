@@ -30,12 +30,7 @@
 
     .form-center--signin {
         margin-top:20%;
-    }
-
-    // .background-jobs {
-    //     height:100vh;
-    // }
-    
+    }  
 }
   
 @media all and (max-width:767px) 
@@ -61,6 +56,14 @@
 
     .col-lg-button {
         padding-left:0px;
+    }
+
+    .d-flex {
+        flex-direction:column;
+    }
+
+    .member {
+        margin-bottom:15px;
     }
 }
 

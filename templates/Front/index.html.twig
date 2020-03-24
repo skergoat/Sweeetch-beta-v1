@@ -19,22 +19,14 @@
   ============================-->
   <header id="header">
 
-    {# <div id="topbar">
-      <div class="container">
-        <div class="social-links">
-          <a href="https://twitter.com/SweeetchA" target="_blank" class="twitter"><i class="fa fa-twitter"></i></a>
-          <a href="https://www.facebook.com/sweeetch.ton.alternance/" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a>
-          <a href="https://fr.linkedin.com/company/sweetchmontpellier?trk=public_profile_topcard_current_company" target="_blank" class="linkedin"><i class="fa fa-linkedin"></i></a>
-          <a href="https://www.instagram.com/sweeetch_alternance/" target="_blank" class="instagram"><i class="fa fa-instagram"></i></a>
+    <div class="container" id="customer-header" style="max-width:1300px;">
+      <div class="logo float-left" style="display:flex;">
+        <div>
+          <a href="#header" class="scrollto"><img src="{{ asset('build/favicon.png') }}" alt="" class="img-fluid"></a>
         </div>
-      </div> #}
-    {# </div> #}
-
-    <div class="container" id="customer-header">
-      <div class="logo float-left">
-        <!-- LOGO HOME IMAGE -->
-        {# <h1 class="text-light"><a href="#intro" class="scrollto"><span>SWEEETCH</span></a></h1> #}
-        <a href="#header" class="scrollto"><img src="{{ asset('build/sweetch.png') }}" alt="" class="img-fluid"></a>
+        <div style="padding-left: 10px;display: flex;align-items: center;">
+          <h1 style="display:block;color:#413e66;">SWEEETCH</h1>
+        </div>
       </div>
 
       <nav class="main-nav float-right d-none d-lg-block">
@@ -43,12 +35,6 @@
           <li><a href="#about">Sweeetch</a></li>
           <li><a href="#why-us">Nos fonctionnalités</a></li>
           <li><a href="{{ path('offers_index') }}">Emplois</a></li>
-              {# <ul>
-                  <li><a href="cgu.html">Conditions Générales D'utilisation</a></li>
-                  <li><a href="cgdc.html">Politique de confidentialité</a></li>
-                  <li><a href="#footer">Contact Partenariat</a></li>
-              </ul> #}
-          </li>
           
             {% if is_granted('ROLE_USER')  %}
                 {% if is_granted('ROLE_ADMIN') %}
@@ -63,14 +49,14 @@
                 <li><a href="/logout">DECONNEXION</a></li>
             {% else %}
               {# <li><a href="{{ path('student_new') }}">S'INSCRIRE</a> #}
-              <li class="drop-down"><a>S'INSCRIRE</a> 
+              <li class="drop-down"><a>S'Inscrire</a> 
                 <ul>
                     <li><a href="/student/new">Etudiants</a></li>
                     <li><a href="/company/new">Entreprises</a></li>
                     <li><a href="/school/new">Ecoles</a></li>
                 </ul>
               </li>
-              <li><a href="/login">CONNEXION</a></li>
+              <li><a href="/login">Connexion</a></li>
             {% endif %}   
                      
         </ul>
@@ -90,7 +76,7 @@
 
     
           <div>
-            <a href="{{ path('student_new') }}" class="btn-get-started scrollto">Inscrivez-vous</a>
+            <a href="{{ path('student_new') }}" class="btn-get-started scrollto" style="display:block;">Inscrivez-vous</a>
           </div>
         </div>
   
@@ -135,72 +121,6 @@
       </div>
 
     </section><!-- #about -->
-
-
-    <!--==========================
-    SERVICES 
-    ============================-->
-    <!-- <section id="services" class="section-bg">
-      <div class="container">
-
-        <header class="section-header">
-          <h3>Service</h3>
-          <p>Voici en quoi SWEETCH s'engagent<br><br>
-            Une recherche d'alternance simplifiée :  Une école et une entreprise en quelques clics, des conseils, coaching pour t'aider dans tes recherches, des partenaires engagés.
-          </p>
-        </header>
-
-        <div class="row">
-
-          <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-duration="1.4s">
-            <div class="box">
-              <div class="icon" style="background: #f3f3f3;"><i class="fa fa-file" style="color: #1bd449;"></i></div>
-              <h4 class="title"><a href="">Retrouvez vos documents sous format numérique</a></h4>
-              <p class="description">Pour limiter la pollution SWEEETCH Vous met à disposition vos documents sous format numérique (PDF).</p>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-duration="1.4s">
-            <div class="box">
-              <div class="icon" style="background: #fff0da;"><i class="ion-ios-bookmarks-outline" style="color: #e98e06;"></i></div>
-              <h4 class="title"><a href="">Carnet D'adresses</a></h4>
-              <p class="description">afin de vous proposer les meilleures missions, nous essayons d'élargir notre carnet d'adresses chaque jour.</p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-delay="0.1s" data-wow-duration="1.4s">
-            <div class="box">
-              <div class="icon" style="background: #e6fdfc;"><i class="ion-ios-paper-outline" style="color: #3fcdc7;"></i></div>
-              <h4 class="title"><a href="">Dossier D'inscription</a></h4>
-              <p class="description">Nous avons juste besoin de certains documents pour établir un dossier d'inscription, Pièce d'identité, Carte vital, RIB, Justificatif de domicile. </p>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-delay="0.1s" data-wow-duration="1.4s">
-            <div class="box">
-              <div class="icon" style="background: #eafde7;"><i class="ion-ios-speedometer-outline" style="color:#41cf2e;"></i></div>
-              <h4 class="title"><a href="">Rapidité</a></h4>
-              <p class="description">Après votre inscription notre objectif est de vous proposer une mission dans les 6 mois suivant votre inscription. </p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-delay="0.2s" data-wow-duration="1.4s">
-            <div class="box">
-              <div class="icon" style="background: #e1eeff;"><i class="ion-ios-world-outline" style="color: #2282ff;"></i></div>
-              <h4 class="title"><a href="">Monopole</a></h4>
-              <p class="description">Nous souhaitons avoir le monopole sur l'intérim 18-25 ans en France grâce à vous nous pouvons l'avoir.</p>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-4 wow bounceInUp" data-wow-delay="0.2s" data-wow-duration="1.4s">
-            <div class="box">
-              <div class="icon" style="background: #ecebff;"><i class="ion-ios-clock-outline" style="color: #8660fe;"></i></div>
-              <h4 class="title"><a href="">CDI, CDD</a></h4>
-              <p class="description">Le principal objectif chez SWEEETCH, c'est de vous insérer dans le monde du travail en temps partiel, temps complet avec un CDI OU CDD </p>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section> -->
 
     <!--==========================
       Pourquoi nous choisir ?
@@ -260,33 +180,6 @@
 
       </div>
 
-      {# <div class="container">
-        <div class="row counters">
-
-          <div class="col-lg-3 col-6 text-center">
-            <span data-toggle="counter-up">80</span>
-            <p>Clients SWEEETCH</p>
-          </div>
-
-          <div class="col-lg-3 col-6 text-center">
-            <span data-toggle="counter-up">1</span>
-            <p> Écoles partenaires</p>
-          </div>
-
-          <div class="col-lg-3 col-6 text-center">
-            <span data-toggle="counter-up">70</span>
-            <p>Alternants inscrits</p>
-          </div>
-
-          <div class="col-lg-3 col-6 text-center">
-            <span data-toggle="counter-up">0</span>
-            <p>Professionnels inscrits </p>
-          </div>
-  
-
-        </div>
-
-      </div> #}
     </section>
 
     <!--==========================
@@ -307,20 +200,6 @@
       </div>
     </section>
 
-    <!--==========================
-      Features section APPP
-    ============================-->
-    
-          
-        </div>
-
-      </div>
-    </section><!-- #about -->
-
-    <!--==========================
-      Témoin
-    ============================-->
-
      <!--==========================
       Features section APPP
     ============================-->
@@ -329,127 +208,24 @@
 
         <div class="section-header">
           <h3>Nos Partenaires</h3>
-          <!-- <p>Notre équipe est en cours des recrutements, nous tarderons pas à vous présenter les membres de SWEEETCH dans les plus brefs délais</p> -->
         </div>
 
-        <div class="col-lg-3 col-md-6 wow fadeInUp">
-          <div class="member">
+        <div class="d-flex col-lg-12 wow fadeInUp">
+          <div class="member col-lg-3 col-sm-12 col-xs-12">
             <img src="{{ asset('build/occitanie.jpg') }}" class="img-fluid" alt="">
-            {# <div class="member-info">
-              <div class="member-info-content">
-                <h4>Noam BERKANI</h4>
-                <span>CEO Sweeetch</span>
-                <div class="social">
-                  <a href="https://twitter.com/BerkaniNoam" target="_blank"><i class="fa fa-twitter"></i></a>
-                  <a href="https://www.facebook.com/noam.berkani" target="_blank"><i class="fa fa-facebook"></i></a>
-                  <a href="https://www.linkedin.com/in/noam-berkani-17156818a/" target="_blank"><i class="fa fa-linkedin"></i></a>
-                </div>
-              </div>
-            </div> #}
+          </div>
+          <div class="member col-lg-3 col-sm-12 col-xs-12">
+            <img src="{{ asset('build/mission.png') }}" class="img-fluid" alt="">
+          </div>
+          <div class="member col-lg-3 col-sm-12 col-xs-12">
+            <img src="{{ asset('build/mont.jpeg') }}" class="img-fluid" alt="">
           </div>
         </div>
-
 
       </div>
     </section>
 
-    <!--==========================
-      Team Section
-    ============================-->
-    <!-- <section id="team" class="section-bg">
-      <div class="container">
-        <div class="section-header">
-          <h3>Équipe</h3>
-          <p>Notre équipe est en cours des recrutements, nous tarderons pas à vous présenter les membres de SWEEETCH dans les plus brefs délais</p>
-        </div>
-
-        <div class="row">
-
-          <div class="col-lg-3 col-md-6 wow fadeInUp">
-            <div class="member">
-              <img src="{{ asset('build/team-1.jpg') }}" class="img-fluid" alt="">
-              <div class="member-info">
-                <div class="member-info-content">
-                  <h4>Noam BERKANI</h4>
-                  <span>CEO Sweeetch</span>
-                  <div class="social">
-                    <a href="https://twitter.com/BerkaniNoam" target="_blank"><i class="fa fa-twitter"></i></a>
-                    <a href="https://www.facebook.com/noam.berkani" target="_blank"><i class="fa fa-facebook"></i></a>
-                    <a href="https://www.linkedin.com/in/noam-berkani-17156818a/" target="_blank"><i class="fa fa-linkedin"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-            <div class="member">
-              <img src="{{ asset('build/team-2.jpg') }}" class="img-fluid" alt="">
-              <div class="member-info">
-                <div class="member-info-content">
-                  <h4>Jérémie MOUËTAUX</h4>
-                  <span>Directeur commercial Sweeetch</span>
-                  <div class="social">
-                    <a href="" target="_blank"><i class="fa fa-twitter"></i></a>
-                    <a href="" target="_blank"><i class="fa fa-facebook"></i></a>
-                    <a href="" target="_blank"><i class="fa fa-linkedin"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
-            <div class="member">
-              <img src="{{ asset('build/team-3.jpg') }}" class="img-fluid" alt="">
-              <div class="member-info">
-                <div class="member-info-content">
-                  <h4>Eugène BASSANINI</h4>
-                  <span>CTO Sweeetch</span>
-                  <div class="social">
-                    <a href="https://twitter.com/P_Wakanda"><i class="fa fa-twitter" target="_blank"></i></a>
-                    <a href="https://www.facebook.com/tyler.amarushakur"><i class="fa fa-facebook" target="_blank"></i></a>
-                    <a href="https://www.linkedin.com/in/eugène-pakisty-bassanini-malela-573932bb/" target="_blank"><i class="fa fa-linkedin"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-            <div class="member">
-              <img src="{{ asset('build/team-4.jpg') }}" class="img-fluid" alt="">
-              <div class="member-info">
-                <div class="member-info-content">
-                  <h4>Jade MAN</h4>
-                  <span>Directrice de la communication Sweeetch</span>
-                  <div class="social">
-                    <a href="" target="_blank"><i class="fa fa-twitter"></i></a>
-                    <a href="" target="_blank"><i class="fa fa-facebook"></i></a>
-                    <a href="" target="_blank"><i class="fa fa-linkedin"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section> --><!-- #team -->
-
-    <!--==========================
-      Clients photos
-    ============================-->
-    {# <section id="clients" class="wow fadeInUp">
-      </div>
-    </section>#}<!-- #clients -->
-
-    <!--========================== !-->
-    
-
   </main>
-
 
   <!--==========================
     Footer
@@ -544,7 +320,5 @@
   </footer><!-- #footer -->
 
   <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
-  <!-- Uncomment below i you want to use a preloader -->
-  <!-- <div id="preloader"></div> -->
 
 {% endblock %}
