@@ -11,7 +11,7 @@ use App\Entity\Pictures;
 use App\Form\StudentType;
 use App\Entity\StudentCard;
 use App\Service\StudentHelper;
-use App\Entity\ProofHabitation;
+// use App\Entity\ProofHabitation;
 use App\Form\UpdateStudentType;
 use App\Service\SecurityHelper;
 use App\Service\UploaderHelper;

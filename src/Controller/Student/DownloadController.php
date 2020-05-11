@@ -10,7 +10,7 @@ use App\Entity\Company;
 use App\Entity\Student;
 use App\Entity\Studies;
 use App\Entity\StudentCard;
-use App\Entity\ProofHabitation;
+// use App\Entity\ProofHabitation;
 use App\Service\UploaderHelper;
 use App\Service\UserChecker\SchoolChecker;
 use App\Service\UserChecker\CompanyChecker;
@@ -118,16 +118,16 @@ class DownloadController extends AbstractController
         }
     }
 
-     /**
-     * @Route("/proofhabitation/{id}/download", name="student_download_proofhabitation", methods={"GET"})
-     * @IsGranted("ROLE_STUDENT")
-     */
-    public function downloadProofHabitation(ProofHabitation $proofHabitation, UploaderHelper $uploaderHelper, StudentChecker $checker)
-    {
-        if($checker->documentValid($proofHabitation))
-        {
-            $response = $this->downloadDocuments($proofHabitation, $uploaderHelper); 
-            return $response;
-        }
-    }
+    //  /**
+    //  * @Route("/proofhabitation/{id}/download", name="student_download_proofhabitation", methods={"GET"})
+    //  * @IsGranted("ROLE_STUDENT")
+    //  */
+    // public function downloadProofHabitation(ProofHabitation $proofHabitation, UploaderHelper $uploaderHelper, StudentChecker $checker)
+    // {
+    //     if($checker->documentValid($proofHabitation))
+    //     {
+    //         $response = $this->downloadDocuments($proofHabitation, $uploaderHelper); 
+    //         return $response;
+    //     }
+    // }
 }
