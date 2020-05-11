@@ -28,10 +28,10 @@ class UserEditPasswordType extends UserType
                 'minMessage' => "{{ limit }} caractères minimum",
                 'maxMessage' => "{{ limit }} caractères maximum"
             ]),
-            new Regex([
-                'pattern' => '/^(?=.*[A-Z]+)(?=.*[a-z]+)(?=.*[0-9]+)\S{8,30}$/',
-                'message' => 'Le mot de passe doit contenir au moins 1 majuscule, 1 caractère spécial et 1 chiffre'
-            ])
+            // new Regex([
+            //     'pattern' => '/^(?=.*[A-Z]+)(?=.*[a-z]+)(?=.*[0-9]+)\S{8,30}$/',
+            //     'message' => 'Le mot de passe doit contenir au moins 1 majuscule, 1 caractère spécial et 1 chiffre'
+            // ])
         ];
         $builder
         ->add('password', RepeatedType::class, [

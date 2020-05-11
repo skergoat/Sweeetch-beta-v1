@@ -53,7 +53,7 @@ class UserType extends AbstractType
                 'message' => 'veuillez entrer un email, svp'
             ]),
             new Regex([
-                'pattern' => '/^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/',
+                'pattern' => '/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4}$/',
                 'message' => 'email non valide'
             ]),
         ];
