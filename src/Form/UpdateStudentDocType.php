@@ -7,7 +7,7 @@ use App\Form\IdCardType;
 use App\Form\ResumeType;
 use App\Form\StudentType;
 use App\Form\StudentCardType;
-use App\Form\ProofHabitationType;
+// use App\Form\ProofHabitationType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\File;
@@ -53,12 +53,12 @@ class UpdateStudentDocType extends StudentType
             'required' => false,
             'mapped' => false,
             'constraints' => $imageConstraints
-        ])
-        ->add('proofHabitations', FileType::class, [
-            'required' => false,
-            'mapped' => false,
-            'constraints' => $imageConstraints
         ]);
+        // ->add('proofHabitations', FileType::class, [
+        //     'required' => false,
+        //     'mapped' => false,
+        //     'constraints' => $imageConstraints
+        // ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

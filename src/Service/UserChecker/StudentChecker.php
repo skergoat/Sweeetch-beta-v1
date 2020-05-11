@@ -5,7 +5,7 @@ namespace App\Service\UserChecker;
 use App\Entity\IdCard;
 use App\Entity\Resume;
 use App\Entity\StudentCard;
-use App\Entity\ProofHabitation;
+// use App\Entity\ProofHabitation;
 use App\Repository\ApplyRepository;
 use App\Repository\OffersRepository;
 use Symfony\Component\Security\Core\Security;
@@ -109,9 +109,9 @@ class StudentChecker
                     $get = 'getStudentCard';
                 break;
 
-                case $document instanceof ProofHabitation : 
-                    $get = 'getProofHabitation';
-                break;
+                // case $document instanceof ProofHabitation : 
+                //     $get = 'getProofHabitation';
+                // break;
             }
 
             return $this->isAdmin() or $this->user->getStudent()->$get()->getId() == $document->getId() ? true : $this->Exception(); 
