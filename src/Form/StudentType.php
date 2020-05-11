@@ -37,7 +37,7 @@ class StudentType extends AbstractType
             ->add('resume', ResumeType::class)
             ->add('idCard', IdCardType::class)
             // ->add('studentCard', StudentCardType::class)
-            ->add('proofHabitation', ProofHabitationType::class)
+            // ->add('proofHabitation', ProofHabitationType::class)
             // ->add('recaptcha', EWZRecaptchaType::class, array(
             //     'attr' => array(
             //         'options' => array(
