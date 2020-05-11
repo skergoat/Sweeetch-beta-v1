@@ -104,6 +104,13 @@
                 <h1>Tableau de Bord</h1>
             </div>
 
+            {# success or error message #}
+            {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+            {% endfor %}
+
         <!-- </div> -->
 
         <!-- <div class="col-lg-8"> -->
