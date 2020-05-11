@@ -8,7 +8,7 @@
 
     <div class="row row-top">
 
-       <div class="col-lg-6">
+        <div class="col-lg-6">
 
             <div class="content-title">
                 <h1>Tableau de Bord</h1>
@@ -21,8 +21,8 @@
                         <span class="info-box-icon bg-success elevation-1"><i class="fas fa-check"></i></span>
 
                         <div class="info-box-content">
-                        <span class="info-box-text">Etat du compte : </span>
-                        <span class="info-box-number">Validé par Sweeetch</span>
+                            <span class="info-box-text">Etat du compte : </span>
+                            <span class="info-box-number">Validé par Sweeetch</span>
                         </div>
                     </div>
                 </div>
@@ -32,8 +32,8 @@
                     <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-hourglass-start"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Etat du Compte</span>
-                            <span class="info-box-number">En cours de confirmation...</span>
+                            <span class="info-box-text">Etat du Compte : </span>
+                            <span class="info-box-number">En cours de confirmation par Sweeetch</span>
                         </div>
                         
                     </div>
@@ -41,6 +41,17 @@
                 {% endif %}
 
             </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="col-lg-12 col-sm-12 col-md-12">
+                <div class="info-box mb-3">
+                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-exclamation-triangle"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Pensez a valider votre email !</span>
+                        <span class="info-box-number"><form action="{{ path('resend_mail', {id:student.id}) }}" method="post"><button>Renvoyer un lien de confirmation</button></form></span>
+                    </div>
+                </div>
+            </div> 
         </div>
     </div>
 
