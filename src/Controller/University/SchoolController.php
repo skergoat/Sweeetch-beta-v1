@@ -98,8 +98,7 @@ class SchoolController extends AbstractController
                 // render 
                 $this->addFlash('success', 'Lien envoyé');
             }
-            // get school studies 
-            $studies = $studiesRepository->findBy(['school' => $school]);
+            // redirect
             return $this->redirectToRoute('school_show', ['id' => $school->getId()]);
         } 
     }
