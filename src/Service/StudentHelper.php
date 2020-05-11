@@ -7,7 +7,7 @@ use App\Entity\Resume;
 use App\Entity\Student;
 use App\Entity\Pictures;
 use App\Entity\StudentCard;
-use App\Entity\ProofHabitation;
+// use App\Entity\ProofHabitation;
 use App\Service\UploaderHelper;
 
 class StudentHelper
@@ -77,10 +77,10 @@ class StudentHelper
                     }
                     
                 break;
-                case 'proofHabitations':
-                    $entity = 'proofHabitation';
-                    $document = $form->getData()->getProofHabitation();
-                break;
+                // case 'proofHabitations':
+                //     $entity = 'proofHabitation';
+                //     $document = $form->getData()->getProofHabitation();
+                // break;
             }
 
             // update document entity

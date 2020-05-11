@@ -96,9 +96,9 @@ class AdminConfirmController extends AbstractController
             $array[] = 'carte d\'etudiant';
         }
 
-        if( isset($parameters['proofHabitation']) && $parameters['proofHabitation'] != NULL) {
-            $array[] = 'justificatif de domicile';
-        }
+        // if( isset($parameters['proofHabitation']) && $parameters['proofHabitation'] != NULL) {
+        //     $array[] = 'justificatif de domicile';
+        // }
 
         if( isset($parameters['siret']) && $parameters['siret'] != NULL) {
             $array[] = 'numero de siret';
