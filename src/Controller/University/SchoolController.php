@@ -82,6 +82,41 @@ class SchoolController extends AbstractController
         ]);
     }
 
+     /**
+     * @Route("/resend/{id}", name="resend_mail_company", methods={"GET", "POST"})
+     * @ParamConverter("company", options={"id" = "id"})
+     * @IsGranted("ROLE_SCHOOL")
+     */
+    public function sendAgain(School $school, Request $request, StudiesRepository $studiesRepository, RecruitRepository $recruitRepository, SchoolChecker $checker, RecruitHelper $recruitHelper, SecurityHelper $securityHelper)
+    {
+        // Si le formulaire est envoyé 
+        if ($request->isMethod('POST')) {
+            // resend confirmation email
+            $securityHelper->reSend($school);
+        }
+
+        if ($checker->schoolValid($school)) {
+            // get school studies 
+            $studies = $studiesRepository->findBy(['school' => $school]);
+            // render 
+            return $this->render('school/show.html.twig', [
+                'school' => $school,
+                'studies' => $studiesRepository->findBy(['school' => $school], ['id' => 'desc']),
+                'recruits' => $recruitRepository->findBy([
+                    'studies' => $studies,
+                    'hired' => false,
+                    'agree' => false,
+                    'refused' => false,
+                    'unavailable' => false,
+                    'finished' => false,
+                ], ['date_recruit' => 'desc']),
+                'hired' => $recruitRepository->findBy(['studies' => $studies, 'hired' => true],['date_recruit' => 'desc']),
+                'agree' => $recruitRepository->findBy(['studies' => $studies, 'agree' => true],['date_recruit' => 'desc']), 
+                'candidates' => $recruitHelper->nbCandidates($studies), // show nb applies 
+            ]);
+        } 
+    }
+
     /**
      * @Route("/{id}", name="school_show", methods={"GET"})
      * @IsGranted("ROLE_SCHOOL")
