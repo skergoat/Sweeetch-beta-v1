@@ -82,7 +82,7 @@ class CompanyController extends AbstractController
 
     /**
      * @Route("/resend/{id}", name="resend_mail_company", methods={"GET", "POST"})
-     * @ParamConverter("student", options={"id" = "id"})
+     * @ParamConverter("company", options={"id" = "id"})
      * @IsGranted("ROLE_COMPANY")
      */
     public function sendAgain(Request $request, Company $company, ApplyRepository $applyRepository, OffersRepository $offersRepository, CompanyChecker $checker, ApplyHelper $helper, SecurityHelper $securityHelper)
