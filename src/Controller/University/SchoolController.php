@@ -90,31 +90,17 @@ class SchoolController extends AbstractController
      */
     public function sendAgain(School $school, Request $request, StudiesRepository $studiesRepository, RecruitRepository $recruitRepository, SchoolChecker $checker, RecruitHelper $recruitHelper, SecurityHelper $securityHelper)
     {
-        // Si le formulaire est envoyé 
-        if ($request->isMethod('POST')) {
-            // resend confirmation email
-            $securityHelper->reSend($school);
-        }
-
         if ($checker->schoolValid($school)) {
+            // Si le formulaire est envoyé 
+            if ($request->isMethod('POST')) {
+                // resend confirmation email
+                $securityHelper->reSend($school);
+                // render 
+                $this->addFlash('success', 'Lien envoyé');
+            }
             // get school studies 
             $studies = $studiesRepository->findBy(['school' => $school]);
-            // render 
-            return $this->render('school/show.html.twig', [
-                'school' => $school,
-                'studies' => $studiesRepository->findBy(['school' => $school], ['id' => 'desc']),
-                'recruits' => $recruitRepository->findBy([
-                    'studies' => $studies,
-                    'hired' => false,
-                    'agree' => false,
-                    'refused' => false,
-                    'unavailable' => false,
-                    'finished' => false,
-                ], ['date_recruit' => 'desc']),
-                'hired' => $recruitRepository->findBy(['studies' => $studies, 'hired' => true],['date_recruit' => 'desc']),
-                'agree' => $recruitRepository->findBy(['studies' => $studies, 'agree' => true],['date_recruit' => 'desc']), 
-                'candidates' => $recruitHelper->nbCandidates($studies), // show nb applies 
-            ]);
+            return $this->redirectToRoute('school_show', ['id' => $school->getId()]);
         } 
     }
 
@@ -128,7 +114,6 @@ class SchoolController extends AbstractController
             // get school studies 
             $studies = $studiesRepository->findBy(['school' => $school]);
             // render 
-            $this->addFlash('success', 'Lien envoyé');
             return $this->render('school/show.html.twig', [
                 'school' => $school,
                 'studies' => $studiesRepository->findBy(['school' => $school], ['id' => 'desc']),
@@ -172,7 +157,7 @@ class SchoolController extends AbstractController
                 // save 
                 $this->getDoctrine()->getManager()->flush();
                 $this->addFlash('success', 'Mise à jour réussie');
-                return $this->redirectToRoute('school_edit', ['id' => $school->getId() ]);
+                return $this->redirectToRoute('school_edit', ['id' => $school->getId()]);
             }
             // get studies
             $studies = $studiesRepository->findBy(['school' => $school]);
