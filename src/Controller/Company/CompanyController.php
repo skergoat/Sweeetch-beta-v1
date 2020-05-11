@@ -87,27 +87,17 @@ class CompanyController extends AbstractController
      */
     public function sendAgain(Request $request, Company $company, ApplyRepository $applyRepository, OffersRepository $offersRepository, CompanyChecker $checker, ApplyHelper $helper, SecurityHelper $securityHelper)
     {
-        // Si le formulaire est envoyé 
-        if ($request->isMethod('POST')) {
-            // resend confirmation email
-            $securityHelper->reSend($company);
-        }
-        // get company offers 
-        $offers = $offersRepository->findBy(['company' => $company]);
-        // get finished or confirmed applies 
-        $array = $helper->findByOffersFinished($offers);
-
         if ($checker->companyValid($company)) {
 
-            return $this->render('company/show.html.twig', [
-                'company' => $company,  // company layout
-                'offers' => $offersRepository->findBy(['company' => $company], ['id' => 'desc']),
-                'applies' => $helper->checkApplies('offers', $offers),
-                'hired' => $applyRepository->findBy(['offers' => $offers, 'hired' => true],['date_recruit' => 'desc']),  // show hired 
-                'agree' => $applyRepository->findBy(['offers' => $offers, 'agree' => true],['date_recruit' => 'desc']), // find agreed applies 
-                'finished' => isset($array) ? $array : null, // find confirmed or finished applies 
-                'candidates' => $helper->nbCandidates($offers), // show nb applies 
-            ]);
+            // Si le formulaire est envoyé 
+            if ($request->isMethod('POST')) {
+                // resend confirmation email
+                $securityHelper->reSend($company);
+                // render 
+                $this->addFlash('success', 'Lien envoyé');
+            }
+            // redirect 
+            return $this->redirectToRoute('company_show', ['id' => $company->getId()]);
         } 
     }
 
