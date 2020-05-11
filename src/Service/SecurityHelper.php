@@ -94,14 +94,14 @@ class SecurityHelper
         }
     }
 
-    // resend confirmation email
-    public function reSend($entity)
-    {   
-        // dd($entity);
-        // generate email 
-        $user = $entity->getUser();
-        $this->mailer->sendActivate($user);
-    }
+    // // resend confirmation email
+    // public function reSend($entity)
+    // {   
+    //     // dd($entity);
+    //     // generate email 
+    //     $user = $entity->getUser();
+    //     $this->mailer->sendActivate($user);
+    // }
 
     // edit user password 
     public function editUser($user, $oldPass)
