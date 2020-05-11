@@ -108,6 +108,17 @@ class StudentController extends AbstractController
     }
 
     /**
+     * @Route("/resend/{id}", name="resend_mail", methods={"POST"})
+     * @ParamConverter("student", options={"id" = "id"})
+     * @IsGranted("ROLE_STUDENT")
+     */
+    public function sendAgain(SecurityHelper $securityHelper)
+    {
+        // resend confirmation email
+        $securityHelper->reSend($student);
+    }
+
+    /**
      * @Route("/{id}", name="student_show", methods={"GET"})
      * @IsGranted("ROLE_STUDENT")
      */
