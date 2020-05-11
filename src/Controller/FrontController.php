@@ -41,6 +41,8 @@ class FrontController extends AbstractController
         return $this->render("Front/cgu.html.twig");
     }
 
+    // test
+
     /**
      * @Route("/contact", name="contact")
      */
