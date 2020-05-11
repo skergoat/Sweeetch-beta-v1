@@ -84,24 +84,24 @@ class CompanyController extends AbstractController
      * @ParamConverter("student", options={"id" = "id"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function sendAgain(Request $request, Student $student, ApplyRepository $applyRepository, RecruitRepository $recruitRepository, StudentChecker $checker, ApplyHelper $helper, SecurityHelper $securityHelper, RecruitHelper $recruitHelper)
+    public function sendAgain(Request $request, Company $company, ApplyRepository $applyRepository, RecruitRepository $recruitRepository, StudentChecker $checker, ApplyHelper $helper, SecurityHelper $securityHelper, RecruitHelper $recruitHelper)
     {
         // Si le formulaire est envoyé 
         if ($request->isMethod('POST')) {
             // resend confirmation email
-            $securityHelper->reSend($student);
+            $securityHelper->reSend($company);
         }
 
-        if ($checker->studentValid($student)) {
+        if ($checker->companyValid($company)) {
 
-            return $this->render('student/show.html.twig', [
-                'student' => $student,  
-                'applies' => $helper->checkApplies('student', $student),    // open applies 
-                'process' => $applyRepository->findByStudentProcess($student),  // processing applies 
-                'fresh' => $applyRepository->findByStudentByFresh($student), // nb candidates
-                'hired' => $helper->checkHired('student', $student), // confirm warning
-                'freshRecruit' => $recruitRepository->findByStudentByFresh($student), // nb candidates
-                'hiredRecruit' => $recruitHelper->checkHired('student', $student), // confirm warning 
+            return $this->render('company/show.html.twig', [
+                'company' => $company,  // company layout
+                'offers' => $offersRepository->findBy(['company' => $company], ['id' => 'desc']),
+                'applies' => $helper->checkApplies('offers', $offers),
+                'hired' => $applyRepository->findBy(['offers' => $offers, 'hired' => true],['date_recruit' => 'desc']),  // show hired 
+                'agree' => $applyRepository->findBy(['offers' => $offers, 'agree' => true],['date_recruit' => 'desc']), // find agreed applies 
+                'finished' => isset($array) ? $array : null, // find confirmed or finished applies 
+                'candidates' => $helper->nbCandidates($offers), // show nb applies 
             ]);
         } 
     }
