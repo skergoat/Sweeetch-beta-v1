@@ -51,7 +51,7 @@
                     <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-exclamation-triangle"></i></span>
                         <div class="info-box-content">
                             <span class="info-box-text">Pensez à valider votre email !</span>
-                            <span class="info-box-number"><form action="{{ path('resend_mail', {id:student.id}) }}" method="post"><button style="border:0px;background:white;padding:0px;text-decoration:underline;color:#00A6E7;">Renvoyer un lien de confirmation</button></form></span>
+                            <span class="info-box-number"><form action="{{ path('resend_mail_student', {id:student.id}) }}" method="post"><button style="border:0px;background:white;padding:0px;text-decoration:underline;color:#00A6E7;">Renvoyer un lien de confirmation</button></form></span>
                         </div>
                     </div>
                 </div> 
