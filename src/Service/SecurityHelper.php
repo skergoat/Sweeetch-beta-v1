@@ -97,7 +97,7 @@ class SecurityHelper
     // resend confirmation email
     public function reSend($entity)
     {   
-        dd($entity);
+        // dd($entity);
         // generate email 
         $user = $entity->getUser();
         $this->mailer->sendActivate($user);
