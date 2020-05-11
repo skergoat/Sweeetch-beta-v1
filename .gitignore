@@ -31,6 +31,3 @@ logs /
 .bash_profile
 .node_repl_history 
 hdd/
-
-###< php ###
-src/DataFixtures/
