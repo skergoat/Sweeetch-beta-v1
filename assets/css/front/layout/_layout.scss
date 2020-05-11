@@ -149,5 +149,13 @@ h1.titles-front {
 
 .d-flex {
     display:flex;
-    justify-content:space-between;
+    justify-content:center;
+
+    & .member {
+        margin-right:15px;
+
+        & img {
+            border:1px solid black;
+        }  
+    }
 }
