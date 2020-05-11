@@ -77,6 +77,7 @@ class UserMailer
 
     public function sendActivate($user)
     {
+        dd($user->getActivateToken());
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
             ->to(new Address($user->getEmail()))
