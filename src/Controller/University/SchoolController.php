@@ -84,7 +84,7 @@ class SchoolController extends AbstractController
     }
 
      /**
-     * @Route("/resend/{id}", name="resend_mail_company", methods={"GET", "POST"})
+     * @Route("/resend/{id}", name="resend_mail_school", methods={"GET", "POST"})
      * @ParamConverter("company", options={"id" = "id"})
      * @IsGranted("ROLE_SCHOOL")
      */
