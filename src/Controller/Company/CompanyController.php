@@ -92,6 +92,10 @@ class CompanyController extends AbstractController
             // resend confirmation email
             $securityHelper->reSend($company);
         }
+        // get company offers 
+        $offers = $offersRepository->findBy(['company' => $company]);
+        // get finished or confirmed applies 
+        $array = $helper->findByOffersFinished($offers);
 
         if ($checker->companyValid($company)) {
 
