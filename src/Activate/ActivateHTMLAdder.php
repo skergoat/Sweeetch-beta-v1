@@ -26,7 +26,7 @@ class ActivateHTMLAdder
         case ['ROLE_STUDENT']:
         case ['ROLE_SUPER_STUDENT']:
         $color = '#FFCC66';
-        $message = 'Validez votre email pour pouvoir postuler. <a href="/student/resend/' . $user->getStudent()->getId() . '">Renvoyer le lien</a>';
+        $message = 'Validez votre email pour pouvoir postuler. <form action="/student/resend/' . $user->getStudent()->getId() . '" method="post"><button type="submit">Renvoyer le lien</button></form>';
         break;
 
         case ['ROLE_COMPANY']:
