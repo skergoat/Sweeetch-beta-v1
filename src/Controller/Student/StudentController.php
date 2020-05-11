@@ -109,7 +109,7 @@ class StudentController extends AbstractController
     }
 
     /**
-     * @Route("/resend/{id}", name="resend_mail", methods={"GET", "POST"})
+     * @Route("/resend/{id}", name="resend_mail_student", methods={"GET", "POST"})
      * @ParamConverter("student", options={"id" = "id"})
      * @IsGranted("ROLE_STUDENT")
      */

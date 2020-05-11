@@ -80,6 +80,33 @@ class CompanyController extends AbstractController
     }
 
     /**
+     * @Route("/resend/{id}", name="resend_mail_company", methods={"GET", "POST"})
+     * @ParamConverter("student", options={"id" = "id"})
+     * @IsGranted("ROLE_STUDENT")
+     */
+    public function sendAgain(Request $request, Student $student, ApplyRepository $applyRepository, RecruitRepository $recruitRepository, StudentChecker $checker, ApplyHelper $helper, SecurityHelper $securityHelper, RecruitHelper $recruitHelper)
+    {
+        // Si le formulaire est envoyé 
+        if ($request->isMethod('POST')) {
+            // resend confirmation email
+            $securityHelper->reSend($student);
+        }
+
+        if ($checker->studentValid($student)) {
+
+            return $this->render('student/show.html.twig', [
+                'student' => $student,  
+                'applies' => $helper->checkApplies('student', $student),    // open applies 
+                'process' => $applyRepository->findByStudentProcess($student),  // processing applies 
+                'fresh' => $applyRepository->findByStudentByFresh($student), // nb candidates
+                'hired' => $helper->checkHired('student', $student), // confirm warning
+                'freshRecruit' => $recruitRepository->findByStudentByFresh($student), // nb candidates
+                'hiredRecruit' => $recruitHelper->checkHired('student', $student), // confirm warning 
+            ]);
+        } 
+    }
+
+    /**
      * @Route("/{id}", name="company_show", methods={"GET"})
      * @IsGranted("ROLE_COMPANY")
      */
