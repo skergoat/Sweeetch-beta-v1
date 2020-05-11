@@ -85,7 +85,7 @@ class CompanyController extends AbstractController
      * @ParamConverter("student", options={"id" = "id"})
      * @IsGranted("ROLE_COMPANY")
      */
-    public function sendAgain(Request $request, Company $company, ApplyRepository $applyRepository, CompanyChecker $checker, ApplyHelper $helper, SecurityHelper $securityHelper)
+    public function sendAgain(Request $request, Company $company, ApplyRepository $applyRepository, OffersRepository $offersRepository, CompanyChecker $checker, ApplyHelper $helper, SecurityHelper $securityHelper)
     {
         // Si le formulaire est envoyé 
         if ($request->isMethod('POST')) {
