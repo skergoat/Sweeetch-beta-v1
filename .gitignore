@@ -22,12 +22,11 @@ yarn-error.log
 ###< liip/imagine-bundle ###
 
 ###< server ###
-logs/traffic.html/.md5sums
-/.composer 
-/.config/configstore
-/.npm
-/.nvm
-/logs 
+.composer 
+.config/configstore
+.npm
+.nvm
+logs 
 .bash_history 
 .bash_profile
 .node_repl_history 
