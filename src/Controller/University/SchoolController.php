@@ -128,6 +128,7 @@ class SchoolController extends AbstractController
             // get school studies 
             $studies = $studiesRepository->findBy(['school' => $school]);
             // render 
+            $this->addFlash('success', 'Lien envoyé');
             return $this->render('school/show.html.twig', [
                 'school' => $school,
                 'studies' => $studiesRepository->findBy(['school' => $school], ['id' => 'desc']),
