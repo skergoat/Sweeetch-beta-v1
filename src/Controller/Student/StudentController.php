@@ -119,20 +119,11 @@ class StudentController extends AbstractController
         if ($request->isMethod('POST')) {
             // resend confirmation email
             $securityHelper->reSend($student);
+             // render 
+             $this->addFlash('success', 'Lien envoyé');
         }
-
-        if ($checker->studentValid($student)) {
-
-            return $this->render('student/show.html.twig', [
-                'student' => $student,  
-                'applies' => $helper->checkApplies('student', $student),    // open applies 
-                'process' => $applyRepository->findByStudentProcess($student),  // processing applies 
-                'fresh' => $applyRepository->findByStudentByFresh($student), // nb candidates
-                'hired' => $helper->checkHired('student', $student), // confirm warning
-                'freshRecruit' => $recruitRepository->findByStudentByFresh($student), // nb candidates
-                'hiredRecruit' => $recruitHelper->checkHired('student', $student), // confirm warning 
-            ]);
-        } 
+        // redirect 
+        return $this->redirectToRoute('student_show', ['id' => $student->getId()]); 
     }
 
     /**
