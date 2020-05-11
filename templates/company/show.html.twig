@@ -100,6 +100,12 @@
             <div class="content-title">
                 <h1>Tableau de Bord</h1>
             </div>
+            {# success or error message #}
+            {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+            {% endfor %}
             {# account state #}
             <div class="row account-state">
                 {% if company.user.confirmed == true %}
