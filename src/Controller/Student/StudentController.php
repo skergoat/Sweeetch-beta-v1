@@ -51,7 +51,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
  */
 class StudentController extends AbstractController
 {
-    private $entities = ['Resume', 'IdCard', 'StudentCard', 'ProofHabitation'];
+    private $entities = ['Resume', 'IdCard', 'StudentCard'];
 
     /**
      * @Route("/", name="student_index", methods={"GET"})
