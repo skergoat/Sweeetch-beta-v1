@@ -13,10 +13,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+// use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-
 
 class UserType extends AbstractType
 {
@@ -60,7 +60,18 @@ class UserType extends AbstractType
         $builder
         ->add('email', EmailType::class, [
             'constraints' => $emailConstraints
-        ]);  
+        ]);
+        // ->add('recaptcha', EWZRecaptchaType::class, array(
+        //     'attr' => array(
+        //         'options' => array(
+        //             'theme' => 'light',
+        //             'type'  => 'image',
+        //             'size'  => 'normal',
+        //             'defer' => true,
+        //             'async' => true,
+        //         )
+        //     )
+        // ));  
 
     }
 

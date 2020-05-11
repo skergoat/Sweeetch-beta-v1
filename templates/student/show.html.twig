@@ -250,9 +250,15 @@
                             </tr>
                             <tr>
                                 <td class="th-dark">Ma Carte d'étudiant</td>
+                                {% if student.studentCard.id is defined %}
                                 <td>
                                     <a href="{{ path('student_download_studentcard', { id: student.studentCard.id }) }}"><span class="fa fa-download"></span></a>
                                 </td>
+                                {% else %}
+                                <td>
+                                     <a href="{{ path('student_edit', {id:student.id}) }}">Ajouter un document</a>
+                                </td>  
+                                {% endif %}
                             </tr>
                             <tr>
                                 <td class="th-dark">Justificatif de domicile</td>

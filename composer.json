@@ -24,7 +24,6 @@
         "symfony/maker-bundle": "^1.14",
         "symfony/messenger": "5.0.*",
         "symfony/orm-pack": "^1.0",
-        "symfony/requirements-checker": "^1.1",
         "symfony/security-bundle": "5.0.*",
         "symfony/templating": "5.0.*",
         "symfony/twig-pack": "^1.0",
@@ -66,8 +65,7 @@
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd",
-            "requirements-checker": "script"
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"

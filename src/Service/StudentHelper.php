@@ -49,8 +49,11 @@ class StudentHelper
     public function editStudentDocs($formDoc, $form, $student, $request)
     {   
         // update only not null files fields 
-        $keys = array_keys($request->files->get('update_student_doc'));
-        
+        // $keys[] = array_keys($request->files->get('update_student_doc'));
+
+        $notNull = array_filter($request->files->get('update_student_doc'));
+        $keys = array_keys($notNull);
+
         foreach($keys as $key) {
 
             $uploadedFile = $formDoc[$key]->getData();
@@ -67,24 +70,35 @@ class StudentHelper
                 break;
                 case 'studentCards':
                     $entity = 'studentCard';
+                    if($form->getData()->getStudentCard() != null) {
                     $document = $form->getData()->getStudentCard();
+                    } else {
+                    $document = new StudentCard();   
+                    }
+                    
                 break;
                 case 'proofHabitations':
                     $entity = 'proofHabitation';
                     $document = $form->getData()->getProofHabitation();
                 break;
             }
+
             // update document entity
             $get = 'get' . ucfirst($entity); 
             $set = 'set' . ucfirst($entity);
             $class = "App\Entity\\" . ucfirst($entity);
 
             if($uploadedFile) {
-                $newFilename = $this->uploaderHelper->uploadPrivateFile($uploadedFile, $student->$get()->getFileName());
-                
+                if($student->$get() == null){
+                    $newFilename = $this->uploaderHelper->uploadPrivateFile($uploadedFile, null);  
+                }
+                else {
+                    $newFilename = $this->uploaderHelper->uploadPrivateFile($uploadedFile, $student->$get()->getFileName());   
+                }
+                 
                 $document->setFileName($newFilename);
                 $document->setOriginalFilename($uploadedFile->getClientOriginalName() ?? $newFilename);
-                $document->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');                    
+                $document->setMimeType($uploadedFile->getMimeType() ?? 'application/octet-stream');     
             } 
             // update relation 
             if($uploadedFile != null) {

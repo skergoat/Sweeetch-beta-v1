@@ -20,3 +20,4 @@ yarn-error.log
 ###> liip/imagine-bundle ###
 /public/media/cache/
 ###< liip/imagine-bundle ###
+logs/traffic.html/.md5sums

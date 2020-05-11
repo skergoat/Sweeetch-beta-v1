@@ -13,6 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\RadioType;
+// use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class StudentType extends AbstractType
@@ -35,8 +36,26 @@ class StudentType extends AbstractType
             ])
             ->add('resume', ResumeType::class)
             ->add('idCard', IdCardType::class)
-            ->add('studentCard', StudentCardType::class)
+            // ->add('studentCard', StudentCardType::class)
             ->add('proofHabitation', ProofHabitationType::class)
+            // ->add('recaptcha', EWZRecaptchaType::class, array(
+            //     'attr' => array(
+            //         'options' => array(
+            //             'theme' => 'light',
+            //             'type'  => 'image',
+            //             'size'  => 'invisible',
+            //             'defer' => true,
+            //             'async' => true,
+            //             'callback' => 'onReCaptchaSuccess',
+            //             'bind' => 'contact_submit',
+            //         )
+            //     ),
+            //     'mapped'      => false,
+            //     'constraints' => array(
+            //         new RecaptchaTrue()
+            //     )
+            //     )
+            // )
         ;   
     }
 

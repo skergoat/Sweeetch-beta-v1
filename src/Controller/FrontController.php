@@ -24,14 +24,6 @@ class FrontController extends AbstractController
     {
         return $this->render("Front/index.html.twig");
     }
-
-    /**
-     * @Route("/conditions", name="conditions")
-     */
-    public function conditions()
-    {
-        return $this->render("Front/conditions.html.twig");
-    }
     
      /**
      * @Route("/faq", name="faq")
@@ -39,6 +31,14 @@ class FrontController extends AbstractController
     public function faq()
     {
         return $this->render("Front/Faq.html.twig");
+    }
+
+     /**
+     * @Route("/cgu", name="cgu")
+     */
+    public function cgu()
+    {
+        return $this->render("Front/cgu.html.twig");
     }
 
     /**

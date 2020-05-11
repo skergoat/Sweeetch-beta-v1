@@ -1,0 +1,33 @@
+0 info it worked if it ends with ok
+1 verbose cli [
+1 verbose cli   '/homepages/15/d819313697/htdocs/.nvm/versions/node/v14.2.0/bin/node',
+1 verbose cli   '/kunden/homepages/15/d819313697/htdocs/.nvm/versions/node/v14.2.0/bin/npm',
+1 verbose cli   'run',
+1 verbose cli   'wtch'
+1 verbose cli ]
+2 info using npm@6.14.4
+3 info using node@v14.2.0
+4 verbose stack Error: missing script: wtch
+4 verbose stack
+4 verbose stack Did you mean this?
+4 verbose stack     watch
+4 verbose stack     at run (/homepages/15/d819313697/htdocs/.nvm/versions/node/v14.2.0/lib/node_modules/npm/lib/run-script.js:155:19)
+4 verbose stack     at /homepages/15/d819313697/htdocs/.nvm/versions/node/v14.2.0/lib/node_modules/npm/lib/run-script.js:63:5
+4 verbose stack     at /homepages/15/d819313697/htdocs/.nvm/versions/node/v14.2.0/lib/node_modules/npm/node_modules/read-package-json/read-json.js:116:5
+4 verbose stack     at /homepages/15/d819313697/htdocs/.nvm/versions/node/v14.2.0/lib/node_modules/npm/node_modules/read-package-json/read-json.js:436:5
+4 verbose stack     at checkBinReferences_ (/homepages/15/d819313697/htdocs/.nvm/versions/node/v14.2.0/lib/node_modules/npm/node_modules/read-package-json/read-json.js:391:45)
+4 verbose stack     at final (/homepages/15/d819313697/htdocs/.nvm/versions/node/v14.2.0/lib/node_modules/npm/node_modules/read-package-json/read-json.js:434:3)
+4 verbose stack     at then (/homepages/15/d819313697/htdocs/.nvm/versions/node/v14.2.0/lib/node_modules/npm/node_modules/read-package-json/read-json.js:161:5)
+4 verbose stack     at /homepages/15/d819313697/htdocs/.nvm/versions/node/v14.2.0/lib/node_modules/npm/node_modules/read-package-json/read-json.js:382:12
+4 verbose stack     at /homepages/15/d819313697/htdocs/.nvm/versions/node/v14.2.0/lib/node_modules/npm/node_modules/graceful-fs/graceful-fs.js:115:16
+4 verbose stack     at FSReqCallback.readFileAfterClose [as oncomplete] (internal/fs/read_file_context.js:63:3)
+5 verbose cwd /homepages/15/d819313697/htdocs
+6 verbose Linux 3.16.0-ui18324.30-uiabi1-infong-amd64
+7 verbose argv "/homepages/15/d819313697/htdocs/.nvm/versions/node/v14.2.0/bin/node" "/kunden/homepages/15/d819313697/htdocs/.nvm/versions/node/v14.2.0/bin/npm" "run" "wtch"
+8 verbose node v14.2.0
+9 verbose npm  v6.14.4
+10 error missing script: wtch
+10 error
+10 error Did you mean this?
+10 error     watch
+11 verbose exit [ 1, true ]
