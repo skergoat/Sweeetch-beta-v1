@@ -187,10 +187,12 @@ class StudentController extends AbstractController
             foreach($this->entities as $entity)
             {
                 $get = 'get' . $entity;
-                $fileName = $student->$get()->getFileName();
-                if($fileName) {
-                    $uploaderHelper->deleteFile($fileName);
-                } 
+                if($student->$get() != NULL) {
+                    $fileName = $student->$get()->getFileName();
+                    if($fileName) {
+                        $uploaderHelper->deleteFile($fileName);
+                    } 
+                }   
             }
             // handle applies 
             $helper->handleStudentApplies($student); 
