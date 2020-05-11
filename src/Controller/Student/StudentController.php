@@ -113,7 +113,7 @@ class StudentController extends AbstractController
      * @ParamConverter("student", options={"id" = "id"})
      * @IsGranted("ROLE_STUDENT")
      */
-    public function sendAgain(SecurityHelper $securityHelper)
+    public function sendAgain(Student $student, SecurityHelper $securityHelper)
     {
         // resend confirmation email
         $securityHelper->reSend($student);
