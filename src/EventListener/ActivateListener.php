@@ -13,34 +13,34 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 class ActivateListener
 {
-    protected $activateHTML;
-    private $security;
+    // protected $activateHTML;
+    // private $security;
   
-    public function __construct(ActivateHTMLAdder $activateHTML, Security $security)
-    {
-      $this->activateHTML = $activateHTML;
-      $this->security = $security;
-    }
+    // public function __construct(ActivateHTMLAdder $activateHTML, Security $security)
+    // {
+    //   $this->activateHTML = $activateHTML;
+    //   $this->security = $security;
+    // }
 
-    public function processActivate(ResponseEvent $event)
-    {
-        $response = $event->getResponse();
+    // public function processActivate(ResponseEvent $event)
+    // {
+    //     $response = $event->getResponse();
 
-        $path = $event->getRequest()->getPathInfo();
+    //     $path = $event->getRequest()->getPathInfo();
 
-        // check if isset user 
-        if($this->security->getToken() != null) {
-            // check if user is connected and has not activate account
-            if($this->security->getToken()->getUser() != 'anon.' && $this->security->getUser()->getActivateToken() != null) {    
-                // display warning message 
-                if(
-                    preg_match('/^\/company\/.{1,}/', $path) == true
-                ||  preg_match('/^\/student\/.{1,}/', $path) == true
-                ||  preg_match('/^\/school\/.{1,}/', $path) == true
-                ){
-                    $this->activateHTML->addActivate($response, $this->security->getToken()->getUser());
-                }       
-            }
-        }   
+    //     // check if isset user 
+    //     if($this->security->getToken() != null) {
+    //         // check if user is connected and has not activate account
+    //         if($this->security->getToken()->getUser() != 'anon.' && $this->security->getUser()->getActivateToken() != null) {    
+    //             // display warning message 
+    //             if(
+    //                 preg_match('/^\/company\/.{1,}/', $path) == true
+    //             ||  preg_match('/^\/student\/.{1,}/', $path) == true
+    //             ||  preg_match('/^\/school\/.{1,}/', $path) == true
+    //             ){
+    //                 $this->activateHTML->addActivate($response, $this->security->getToken()->getUser());
+    //             }       
+    //         }
+    //     }   
     }
 }
