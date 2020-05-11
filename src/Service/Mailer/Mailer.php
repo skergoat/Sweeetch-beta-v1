@@ -21,7 +21,7 @@ class Mailer
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
             ->to(new Address($email, $name))
-            ->subject('Problems with docs')
+            ->subject('Problème avec les documents')
             ->htmlTemplate('email/warning.html.twig')
             ->context([
                 'message' => $message,
@@ -36,7 +36,7 @@ class Mailer
         $mail = (new TemplatedEmail())
             ->from(new Address('no-reply@sweeetch.com', 'Sweeetch\'s Team'))
             ->to(new Address($email))
-            ->subject('Problems with docs')
+            ->subject('Confirmation de compte')
             ->htmlTemplate('email/confirmed.html.twig')
             ->context([
                 'firstName' => $firstName,

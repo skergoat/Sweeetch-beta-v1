@@ -2,3 +2,8 @@
 ewz_recaptcha:
     public_key:  '%env(EWZ_RECAPTCHA_SITE_KEY)%'
     private_key: '%env(EWZ_RECAPTCHA_SECRET)%'
+#     locale_key:  '%kernel.default_locale%'
+#     locale_from_request: false
+#     enabled: true
+#     verify_host: true
+#     ajax: false

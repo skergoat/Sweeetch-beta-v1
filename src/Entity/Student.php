@@ -140,8 +140,7 @@ class Student
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\StudentCard", inversedBy="student", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     * @Assert\NotBlank(message="Champ requis")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $studentCard;
 
