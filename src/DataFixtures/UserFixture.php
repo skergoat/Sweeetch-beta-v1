@@ -19,19 +19,19 @@ class UserFixture extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        for($i = 1 ; $i < 5 ; $i++) {
+        // for($i = 1 ; $i < 5 ; $i++) {
 
-            $user = new User; 
-            $user->setEmail('admin' . $i . '@gmail.com');
-            $user->setRoles(['ROLE_ADMIN']);
-            $user->setConfirmed(true);
-            $user->setPassword($this->passwordEncoder->encodePassword(
-                $user,
-                'admin'
-            ));
+        //     $user = new User; 
+        //     $user->setEmail('admin' . $i . '@gmail.com');
+        //     $user->setRoles(['ROLE_ADMIN']);
+        //     $user->setConfirmed(true);
+        //     $user->setPassword($this->passwordEncoder->encodePassword(
+        //         $user,
+        //         'admin'
+        //     ));
 
-            $manager->persist($user);
-        }
+        //     $manager->persist($user);
+        // }
 
         $superAdmin = new User; 
         $superAdmin->setEmail('kergoane@gmail.com');
@@ -39,7 +39,7 @@ class UserFixture extends Fixture
         $superAdmin->setConfirmed(true);
         $superAdmin->setPassword($this->passwordEncoder->encodePassword(
             $superAdmin,
-            'malaysia333?'
+            '9195285B65x9@'
         ));
 
         $manager->persist($superAdmin);
