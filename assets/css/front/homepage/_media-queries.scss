@@ -14,6 +14,12 @@
       -ms-flex-pack: end;
       justify-content: flex-end;
     }
+
+    #intro{
+        background: rgb(57,188,236);
+        background: linear-gradient(48deg, rgba(57,188,236,1) 1%, rgba(255,131,131,1) 27%, rgba(245,189,104,0.95) 86%);
+        height:100vh;
+    }
   }
   
   @media (min-width: 992px) {
@@ -77,8 +83,8 @@
   
   @media (max-width: 767px) {
     #intro {
-      height: auto;
-      padding: 80px 0 60px 0;
+      // height: auto;
+      padding: 150px 0 60px 0;
     }
   
     #intro .container {
@@ -91,12 +97,12 @@
   
     #intro .intro-info {
       text-align: center;
-      padding-top: 40px;
+      padding-top: 30px;
     }
   
     #intro .intro-info h2 {
       font-size: 34px;
-      margin-bottom: 30px;
+      margin-bottom: 50px;
     }
   
     .section-header p {
