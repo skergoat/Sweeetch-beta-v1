@@ -282,16 +282,18 @@
 <tr style="vertical-align: top;" valign="top">
 <td style="word-break: break-word; vertical-align: top; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;" valign="top"><span></span></td>
 </tr>
+<tr style="vertical-align: top;" valign="top">
+{% if message != '' %}
+<br/><h4>Note personnelle :</h4> 
+<p>{{ message }}</p>
+{% endif %}
+</tr>
 </tbody>
 </table>
 </td>
 </tr>
 </tbody>
 </table>
-{% if message != '' %}
-<br/><h4>Note personnelle :</h4> 
-<p>{{ message }}</p>
-{% endif %}
 <div align="left" class="img-container left fixedwidth" style="padding-right: 40px;padding-left: 40px;">
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px"><td style="padding-right: 40px;padding-left: 40px;" align="left"><![endif]--><img alt="Image" border="0" class="left fixedwidth" src="{{ email.image('@images/signature.png') }}" style="text-decoration: none; -ms-interpolation-mode: bicubic; border: 0; height: auto; width: 100%; max-width: 288px; display: block;" title="Image" width="288"/>
 <!--[if mso]></td></tr></table><![endif]-->
