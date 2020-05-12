@@ -267,7 +267,12 @@
 <p style="line-height: 1.5; word-break: break-word; font-family: inherit; mso-line-height-alt: NaNpx; margin: 0;"><span style="color: #6d89bc;"> Infos du compte &gt; Documents</span></p>
 <p style="line-height: 1.5; word-break: break-word; font-family: inherit; mso-line-height-alt: NaNpx; margin: 0;"> </p>
 <p style="line-height: 1.5; word-break: break-word; font-family: inherit; mso-line-height-alt: NaNpx; margin: 0;"><span style="color: #6d89bc;"><span style="caret-color: #6d89bc;">Si tu rencontres un problème, n'hésite pas à nous contacter ! nous répondrons à ta demande dans les plus brefs délais.</span></span></p>
-<p style="line-height: 1.5; word-break: break-word; font-family: inherit; mso-line-height-alt: NaNpx; margin: 0;"> </p>
+<p style="line-height: 1.5; word-break: break-word; font-family: inherit; mso-line-height-alt: NaNpx; margin: 0;"> 
+	{% if message != '' %}
+	<br/><h4>Note de l'équipe :</h4> 
+	<p>{{ message }}</p>
+	{% endif %}
+</p>
 <p style="line-height: 1.5; word-break: break-word; font-family: inherit; mso-line-height-alt: NaNpx; margin: 0;"> </p>
 <p style="line-height: 1.5; word-break: break-word; font-family: inherit; mso-line-height-alt: NaNpx; margin: 0;"> </p>
 </div>
@@ -281,12 +286,6 @@
 <tbody>
 <tr style="vertical-align: top;" valign="top">
 <td style="word-break: break-word; vertical-align: top; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;" valign="top"><span></span></td>
-</tr>
-<tr style="vertical-align: top;" valign="top">
-{% if message != '' %}
-<br/><h4>Note personnelle :</h4> 
-<p>{{ message }}</p>
-{% endif %}
 </tr>
 </tbody>
 </table>
