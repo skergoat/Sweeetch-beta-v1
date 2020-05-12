@@ -35,7 +35,6 @@
     #intro{
         background: rgb(57,188,236);
         background: linear-gradient(48deg, rgba(57,188,236,1) 1%, rgba(255,131,131,1) 27%, rgba(245,189,104,0.95) 86%);
-        // height:110vh;
     }
 }
   
@@ -70,6 +69,49 @@
 
     .member {
         margin-bottom:15px;
+    }
+
+    /* front section 2 */
+
+    #about  {
+        margin-top:20px;
+        padding-bottom:30px;
+        & .about-content {
+            text-align:center;
+            & p {
+                font-size:19px;
+            }
+            & h2, & h3 {
+                font-size: 27px;
+                margin-bottom:40px;
+            }
+            & h3 {
+                font-size: 21px;
+            }
+        }  
+    }
+
+    /* front section 3 */
+    #why-us {
+        padding-top:80px;
+    }
+
+    #custom-img {
+        margin-bottom:50px;
+    }
+
+    #why-us {
+        padding-bottom:10px;
+        & .why-us-content .features h4 {
+            text-align:left;
+        } 
+    }
+
+    /* front section 4 */
+
+    #features .d-flex {
+        padding-left:50px;
+        padding-right:50px;
     }
 }
 
