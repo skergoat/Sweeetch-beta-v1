@@ -5,15 +5,16 @@
 
 {% block body %}
 
+
 <div class="background-jobs">
 
     <div class="container-fluid container-jobs">
 
         <header id="header">
-        
-            <div class="container nav-desktop">
+
+            <div class="container" id="customer-header">
                 {# nav #}
-                <nav class="nav-jobs main-nav d-none d-lg-block">
+                <nav class="main-nav d-none d-lg-block">
                     <ul>
                         <li class="active"><a href="/">Accueil</a></li>
                         {% if page is defined %}
@@ -64,6 +65,7 @@
                     <label style="text-align:center;">Quel est votre domaine ?</label><button class="btn btn-primary" style="margin:10px;"><i class="fa fa-search"></i></button>
                 </div>
                 <select name="domain" id="domain">
+                    <option value="tous">Tous</option>
                     <option value="Administration & législation">Administration & législation</option>
                     <option value="Bâtiment & construction">Bâtiment & construction</option>
                     <option value="Communication">Communication</option>
