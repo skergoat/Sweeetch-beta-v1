@@ -106,7 +106,7 @@
                                 </div>
                                 <div class="col-lg-5 col-sm-12 text-center">
                                     {% if offer.company.pictures.fileName is defined %}
-                                    <img src="{{ uploaded_asset(offer.company.pictures.fileName) }}" alt="" class="img-circle img-fluid" style="width: 200px;height: 150px;">
+                                    <img src="{{ uploaded_asset(offer.company.pictures.fileName) }}" alt="" class="img-offers img-circle img-fluid">
                                     {% else %}
                                     <img src="https://via.placeholder.com/150" alt="" class="img-circle img-fluid">
                                     {% endif %}
