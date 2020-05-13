@@ -147,9 +147,9 @@
 
     /*** sign in - student ***/
 
-    h1.titles-front {
-        margin-top:100px;
-    }
+    // h1.titles-front {
+    //     margin-top:100px;
+    // }
 
     .form-center--signin {
         margin-top:10%;
@@ -162,8 +162,13 @@
         flex-direction: column-reverse;
     }
 
-    .container-jobs {
-        padding-top:50px;
+    // .container-jobs {
+    //     padding-top:50px;
+    // }
+
+    .jobs-container {
+        padding-top: 10px;
+        padding-bottom:50px;
     }
 
     #no-offers {
