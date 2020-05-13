@@ -1,5 +1,20 @@
 // general media queries for profils
 
+@media all and (max-width: 991px) {
+
+    .table-scroll-card-width {
+        width:100vw;
+    }
+
+    /*** accounts ***/       
+    #as-2.account-state {
+        margin-top:0px;
+        position:relative;
+        width:100%;
+        bottom:0px;  
+    }
+}
+
 @media all and (max-width: 900px) {
 
     .table-scroll-card-width {
