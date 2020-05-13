@@ -52,6 +52,7 @@ class OffersController extends AbstractController
     public function find(OffersRepository $offersRepository, PaginatorInterface $paginator, Request $request, $page): Response
     {
         $domain = $request->get('domain');
+
         $queryBuilder = $offersRepository->findBy(['state' => false, 'domain' => $domain], ['domain' => 'desc']);
 
         $pagination = $paginator->paginate(
