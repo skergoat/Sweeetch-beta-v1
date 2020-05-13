@@ -16,8 +16,9 @@ $(document).ready(function() {
 
     var $_GET = getQueryParams(document.location.search);
 
+
     if($_GET.domain == null) {
-        $('#domain').val("Administration");
+        $('#domain').val("tous");
     }
     else {
         $('#domain').val($_GET.domain);
