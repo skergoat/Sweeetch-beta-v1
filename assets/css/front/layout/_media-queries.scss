@@ -113,6 +113,11 @@
         padding-left:50px;
         padding-right:50px;
     }
+
+    /*** login ***/
+    #login-option {
+        font-size:15px;
+    }
 }
 
 @media all and (max-width:400px) 
@@ -122,3 +127,4 @@
         top:-32px;
     }      
 }
+
