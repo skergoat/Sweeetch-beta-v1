@@ -1,7 +1,7 @@
 {# find offers page #}
 {% extends 'base-front.html.twig' %}
 
-{% block title %} {{ parent() }} - Emplois {% endblock %}
+{% block title %} {{ parent() }} - Alternance {% endblock %}
 
 {% block body %}
 
@@ -26,11 +26,11 @@
                 {# nav #}
                 <nav class="nav-jobs main-nav d-none d-lg-block">
                     <ul>
-                        <li class="active"><a href="/">Acceuil</a></li>
+                        <li class="active"><a href="/">Accueil</a></li>
                         {% if page is defined %}
-                        <li><a href="{{ path('offers_index', {'page':page}) }}">Emplois</a></li>
+                        <li><a href="{{ path('offers_index', {'page':page}) }}">Alternances</a></li>
                         {% else %}
-                        <li><a href="{{ path('offers_index', {'page':1}) }}">Emplois</a></li>
+                        <li><a href="{{ path('offers_index', {'page':1}) }}">Alternances</a></li>
                         {% endif %}
                         {% if is_granted('ROLE_USER') %}
                             {% if is_granted('ROLE_ADMIN') %}
@@ -61,7 +61,7 @@
 
     <div class="jobs-container">
 
-        <h1>Offres d'emploi</h1><br>
+        <h1>Alternances</h1><br>
         {# success message #}
         {% for message in app.flashes('error') %}
         <div class="alert alert-danger">
