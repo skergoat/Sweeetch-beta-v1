@@ -157,6 +157,11 @@
 
     /*** offers ***/
 
+    .row-offers {
+        display:flex;
+        flex-direction: column-reverse;
+    }
+
     .container-jobs {
         padding-top:50px;
     }
