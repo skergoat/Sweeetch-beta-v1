@@ -93,7 +93,7 @@
                 <div class="d-flex" style="flex-wrap:wrap;">
         {% for offer in offers %}
             {% if offer.applies[0] is not defined or offer.applies[0] is defined and offer.applies[0].hired == false and offer.applies[0].confirmed == false and offer.applies[0].finished == false %}
-                    <div class="card bg-light"  style="margin-left:15px;margin-right:15px;width:450px;padding-top:45px;">
+                    <div class="job-offer card bg-light">
                         <div class="card-body pt-0">
                             <div class="row">
                                 <div class="col-7">
