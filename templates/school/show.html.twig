@@ -96,54 +96,44 @@
 
 <div class="row" style="margin-bottom:50px;">
 
-    <div class="col-lg-6">
+    <div class="col-lg-6 col-sm-12">
 
-        <!-- <div class="col-lg-4"> -->
+        <div class="content-title">
+            <h1>Tableau de Bord</h1>
+        </div>
+        {# success or error message #}
+        {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {# account state #}
+        <div class="row account-state">
+            {% if school.user.confirmed == true %}
+            <div class="col-12 col-sm-6 col-md-6">
+                <div class="info-checked info-box info-success mb-3">
+                    <span class="info-box-icon bg-success elevation-1"><i class="fas fa-check"></i></span>
 
-            <div class="content-title">
-                <h1>Tableau de Bord</h1>
-            </div>
-
-            {# success or error message #}
-            {% for message in app.flashes('success') %}
-            <div class="alert alert-success">
-                {{ message }}
-            </div>
-            {% endfor %}
-
-        <!-- </div> -->
-
-        <!-- <div class="col-lg-8"> -->
-    {# account state #}
-            <div class="row">
-                {% if school.user.confirmed == true %}
-                <div class="col-12 col-sm-12 col-md-12">
-                    <div class="info-checked info-box info-success mb-3">
-                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-check"></i></span>
-
-                        <div class="info-box-content">
+                    <div class="info-box-content">
                         <span class="info-box-text">Etat du compte : </span>
                         <span class="info-box-number">Validé par Sweeetch</span>
-                        </div>
                     </div>
                 </div>
-                {% else %} 
-                <div class="col-12 col-sm-12 col-md-12">
-                    <div class="info-box mb-3">
-                    <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-hourglass-start"></i></span>
-
-                        <div class="info-box-content">
-                            <span class="info-box-text">Etat du Compte</span>
-                            <span class="info-box-number">En cours de confirmation...</span>
-                        </div>
-                        
-                    </div>
-                </div> 
-                {% endif %}
             </div>
+            {% else %} 
+            <div class="col-lg-12 col-sm-12 col-md-12">
+                <div class="info-box mb-3">
+                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-hourglass-start"></i></span>
 
-        <!-- </div> -->
-
+                    <div class="info-box-content">
+                        <span class="info-box-text">Etat du Compte : </span>
+                        <span class="info-box-number">En cours de confirmation par Sweeetch</span>
+                    </div>
+                    
+                </div>
+            </div> 
+            {% endif %}
+        </div>
     </div>
     <div class="col-lg-6" style="position:relative;">
         {# account state #}
