@@ -10,17 +10,6 @@
     <div class="container-fluid container-jobs">
 
         <header id="header">
-
-            <!-- <div id="topbar">
-            <div class="container">
-                <div class="social-links">
-                <a href="https://twitter.com/SweeetchA" target="_blank" class="twitter"><i class="fa fa-twitter"></i></a>
-                <a href="https://www.facebook.com/sweeetch.ton.alternance/" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a>
-                <a href="https://fr.linkedin.com/company/sweetchmontpellier?trk=public_profile_topcard_current_company" target="_blank" class="linkedin"><i class="fa fa-linkedin"></i></a>
-                <a href="https://www.instagram.com/sweeetch_alternance/" target="_blank" class="instagram"><i class="fa fa-instagram"></i></a>
-                </div>
-            </div>
-            </div> -->
         
             <div class="container nav-desktop">
                 {# nav #}
@@ -97,69 +86,75 @@
          {# paginate #}
         <div class="pagination-top">{{ knp_pagination_render(offers) }}</div>
          {# render offers #}
-        <div class="row">
-        {% for offer in offers %}
-            {% if offer.applies[0] is not defined or offer.applies[0] is defined and offer.applies[0].hired == false and offer.applies[0].confirmed == false and offer.applies[0].finished == false %}
-
-            <div class="offers-index card col-lg-5 mr-2 ml-2 mt-2 mb-2">
-                <a  href="{{ path('offers_show', {'id': offer.id, 'page':page}) }}" class="card-link">
-                    <div class="card-header" style="display:flex;">
-                        {% if offer.company.pictures.fileName is defined %}
-                        <div class="image" style="margin-right:15px;">
-                            <img src="{{ uploaded_asset(offer.company.pictures.fileName) }}" class="profile_picture elevation-2" alt="User Image">
+        <!-- <div class="card card-solid"> -->
+            <div class="card-body pb-0">
+                <div class="row d-flex align-items-stretch">
+                    <div class="d-flex" style="flex-wrap:wrap;">
+            {% for offer in offers %}
+                {% if offer.applies[0] is not defined or offer.applies[0] is defined and offer.applies[0].hired == false and offer.applies[0].confirmed == false and offer.applies[0].finished == false %}
+                        <div class="card bg-light"  style="margin-left:15px;margin-right:15px;width:450px;padding-top:45px;">
+                            <div class="card-body pt-0">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <div class="card-header text-muted border-bottom-0"  style="text-align:center;margin-bottom:10px;padding-top:0px;">
+                                            {{ offer.company.companyName }}
+                                            </div>
+                                    <h2 class="lead" style="text-align:center;"><b>{{ offer.title }}</b></h2>
+                                    <p class="text-muted text-sm" style="text-align:center;"><b>{{ offer.domain }}</b></p>
+                                    <ul class="ml-4 mb-0 fa-ul text-muted">
+                                        <li class="small" style="text-align:center;"><span class="fa-li"></span><i class="fas fa-map-marker-alt"></i></span> {{ offer.location }}</li>
+                                    </ul>
+                                    </div>
+                                    <div class="col-5 text-center">
+                                        {% if offer.company.pictures.fileName is defined %}
+                                        <img src="{{ uploaded_asset(offer.company.pictures.fileName) }}" alt="" class="img-circle img-fluid" style="width: 200px;height: 150px;">
+                                        {% else %}
+                                        <img src="https://via.placeholder.com/150" alt="" class="img-circle img-fluid">
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="text-right">
+                                    <a href="{{ path('offers_show', {'id': offer.id, 'page':page}) }}" class="btn btn-sm btn-primary">
+                                        <i class="fa fa-briefcase"></i> Voir l'Annonce
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                        {% else %}
-                        <div style="margin-right:15px;">
-                            <img src="https://via.placeholder.com/30" />                        
+                {% else %}
+                <tr>
+                    <td colspan="8">
+                        
+                        <div class="info-box mb-3" style="border:1px solid rgba(0, 0, 0, 0.125);border-radius:5px;margin-top:30px;">
+                            <span class="info-box-icon bg-warning elevation-1"><i class="fa fa-info"></i></span>
+            
+                            <div class="info-box-content">
+                                <span class="info-box-number">Aucune altrenance pour le moment</span>
+                            </div>
                         </div>
-                        {% endif %}
-                        <div style="width:100%;display:flex;justify-content:space-between;">
-                            <div><h6 style="color: #6c757d !important">{{ offer.company.companyName }}</h6></div>
-                            <div style="color:#6c757d;font-weight:700;">{{ offer.domain }}</div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="card-text"> 
-                            <div style="margin-right:20px;">
-                                <h3>{{ offer.title }}</h3>
-                            </div> 
-                            <div><h5 class="card-subtitle mb-2 text-muted">{{ offer.location }}</h5></div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            {# no offers #}
+    
+                    </td>
+                </tr>
+                {% endif %}
             {% else %}
-            <tr>
-                <td colspan="8">
-                    
-                    <div class="info-box mb-3" style="border:1px solid rgba(0, 0, 0, 0.125);border-radius:5px;margin-top:30px;">
-                        <span class="info-box-icon bg-warning elevation-1"><i class="fa fa-info"></i></span>
-        
-                        <div class="info-box-content">
-                            <span class="info-box-number">Aucune alternance pour le moment</span>
+                <tr>
+                    <td colspan="8">
+           
+                        <div class="info-box mb-3" style="border:1px solid rgba(0, 0, 0, 0.125);border-radius:5px;margin-top:30px;">
+                            <span class="info-box-icon bg-warning elevation-1"><i class="fa fa-info"></i></span>
+            
+                            <div class="info-box-content">
+                                <span class="info-box-number">Aucune altrenance pour le moment</span>
+                            </div>
                         </div>
-                    </div>
-
-                </td>
-            </tr>
-            {% endif %}
-        {% else %}
-            <tr>
-                <td colspan="8">
-       
-                    <div class="info-box mb-3" style="border:1px solid rgba(0, 0, 0, 0.125);border-radius:5px;margin-top:30px;">
-                        <span class="info-box-icon bg-warning elevation-1"><i class="fa fa-info"></i></span>
-        
-                        <div class="info-box-content">
-                            <span class="info-box-number">Aucune alternance pour le moment</span>
-                        </div>
-                    </div>
-                            
-                </td>
-            </tr>
-        {% endfor %} 
+                                
+                    </td>
+                </tr>
+            {% endfor %} 
+            </div>
         </div>
+    </div>
         {# paginate #}
         <div class="pagination-bottom">{{ knp_pagination_render(offers) }}</div> 
 
