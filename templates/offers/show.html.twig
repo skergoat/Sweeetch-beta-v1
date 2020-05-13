@@ -6,13 +6,15 @@
 {% block body %}
 
 <div class="background-jobs">
-    
+
     <div class="container container-jobs">
 
         <header id="header">
-            {# nav #}
-            <div class="container nav-desktop">
-                <nav class="nav-jobs main-nav d-none d-lg-block">
+
+            <div class="container" id="customer-header">
+                {# nav #}
+                <nav class="main-nav d-none d-lg-block">
+                    
                     <ul>
                         {% if is_granted('ROLE_ADMIN') %}
                         <li><a href="/admin">ADMIN</a></li>
