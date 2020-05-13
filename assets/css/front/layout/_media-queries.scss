@@ -8,6 +8,14 @@
             margin-top:10%;
         }
     }
+
+    /*** accounts ***/       
+ #as-2.account-state {
+    margin-top:0px;
+    position:relative;
+    width:100%;
+    bottom:0px;  
+}
 }  
 
 @media all and (max-width:991px) {
@@ -62,7 +70,9 @@
         width: 150px;
         height: 150px;
      }
-}
+
+}    
+
   
 @media all and (max-width:767px) 
 {
@@ -146,10 +156,6 @@
     }
 
     /*** sign in - student ***/
-
-    // h1.titles-front {
-    //     margin-top:100px;
-    // }
 
     .form-center--signin {
         margin-top:10%;
