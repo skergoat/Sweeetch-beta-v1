@@ -6,20 +6,10 @@
 {% block body %}
 
 <div class="background-jobs">
+    
     <div class="container container-jobs">
 
         <header id="header">
-
-            <div id="topbar">
-            <div class="container">
-                <div class="social-links">
-                <a href="https://twitter.com/SweeetchA" target="_blank" class="twitter"><i class="fa fa-twitter"></i></a>
-                <a href="https://www.facebook.com/sweeetch.ton.alternance/" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a>
-                <a href="https://fr.linkedin.com/company/sweetchmontpellier?trk=public_profile_topcard_current_company" target="_blank" class="linkedin"><i class="fa fa-linkedin"></i></a>
-                <a href="https://www.instagram.com/sweeetch_alternance/" target="_blank" class="instagram"><i class="fa fa-instagram"></i></a>
-                </div>
-            </div>
-            </div>
             {# nav #}
             <div class="container nav-desktop">
                 <nav class="nav-jobs main-nav d-none d-lg-block">
@@ -43,129 +33,132 @@
             </div>
         </header>
 
-        <h1 class="titles-front">{{ offers.title }}</h1>
-        <h4 class="card-subtitle mb-2 text-muted">{{ offers.location }}</h4>
-        {# success or error message #}
-        {% for message in app.flashes('success') %}
-        <div class="alert alert-success">
-            {{ message }}
-        </div>
-        {% endfor %}
+        <div class="jobs-container">
 
-        {% for message in app.flashes('error') %}
-        <div class="alert alert-danger">
-            {{ message }}
-        </div>
-        {% endfor %}
-        {# offers infos #}
-        <div class="Password card col-lg-12">
-            <div class="card-body">
-                <table class="table offers-show col-lg-5 col-md-5 col-sm-12 col-xs-12">
-                    <tbody>
-                        <tr>
-                            <th>Entreprise</th>
-                            <td style="display:flex;">
-                                {% if offers.company.pictures.fileName is defined %}
-                                <div class="image" style="margin-right:15px;">
-                                    <img src="{{ uploaded_asset(offers.company.pictures.fileName) }}" class="profile_picture elevation-2" alt="User Image">
-                                </div>
+            <h1 class="titles-front">{{ offers.title }}</h1>
+            <h4 class="card-subtitle mb-2 text-muted">{{ offers.location }}</h4>
+            {# success or error message #}
+            {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+            {% endfor %}
+
+            {% for message in app.flashes('error') %}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {# offers infos #}
+            <div class="Password card col-lg-12">
+                <div class="card-body">
+                    <table class="table offers-show col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                        <tbody>
+                            <tr>
+                                <th>Entreprise</th>
+                                <td style="display:flex;">
+                                    {% if offers.company.pictures.fileName is defined %}
+                                    <div class="image" style="margin-right:15px;">
+                                        <img src="{{ uploaded_asset(offers.company.pictures.fileName) }}" class="profile_picture elevation-2" alt="User Image">
+                                    </div>
+                                    {% else %}
+                                    <div style="margin-right:15px;">
+                                        <img src="https://via.placeholder.com/30" />                        
+                                    </div>
+                                    {% endif %}
+                                    {{ offers.company.companyName }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Lieu</th>
+                                <td>{{ offers.location }}</td>
+                            </tr>
+                            <tr>
+                                <th>Domaine</th>
+                                <td>{{ offers.domain }}</td>
+                            </tr>
+                            <tr>
+                                <th>Du</th>
+                                <td>{{ offers.dateStart ? offers.dateStart|date('d-m-Y') : '' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Au</th>
+                                <td>{{ offers.dateEnd ? offers.dateEnd|date('d-m-Y') : '' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="description">
+                        <h5>Description</h5>
+                        {% if is_granted('ROLE_USER') %}
+                        <p>{{ offers.description|raw }}</p>
+                        {% else %}
+                        <div class="blur">
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean mattis posuere nisl, vel fermentum mauris semper id. Cras nec fermentum nibh. Maecenas hendrerit fringilla lacinia. Morbi interdum interdum mi, eleifend suscipit quam efficitur quis. In ultrices nibh vel neque viverra, ut dignissim ante aliquam. Etiam iaculis orci ac tellus sodales efficitur. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed congue sapien quis nulla maximus pharetra. Morbi gravida ac orci vel lobortis. Vivamus molestie pretium felis, gravida vulputate turpis interdum eget. Nam tincidunt gravida eros, ac placerat eros posuere vitae. Proin suscipit eu lectus eget tempor. Fusce et volutpat libero, id vestibulum mi. Nunc at mauris eros.
+                            </p>
+                            <p>
+                                Praesent quis risus eget mauris dapibus aliquet. Nulla volutpat egestas ligula ut congue. Quisque eu aliquet lacus. Donec nec dolor nec libero interdum malesuada vel sed ex. Nullam mattis diam sed massa egestas, ac venenatis lorem tristique. Etiam consectetur augue sed odio maximus tristique. Sed sit amet aliquam eros. Donec imperdiet purus quis lectus dictum, ut fringilla tellus consectetur. Fusce efficitur risus vitae tempus mollis. Etiam sit amet convallis ipsum, eu ullamcorper lectus. Sed ut nulla quam. Etiam viverra magna nec pulvinar tempus. Donec eu metus eu nunc mattis malesuada. Morbi laoreet gravida tortor, eget volutpat sem vestibulum vel. Pellentesque convallis, massa eget cursus lacinia, metus orci tincidunt erat, vitae mollis lorem nisl vitae nibh.
+                            </p>
+                            <p>
+                                Donec ultrices dapibus nibh, eu dignissim dui elementum eu. Morbi mi quam, iaculis malesuada enim id, semper eleifend est. Sed id maximus nisl. Proin laoreet neque sed molestie malesuada. Integer eros felis, tristique ut viverra pellentesque, aliquet eu tellus. Donec fermentum elit at ipsum pretium, vitae ornare arcu consequat. Nullam a sapien maximus, mollis leo pellentesque, faucibus risus. Praesent venenatis, libero sit amet mollis pharetra, tellus massa mattis leo, eget mattis odio purus eget augue. Praesent ac ex et lectus tempor sagittis. Duis mauris nisi, dapibus in hendrerit in, blandit et augue. Nunc pellentesque ipsum sit amet semper auctor. Vivamus mollis velit et turpis tempor, nec elementum urna convallis. Ut ut nibh quis metus congue pretium non semper nibh.
+                            </p>
+                            <p>
+                                Nunc urna leo, placerat finibus tortor sit amet, finibus tempus odio. Integer eu fermentum lectus. Morbi et auctor nibh, eget fringilla ligula. Nullam finibus finibus diam ac aliquam. Maecenas pulvinar risus nec nisi rhoncus, et sollicitudin diam aliquet. Sed ac purus sed nisl dapibus pretium eget id eros. Aliquam arcu leo, vestibulum eu fringilla sit amet, egestas at lacus.
+                            </p>
+                            <p>
+                                Proin mollis egestas justo, vel interdum leo vestibulum in. Sed pretium mi dolor, dapibus tempus tortor ullamcorper sit amet. Suspendisse potenti. Nunc consectetur vel felis vitae efficitur. Sed a velit pharetra, gravida eros sit amet, consequat purus. Sed ut nunc eget nisi suscipit auctor vestibulum eu nisi. Morbi sed dolor at ante hendrerit venenatis pellentesque vitae erat. Aliquam tincidunt velit non ligula posuere congue non venenatis velit. In arcu purus, vehicula et finibus at, mattis vel tortor. Morbi sit amet rutrum metus. Curabitur lacinia posuere magna, quis volutpat justo efficitur nec. Vestibulum tristique mollis sapien sit amet maximus. Donec lectus turpis, fringilla in metus sed, cursus hendrerit enim. Nunc aliquet porttitor sollicitudin. Phasellus quis felis erat.
+                            </p>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {# apply options #}
+                    {% if is_granted('ROLE_USER') %}
+
+                        {% if app.user.student.id is defined %}
+
+                            {% if is_granted('ROLE_SUPER_STUDENT') %}
+
+                                {% if offers.state == false %}
+                                <form method="post" action="{{ path('apply', { id:offers.id, student_id:app.user.student.id, page:page }) }}">
+                                    <input type="hidden" name="_method" value="POST">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('apply' ~ app.user.student.id) }}">
+                                    <button class="btn btn-success">Postuler</button>
+                                </form> 
                                 {% else %}
-                                <div style="margin-right:15px;">
-                                    <img src="https://via.placeholder.com/30" />                        
+                                <div class="col-12 col-sm-6 col-md-6">
+                                    <div class="info-box mb-3">
+                                    <span class="info-box-icon bg-warning elevation-1"><i class="fa fa-info"></i></span>
+                        
+                                    <div class="info-box-content">
+                                        <span class="info-box-number">Dossier en cours</span>
+                                        <span class="info-box-text">Controllez votre profil</span>
+                                    </div>
+                                    </div>
                                 </div>
                                 {% endif %}
-                                 {{ offers.company.companyName }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Lieu</th>
-                            <td>{{ offers.location }}</td>
-                        </tr>
-                        <tr>
-                            <th>Domaine</th>
-                            <td>{{ offers.domain }}</td>
-                        </tr>
-                        <tr>
-                            <th>Du</th>
-                            <td>{{ offers.dateStart ? offers.dateStart|date('d-m-Y') : '' }}</td>
-                        </tr>
-                        <tr>
-                            <th>Au</th>
-                            <td>{{ offers.dateEnd ? offers.dateEnd|date('d-m-Y') : '' }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div class="description">
-                    <h5>Description</h5>
-                    {% if is_granted('ROLE_USER') %}
-                    <p>{{ offers.description|raw }}</p>
-                    {% else %}
-                    <div class="blur">
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean mattis posuere nisl, vel fermentum mauris semper id. Cras nec fermentum nibh. Maecenas hendrerit fringilla lacinia. Morbi interdum interdum mi, eleifend suscipit quam efficitur quis. In ultrices nibh vel neque viverra, ut dignissim ante aliquam. Etiam iaculis orci ac tellus sodales efficitur. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed congue sapien quis nulla maximus pharetra. Morbi gravida ac orci vel lobortis. Vivamus molestie pretium felis, gravida vulputate turpis interdum eget. Nam tincidunt gravida eros, ac placerat eros posuere vitae. Proin suscipit eu lectus eget tempor. Fusce et volutpat libero, id vestibulum mi. Nunc at mauris eros.
-                        </p>
-                        <p>
-                            Praesent quis risus eget mauris dapibus aliquet. Nulla volutpat egestas ligula ut congue. Quisque eu aliquet lacus. Donec nec dolor nec libero interdum malesuada vel sed ex. Nullam mattis diam sed massa egestas, ac venenatis lorem tristique. Etiam consectetur augue sed odio maximus tristique. Sed sit amet aliquam eros. Donec imperdiet purus quis lectus dictum, ut fringilla tellus consectetur. Fusce efficitur risus vitae tempus mollis. Etiam sit amet convallis ipsum, eu ullamcorper lectus. Sed ut nulla quam. Etiam viverra magna nec pulvinar tempus. Donec eu metus eu nunc mattis malesuada. Morbi laoreet gravida tortor, eget volutpat sem vestibulum vel. Pellentesque convallis, massa eget cursus lacinia, metus orci tincidunt erat, vitae mollis lorem nisl vitae nibh.
-                        </p>
-                        <p>
-                            Donec ultrices dapibus nibh, eu dignissim dui elementum eu. Morbi mi quam, iaculis malesuada enim id, semper eleifend est. Sed id maximus nisl. Proin laoreet neque sed molestie malesuada. Integer eros felis, tristique ut viverra pellentesque, aliquet eu tellus. Donec fermentum elit at ipsum pretium, vitae ornare arcu consequat. Nullam a sapien maximus, mollis leo pellentesque, faucibus risus. Praesent venenatis, libero sit amet mollis pharetra, tellus massa mattis leo, eget mattis odio purus eget augue. Praesent ac ex et lectus tempor sagittis. Duis mauris nisi, dapibus in hendrerit in, blandit et augue. Nunc pellentesque ipsum sit amet semper auctor. Vivamus mollis velit et turpis tempor, nec elementum urna convallis. Ut ut nibh quis metus congue pretium non semper nibh.
-                        </p>
-                        <p>
-                            Nunc urna leo, placerat finibus tortor sit amet, finibus tempus odio. Integer eu fermentum lectus. Morbi et auctor nibh, eget fringilla ligula. Nullam finibus finibus diam ac aliquam. Maecenas pulvinar risus nec nisi rhoncus, et sollicitudin diam aliquet. Sed ac purus sed nisl dapibus pretium eget id eros. Aliquam arcu leo, vestibulum eu fringilla sit amet, egestas at lacus.
-                        </p>
-                        <p>
-                            Proin mollis egestas justo, vel interdum leo vestibulum in. Sed pretium mi dolor, dapibus tempus tortor ullamcorper sit amet. Suspendisse potenti. Nunc consectetur vel felis vitae efficitur. Sed a velit pharetra, gravida eros sit amet, consequat purus. Sed ut nunc eget nisi suscipit auctor vestibulum eu nisi. Morbi sed dolor at ante hendrerit venenatis pellentesque vitae erat. Aliquam tincidunt velit non ligula posuere congue non venenatis velit. In arcu purus, vehicula et finibus at, mattis vel tortor. Morbi sit amet rutrum metus. Curabitur lacinia posuere magna, quis volutpat justo efficitur nec. Vestibulum tristique mollis sapien sit amet maximus. Donec lectus turpis, fringilla in metus sed, cursus hendrerit enim. Nunc aliquet porttitor sollicitudin. Phasellus quis felis erat.
-                        </p>
-                    </div>
-                    {% endif %}
-                </div>
-                {# apply options #}
-                {% if is_granted('ROLE_USER') %}
-
-                    {% if app.user.student.id is defined %}
-
-                        {% if is_granted('ROLE_SUPER_STUDENT') %}
-
-                            {% if offers.state == false %}
-                            <form method="post" action="{{ path('apply', { id:offers.id, student_id:app.user.student.id, page:page }) }}">
-                                <input type="hidden" name="_method" value="POST">
-                                <input type="hidden" name="_token" value="{{ csrf_token('apply' ~ app.user.student.id) }}">
-                                <button class="btn btn-success">Postuler</button>
-                            </form> 
-                            {% else %}
-                            <div class="col-12 col-sm-6 col-md-6">
+                                
+                            {% elseif is_granted('ROLE_STUDENT') %}
+                            <div class="col-12 col-sm-6 col-md-12">
                                 <div class="info-box mb-3">
-                                <span class="info-box-icon bg-warning elevation-1"><i class="fa fa-info"></i></span>
+                                <span class="info-box-icon bg-danger elevation-1"><i class="fa fa-exclamation-triangle"></i></span>
                     
                                 <div class="info-box-content">
-                                    <span class="info-box-number">Dossier en cours</span>
-                                    <span class="info-box-text">Controllez votre profil</span>
+                                    <span class="info-box-number">Validation en attente</span>
+                                    <span class="info-box-text">
+                                        Vous devez valider votre email et attendre que Sweeetch valide votre compte pour pouvoir postuler
+                                    </span>
                                 </div>
                                 </div>
                             </div>
                             {% endif %}
-                            
-                        {% elseif is_granted('ROLE_STUDENT') %}
-                        <div class="col-12 col-sm-6 col-md-12">
-                            <div class="info-box mb-3">
-                            <span class="info-box-icon bg-danger elevation-1"><i class="fa fa-exclamation-triangle"></i></span>
-                
-                            <div class="info-box-content">
-                                <span class="info-box-number">Validation en attente</span>
-                                <span class="info-box-text">
-                                    Vous devez valider votre email et attendre que Sweeetch valide votre compte pour pouvoir postuler
-                                </span>
-                            </div>
-                            </div>
-                        </div>
-                        {% endif %}
 
+                        {% endif %}
+                        
+                    {% else %}
+                        <a href="{{ path('student_new') }}" class="btn btn-success">S'inscrire pour voir l'annonce</a>
                     {% endif %}
-                    
-                {% else %}
-                    <a href="{{ path('student_new') }}" class="btn btn-success">S'inscrire pour voir l'annonce</a>
-                {% endif %}
+                </div>
             </div>
         </div>
 
