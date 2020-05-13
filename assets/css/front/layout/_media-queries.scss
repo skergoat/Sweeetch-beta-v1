@@ -37,8 +37,25 @@
         background: linear-gradient(48deg, rgba(57,188,236,1) 1%, rgba(255,131,131,1) 27%, rgba(245,189,104,0.95) 86%);
     }
 
+    /* job offers */
+
     .job-offer {
-        width:100%;
+        // width:100%;
+        margin-left:0px;
+        padding-top:30px;
+    }
+
+    .row-offers {
+        display:flex;
+        flex-direction: column-reverse;
+    }
+
+    .img-circle.img-fluid {
+        margin-bottom:30px;
+    }
+
+    p.small.text-muted {
+        margin-bottom:15px;
     }
 }
   
@@ -141,6 +158,12 @@
 
     #no-offers {
         max-width:100%;
+        width:100%;
+    }
+
+    /* job offers */
+
+    .job-offer {
         width:100%;
     }
 }
