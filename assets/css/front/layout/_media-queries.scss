@@ -107,6 +107,10 @@
         margin-bottom:15px;
     }
 
+    #header-image {
+        width:100%
+    }
+
     /* front section 2 */
 
     #about  {
@@ -132,6 +136,7 @@
     #padding-1 {
         padding:0px;
     }
+
     #padding-2 {
         padding:0px;
     }
@@ -151,6 +156,21 @@
             text-align:left;
         } 
     }
+
+    #padding-3 {
+        padding:0px;
+    }
+
+    #why-us .why-us-content {
+        text-align:justify;
+        & .features h4 {
+            font-size:22px;
+            margin-bottom:20px;
+            width:80%;
+            text-align:justify;
+        }
+    }
+    
 
     /* front section 4 */
 
