@@ -113,18 +113,27 @@
         margin-top:20px;
         padding-bottom:30px;
         & .about-content {
-            text-align:center;
+            text-align:justify;
             & p {
                 font-size:19px;
             }
-            & h2, & h3 {
+            & h2 {
                 font-size: 25px;
                 margin-bottom:40px;
             }
             & h3 {
                 font-size: 21px;
+                text-align:justify;
+                margin-bottom:40px;
             }
         }  
+    }
+    // delete padding on mobile
+    #padding-1 {
+        padding:0px;
+    }
+    #padding-2 {
+        padding:0px;
     }
 
     /* front section 3 */
