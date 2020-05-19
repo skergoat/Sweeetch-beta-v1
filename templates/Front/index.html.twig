@@ -48,7 +48,6 @@
                 {% endif %}
                 <li><a href="/logout">DECONNEXION</a></li>
             {% else %}
-              {# <li><a href="{{ path('student_new') }}">S'INSCRIRE</a> #}
               <li class="drop-down"><a>S'Inscrire</a> 
                 <ul>
                     <li><a href="/student/new">Etudiants</a></li>
@@ -82,7 +81,7 @@
         </div>
   
         <div class="col-md-6 intro-img order-md-last order-first">
-            <img src="{{ asset('build/CV.png') }}" alt="Sweeetch alternance" class="img-fluid">
+            <img src="{{ asset('build/CV.png') }}" alt="Sweeetch alternance" class="img-fluid" id="header-image">
 
         </div>
       </div>
@@ -98,7 +97,7 @@
     <section id="about">
 
       <div class="container"style="max-width:85%" id="padding-1">
-        <div class="row">
+        <div class="row" id="j-c">
 
           <div class="col-lg-5 col-md-6">
             <div class="why-us-img">
@@ -141,18 +140,9 @@
             </div>
           </div>
 
-          {#<div class="col-lg-7"style="height:auto;display:flex;flex-direction:column;align-items:flex-start;justify-content: center;">
-            <div class="why-us-content"style="max-width:90%">#}
-
-           <div class="col-lg-7" style="height:auto;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;"> 
+           <div class="col-lg-7" id="padding-3"> 
             <div class="why-us-content" style="max-width:90% !important">
-              {# <h1>SWEEETCH</h1>
-              <p>
-                  Une alternance en quelques clics Grâce à Sweeetch, tu peux désormais trouver ton école et ton entreprise simplement
-
-              </p> #}
-
-
+    
               <div class="features wow bounceInUp clearfix">
                 <i class="fa fa-diamond" style="color: #0748fc;"></i>
                 <h4>Deviens un chasseur d'alternance </h4>
@@ -169,10 +159,6 @@
                 <i class="fa fa-thumbs-up" style="color: #0748fc;"></i>
                 <h4>Une alternance simple & rapide </h4>
                 <p> Toutes les démarches sur une même plateforme !  Ton entreprise et ton école en quelques clics.</p>
-                <p style="display: flex;justify-content: center;margin-left:0px;margin-botton:0px;">
-                  {# <img src="{{ asset('build/soon.gif') }}" alt="applestore" style="width:120px;margin-right:10px;height:50px;">
-                  <img src="{{ asset('build/play-store.png') }}" alt="playstore" style="width:120px;height:50px;"> #}
-                </p>
               </div>
               
             </div>
@@ -184,25 +170,6 @@
       </div>
 
     </section>
-
-    <!--==========================
-    Section d'appel à l'action
-    ============================-->
-     {# <section id="call-to-action" class="wow fadeInUp">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-9 text-center text-lg-left">
-            <h3 class="cta-title">Passer à l'action</h3>
-            <p class="cta-text">Il est temps de prendre le taureau par les cornes, aujourd'hui vous n'êtes plus seules nous sommes là ! ensemble nous pouvons réussir.</p>
-          </div>
-          <div class="col-lg-3 cta-btn-container text-center">
-            <a class="cta-btn align-middle" href="#">Maintenant</a>
-          </div>
-        </div>
-
-      </div>
-    </section>  #}
-
 
      <!--==========================
       Features section APPP
