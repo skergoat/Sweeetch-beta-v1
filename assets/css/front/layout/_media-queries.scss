@@ -157,6 +157,21 @@
         } 
     }
 
+    #padding-3 {
+        padding:0px;
+    }
+
+    #why-us .why-us-content {
+        text-align:justify;
+        & .features h4 {
+            font-size:22px;
+            margin-bottom:20px;
+            width:80%;
+            text-align:justify;
+        }
+    }
+    
+
     /* front section 4 */
 
     #features .d-flex {
