@@ -44,6 +44,7 @@ justify-content: space-between;
 
 #why-us .why-us-content .features p {
     color:black;
+    text-align:justify;
 }
 
 #why-us {
@@ -81,5 +82,14 @@ justify-content: space-between;
     flex-direction:column;
     align-items:flex-start;
     justify-content:center;
+    padding-left: 70px;
+    padding-right: 70px;
+    margin-bottom:25px;
+    margin-top:30px;
 }
+
+#why-us .why-us-content .features h4 {
+    margin-bottom:15px;
+}
+
 
