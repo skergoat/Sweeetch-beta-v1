@@ -1,10 +1,13 @@
 // admin btn 
+* {
+    color:purple;
+    background-color:purple;
+}
 
 .btn {
     &-sm-1{  
         margin-left:0px;
         margin-top:20px;
-        margin-bottom:200px;
     } 
 }
 
