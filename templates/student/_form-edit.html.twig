@@ -49,6 +49,38 @@
             </div>
         </div>
         <div class="form-group">
+            {{ form_label(form.interest, 'Centres d\'intérêt') }}
+            {% if form.interest.vars.errors | length == 0 %}
+            {{ form_widget(form.interest, {'label':'Centre d\'intérêt', 'attr' : { class: 'form-control' }} ) }}
+            {% else %}
+            {{ form_widget(form.interest, {'label':'Centre d\'intérêt', 'attr' : { class: 'form-control is-invalid' }} ) }}
+            {% endif %}
+            <div class="form-error">
+                {{ form_errors(form.interest) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.hobbies, 'Loisirs') }}
+            {% if form.hobbies.vars.errors | length == 0 %}
+            {{ form_widget(form.hobbies, {'label':'Loisirs', 'attr' : { class: 'form-control' }} ) }}
+            {% else %}
+            {{ form_widget(form.hobbies, {'label':'Loisirs', 'attr' : { class: 'form-control is-invalid' }} ) }}
+            {% endif %}
+            <div class="form-error">
+                {{ form_errors(form.hobbies) }}
+            </div>
+        </div>
+    </div>
+    <div class="row" id="row-radio">
+        <div class="col-lg-6 form-group">
+            {{ form_row(form.driving_license, {'label': 'Permis de Conduire', 'attr' : { class: 'form-control' }} ) }}
+        </div>
+        <div class="col-lg-6 form-group">
+            {{ form_row(form.disabled, {'label': 'Handicap', 'attr' : { class: 'form-control' }} ) }}
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="form-group">
             {{ form_label(form.adress, 'Adresse') }}
             {% if form.adress.vars.errors | length == 0 %}
             {{ form_widget(form.adress, {'label':'Entreprise', 'attr' : { class: 'form-control' }} ) }}
@@ -59,8 +91,6 @@
                 {{ form_errors(form.adress) }}
             </div>
         </div>
-    </div>
-    <div class="col-lg-6">
         <div class="form-group">
             {{ form_label(form.zipCode, 'Code Postal') }}
             {% if form.zipCode.vars.errors | length == 0 %}
@@ -92,36 +122,6 @@
             {% endif %}
             <div class="form-error">
                 {{ form_errors(form.telNumber) }}
-            </div>
-        </div>
-        <div class="form-group">
-            {{ form_label(form.interest, 'Centres d\'intérêt') }}
-            {% if form.interest.vars.errors | length == 0 %}
-            {{ form_widget(form.interest, {'label':'Centre d\'intérêt', 'attr' : { class: 'form-control' }} ) }}
-            {% else %}
-            {{ form_widget(form.interest, {'label':'Centre d\'intérêt', 'attr' : { class: 'form-control is-invalid' }} ) }}
-            {% endif %}
-            <div class="form-error">
-                {{ form_errors(form.interest) }}
-            </div>
-        </div>
-        <div class="form-group">
-            {{ form_label(form.hobbies, 'Loisirs') }}
-            {% if form.hobbies.vars.errors | length == 0 %}
-            {{ form_widget(form.hobbies, {'label':'Loisirs', 'attr' : { class: 'form-control' }} ) }}
-            {% else %}
-            {{ form_widget(form.hobbies, {'label':'Loisirs', 'attr' : { class: 'form-control is-invalid' }} ) }}
-            {% endif %}
-            <div class="form-error">
-                {{ form_errors(form.hobbies) }}
-            </div>
-        </div>
-        <div class="row" id="row-radio">
-            <div class="col-lg-6 form-group">
-                {{ form_row(form.driving_license, {'label': 'Permis de Conduire', 'attr' : { class: 'form-control' }} ) }}
-            </div>
-            <div class="col-lg-6 form-group">
-                {{ form_row(form.disabled, {'label': 'Handicap', 'attr' : { class: 'form-control' }} ) }}
             </div>
         </div>
     </div>
