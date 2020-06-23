@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class UpdateStudentGeneralType extends AbstractType
 {
@@ -28,6 +29,8 @@ class UpdateStudentGeneralType extends AbstractType
             ->add('city', TextType::class)
             ->add('telNumber', TextType::class)
             ->add('user', UserEditFormType::class)
+            ->add('interest', TextareaType::class)
+            ->add('hobbies', TextareaType::class)
             ->add('driving_license', CheckboxType::class, [
                 'required' => false
             ])
