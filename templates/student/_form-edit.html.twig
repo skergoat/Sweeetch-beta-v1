@@ -102,11 +102,11 @@
                 {{ form_errors(form.telNumber) }}
             </div>
         </div>
-    </div>
+    </div> 
 
-    <br>
-    <br>
-    
+</div>
+
+<div class="row">
     <div class="col-lg-6">
         <div class="form-group">
             {{ form_label(form.interest, 'Centres d\'intérêt') }}
@@ -132,10 +132,18 @@
         </div>
     </div>
 
+    <div class="col-lg-6" id="row-radio">
+        <div class="col-lg-6 form-group">
+            {{ form_row(form.driving_license, {'label': 'Permis de Conduire', 'attr' : { class: 'form-control' }} ) }}
+        </div>
+        <div class="col-lg-6 form-group">
+            {{ form_row(form.disabled, {'label': 'Handicap', 'attr' : { class: 'form-control' }} ) }}
+        </div>
+    </div> 
+
     <div class="col-lg-12">
         <button class="btn btn-primary btn-edit-form">Mettre à jour</button>
-    </div>  
-
+    </div> 
 </div>
 
 {{ form_end(form) }}
