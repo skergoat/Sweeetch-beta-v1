@@ -183,6 +183,12 @@
         padding-right:50px;
     }
 
+    .img-fluid {
+        max-width: 80%;
+        display: block;
+        margin: auto;
+    }
+
     /*** login ***/
     #login-option {
         font-size:15px;
