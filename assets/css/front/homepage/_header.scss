@@ -34,7 +34,9 @@
     line-height: 1;
     font-weight: 400;
     letter-spacing: 3px;
-    text-transform: uppercase;
+    display:block;
+    color:#00C2F2;
+    font-weight:bold;
   }
   
   #header .logo h1 a,
@@ -49,12 +51,6 @@
     max-height: 70%;
     margin-left:10px;
     // height:75px;
-  }
-
-  #title-index {
-    display:block;
-    color:#00C2F2;
-    font-weight:bold;
   }
   
   .main-pages {
