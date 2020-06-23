@@ -260,20 +260,20 @@
                             <tr>
                                 <td>Mon CV</td>
                                 <td>
-                                    <a href="{{ path('student_download_resume', { id: student.resume.id }) }}"><span class="fa fa-download"></span></a>
+                                    <a href="{{ path('student_download_resume', { id: student.resume.id }) }}"><span class="fas fa-file-image"></span></a>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="th-dark">Ma Carte d'identité</td>
                                 <td>
-                                    <a href="{{ path('student_download_idcard', { id: student.idCard.id }) }}"><span class="fa fa-download"></span></a>
+                                    <a href="{{ path('student_download_idcard', { id: student.idCard.id }) }}"><span class="fas fa-file-image"></span></a>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="th-dark">Ma Carte d'étudiant</td>
                                 {% if student.studentCard.id is defined %}
                                 <td>
-                                    <a href="{{ path('student_download_studentcard', { id: student.studentCard.id }) }}"><span class="fa fa-download"></span></a>
+                                    <a href="{{ path('student_download_studentcard', { id: student.studentCard.id }) }}"><span class="fas fa-file-image"></span></a>
                                 </td>
                                 {% else %}
                                 <td>

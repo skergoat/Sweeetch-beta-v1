@@ -69,13 +69,13 @@ class OffersType extends AbstractType
             ])
             ->add('domain', ChoiceType::class, [
                 'choices' => [
-                    'Administration & législation' => 'Grande distribution',
-                    'Bâtiment & construction' => 'Vente & Commerce',
-                    'Communication' => 'Restauration',
-                    'Culture' => 'Artisanat',
-                    'Economie & gestion' => 'Marketing & Communication',
-                    'Environnement & nature' => 'Assistanat & secrétariat',
-                    'Hôtellerie & alimentation' => 'Immobilier',
+                    'Grande distribution' => 'Grande distribution',
+                    'Vente & Commerce' => 'Vente & Commerce',
+                    'Restauration' => 'Restauration',
+                    'Artisanat' => 'Artisanat',
+                    'Marketing & Communication' => 'Marketing & Communication',
+                    'Assistanat & secrétariat' => 'Assistanat & secrétariat',
+                    'Immobilier' => 'Immobilier',
                 ],
                 'choice_attr' => function($choice, $key, $value) {
                     return ['class' => 'attending_'.strtolower($key)];
