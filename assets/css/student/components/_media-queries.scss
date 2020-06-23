@@ -21,6 +21,11 @@
 }
 
 @media all and (max-width: 700px) {
+
+     /* tables */
+     .table-responsive {
+        overflow:scroll;
+    }
    
     .Password.card {
         border:0px;
