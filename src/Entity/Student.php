@@ -166,6 +166,16 @@ class Student
      */
     private $pictures;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $interest;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $hobbies;
+
 
     public function __construct()
     {
@@ -424,6 +434,30 @@ class Student
     public function setPictures(?Pictures $pictures): self
     {
         $this->pictures = $pictures;
+
+        return $this;
+    }
+
+    public function getInterest(): ?string
+    {
+        return $this->interest;
+    }
+
+    public function setInterest(string $interest): self
+    {
+        $this->interest = $interest;
+
+        return $this;
+    }
+
+    public function getHobbies(): ?string
+    {
+        return $this->hobbies;
+    }
+
+    public function setHobbies(?string $hobbies): self
+    {
+        $this->hobbies = $hobbies;
 
         return $this;
     }
