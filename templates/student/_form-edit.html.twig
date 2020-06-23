@@ -95,14 +95,25 @@
             </div>
         </div>
         <div class="form-group">
-            {{ form_label(form.interest, 'Centres d\'interet') }}
+            {{ form_label(form.interest, 'Centres d\'intérêt') }}
             {% if form.interest.vars.errors | length == 0 %}
-            {{ form_widget(form.interest, {'label':'Centre d\'interet', 'attr' : { class: 'form-control' }} ) }}
+            {{ form_widget(form.interest, {'label':'Centre d\'intérêt', 'attr' : { class: 'form-control' }} ) }}
             {% else %}
-            {{ form_widget(form.interest, {'label':'Centre d\'interet', 'attr' : { class: 'form-control is-invalid' }} ) }}
+            {{ form_widget(form.interest, {'label':'Centre d\'intérêt', 'attr' : { class: 'form-control is-invalid' }} ) }}
             {% endif %}
             <div class="form-error">
                 {{ form_errors(form.interest) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.hobbies, 'Loisirs') }}
+            {% if form.hobbies.vars.errors | length == 0 %}
+            {{ form_widget(form.hobbies, {'label':'Loisirs', 'attr' : { class: 'form-control' }} ) }}
+            {% else %}
+            {{ form_widget(form.hobbies, {'label':'Loisirs', 'attr' : { class: 'form-control is-invalid' }} ) }}
+            {% endif %}
+            <div class="form-error">
+                {{ form_errors(form.hobbies) }}
             </div>
         </div>
         <div class="row" id="row-radio">
