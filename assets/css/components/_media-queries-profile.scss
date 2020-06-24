@@ -28,6 +28,13 @@
 
 @media all and (max-width: 700px) {
 
+    .card {
+    
+        &-dashboard {
+            max-height:auto;
+        }
+    }
+
     .body-row {
         padding:0px;
         border:0px;
