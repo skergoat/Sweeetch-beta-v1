@@ -12,11 +12,19 @@
     }
 }
 
-.table thead th,
-// js tables 
-table.dataTable.no-footer,
-table.dataTable thead th, 
-table.dataTable thead td {
+// .table thead th,
+// table.dataTable.no-footer,
+// table.dataTable thead th, 
+// table.dataTable thead td 
+
+#no-border.table thead th
+#applies1.dataTable.no-footer
+#applies1.dataTable thead th,
+#applies1.dataTable thead td,
+#applies2.dataTable.no-footer
+#applies2.dataTable thead th,
+#applies2.dataTable thead td
+ {
     border:0px;
 }
 
