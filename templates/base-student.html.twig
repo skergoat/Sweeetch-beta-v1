@@ -70,9 +70,6 @@
                     </li>
 
                     <ul class="ul-ul">
-                        <li class="nav-item d-sm-inline-block">
-                            <a href="/logout" class="nav-link">Déconnexion</a>
-                        </li>
                         
                         {% if is_granted('ROLE_ADMIN') %}
 
@@ -82,7 +79,10 @@
                         <li class="nav-item d-none d-sm-inline-block">
                             <a class="nav-link" href="{{ path('student_index') }}">Liste des étudiants</a>
                         </li>
-                    {% endif %}
+                        {% endif %}
+                        <li class="nav-item d-sm-inline-block">
+                            <a href="/logout" class="nav-link">Déconnexion</a>
+                        </li>
                     </ul>
                 </ul>
 

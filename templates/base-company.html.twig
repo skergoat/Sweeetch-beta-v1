@@ -48,9 +48,6 @@
                         <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
                     </li>
                     <ul>
-                        <li class="nav-item d-sm-inline-block">
-                            <a href="/logout" class="nav-link">Déconnexion</a>
-                        </li>
                         
                         {% if is_granted('ROLE_ADMIN') %}
 
@@ -62,6 +59,9 @@
                         </li>
 
                         {% endif %}
+                        <li class="nav-item d-sm-inline-block">
+                            <a href="/logout" class="nav-link">Déconnexion</a>
+                        </li>
                     </ul>
                 </ul>
 
