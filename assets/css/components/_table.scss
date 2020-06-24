@@ -19,11 +19,15 @@
 
 #no-border.table thead th,
 #applies1.dataTable.no-footer,
+#applies2.dataTable.no-footer,
 #applies1.dataTable thead th,
 #applies1.dataTable thead td,
-#applies2.dataTable.no-footer,
 #applies2.dataTable thead th,
-#applies2.dataTable thead td
+#applies2.dataTable thead td,
+#applies1.dataTable tbody th,
+#applies1.dataTable tbody td,
+#applies2.dataTable tbody th,
+#applies2.dataTable tbody td
  {
     border:0px;
 }
