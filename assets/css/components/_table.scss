@@ -14,7 +14,9 @@
 
 .table thead th,
 // js tables 
-table.dataTable.no-footer {
+table.dataTable.no-footer,
+table.dataTable thead th, 
+table.dataTable thead td {
     border:0px;
 }
 
