@@ -19,4 +19,8 @@
         flex-direction:row;
         list-style-type:none;
     }
+
+    .navbar-expand .navbar-nav {
+        justify-content: space-between;
+    }
 }
