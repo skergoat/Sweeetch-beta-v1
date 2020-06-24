@@ -24,11 +24,6 @@
 
 @media all and (max-width: 700px) {
 
-    .card {
-        padding: 0px;
-        padding-top: 0px; {
-    }
-
     .body-row {
         padding:0px;
         border:0px;
@@ -81,5 +76,10 @@
 
     .overflow-box {
         overflow:scroll;
+    }
+
+    .card {
+        padding: 0px;
+        padding-top: 0px; 
     }
 }
