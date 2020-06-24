@@ -50,11 +50,17 @@
 					<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
 						<div class="job-grid border">
 							<div class="job-title-sec">
-								<div class="c-logo"> 
-									{% if offer.company.pictures.fileName is defined %}
-									<img src="{{ uploaded_asset(offer.company.pictures.fileName) }}" alt="">
+								<div class="c-logo" tyle="
+								width: 300px;
+								height: 120px;
+								overflow: hidden;
+								position: relative;"> 
+									{% if studies.school.pictures.fileName is defined %}
+									<img src="{{ uploaded_asset(studies.school.pictures.fileName) }}" alt="" style="width:300px;height:110px;max-width: 300px;max-height:120px;
+									object-fit: cover;">
 									{% else %}
-									<img src="https://via.placeholder.com/150" alt="" >
+									<img src="https://via.placeholder.com/150" alt="" style="width:300px;height:110px;max-width: 300px;max-height:120px;
+									object-fit: cover;">
 									{% endif %}
 								</div>
 								<h3><a href="{{ path('studies_show_recruit', {id:studies.id, from:from, from_id:id}) }}">{{ studies.title }}</a></h3>
