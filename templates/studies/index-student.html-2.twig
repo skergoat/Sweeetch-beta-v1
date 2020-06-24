@@ -1,0 +1,87 @@
+{# studies list by student #}
+{% extends 'base-front.html.twig' %}
+
+{% block title %} {{ parent() }} - Formations {% endblock %}
+
+{% block body %}
+
+    {% if is_granted('ROLE_SUPER_SCHOOL') or is_granted('ROLE_STUDENT_HIRED') %}
+
+    <div class="background-jobs">
+        <div class="container-fluid container-jobs">
+
+            <header id="header">
+                <div class="container nav-desktop">
+                    {# nav #}
+                    <nav class="nav-jobs main-nav d-none d-lg-block">
+                        <ul>
+                            <li><a href="{{ path('homepage') }}">Accueil</a></li>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                {% if from == 'student' %}
+                                <li><a href="{{ path('school_student_index', {'id':id}) }}">Retour</a></li>
+                                {% elseif from == 'school' %}
+                                <li><a href="{{ path('school_studies_index', {'id': id}) }}">Retour</a></li>
+                                {% endif %}
+                            {% elseif  is_granted('ROLE_STUDENT_HIRED') %}
+                            <li><a href="{{ path('school_student_index', {'id': app.user.student.id}) }}">Retour</a></li>
+                            {% elseif  is_granted('ROLE_SUPER_SCHOOL') %}
+                            <li><a href="{{ path('school_studies_index', {'id': app.user.school.id}) }}">Retour</a></li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </header>
+
+            <div class="jobs-container">
+
+                <h1>Formations disponibles</h1>
+                {# success message #}
+                {% for message in app.flashes('error') %}
+                <div class="alert alert-danger">
+                    {{ message }}
+                </div>
+                {% endfor %}
+                {# paginate #}
+                <div class="pagination-top">{{ knp_pagination_render(studies) }}</div>
+                {# studies list #}
+                <div class="row">
+
+                    {% for studies in studies %}
+                    <div class="offers-index card col-lg-5 mr-2 ml-2 mt-2 mb-2">
+                        <a  href="{{ path('studies_show_recruit', {id:studies.id, from:from, from_id:id}) }}" class="card-link">
+                           
+                            <div class="card-body">
+                                <div class="card-text"> 
+                                    <div style="margin-right:20px;">
+                                        <h3>{{ studies.title }}</h3>
+                                    </div> 
+                                    <div><h5 class="card-subtitle mb-2 text-muted">{{ studies.domain }}</h5></div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+                {# paginate #}
+                <div class="pagination-bottom">{{ knp_pagination_render(studies) }}</div> 
+
+            </div>
+        </div>
+    </div>
+    {# footer #}
+    <footer id="footer" class="section-bg">
+        <div class="container">
+            <div class="copyright">
+            &copy; Copyright <strong>SWEEETCH</strong>. All Rights Reserved
+            </div>
+            <div class="credits">
+            L'équipe de SWEEETCH
+            </div>
+        </div>
+    </footer>
+
+    {% endif %}
+
+{% endblock %}
+
+
