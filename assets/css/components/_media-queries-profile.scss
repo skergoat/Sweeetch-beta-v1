@@ -20,6 +20,11 @@
     .table-scroll-card-width {
         width:100vw;
     }
+
+    .card {
+        padding: 0px;
+        padding-top: 0px; 
+    }
 }
 
 @media all and (max-width: 700px) {
@@ -76,10 +81,5 @@
 
     .overflow-box {
         overflow:scroll;
-    }
-
-    .card {
-        padding: 0px;
-        padding-top: 0px; 
     }
 }
