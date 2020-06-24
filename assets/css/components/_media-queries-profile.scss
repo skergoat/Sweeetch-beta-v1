@@ -84,14 +84,15 @@
         min-width:50px;
     }
 
-    .overflow-box {
-        overflow:scroll;
-    }
-
     .card {
     
         &-dashboard {
             overflow-y: scroll;
         }
+    }
+
+    .info-box .progress-description, .info-box .info-box-text {
+        white-space: pre-wrap;
+        word-break: break-all;
     }
 }
