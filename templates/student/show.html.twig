@@ -110,6 +110,14 @@
                                 <th>Handicappé</th>
                                 <td>{% if student.disabled == 1 %} oui {% else %} non {% endif %} </td>   
                             </tr>
+                            <tr>
+                                <th>Centres d'intérêt</th>
+                                <td>{{ student.user.interest }}</td>  
+                            </tr>
+                            <tr>
+                                <th>Loisirs</th>
+                                <td>{{ student.user.hobbies }}</td>  
+                            </tr>
                         </table>
                     </div>
                 </div>
