@@ -50,7 +50,7 @@
 
     <div class="jobs-container">
 
-        <h1>Alternances</h1><br>
+        <h1 class="titles-front">Alternances</h1><br>
         {# success message #}
         {% for message in app.flashes('error') %}
         <div class="alert alert-danger">
@@ -61,25 +61,18 @@
         <form method="get" action="{{ path('find') }}" style="margin:auto;width:300px;" id="form-options">
             <p>
                 <div style="display:flex;justify-content:center;align-items:center;">
-                    <label style="text-align:center;">Quel est votre domaine ?</label><button class="btn btn-primary" style="margin:10px;"><i class="fa fa-search"></i></button>
+                    <label style="text-align:center;">Quel est votre domaine ?</label><button class="btn btn-primary" style="margin:10px;"><i class="fa fa-search" id="search-offers"></i></button>
                 </div>
-                <select name="domain" id="domain">
+                <select name="domain" id="domain" style="margin-left:19px;">
                     <option value="tous">Tous</option>
-                    <option value="Administration & législation">Administration & législation</option>
-                    <option value="Bâtiment & construction">Bâtiment & construction</option>
-                    <option value="Communication">Communication</option>
-                    <option value="Culture">Culture</option>
-                    <option value="Economie & gestion">Economie & gestion</option>
-                    <option value="Environnement & nature">Environnement & nature</option>
+                    <option value="Grande distribution">Grande distribution</option>
+                    <option value="Vente & Commerce">Vente & Commerce</option>
+                    <option value="Restauration">Restauration</option>
+                    <option value="Artisanat">Artisanat</option>
+                    <option value="Marketing & Communication">Marketing & Communication</option>
+                    <option value="Assistanat & secrétariat">Assistanat & secrétariat</option>
                     <option value="Hôtellerie & alimentation">Hôtellerie & alimentation</option>
-                    <option value="Informatique & télécommunication">Informatique & télécommunication</option>
-                    <option value="Santé & bien-être">Santé & bien-être</option>
-                    <option value="Sciences">Sciences</option>
-                    <option value="Sciences humaines & sociales">Sciences humaines & sociales</option>
-                    <option value="Sécurité">Sécurité</option>
-                    <option value="Technique & industrie">Technique & industrie</option>
-                    <option value="Tourisme, sports & loisirs">Tourisme, sports & loisirs</option>
-                    <option value="Transports & logistique">Transports & logistique</option>
+                    <option value="Immobilier">Immobilier</option>
                 </select>
                 <input type="hidden" name="_token" value="{{ csrf_token('find' ~ page) }}">
             </p>
@@ -128,7 +121,7 @@
                     <div class="info-box mb-3" style="border:1px solid rgba(0, 0, 0, 0.125);border-radius:5px;margin-top:30px;">
                         <span class="info-box-icon bg-warning elevation-1"><i class="fa fa-info"></i></span>
         
-                        <div class="info-box-content">
+                        <div class="info-box-content" style="padding-top:17px;">
                             <span class="info-box-number">Aucune altrenance pour le moment</span>
                         </div>
                     </div>
@@ -143,7 +136,7 @@
                     <div class="info-box mb-3" style="border:1px solid rgba(0, 0, 0, 0.125);border-radius:5px;margin-top:30px;">
                         <span class="info-box-icon bg-warning elevation-1"><i class="fa fa-info"></i></span>
         
-                        <div class="info-box-content">
+                        <div class="info-box-content" style="padding-top:17px;">
                             <span class="info-box-number">Aucune altrenance pour le moment</span>
                         </div>
                     </div>
