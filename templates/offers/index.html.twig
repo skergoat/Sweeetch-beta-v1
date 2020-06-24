@@ -94,7 +94,7 @@
                     <div class="job-title-sec">
                         <div class="c-logo"> 
                             {% if offer.company.pictures.fileName is defined %}
-                            <img src="{{ path('offers_show', {'id': offer.id, 'page':page}) }}" alt="">
+                            <img src="{{ uploaded_asset(offer.company.pictures.fileName) }}" alt="">
                             {% else %}
                             <img src="https://via.placeholder.com/150" alt="" >
                             {% endif %}
