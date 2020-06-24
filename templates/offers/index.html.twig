@@ -82,11 +82,33 @@
          {# render offers #}
          <!-- <div class="card card-solid"> -->
         <div class="card-body pb-0">
-            <div class="row d-flex align-items-stretch">
+            {# <div class="row d-flex align-items-stretch"> #}
+            <div>
                 <div class="d-flex" style="flex-wrap:wrap;">
         {% for offer in offers %}
             {% if offer.applies[0] is not defined or offer.applies[0] is defined and offer.applies[0].hired == false and offer.applies[0].confirmed == false and offer.applies[0].finished == false %}
-                    <div class="job-offer card bg-light">
+
+
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                <div class="job-grid border">
+                    <div class="job-title-sec">
+                        <div class="c-logo"> 
+                            {% if offer.company.pictures.fileName is defined %}
+                            <img src="{{ path('offers_show', {'id': offer.id, 'page':page}) }}" alt="">
+                            {% else %}
+                            <img src="https://via.placeholder.com/150" alt="" >
+                            {% endif %}
+                        </div>
+                        <h3><a href="">{{ offer.title }}</a></h3>
+                        <span>{{ offer.company.firstname}} {{ offer.company.lastname}}</span>
+                        <span class="fav-job"><i class="la la-heart-o"></i></span>
+                    </div>
+                    <span class="job-lctn">{{ offer.domain}}</span>
+                    <a  class="a-button" href="{{ path('offers_show', {'id': offer.id, 'page':page}) }}">POSTULER</a>
+                </div><!-- JOB Grid -->
+            </div>
+         
+                    {# <div class="job-offer card bg-light">
                         <div class="card-body pt-0">
                             <div class="row-offers row">
                                 <div class="col-lg-7 col-sm-12">
@@ -113,7 +135,7 @@
                                 </a>
                             </div>
                         </div>
-                    </div>
+                    </div> #}
             {% else %}
             <tr>
                 <td colspan="8">

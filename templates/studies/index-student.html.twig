@@ -57,8 +57,8 @@
 									<img src="https://via.placeholder.com/150" alt="" >
 									{% endif %}
 								</div>
-								<h3><a href="#" title="">{{ studies.title }}</a></h3>
-								<span>Massimo Artemisis</span>
+								<h3><a href="{{ path('studies_show_recruit', {id:studies.id, from:from, from_id:id}) }}">{{ studies.title }}</a></h3>
+								<span>{{ studies.school.firstname}} {{ studies.school.lastname}}</span>
 								<span class="fav-job"><i class="la la-heart-o"></i></span>
 							</div>
 							<span class="job-lctn">{{ studies.domain}}</span>
