@@ -36,3 +36,14 @@
 .jquery-modal.blocker.current {
     z-index:9999;
 }
+
+ .ul-ul {
+    display:flex;
+    flex-direction:row;
+    list-style-type:none;
+    justify-content: space-between;
+}
+
+.navbar-nav {
+    width:100%;
+}
