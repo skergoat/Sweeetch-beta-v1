@@ -13,4 +13,10 @@
     .table th, .table td {
         min-width: 200px;
     }
+
+    .ul-ul {
+        display:flex;
+        flex-direction:row;
+        list-style-type:none;
+    }
 }
