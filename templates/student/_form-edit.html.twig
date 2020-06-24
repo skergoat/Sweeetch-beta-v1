@@ -120,6 +120,9 @@
             {% else %}
             {{ form_widget(form.interest, {'label':'Centre d\'intérêt', 'attr' : { class: 'form-control is-invalid' }} ) }}
             {% endif %}
+            <small id="passwordHelpBlock" class="form-text text-muted">
+                Séparez chaque idée par une virgule
+            </small>
             <div class="form-error">
                 {{ form_errors(form.interest) }}
             </div>
@@ -131,6 +134,9 @@
             {% else %}
             {{ form_widget(form.hobbies, {'label':'Loisirs', 'attr' : { class: 'form-control is-invalid' }} ) }}
             {% endif %}
+            <small id="passwordHelpBlock" class="form-text text-muted">
+                Séparez chaque idée par une virgule
+            </small>
             <div class="form-error">
                 {{ form_errors(form.hobbies) }}
             </div>
