@@ -25,6 +25,14 @@
     .ul-ul {
         display:flex;
         flex-direction:row;
+        list-style-type:none;
+    }
+
+    .card {
+    
+        &-dashboard {
+            max-height:auto;
+        }
     }
 
      /* tables */
