@@ -185,7 +185,8 @@
 
                                 {% else %}
 
-                                <tr class="border-top">
+                                {# <tr class="border-top"> #}
+                                <tr>
                                     <td colspan="8" class="border-top-td">Aucune langue</td>
                                 </tr> 
 
@@ -235,7 +236,8 @@
                                     </tr>
                                     {% else %}
 
-                                    <tr class="border-top">
+                                    {# <tr class="border-top"> #}
+                                    <tr>
                                         <td colspan="8" class="border-top-td">Aucune formation</td>
                                     </tr> 
 
@@ -325,7 +327,8 @@
                             <tbody>
 
                                 {% for applies in applies %}
-                                <tr class="border-top">
+                                {# <tr class="border-top"> #}
+                                <tr>
                                     <td><a href="{{ path('student_apply', {'id': student.id}) }}" class="action-link">{{ applies.offers.title }}</a></td>
                                     <td>
                                         <span class="badge badge-primary" title="Embauche en cours">ouverte</span>
@@ -364,7 +367,8 @@
                                 <tbody>
                                     {% for process in process %}
                                         {% if process.offers.title is defined %}
-                                    <tr class="border-top">
+                                    {# <tr class="border-top"> #}
+                                    <tr>
                                         <td><a href="{{ path('student_apply', {'id': student.id}) }}" class="action-link">{{ process.offers.title }}</a></td>
                                         <td>
                                             {% if process.hired == true %}
