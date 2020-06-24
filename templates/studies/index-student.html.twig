@@ -48,31 +48,9 @@
                 <div class="row">
 					{% for studies in studies %}
 					<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-						<div class="job-grid border" style="box-shadow: none;border: 2px solid #e8ecec;float: left;
-						width: 100%;
-						background: #ffffff;
-						-webkit-border-radius: 8px;
-						-moz-border-radius: 8px;
-						-ms-border-radius: 8px;
-						-o-border-radius: 8px;
-						border-radius: 8px;
-						-webkit-box-shadow: 0px 2px 4px rgba(0,0,0,0.06);
-						-moz-box-shadow: 0px 2px 4px rgba(0,0,0,0.06);
-						-ms-box-shadow: 0px 2px 4px rgba(0,0,0,0.06);
-						-o-box-shadow: 0px 2px 4px rgba(0,0,0,0.06);
-						box-shadow: 0px 2px 4px rgba(0,0,0,0.06);
-						padding: 0px 20px;
-						margin-top: 30px;">
-							<div class="job-title-sec" style="float: left;
-							width: 100%;
-							text-align: center;
-							position: relative;
-							padding-bottom: 20px;
-							border-bottom: 1px solid #e8ecec;">
-								<div class="c-logo" style="float: left;
-								width: 100%;
-								margin-top: 50px;
-								margin-bottom: 30px;"> 
+						<div class="job-grid border">
+							<div class="job-title-sec">
+								<div class="c-logo"> 
 									{% if offer.company.pictures.fileName is defined %}
 									<img src="{{ uploaded_asset(offer.company.pictures.fileName) }}" alt="">
 									{% else %}
@@ -83,30 +61,8 @@
 								<span>Massimo Artemisis</span>
 								<span class="fav-job"><i class="la la-heart-o"></i></span>
 							</div>
-							<span class="job-lctn" style="    display: table-cell;
-							vertical-align: middle;
-							font-family: open Sans;
-							font-size: 13px;
-							color: #888888;
-							line-height: 23px;
-							width: 25%;    float: left;
-							width: auto;
-							font-size: 13px;
-							margin: 18px 0;">{{ studies.domain}}</span>
-							<a  href="{{ path('studies_show_recruit', {id:studies.id, from:from, from_id:id}) }}" style="    float: right;
-							font-family: Open Sans;
-							font-size: 13px;
-							color: #fb236a;
-							border: 1px solid #fb236a;
-							-webkit-border-radius: 20px;
-							-moz-border-radius: 20px;
-							-ms-border-radius: 20px;
-							-o-border-radius: 20px;
-							border-radius: 20px;
-							padding: 6px 14px;
-							letter-spacing: 0px;
-							margin: 16px 0;
-							display: inline-block;">POSTULER</a>
+							<span class="job-lctn">{{ studies.domain}}</span>
+							<a  class="a-button" href="{{ path('studies_show_recruit', {id:studies.id, from:from, from_id:id}) }}">POSTULER</a>
 						</div><!-- JOB Grid -->
 					</div>
 					{% endfor %}

@@ -181,4 +181,69 @@ h1.titles-front {
    height: 150px;
 }
 
+// new offers index 
+
+.job-grid.border {
+    box-shadow: none;border: 2px solid #e8ecec;float: left;
+    width: 100%;
+    background: #ffffff;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-box-shadow: 0px 2px 4px rgba(0,0,0,0.06);
+    -moz-box-shadow: 0px 2px 4px rgba(0,0,0,0.06);
+    -ms-box-shadow: 0px 2px 4px rgba(0,0,0,0.06);
+    -o-box-shadow: 0px 2px 4px rgba(0,0,0,0.06);
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.06);
+    padding: 0px 20px;
+    margin-top: 30px;
+
+    & .job-title-sec {
+        float: left;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #e8ecec;
+
+        & .c-logo {
+            float: left;
+            width: 100%;
+            margin-top: 50px;
+            margin-bottom: 30px;
+        }
+    }
+
+    & .job-lctn {
+        display: table-cell;
+        vertical-align: middle;
+        font-family: open Sans;
+        font-size: 13px;
+        color: #888888;
+        line-height: 23px;
+        width: 25%;    float: left;
+        width: auto;
+        font-size: 13px;
+        margin: 18px 0;
+    }
+
+    & .a-button {
+        float: right;
+        font-family: Open Sans;
+        font-size: 13px;
+        color: #fb236a;
+        border: 1px solid #fb236a;
+        -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+        -ms-border-radius: 20px;
+        -o-border-radius: 20px;
+        border-radius: 20px;
+        padding: 6px 14px;
+        letter-spacing: 0px;
+        margin: 16px 0;
+        display: inline-block;
+    }
+}
 
