@@ -351,7 +351,7 @@
                                 {% for recruits in recruits %}
                                 <tr class="border-top">
                                     <td>{{ recruits.student.name }} {{ recruits.student.lastName }}</td>
-                                    <td><a href="{{ path('school_studies_show', {id:recruits.studies.id, school_id:school.id}) }}" class="action-link">{{ recruits.studies.title }}</a></td>
+                                    <td><a href="{{ path('studies_edit', {id:recruits.studies.id, school_id:school.id}) }}" class="action-link">{{ recruits.studies.title }}</a></td>
                                     <td>
                                         <span class="badge badge-primary right">Candidat</span> 
                                     </td>
