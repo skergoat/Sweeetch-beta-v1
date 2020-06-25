@@ -98,17 +98,24 @@
                     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                         {% if student.pictures.fileName is defined %}
                         <div class="image">
-                          <img src="{{ uploaded_asset(student.pictures.fileName) }}" class="elevation-2" alt="User Image">
+                            <img src="{{ uploaded_asset(student.pictures.fileName) }}" class="elevation-2" alt="User Image" style="                                   width: 200px;
+                          height: 100px;max-width: 300px;max-height:120px;
+                          object-fit: cover;">
                         </div>
                         {% else %}
                         <div>
-                            <img src="https://via.placeholder.com/50" />                        
+                            <img src="https://via.placeholder.com/50" style="width: 200px;
+                            height: 100px;max-width: 300px;max-height:120px;
+                            object-fit: cover;"/>                        
                         </div>
                         {% endif %}
+                    </div>
+                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                         <div class="info">
-                          <a href="{{ path('student_show', {'id' : student.id }) }}" class="d-block">{{ app.user.email }}</a>
+                            <a href="{{ path('student_show', {'id' : student.id }) }}" class="d-block">{{ app.user.email }}</a>
                         </div>
                     </div>
+
                     <nav class="mt-2">
                         {# sidebar left #}
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
