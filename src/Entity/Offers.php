@@ -74,7 +74,7 @@ class Offers
     private $skills;
 
     /**
-     * @ORM\OneToMany(targetEntity=Experience::class, mappedBy="offers")
+     * @ORM\OneToMany(targetEntity=Experience::class, mappedBy="offers", orphanRemoval=true, cascade={"persist"})
      */
     private $experience; 
     
