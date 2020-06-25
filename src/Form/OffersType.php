@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class OffersType extends AbstractType
 {
@@ -102,6 +103,13 @@ class OffersType extends AbstractType
                 'required' => false,
                 'constraints' => $descConstraints
             ])
+            ->add('skills', CollectionType::class, array(
+                'entry_type' => SkillsType::class,
+                'allow_delete' => true,
+                'allow_add' => true,
+                'by_reference' => false,
+                'label' => false
+            ))
         ;
     }
 
