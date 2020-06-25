@@ -134,3 +134,9 @@ form.form-icon {
         margin-top: 5px;
     }
 }
+
+// label file input 
+
+.custom-file-label::after {
+    content: "Importer";
+}
