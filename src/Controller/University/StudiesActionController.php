@@ -104,7 +104,7 @@ class StudiesActionController extends AbstractController
         // check if student is available
         if($helper->checkAgree('student', $student)) {
             $this->addFlash('error', 'Cet étudiant n\'est plus disponible.');
-            return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
+            return $this->redirectToRoute('studies_edit', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
         }
         
         if($this->isCsrfTokenValid('hire'.$recruit->getId(), $request->request->get('_token'))) {           // not usefull to delete others 
@@ -113,11 +113,11 @@ class StudiesActionController extends AbstractController
             // save
             $entityManager = $this->getDoctrine()->getManager()->flush();   
             $this->addFlash('success', 'Elève recruté !');
-            return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
+            return $this->redirectToRoute('studies_edit', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
         }
         else {
             $this->addFlash('error', 'Requête invalide');
-            return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
+            return $this->redirectToRoute('studies_edit', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
         }
     }
 
@@ -164,11 +164,11 @@ class StudiesActionController extends AbstractController
             // save
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Inscription Terminée');
-            return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
+            return $this->redirectToRoute('studies_edit', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
         }
         else {
             $this->addFlash('success', 'Requête invalide');
-            return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
+            return $this->redirectToRoute('studies_edit', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
         }
     }
 
@@ -184,7 +184,7 @@ class StudiesActionController extends AbstractController
 
         if($recruit->getRefused() == true) {
             $this->addFlash('error', 'Vous avez déjà refusé cette candidature');
-            return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
+            return $this->redirectToRoute('studies_edit', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
         }
 
         if($this->isCsrfTokenValid('refuse'.$recruit->getId(), $request->request->get('_token'))) {
@@ -193,11 +193,11 @@ class StudiesActionController extends AbstractController
             // save 
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Candidature refusée');
-            return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
+            return $this->redirectToRoute('studies_edit', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
         }
         else {
             $this->addFlash('error', 'Requête Invalide');
-            return $this->redirectToRoute('school_studies_show', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
+            return $this->redirectToRoute('studies_edit', ['id' => $studies->getId(), 'school_id' => $studies->getSchool()->getId()]);
         }  
     }
 
