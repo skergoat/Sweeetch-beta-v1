@@ -35,9 +35,10 @@ class StudiesType extends AbstractType
             ]),
         ];
 
-        // $descConstraints = [
-        //     new NotBlank([
-        //         'message' => 'Veuillez entrer une description, svp',
+        // $videoConstraints = [
+        //     new Regex([
+        //         'pattern' => "/(.*?)(^|\/|v=)([a-z0-9_-]{11})(.*)?/",
+        //         'message' => "Entrez une url Youtube valide svp"
         //     ]),
         // ];
 
@@ -63,15 +64,11 @@ class StudiesType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => '',
                 'required' => false,
-                // 'constraints' => $descConstraints
             ])
-            // ->add('sessions', CollectionType::class, array(
-            //     'entry_type' => SessionType::class,
-            //     'allow_delete' => true,
-            //     'allow_add' => true,
-            //     'by_reference' => false,
-            //     'label' => false
-            // ))
+            
+             ->add('video', TextType::class, [
+                // 'constraints' => $videoConstraints
+            ])
         ;
     }
 

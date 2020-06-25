@@ -44,7 +44,6 @@ class OffersType extends AbstractType
             ]),
         ];
 
-
         $builder
             ->add('title', TextType::class, [
                 'constraints' => $titleConstraints
@@ -90,7 +89,6 @@ class OffersType extends AbstractType
                 'format' => 'dd-MM-yyyy',
                 'html5' => false,
                 'attr' => ['class' => 'js-datepicker'],
-                // 'constraints' => $dateConstraints
             ])
             ->add('dateEnd', DateType::Class, [
                 'required' => true,
@@ -98,7 +96,6 @@ class OffersType extends AbstractType
                 'format' => 'dd-MM-yyyy',
                 'html5' => false,
                 'attr' => ['class' => 'js-datepicker'],
-                // 'constraints' => $dateConstraints
             ])
             ->add('description', TextareaType::class, [
                 'required' => false,

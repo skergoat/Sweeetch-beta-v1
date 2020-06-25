@@ -44,6 +44,11 @@ class Studies
      */
     private $recruits;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $video;
+
     public function __construct()
     {
         $this->recruits = new ArrayCollection();
@@ -215,4 +220,16 @@ class Studies
     //     return $this;
     // }
 
+
+    public function getVideo(): ?string
+    {
+        return $this->video;
+    }
+
+    public function setVideo(?string $video): self
+    {
+        $this->video = $video;
+
+        return $this;
+    }
 }
