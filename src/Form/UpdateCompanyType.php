@@ -43,6 +43,7 @@ class UpdateCompanyType extends AbstractType
             ->add('city', TextType::class)
             ->add('telNumber', TextType::class)
             ->add('siret', TextType::class)
+            ->add('website', TextType::class)
             ->add('user', UserEditFormType::class);
 
             $imageConstraints = [

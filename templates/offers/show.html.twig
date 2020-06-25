@@ -36,9 +36,6 @@
         </header>
 
         <div class="jobs-container">
-
-            <h1 class="titles-front">{{ offers.title }}</h1>
-            <h4 class="card-subtitle mb-2 text-muted">{{ offers.location }}</h4>
             {# success or error message #}
             {% for message in app.flashes('success') %}
             <div class="alert alert-success">
@@ -90,7 +87,7 @@
                                             font-size: 13px;
                                             margin-right: 40px;
                                             color: #888;
-                                            margin-top: 11px;">274 Seven Sisters Road, London, N4 2HY</span>
+                                            margin-top: 11px;">{{ offers.company.address }}</span>
                                             <p style="float: left;
                                             margin: 0;
                                             margin-top: 0px;
@@ -98,7 +95,7 @@
                                             font-size: 13px;
                                             margin-right: 40px;
                                             color: #888;
-                                            margin-top: 11px;"><i class="la la-unlink"></i> www.jobhunt.com</p>
+                                            margin-top: 11px;"><i class="la la-unlink"></i>{{ offers.company.website }}</p>
                                             <p style="float: left;
                                             margin: 0;
                                             margin-top: 0px;
@@ -106,7 +103,7 @@
                                             font-size: 13px;
                                             margin-right: 40px;
                                             color: #888;
-                                            margin-top: 11px;"><i class="la la-phone"></i> +90 538 963 54 87</p>
+                                            margin-top: 11px;"><i class="la la-phone"></i> {{ offers.company.telNumber }} </p>
                                             <p style="float: left;
                                             margin: 0;
                                             margin-top: 0px;
@@ -114,7 +111,7 @@
                                             font-size: 13px;
                                             margin-right: 40px;
                                             color: #888;
-                                            margin-top: 11px;"><i class="la la-envelope-o"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a4c5c8cd8ad0d1c2c5cae4cecbc6ccd1cad08ac7cbc9">[email&#160;protected]</a></p>
+                                            margin-top: 11px;"><i class="la la-envelope-o"></i> <a href="#" class="__cf_email__" data-cfemail="a4c5c8cd8ad0d1c2c5cae4cecbc6ccd1cad08ac7cbc9">{{ offers.company.user.email }}</a></p>
                                         </div>
                                     </div><!-- Job Head -->
                                     <div class="job-details" style="float: left;
@@ -186,144 +183,12 @@
                                          </ul>
                                     </div>
                                  </div>
-                             </div>
-                             {# <div class="col-lg-4 column">
-                                 <a class="apply-thisjob" href="#" title=""><i class="la la-paper-plane"></i>Apply for job</a> #}
-                                 {# <div class="job-overview">
-                                     <h3>Job Overview</h3>
-                                     <ul>
-                                         <li><i class="la la-money"></i><h3>Offerd Salary</h3><span>£15,000 - £20,000</span></li>
-                                         <li><i class="la la-mars-double"></i><h3>Gender</h3><span>Female</span></li>
-                                         <li><i class="la la-thumb-tack"></i><h3>Career Level</h3><span>Executive</span></li>
-                                         <li><i class="la la-puzzle-piece"></i><h3>Industry</h3><span>Management</span></li>
-                                         <li><i class="la la-shield"></i><h3>Experience</h3><span>2 Years</span></li>
-                                         <li><i class="la la-line-chart "></i><h3>Qualification</h3><span>Bachelor Degree</span></li>
-                                     </ul>
-                                 </div><!-- Job Overview --> #}
-                                 {# <div class="job-location">
-                                     <h3>Job Location</h3>
-                                     <div class="job-lctn-map">
-                                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d926917.0482572999!2d-104.57738594649922!3d40.26036964524562!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54eab584e432360b%3A0x1c3bb99243deb742!2sUnited+States!5e0!3m2!1sen!2s!4v1513784737244"></iframe>
-                                     </div>
-                                 </div>
-                                 <div class="extra-job-info">
-                                     <span><i class="la la-clock-o"></i><strong>35</strong> Days</span>
-                                     <span><i class="la la-search-plus"></i><strong>35697</strong> Displayed</span>
-                                     <span><i class="la la-file-text"></i><strong>300-500</strong> Application</span>
-                                 </div> #}
-                             {# </div> #}
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
-            {# <div class="Password card col-lg-12">
-                <div class="card-body">
-                    <div class="col-lg-5 col-sm-12 mb-3">
-                        {% if offers.company.pictures.fileName is defined %}
-                        <img src="{{ uploaded_asset(offers.company.pictures.fileName) }}" alt="" class="img-offers img-circle img-fluid" style="width:150px;height:150px;">
-                        {% else %}
-                        <img src="https://via.placeholder.com/150" alt="" class="img-circle img-fluid">
-                        {% endif %}
-                    </div>
-                    <table class="table offers-show col-lg-5 col-md-5 col-sm-12 col-xs-12">
-                        <tbody>
-                            <tr>
-                                <th>Entreprise</th>
-                                    <td>{{ offers.company.companyName }}</td>
-                            </tr>
-                            <tr>
-                                <th>Lieu</th>
-                                <td>{{ offers.location }}</td>
-                            </tr>
-                            <tr>
-                                <th>Domaine</th>
-                                <td>{{ offers.domain }}</td>
-                            </tr>
-                            <tr>
-                                <th>Du</th>
-                                <td>{{ offers.dateStart ? offers.dateStart|date('d-m-Y') : '' }}</td>
-                            </tr>
-                            <tr>
-                                <th>Au</th>
-                                <td>{{ offers.dateEnd ? offers.dateEnd|date('d-m-Y') : '' }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <div class="description">
-                        <h5>Description</h5>
-                        {% if is_granted('ROLE_USER') %}
-                        <p>{{ offers.description|raw }}</p>
-                        {% else %}
-                        <div class="blur">
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean mattis posuere nisl, vel fermentum mauris semper id. Cras nec fermentum nibh. Maecenas hendrerit fringilla lacinia. Morbi interdum interdum mi, eleifend suscipit quam efficitur quis. In ultrices nibh vel neque viverra, ut dignissim ante aliquam. Etiam iaculis orci ac tellus sodales efficitur. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed congue sapien quis nulla maximus pharetra. Morbi gravida ac orci vel lobortis. Vivamus molestie pretium felis, gravida vulputate turpis interdum eget. Nam tincidunt gravida eros, ac placerat eros posuere vitae. Proin suscipit eu lectus eget tempor. Fusce et volutpat libero, id vestibulum mi. Nunc at mauris eros.
-                            </p>
-                            <p>
-                                Praesent quis risus eget mauris dapibus aliquet. Nulla volutpat egestas ligula ut congue. Quisque eu aliquet lacus. Donec nec dolor nec libero interdum malesuada vel sed ex. Nullam mattis diam sed massa egestas, ac venenatis lorem tristique. Etiam consectetur augue sed odio maximus tristique. Sed sit amet aliquam eros. Donec imperdiet purus quis lectus dictum, ut fringilla tellus consectetur. Fusce efficitur risus vitae tempus mollis. Etiam sit amet convallis ipsum, eu ullamcorper lectus. Sed ut nulla quam. Etiam viverra magna nec pulvinar tempus. Donec eu metus eu nunc mattis malesuada. Morbi laoreet gravida tortor, eget volutpat sem vestibulum vel. Pellentesque convallis, massa eget cursus lacinia, metus orci tincidunt erat, vitae mollis lorem nisl vitae nibh.
-                            </p>
-                            <p>
-                                Donec ultrices dapibus nibh, eu dignissim dui elementum eu. Morbi mi quam, iaculis malesuada enim id, semper eleifend est. Sed id maximus nisl. Proin laoreet neque sed molestie malesuada. Integer eros felis, tristique ut viverra pellentesque, aliquet eu tellus. Donec fermentum elit at ipsum pretium, vitae ornare arcu consequat. Nullam a sapien maximus, mollis leo pellentesque, faucibus risus. Praesent venenatis, libero sit amet mollis pharetra, tellus massa mattis leo, eget mattis odio purus eget augue. Praesent ac ex et lectus tempor sagittis. Duis mauris nisi, dapibus in hendrerit in, blandit et augue. Nunc pellentesque ipsum sit amet semper auctor. Vivamus mollis velit et turpis tempor, nec elementum urna convallis. Ut ut nibh quis metus congue pretium non semper nibh.
-                            </p>
-                            <p>
-                                Nunc urna leo, placerat finibus tortor sit amet, finibus tempus odio. Integer eu fermentum lectus. Morbi et auctor nibh, eget fringilla ligula. Nullam finibus finibus diam ac aliquam. Maecenas pulvinar risus nec nisi rhoncus, et sollicitudin diam aliquet. Sed ac purus sed nisl dapibus pretium eget id eros. Aliquam arcu leo, vestibulum eu fringilla sit amet, egestas at lacus.
-                            </p>
-                            <p>
-                                Proin mollis egestas justo, vel interdum leo vestibulum in. Sed pretium mi dolor, dapibus tempus tortor ullamcorper sit amet. Suspendisse potenti. Nunc consectetur vel felis vitae efficitur. Sed a velit pharetra, gravida eros sit amet, consequat purus. Sed ut nunc eget nisi suscipit auctor vestibulum eu nisi. Morbi sed dolor at ante hendrerit venenatis pellentesque vitae erat. Aliquam tincidunt velit non ligula posuere congue non venenatis velit. In arcu purus, vehicula et finibus at, mattis vel tortor. Morbi sit amet rutrum metus. Curabitur lacinia posuere magna, quis volutpat justo efficitur nec. Vestibulum tristique mollis sapien sit amet maximus. Donec lectus turpis, fringilla in metus sed, cursus hendrerit enim. Nunc aliquet porttitor sollicitudin. Phasellus quis felis erat.
-                            </p>
-                        </div>
-                        {% endif %}
-                    </div> #}
-                    {# apply options #}
-                    {# {% if is_granted('ROLE_USER') %}
-
-                        {% if app.user.student.id is defined %}
-
-                            {% if is_granted('ROLE_SUPER_STUDENT') %}
-
-                                {% if offers.state == false %}
-                                <form method="post" action="{{ path('apply', { id:offers.id, student_id:app.user.student.id, page:page }) }}">
-                                    <input type="hidden" name="_method" value="POST">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('apply' ~ app.user.student.id) }}">
-                                    <button class="btn btn-success">Postuler</button>
-                                </form> 
-                                {% else %}
-                                <div class="col-12 col-sm-6 col-md-6">
-                                    <div class="info-box mb-3">
-                                    <span class="info-box-icon bg-warning elevation-1"><i class="fa fa-info"></i></span>
-                        
-                                    <div class="info-box-content">
-                                        <span class="info-box-number">Dossier en cours</span>
-                                        <span class="info-box-text">Controllez votre profil</span>
-                                    </div>
-                                    </div>
-                                </div>
-                                {% endif %}
-                                
-                            {% elseif is_granted('ROLE_STUDENT') %}
-                            <div class="col-12 col-sm-6 col-md-12">
-                                <div class="info-box mb-3">
-                                <span class="info-box-icon bg-danger elevation-1"><i class="fa fa-exclamation-triangle"></i></span>
-                    
-                                <div class="info-box-content">
-                                    <span class="info-box-number">Validation en attente</span>
-                                    <span class="info-box-text">
-                                        Vous devez valider votre email et attendre que Sweeetch valide votre compte pour pouvoir postuler
-                                    </span>
-                                </div>
-                                </div>
-                            </div>
-                            {% endif %}
-
-                        {% endif %}
-                        
-                    {% else %}
-                        <a href="{{ path('student_new') }}" class="btn btn-success">S'inscrire pour voir l'annonce</a>
-                    {% endif %}
-                </div>
-            </div>
-        </div> #}
-
+        </div>
     </div>
 </div>
 {# footer #}

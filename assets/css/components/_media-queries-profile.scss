@@ -92,11 +92,14 @@
     }
 
     // infos bulles 
-    #info-bulle {
-        background: #FFC636;
-    }
+    // #info-bulle {
+    //     background: #FFC636;
+    // }
 
     .info-box {
+
+        border-left: 5px solid #FFC636;
+
         & .info-box-icon {
             display:none;
         }

@@ -129,6 +129,11 @@ class Company
      */
     private $pictures;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $website;
+
     public function __construct()
     {
         $this->offers = new ArrayCollection();
@@ -286,6 +291,18 @@ class Company
     public function setPictures(?Pictures $pictures): self
     {
         $this->pictures = $pictures;
+
+        return $this;
+    }
+
+    public function getWebsite(): ?string
+    {
+        return $this->website;
+    }
+
+    public function setWebsite(?string $website): self
+    {
+        $this->website = $website;
 
         return $this;
     }
