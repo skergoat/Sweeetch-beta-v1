@@ -59,7 +59,7 @@
 
                 <div class="sidebar">
 
-                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    {#<div class="user-panel mt-3 pb-3 mb-3 d-flex">
                         {% if school.pictures.fileName is defined %}
                         <div class="image">
                           <img src="{{ uploaded_asset(school.pictures.fileName) }}" class="elevation-2" alt="User Image">
@@ -71,6 +71,28 @@
                         {% endif %}
                         <div class="info">
                           <a href="{{ path('school_show', {'id' : school.id }) }}" class="d-block">{{ app.user.email }}</a>
+                        </div>
+                    </div>#}
+
+                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                        {% if school.pictures.fileName is defined %}
+                        <div class="image">
+                        <img src="{{ uploaded_asset(school.pictures.fileName) }}" class="elevation-2" alt="User Image" style="                                   width: 200px;
+                          height: 100px;max-width: 300px;max-height:120px;
+                          object-fit: cover;">
+                        </div>
+                        {% else %}
+                        <div>
+                            <img src="https://via.placeholder.com/50" style="width: 200px;
+                            height: 100px;max-width: 300px;max-height:120px;
+                            object-fit: cover;"/>                        
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                        <div class="info">
+                        <a href="{{ path('school_show', {'id' : school.id }) }}" class="d-block">{{ app.user.email }}</a>
+                         {# <a href="{{ path('company_show', {'id' : company.id }) }}" class="d-block">{{ app.user.email }}</a> #}
                         </div>
                     </div>
 
