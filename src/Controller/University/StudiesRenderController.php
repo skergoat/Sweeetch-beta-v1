@@ -207,12 +207,12 @@ class StudiesRenderController extends AbstractController
                 }
                 else {
                     $this->addFlash('error', 'Requête Invalide');
-                    return $this->redirectToRoute('school_studies_show', ['id' => $study->getId(), 'school_id' => $school->getId()]);
+                    return $this->redirectToRoute('studies_edit', ['id' => $study->getId(), 'school_id' => $school->getId()]);
                 }
             }
             else {
                 $this->addFlash('error', 'Requête Invalide');
-                return $this->redirectToRoute('school_studies_show', ['id' => $study->getId(), 'school_id' => $school->getId()]);
+                return $this->redirectToRoute('studies_edit', ['id' => $study->getId(), 'school_id' => $school->getId()]);
             }
         }
     } 
