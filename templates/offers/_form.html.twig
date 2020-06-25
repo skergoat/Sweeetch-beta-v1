@@ -10,6 +10,16 @@
         </div><br>
     </div>
 {% endmacro %}
+{% macro printXpFormRow(xp) %}
+    <div href="#" class="js-remove-profile-item language-card"> 
+        <a href="#" class="js-remove-data pull-right">
+            <span class="fa fa-close js-remove-data" style="color:red;font-size:20px;"></span>
+        </a>
+        <div class="form-group">
+        {{ form_row(xp.single, {'label':'Expériences + Formation' ,'attr' : { class: 'form-control' }} ) }}
+        </div><br>
+    </div>
+{% endmacro %}
 {# import macro #}
 {% import _self as FormSkillsMacro %}
 
@@ -44,13 +54,22 @@
                 </div>
             </div><br>
             <div class="row">
-                <div class="col-lg-6 js-profile-wrapper" id="languages-wrapper" data-prototype="{{ FormSkillsMacro.printSkillsFormRow(form.skills.vars.prototype)|e('html_attr') }}"  data-index="{{ form.skills|length }}">
+                <div class="col-lg-6 js-profile-wrapper" id="skills-wrapper" data-prototype="{{ FormSkillsMacro.printSkillsFormRow(form.skills.vars.prototype)|e('html_attr') }}"  data-index="{{ form.skills|length }}">
                     <h5>Compétences Requises</h5><br>
                     {% for skill in form.skills %}
                     {{  FormSkillsMacro.printSkillsFormRow(skill) }} 
                     {% endfor %}
-                    <a href="#" class="js-profile-add" data-url="languages-wrapper">
+                    <a href="#" class="js-profile-add" data-url="skills-wrapper">
                         <span class="btn btn-success">Ajouter une Compétence</span>
+                    </a>
+                </div>
+                <div class="col-lg-6 js-profile-wrapper" id="xp-wrapper" data-prototype="{{ FormSkillsMacro.printXpFormRow(form.experience.vars.prototype)|e('html_attr') }}"  data-index="{{ form.experience|length }}">
+                    <h5>Expériences + Formation</h5><br>
+                    {% for xp in form.experience %}
+                    {{  FormSkillsMacro.printXpFormRow(xp) }} 
+                    {% endfor %}
+                    <a href="#" class="js-profile-add" data-url="xp-wrapper">
+                        <span class="btn btn-success">Ajouter une Expérience</span>
                     </a>
                 </div>
             </div>
