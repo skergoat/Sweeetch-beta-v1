@@ -253,8 +253,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
                         {% for studies in studies %}
+                        <tr>
                             <td>{{ studies.title }}</td>
                             {# <td><a href="{{ path('school_studies_show', {'id': studies.id, school_id: studies.school.id }) }}">{{ studies.title }}</a></td> #}
                            {# studies state #}
@@ -306,8 +306,8 @@
                                 <span class="badge badge-info right" title="candidatures">A Confirmer</span>
                                 {% endif %}
                             </td>
-                        {% endfor %}
                         </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
