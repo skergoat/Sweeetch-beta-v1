@@ -90,7 +90,53 @@
                                             <span style="color:darkred;">Aucune expérience spécifique n'est requise</span>
                                             {% endfor %}
                                          </ul>
-                                    </div>
+                                    </div><br>
+                                     {# apply options #}
+                                    {% if is_granted('ROLE_USER') %}
+
+                                    {% if app.user.student.id is defined %}
+
+                                        {% if is_granted('ROLE_SUPER_STUDENT') %}
+
+                                            {% if offers.state == false %}
+                                            <form method="post" action="{{ path('apply', { id:offers.id, student_id:app.user.student.id, page:page }) }}">
+                                                <input type="hidden" name="_method" value="POST">
+                                                <input type="hidden" name="_token" value="{{ csrf_token('apply' ~ app.user.student.id) }}">
+                                                <button class="btn btn-success" style="width:100%;">Postuler</button>
+                                            </form> 
+                                            {% else %}
+                                            <div class="col-12 col-sm-6 col-md-6">
+                                                <div class="info-box mb-3">
+                                                <span class="info-box-icon bg-warning elevation-1"><i class="fa fa-info"></i></span>
+                                    
+                                                <div class="info-box-content">
+                                                    <span class="info-box-number">Dossier en cours</span>
+                                                    <span class="info-box-text">Controllez votre profil</span>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                            
+                                        {% elseif is_granted('ROLE_STUDENT') %}
+                                        <div class="col-12 col-sm-6 col-md-12">
+                                            <div class="info-box mb-3">
+                                            <span class="info-box-icon bg-danger elevation-1"><i class="fa fa-exclamation-triangle"></i></span>
+
+                                            <div class="info-box-content">
+                                                <span class="info-box-number">Validation en attente</span>
+                                                <span class="info-box-text">
+                                                    Vous devez valider votre email et attendre que Sweeetch valide votre compte pour pouvoir postuler
+                                                </span>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        {% endif %}
+
+                                    {% endif %}
+                                    
+                                    {% else %}
+                                    <a href="{{ path('student_new') }}" class="btn btn-success">S'inscrire pour voir l'annonce</a>
+                                    {% endif %}
                                  </div>
                             </div>
                         </div>

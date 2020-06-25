@@ -69,7 +69,7 @@
                             <i class="fas fa-question-circle"></i>
                           </a>
                         </th>
-                        <th>Actions</th>
+                        <!-- <th>Actions</th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -79,18 +79,19 @@
                   {% if offers.applies | length == 0 %} 
                 
                     <tr>
-                        <td><a href="{{ path('offers_preview', {'id': offers.id, 'company':company.id}) }}">{{ offers.title }}</a></td>
+                        {# <td><a href="{{ path('offers_preview', {'id': offers.id, 'company':company.id}) }}">{{ offers.title }}</a></td>#}
+                        <td><a href="{{ path('offers_edit', {'id': offers.id, 'company':company.id}) }}">{{ offers.title }}</a></td>        
                         <td>{{ offers.location }}</td>
                         <td>{{ offers.dateStart ? offers.dateStart|date("d/m/Y à g\\hi") : '' }}</td>
                         <td> <span class="badge bg-secondary">Ouverte</span> </td>
-                        <td>
+                        {# <td>
                             <a href="{{ path('offers_edit', {'id': offers.id, 'company':company.id}) }}" title="Modifier"> 
                               <button class="btn btn-info btn-sm">
                                 <i class="fas fa-edit"></i>
                               Modifier
                               </button>
                             </a>
-                        </td> 
+                        </td> #}
                     </tr>
                     
                   {% elseif offers.applies | length > 0 %}
@@ -98,7 +99,8 @@
                     {% if offers.applies[0].finished == false and offers.applies[0].confirmed == false %} 
 
                     <tr>
-                        <td><a href="{{ path('offers_preview', {'id': offers.applies[0].offers.id, 'company':company.id}) }}">{{ offers.applies[0].offers.title }}</a></td>
+                        {# <td><a href="{{ path('offers_preview', {'id': offers.applies[0].offers.id, 'company':company.id}) }}">{{ offers.applies[0].offers.title }}</a></td>#} 
+                        <td><a href="{{ path('offers_edit', {'id': offers.applies[0].offers.id, 'company':company.id}) }}">{{ offers.applies[0].offers.title }}</a></td>
                         <td>{{ offers.applies[0].offers.location }}</td>
                         <td>{{ offers.applies[0].offers.dateStart ? offers.applies[0].offers.dateStart|date("d/m/Y à g\\hi") : '' }}</td>
                         <td>    
@@ -145,14 +147,14 @@
                             <span class="badge bg-success">En cours</span>
                             {% endif %} 
                         </td>
-                        <td>
+                        {# <td>
                           <a href="{{ path('offers_edit', {'id': offers.applies[0].offers.id, 'company':company.id}) }}">
                             <button  title="Modifier" style="color:white;" class="btn btn-info btn-sm"> 
                               <i class="fas fa-edit"></i>
                               Modifier
                             </button>
                           </a>
-                        </td>
+                        </td> #}
                     </tr>
 
                     {% endif %} 

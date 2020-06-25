@@ -105,7 +105,7 @@ class ApplyActionsController extends AbstractController
     }
 
     /**
-     * @Route("/hire/{id}", name="hire", methods={"POST"})
+     * @Route("/hire/{id}", name="hire", methods={"POST"}) *******
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
     public function hire(Apply $apply, ApplyRepository $repository, Request $request, ApplyHelper $helper)
@@ -117,7 +117,7 @@ class ApplyActionsController extends AbstractController
         // check if student is available
         if($helper->checkAgree('student', $student) || $helper->checkConfirmed('student', $student)) {
             $this->addFlash('error', 'Cet étudiant n\'est plus disponible.');
-            return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
+            return $this->redirectToRoute('offers_edit', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
         }
 
         if($this->isCsrfTokenValid('hire'.$apply->getId(), $request->request->get('_token')))
@@ -127,11 +127,11 @@ class ApplyActionsController extends AbstractController
             // save
             $entityManager = $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Elève Embauché !');
-            return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);  
+            return $this->redirectToRoute('offers_edit', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);  
         }
         else {
             $this->addFlash('error', 'requête invalide');
-            return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
+            return $this->redirectToRoute('offers_edit', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
         }
     }
 
@@ -175,11 +175,11 @@ class ApplyActionsController extends AbstractController
     
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Mission Commencée. Bon travail !');
-            return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
+            return $this->redirectToRoute('offers_edit', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
         }
         else {
             $this->addFlash('error', 'requête invalide');
-            return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
+            return $this->redirectToRoute('offers_edit', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
         }
     }
 
@@ -195,7 +195,7 @@ class ApplyActionsController extends AbstractController
         // check if student has been refused already 
         if($apply->getRefused() == true) {
             $this->addFlash('error', 'Vous avez déjà refusé cette candidature');
-            return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
+            return $this->redirectToRoute('offers_edit', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
         }
 
         if($this->isCsrfTokenValid('refuse'.$apply->getId(), $request->request->get('_token'))) {
@@ -204,11 +204,11 @@ class ApplyActionsController extends AbstractController
             
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Candidat refusée');
-            return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
+            return $this->redirectToRoute('offers_edit', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
         }
         else {
             $this->addFlash('error', 'requête invalide');
-            return $this->redirectToRoute('offers_preview', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
+            return $this->redirectToRoute('offers_edit', ['id' => $offers->getId(), 'company' => $offers->getCompany()->getId()]);
         }
     }
 

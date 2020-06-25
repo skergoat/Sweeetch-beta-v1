@@ -113,29 +113,29 @@ class ApplyRenderController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/company/apply/{id}/{company}", name="offers_preview", methods={"GET"})
-     * @IsGranted("ROLE_SUPER_COMPANY")
-     * @ParamConverter("company", options={"id" = "company"})
-     */
-    public function showByCompany(ApplyRepository $applyRepository, Offers $offer, Company $company, OffersRepository $offersRepository, CompanyChecker $checker, ApplyHelper $helper): Response
-    {   
-        if($checker->companyOffersValid($company, $offer)) {
+    // /**
+    //  * @Route("/company/apply/{id}/{company}", name="offers_preview", methods={"GET"})
+    //  * @IsGranted("ROLE_SUPER_COMPANY")
+    //  * @ParamConverter("company", options={"id" = "company"})
+    //  */
+    // public function showByCompany(ApplyRepository $applyRepository, Offers $offer, Company $company, OffersRepository $offersRepository, CompanyChecker $checker, ApplyHelper $helper): Response
+    // {   
+    //     if($checker->companyOffersValid($company, $offer)) {
             
-            $offers = $offersRepository->findBy(['company' => $company]);
+    //         $offers = $offersRepository->findBy(['company' => $company]);
 
-            return $this->render('apply/show_preview.html.twig', [
-                'offers' => $offer, // current single offer content 
-                'company' => $company, // company layout 
-                'applies' => $applyRepository->findBy(['offers' => $offer, 'refused' => false, 'unavailable' => false, 'confirmed' => false, 'finished' => false], ['date_recruit' => 'desc']),
-                // infos
-                'hired' => $helper->checkHired('offers', $offers),
-                'agree' => $helper->checkAgree('offers', $offers),
-                'closed' =>  $helper->checkOfferFinished($offers),
-                'candidates' => $helper->nbCandidates($offers),
-            ]);
-        }
-    }
+    //         return $this->render('apply/show_preview.html.twig', [
+    //             'offers' => $offer, // current single offer content 
+    //             'company' => $company, // company layout 
+    //             'applies' => $applyRepository->findBy(['offers' => $offer, 'refused' => false, 'unavailable' => false, 'confirmed' => false, 'finished' => false], ['date_recruit' => 'desc']),
+    //             // infos
+    //             'hired' => $helper->checkHired('offers', $offers),
+    //             'agree' => $helper->checkAgree('offers', $offers),
+    //             'closed' =>  $helper->checkOfferFinished($offers),
+    //             'candidates' => $helper->nbCandidates($offers),
+    //         ]);
+    //     }
+    // }
 
     /**
      * @Route("/company/apply/finished/{id}/{company}", name="show_finished", methods={"GET"})
