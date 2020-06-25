@@ -5,8 +5,6 @@
 
 {% block body %}
 
-   {# {% if is_granted('ROLE_SUPER_SCHOOL') or is_granted('ROLE_STUDENT_HIRED') %} #}
-
     <div class="background-jobs">
 
 		<div class="container-fluid container-jobs">
@@ -14,22 +12,6 @@
 			<header id="header">
 				<div class="container" id="customer-header">
 					{# nav #}
-					{# <nav class="main-nav d-none d-lg-block">
-						<ul>
-							<li><a href="{{ path('homepage') }}">Accueil</a></li>
-							{% if is_granted('ROLE_ADMIN') %}
-								{% if from == 'student' %}
-								<li><a href="{{ path('school_student_index', {'id':id}) }}">Retour</a></li>
-								{% elseif from == 'school' %}
-								<li><a href="{{ path('school_studies_index', {'id': id}) }}">Retour</a></li>
-								{% endif %}
-							{% elseif  is_granted('ROLE_STUDENT_HIRED') %}
-							<li><a href="{{ path('school_student_index', {'id': app.user.student.id}) }}">Retour</a></li>
-							{% elseif  is_granted('ROLE_SUPER_SCHOOL') %}
-							<li><a href="{{ path('school_studies_index', {'id': app.user.school.id}) }}">Retour</a></li>
-							{% endif %}
-						</ul>
-					</nav>#}
 					<nav class="main-nav d-none d-lg-block">
 						<ul>
 							<li class="active"><a href="/">Accueil</a></li>
@@ -38,7 +20,11 @@
 							{% else %}
 							<li><a href="{{ path('offers_index', {'page':1}) }}">Alternances</a></li>
 							{% endif %}
-							<li><a href="{{ path('studies_candidate_index') }}">Formations</a></li>
+							{% if pages is defined %}
+							<li><a href="{{ path('studies_candidate_index', {'page':pages}) }}">Formations</a></li>
+							{% else %}
+							<li><a href="{{ path('studies_candidate_index', {'page':1}) }}">Formations</a></li>
+							{% endif %}
 							{% if is_granted('ROLE_USER') %}
 								{% if is_granted('ROLE_ADMIN') %}
 								<li><a href="/admin">ADMIN</a></li>
@@ -99,29 +85,6 @@
 							<a  class="a-button" href="{{ path('studies_show_recruit', {id:studies.id }) }}">POSTULER</a> 
 						</div>
 					</div>
-					{# <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-						<div class="job-grid border">
-							<div class="job-title-sec">
-								<div class="c-logo" tyle="
-								width: 300px;
-								height: 120px;
-								overflow: hidden;
-								position: relative;"> 
-									{% if studies.school.pictures.fileName is defined %}
-									<img src="{{ uploaded_asset(studies.school.pictures.fileName) }}" alt="">
-									{% else %}
-									<img src="https://via.placeholder.com/150" alt="" style="width:300px;height:110px;max-width: 300px;max-height:120px;
-									object-fit: cover;">
-									{% endif %}
-								</div>
-								{# <h3><a href="{{ path('studies_show_recruit', {id:studies.id, from:from, from_id:id}) }}">{{ studies.title }}</a></h3>#}
-								{#<span>{{ studies.school.firstname}} {{ studies.school.lastname}}</span>
-								<span class="fav-job"><i class="la la-heart-o"></i></span>
-							</div>
-							<span class="job-lctn">{{ studies.domain}}</span>
-							{# <a  class="a-button" href="{{ path('studies_show_recruit', {id:studies.id, from:from, from_id:id}) }}">POSTULER</a> #}
-						{#</div> #}
-					</div>
 					{% endfor %}
 				</div>
 				 {# paginate #}
@@ -141,8 +104,6 @@
         </div>
 	</footer>
 	
-   {# {% endif %} #}
-
 {% endblock %}
 
 
