@@ -259,7 +259,7 @@
                                 {% if offers.applies | length == 0 %} 
                             
                                 <tr>
-                                    <td><a href="{{ path('offers_preview', {'id': offers.id, 'company':company.id}) }}">{{ offers.title }}</a></td>
+                                    <td><a href="{{ path('offers_edit', {'id': offers.id, 'company':company.id}) }}">{{ offers.title }}</a></td>
                                    
                                     <td> <span class="badge bg-secondary">Ouverte</span> </td>
                                   
@@ -270,7 +270,7 @@
                                 {% if offers.applies[0].finished == false and offers.applies[0].confirmed == false %} 
 
                                 <tr>
-                                    <td><a href="{{ path('offers_preview', {'id': offers.applies[0].offers.id, 'company':company.id}) }}">{{ offers.applies[0].offers.title }}</a></td>
+                                    <td><a href="{{ path('offers_edit', {'id': offers.applies[0].offers.id, 'company':company.id}) }}">{{ offers.applies[0].offers.title }}</a></td>
                                 
                                     <td>  {# offer state #}  
                                         {% if offers.applies[0].confirmed == false %}
@@ -368,7 +368,7 @@
                                     {% for applies in applies %}
                                     <tr class="border-top">
                                         <td>{{ applies.student.name }} {{ applies.student.lastName }}</td>
-                                        <td><a href="{{ path('offers_preview', {id:applies.offers.id, company:company.id}) }}" class="action-link">{{ applies.offers.title }}</a></td>
+                                        <td><a href="{{ path('offers_edit', {id:applies.offers.id, company:company.id}) }}" class="action-link">{{ applies.offers.title }}</a></td>
                                         <td>
                                             <span class="badge badge-primary right">Candidat</span> 
                                         </td>
@@ -411,7 +411,7 @@
                                     {% for agree in agree %}
                                     <tr class="border-top">
                                         <td>{{ agree.student.name }} {{ agree.student.lastName }}</td>
-                                        <td><a href="{{ path('offers_preview', {id:agree.offers.id, company:company.id}) }}" class="action-link">{{ agree.offers.title }}</a></td>
+                                        <td><a href="{{ path('offers_edit', {id:agree.offers.id, company:company.id}) }}" class="action-link">{{ agree.offers.title }}</a></td>
                                         <td>
                                             {% if agree.hired == true %}
                                             <span class="badge badge-warning right">En attente d'acceptation</span>
@@ -462,7 +462,7 @@
                                     {% for hired in hired %}
                                         <tr class="border-top">
                                             <td>{{ hired.student.name }} {{ hired.student.lastName }}</td>
-                                            <td><a href="{{ path('offers_preview', {id:hired.offers.id, company:company.id}) }}" class="action-link">{{ hired.offers.title }}</a></td>
+                                            <td><a href="{{ path('offers_edit', {id:hired.offers.id, company:company.id}) }}" class="action-link">{{ hired.offers.title }}</a></td>
                                             <td>
                                                 <span class="badge badge-warning right">En attente d'acceptation</span>
                                             </td>
@@ -508,7 +508,7 @@
                                     {% for finished in finished %}
                                     <tr class="border-top">
                                         <td>{{ finished.student.name }} {{ finished.student.lastName }}</td>
-                                        <td><a href="{{ path('offers_preview', {id:finished.offers.id, company:company.id}) }}" class="action-link">{{ finished.offers.title }}</a></td>
+                                        <td><a href="{{ path('offers_edit', {id:finished.offers.id, company:company.id}) }}" class="action-link">{{ finished.offers.title }}</a></td>
                                         <td>
                                             <span class="badge badge-success right">Recruté</span>
                                         </td>
