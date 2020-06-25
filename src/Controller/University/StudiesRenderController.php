@@ -159,7 +159,6 @@ class StudiesRenderController extends AbstractController
     // */
     /**
     * @Route("crusus/show/{id}", name="studies_show_recruit", methods={"GET"})
-    * @IsGranted("ROLE_RECRUIT")
     */
     public function showRecruit(Studies $study) 
     //, $from_id
