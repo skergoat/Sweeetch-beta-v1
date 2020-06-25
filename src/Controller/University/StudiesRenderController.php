@@ -85,29 +85,29 @@ class StudiesRenderController extends AbstractController
         } 
     }
 
-     /**
-     * @Route("school/study/{id}/{school_id}", name="school_studies_show", methods={"GET"})
-     * @ParamConverter("school", options={"id" = "school_id"})
-     * @IsGranted("ROLE_SUPER_SCHOOL")
-     */
-    public function show(Studies $study, School $school, StudiesRepository $studiesRepository, RecruitRepository $recruitRepository, RecruitHelper $recruitHelper, SchoolChecker $checker): Response
-    {
-        if ($checker->schoolStudiesEditValid($school, $study)) {
+    //  /**
+    //  * @Route("school/study/{id}/{school_id}", name="school_studies_show", methods={"GET"})
+    //  * @ParamConverter("school", options={"id" = "school_id"})
+    //  * @IsGranted("ROLE_SUPER_SCHOOL")
+    //  */
+    // public function show(Studies $study, School $school, StudiesRepository $studiesRepository, RecruitRepository $recruitRepository, RecruitHelper $recruitHelper, SchoolChecker $checker): Response
+    // {
+    //     if ($checker->schoolStudiesEditValid($school, $study)) {
 
-            $studies = $studiesRepository->findBy(['school' => $school]);
+    //         $studies = $studiesRepository->findBy(['school' => $school]);
 
-            return $this->render('studies/show.html.twig', [
-                'study' => $study,
-                'school' => $school,
-                'finished' => $recruitRepository->findBy(['studies' => $study, 'finished' => true], ['date_finished' => 'desc']),
-                'recruit' => $recruitRepository->findBy(['studies' => $study, 'hired' => false, 'agree' => false, 'refused' => false, 'unavailable' => false, 'finished' => false], ['date_recruit' => 'desc']),
-                'process' => $recruitRepository->findProcessing($study),
-                'hired' => $recruitRepository->findBy(['studies' => $studies, 'hired' => true],['date_recruit' => 'desc']),
-                'agree' => $recruitRepository->findBy(['studies' => $studies, 'agree' => true],['date_recruit' => 'desc']), 
-                'candidates' => $recruitHelper->nbCandidates($studies), // show nb applies 
-            ]);
-        }
-    }
+    //         return $this->render('studies/show.html.twig', [
+    //             'study' => $study,
+    //             'school' => $school,
+    //             'finished' => $recruitRepository->findBy(['studies' => $study, 'finished' => true], ['date_finished' => 'desc']),
+    //             'recruit' => $recruitRepository->findBy(['studies' => $study, 'hired' => false, 'agree' => false, 'refused' => false, 'unavailable' => false, 'finished' => false], ['date_recruit' => 'desc']),
+    //             'process' => $recruitRepository->findProcessing($study),
+    //             'hired' => $recruitRepository->findBy(['studies' => $studies, 'hired' => true],['date_recruit' => 'desc']),
+    //             'agree' => $recruitRepository->findBy(['studies' => $studies, 'agree' => true],['date_recruit' => 'desc']), 
+    //             'candidates' => $recruitHelper->nbCandidates($studies), // show nb applies 
+    //         ]);
+    //     }
+    // }
 
     /**
     * @Route("/cursus/{page<\d+>?1}", name="studies_candidate_index", methods={"GET"})

@@ -35,25 +35,25 @@ class StudiesActionController extends AbstractController
         // check if student is already hired
         if($helper->checkAgree('student', $student)) {
             $this->addFlash('error', 'Vous êtes déjà embauché ailleurs. Rendez-vous sur votre profil.');
-            return  $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'from' => 'student', 'from_id' => $student->getId()]);
+            return  $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'page' => 1]);
         }
 
         // check if some offers are waiting
         if($helper->checkHired('student', $student)){
             $this->addFlash('error', 'Vous avez des offres en attente. Consultez votre profil');
-            return  $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'from' => 'student', 'from_id' => $student->getId()]);
+            return  $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'page' => 1]);
         }
 
         // check if student is refused
         if($helper->checkRefused($studies, $student)) {  
             $this->addFlash('error', 'Offre non disponible');
-            return  $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'from' => 'student', 'from_id' => $student->getId()]);
+            return  $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'page' => 1]);
         }
 
         // check if student has already applied to current study
         if($helper->checkRecruit($studies, $student) && !$helper->checkFinished('student', $student)) {    
             $this->addFlash('error', 'Vous avez déjà postulé');
-            return  $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'from' => 'student', 'from_id' => $student->getId()]);
+            return  $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'page' => 1]);
         }
 
         if($this->isCsrfTokenValid('recruit'.$student->getId(), $request->request->get('_token'))) {
@@ -83,11 +83,11 @@ class StudiesActionController extends AbstractController
             $manager->flush();
 
             $this->addFlash('success', 'Candidature enregistrée !');
-            return $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'from' => 'student', 'from_id' => $student->getId()]);
+            return $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'page' => 1]);
         }
         else {
             $this->addFlash('error', 'Requête invalide');
-            return  $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'from' => 'student', 'from_id' => $student->getId()]);
+            return  $this->redirectToRoute('studies_show_recruit', ['id' => $studies->getId(), 'page' => 1]);
         }
     }
 
@@ -273,7 +273,7 @@ class StudiesActionController extends AbstractController
      * @Route("/studies/{id}/edit/{school_id}", name="studies_edit", methods={"GET","POST"})
      * @ParamConverter("school", options={"id" = "school_id"})
      */
-    public function edit(Request $request, Studies $study, School $school, SchoolChecker $checker): Response
+    public function edit(Request $request, Studies $study, School $school, SchoolChecker $checker, RecruitRepository $recruitRepository): Response
     {
         if ($checker->schoolStudiesEditValid($school, $study)) {
 
@@ -286,6 +286,9 @@ class StudiesActionController extends AbstractController
 
             return $this->render('studies/edit.html.twig', [
                 'study' => $study,
+                'recruit' => $recruitRepository->findBy(['studies' => $study, 'hired' => false, 'agree' => false, 'refused' => false, 'unavailable' => false, 'finished' => false], ['date_recruit' => 'desc']),
+                'process' => $recruitRepository->findProcessing($study),
+                'finished' => $recruitRepository->findBy(['studies' => $study, 'finished' => true], ['date_finished' => 'desc']),
                 'form' => $form->createView(),
                 'school' => $school
             ]);
