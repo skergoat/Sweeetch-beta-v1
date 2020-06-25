@@ -180,6 +180,9 @@ class OffersController extends AbstractController
 
             return $this->render('offers/edit.html.twig', [
                 'offers' => $offer,
+                // test 
+                'applies' => $repository->findBy(['offers' => $offer, 'refused' => false, 'unavailable' => false, 'confirmed' => false, 'finished' => false], ['date_recruit' => 'desc']),
+                // test
                 'company' => $company,
                 'form' => $form->createView(),
                 // infos
@@ -192,7 +195,7 @@ class OffersController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="offers_delete", methods={"DELETE"})
+     * @Route("/{id}", name="offers_delete", methods={"DELETE"}) *****
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
     public function delete(Request $request, Offers $offer, ApplyRepository $repository, ApplyMailer $mailer, ApplyHelper $helper): Response
@@ -200,7 +203,7 @@ class OffersController extends AbstractController
         // prevent user from deleting finished offer 
         if($helper->checkConfirmed('offers', $offer) || $helper->checkFinished('offers', $offer)) {
             $this->addFlash('error', 'Mission terminée');
-            return $this->redirectToRoute('offers_preview', ['id' => $offer->getId(), 'company' => $offer->getCompany()->getId()]);
+            return $this->redirectToRoute('offers_edit', ['id' => $offer->getId(), 'company' => $offer->getCompany()->getId()]);
         }
         
         if ($this->isCsrfTokenValid('delete'.$offer->getId(), $request->request->get('_token'))) {

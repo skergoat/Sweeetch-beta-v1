@@ -1,11 +1,11 @@
-{# show offer and candidates to company #}
+{# show offer and candidates to company 
 
 {% extends 'base-company.html.twig' %}
 
 {% block title %} {{ parent() }} - Entreprises {% endblock %}
 
 {% block body %}
-{# title #}
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-6">
@@ -19,7 +19,7 @@
         </div>
     </div>
 </div> <br>
-{# error or success message #}
+
 {% for message in app.flashes('success') %}
 <div class="alert alert-success">
     {{ message }}
@@ -31,7 +31,7 @@
     {{ message }}
 </div>
 {% endfor %}
-{# offers infos #}
+
 <section class="content">
     <div class="row">
         <div class="col-12">
@@ -78,7 +78,7 @@
                     
             </div>
         </div>
-    </section> 
+    </div> 
 
     <section class="content">
         <div class="row">
@@ -90,7 +90,7 @@
                             <i class="fas fa-question-circle"></i>
                         </a>
                     </div>
-                    {# candidates #}
+                  
                     <div class="card-body">
                         <table id="example1" class="table table-bordered table-hover">
                         <thead>
@@ -117,7 +117,7 @@
                                     
                                         <div class="btn-group">
                                     {% if applies.hired == false and applies.confirmed == false and applies.agree == false %}
-                                            {# apply options #}
+                                         
                                             <form method="post" action="{{ path('hire', { id:applies.id }) }}" class="btn-icon-form" onsubmit="return confirm('Etes-vous certain de vouloir embaucher cet étudiant ?');">
                                                 <input type="hidden" name="_token" value="{{ csrf_token('hire' ~ applies.id) }}">
                                                 <button class="btn btn-success btn-sm">
@@ -160,7 +160,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 </section>
 
 {% endblock %}
@@ -168,10 +168,12 @@
 {% block javascripts %}
 {{ parent() }}
 <script>
-    // close first card
+
     $(document).ready(function() {
         $('#card-1').CardWidget('toggle');
     });
 </script>
 
 {% endblock %}
+
+#}
