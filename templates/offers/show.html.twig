@@ -74,24 +74,21 @@
                                     <div class="job-details">
                                          <h3>Job Description</h3>
                                          {{ offers.description |raw }}
-                                         <h3>Required Knowledge, Skills, and Abilities</h3>
+                                         <h3>Compétences Requises</h3>
                                          <ul>
-                                             <li >Ability to write code – HTML & CSS (SCSS flavor of SASS preferred when writing CSS)</li>
-                                             <li>Proficient in Photoshop, Illustrator, bonus points for familiarity with Sketch (Sketch is our preferred concepting)</li>
-                                             <li>Cross-browser and platform testing as standard practice</li>
-                                             <li>Experience using Invision a plus</li>
-                                             <li>Experience in video production a plus or, at a minimum, a willingness to learn</li>
+                                             {% for offers.skills as skills %}
+                                             <li>{{ skills.single }}</li>
+                                             {% else %}
+                                             <li style="color:darkred;">Aucune compétence spécifique n'est requise</li>
+                                             {% endfor %}
                                          </ul>
-                                         <h3>Education + Experience</h3>
+                                         <h3>Formation + Experience</h3>
                                          <ul>
-                                             <li>Advanced degree or equivalent experience in graphic and web design</li>
-                                             <li>3 or more years of professional design experience</li>
-                                             <li>Direct response email experience</li>
-                                             <li>Ecommerce website design experience</li>
-                                             <li>Familiarity with mobile and web apps preferred</li>
-                                             <li>Excellent communication skills, most notably a demonstrated ability to solicit and address creative and design feedback</li>
-                                             <li>Must be able to work under pressure and meet deadlines while maintaining a positive attitude and providing exemplary customer service</li>
-                                             <li>Ability to work independently and to carry out assignments to completion within parameters of instructions given, prescribed routines, and standard accepted practices</li>
+                                            {% for offers.Experience as Experience %}
+                                            <li>{{ Experience.single }}</li>
+                                            {% else %}
+                                            <li style="color:darkred;">Aucune expérience spécifique n'est requise</li>
+                                            {% endfor %}
                                          </ul>
                                     </div>
                                  </div>
