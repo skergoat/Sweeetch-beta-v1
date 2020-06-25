@@ -21,7 +21,12 @@
                         {% else %}
                         <li><a href="{{ path('offers_index', {'page':1}) }}">Alternances</a></li>
                         {% endif %}
-                        <li><a href="{{ path('studies_candidate_index') }}">Formations</a></li>
+                        {% if pages is defined %}
+                        <li><a href="{{ path('studies_candidate_index', {'page':pages}) }}">Formations</a></li>
+                        {% else %}
+                        <li><a href="{{ path('studies_candidate_index', {'page':1}) }}">Formations</a></li>
+                        {% endif %}
+                        {# <li><a href="{{ path('studies_candidate_index') }}">Formations</a></li>#}
                         {% if is_granted('ROLE_USER') %}
                             {% if is_granted('ROLE_ADMIN') %}
                             <li><a href="/admin">ADMIN</a></li>
@@ -89,7 +94,6 @@
         {% for offer in offers %}
             {% if offer.applies[0] is not defined or offer.applies[0] is defined and offer.applies[0].hired == false and offer.applies[0].confirmed == false and offer.applies[0].finished == false %}
 
-
             <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
                 <div class="job-grid border">
                     <div class="job-title-sec">
@@ -108,35 +112,6 @@
                     <a  class="a-button" href="{{ path('offers_show', {'id': offer.id, 'page':page}) }}">POSTULER</a>
                 </div><!-- JOB Grid -->
             </div>
-         
-                    {# <div class="job-offer card bg-light">
-                        <div class="card-body pt-0">
-                            <div class="row-offers row">
-                                <div class="col-lg-7 col-sm-12">
-                                    <div class="card-header text-muted border-bottom-0"  style="text-align:center;margin-bottom:10px;padding-top:0px;">
-                                        {{ offer.company.companyName }}
-                                        </div>
-                                <h2 class="lead" style="text-align:center;"><b>{{ offer.title }}</b></h2>
-                                <p class="text-muted text-sm" style="text-align:center;"><b>{{ offer.domain }}</b></p>
-                                <p class="small text-muted" style="text-align:center;"><span class="fa-li"></span><i class="fas fa-map-marker-alt"></i></span> {{ offer.location }}</p>
-                                </div>
-                                <div class="col-lg-5 col-sm-12 text-center">
-                                    {% if offer.company.pictures.fileName is defined %}
-                                    <img src="{{ uploaded_asset(offer.company.pictures.fileName) }}" alt="" class="img-offers img-circle img-fluid">
-                                    {% else %}
-                                    <img src="https://via.placeholder.com/150" alt="" class="img-circle img-fluid">
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <div class="text-right">
-                                <a href="{{ path('offers_show', {'id': offer.id, 'page':page}) }}" class="btn btn-sm btn-primary">
-                                    <i class="fa fa-briefcase"></i> Voir l'Annonce
-                                </a>
-                            </div>
-                        </div>
-                    </div> #}
             {% else %}
             <tr>
                 <td colspan="8">

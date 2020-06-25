@@ -109,28 +109,22 @@ class StudiesRenderController extends AbstractController
         }
     }
 
-    // /**
-    //  * @Route("/cursus/index/{from}/{id}", name="studies_candidate_index", methods={"GET"})
-    //  * @IsGranted("ROLE_SUPER_STUDENT")
-    //  */
     /**
-    * @Route("/cursus/index", name="studies_candidate_index", methods={"GET"})
+    * @Route("/cursus/{page<\d+>?1}", name="studies_candidate_index", methods={"GET"})
     */
-    public function indexCandidate(StudiesRepository $studiesRepository, PaginatorInterface $paginator, Request $request): Response
+    public function indexCandidate(StudiesRepository $studiesRepository, PaginatorInterface $paginator, Request $request, $page): Response
     { 
-        // id , $from
         $queryBuilder = $studiesRepository->findAll();
 
         $pagination = $paginator->paginate(
             $queryBuilder, /* query NOT result */
-            $request->query->getInt('page', 1)/*page number*/,
+            $request->query->getInt('page', $page)/*page number*/,
             6/*limit per page*/
         );
 
         return $this->render('studies/index-cursus.html.twig', [
             'studies' => $pagination,
-            // 'from' => $from,
-            // 'id' => $id,
+            'pages' => $page
         ]);
     } 
 
