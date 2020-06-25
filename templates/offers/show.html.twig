@@ -76,7 +76,7 @@
                                          {{ offers.description |raw }}
                                          <h3>Compétences Requises</h3>
                                          <ul>
-                                             {% for offers.skills as skills %}
+                                             {% for offers.skills in skills %}
                                              <li>{{ skills.single }}</li>
                                              {% else %}
                                              <li style="color:darkred;">Aucune compétence spécifique n'est requise</li>
@@ -84,7 +84,7 @@
                                          </ul>
                                          <h3>Formation + Experience</h3>
                                          <ul>
-                                            {% for offers.Experience as Experience %}
+                                            {% for offers.Experience in Experience %}
                                             <li>{{ Experience.single }}</li>
                                             {% else %}
                                             <li style="color:darkred;">Aucune expérience spécifique n'est requise</li>
