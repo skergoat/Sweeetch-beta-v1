@@ -21,6 +21,7 @@
                         {% else %}
                         <li><a href="{{ path('offers_index', {'page':1}) }}">Alternances</a></li>
                         {% endif %}
+                        <li><a href="{{ path('studies_candidate_index') }}">Formations</a></li>
                         {% if is_granted('ROLE_USER') %}
                             {% if is_granted('ROLE_ADMIN') %}
                             <li><a href="/admin">ADMIN</a></li>

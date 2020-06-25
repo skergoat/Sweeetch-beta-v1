@@ -19,7 +19,6 @@
                     </ul>
                 </nav> #}
                 <nav class="main-nav d-none d-lg-block">
-                    
                     <ul>
                         {% if is_granted('ROLE_ADMIN') %}
                         <li><a href="/admin">ADMIN</a></li>
@@ -31,9 +30,10 @@
                         <li><a href="{{ path('school_show', {'id': app.user.school.id}) }}">MON ECOLE</a></li>
                         {% endif %}
                         {% if page is defined %}
-                        <li><a href="{{ path('offers_index', {'page':page}) }}">Emplois</a></li>
+                        {# <li><a href="{{ path('offers_index', {'page':page}) }}">Emplois</a></li> #}
                         {% else %}
-                        <li><a href="{{ path('offers_index', {'page':1}) }}">Emplois</a></li>
+                        {# <li><a href="{{ path('offers_index', {'page':1}) }}">Emplois</a></li> #}
+                        <li><a href="{{ path('studies_candidate_index') }}">Formations</a></li>
                         {% endif %} 
                     </ul>
                 </nav>
