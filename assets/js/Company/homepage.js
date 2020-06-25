@@ -20,8 +20,10 @@ import '../components/file.js'; // file name
 import '../components/message.js'; // success or error message 
 import '../components/table.js'; // dataTable 
 
+
 // show page table 
 import './table.js'; // dataTable 
+import './edit-skills.js' // skills 
 
 // tinymce 
 tinymce.init({

@@ -1,5 +1,18 @@
 {{ form_start(form) }}
 
+{% macro printSkillsFormRow(skill) %}
+    <div href="#" class="js-remove-profile-item language-card"> 
+        <a href="#" class="js-remove-data pull-right">
+            <span class="fa fa-close js-remove-data" style="color:red;font-size:20px;"></span>
+        </a>
+        <div class="form-group">
+        {{ form_row(skill.single, {'label':'Compétences' ,'attr' : { class: 'form-control' }} ) }}
+        </div><br>
+    </div>
+{% endmacro %}
+{# import macro #}
+{% import _self as FormSkillsMacro %}
+
 <div class="col-md-12">
     <div class="card-responsive card">
 
@@ -31,8 +44,20 @@
                 </div>
             </div><br>
             <div class="row">
+                <div class="col-lg-6 js-profile-wrapper" id="languages-wrapper" data-prototype="{{ FormSkillsMacro.printSkillsFormRow(form.skills.vars.prototype)|e('html_attr') }}"  data-index="{{ form.skills|length }}">
+                    <h5>Compétences Requises</h5><br>
+                    {% for skill in form.skills %}
+                    {{  FormSkillsMacro.printSkillsFormRow(skill) }} 
+                    {% endfor %}
+                    <a href="#" class="js-profile-add" data-url="languages-wrapper">
+                        <span class="btn btn-success">Ajouter une Compétence</span>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-lg-12 mt-2">
-                    <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+                    <br><br>
+                    <button class="btn btn-primary" style="width:100%;">{{ button_label|default('Enregistrer') }}</button>
                 </div>
             </div>
         </div>

@@ -66,13 +66,19 @@ class Offers
     /**
      * @ORM\Column(type="boolean")
      */
-    private $state; 
+    private $state;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Skills::class, mappedBy="offers", orphanRemoval=true, cascade={"persist"})
+     */
+    private $skills; 
     
 
     public function __construct()
     {
         $this->student = new ArrayCollection();
         $this->applies = new ArrayCollection();
+        $this->skills = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -232,4 +238,35 @@ class Offers
 
     //     return $this;
     // }
-}
+
+
+    /**
+     * @return Collection|Skills[]
+     */
+    public function getSkills(): Collection
+    {
+        return $this->skills;
+    }
+
+    public function addSkill(Skills $skill): self
+    {
+        if (!$this->skills->contains($skill)) {
+            $this->skills[] = $skill;
+            $skill->setOffers($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSkill(Skills $skill): self
+    {
+        if ($this->skills->contains($skill)) {
+            $this->skills->removeElement($skill);
+            // set the owning side to null (unless already changed)
+            if ($skill->getOffers() === $this) {
+                $skill->setOffers(null);
+            }
+        }
+
+        return $this;
+    }}
