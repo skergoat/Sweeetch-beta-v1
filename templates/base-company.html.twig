@@ -78,13 +78,19 @@
                     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                         {% if company.pictures.fileName is defined %}
                         <div class="image">
-                          <img src="{{ uploaded_asset(company.pictures.fileName) }}" class="elevation-2" alt="User Image">
+                          <img src="{{ uploaded_asset(company.pictures.fileName) }}" class="elevation-2" alt="User Image" style="                                   width: 200px;
+                          height: 100px;max-width: 300px;max-height:120px;
+                          object-fit: cover;">
                         </div>
                         {% else %}
                         <div>
-                            <img src="https://via.placeholder.com/50" />                        
+                            <img src="https://via.placeholder.com/300" class="elevation-2" style="                                   width: 200px;
+                            height: 100px;max-width: 300px;max-height:120px;
+                            object-fit: cover;"/>                        
                         </div>
                         {% endif %}
+                    </div>
+                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                         <div class="info">
                           <a href="{{ path('company_show', {'id' : company.id }) }}" class="d-block">{{ app.user.email }}</a>
                         </div>
