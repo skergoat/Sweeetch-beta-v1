@@ -31,55 +31,6 @@
 </div>
 {% endfor %}
 
-<section class="content">
-    <div class="row">
-        <div class="col-12">
-            <div class="card" id="card-1">
-        
-                <div class="card-header">
-                    <p class="card-title" style="color:#FFC756 !important; font-weight:900;font-size:22px;">Détail de l'Offre</p>
-    
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                        <i class="fas fa-minus" style="color:#B5B7B9;"></i>
-                        </button>
-                    </div>
-                </div>
-                {# offer infos #}
-                <div class="card-body">
-                    <table class="table offers-show col-lg-5 col-md-5 col-sm-12 col-xs-12">
-    
-                    <tbody>
-                        <tr>
-                            <th>Lieu</th>
-                            <td>{{ offers.location }}</td>
-                        </tr>
-                        <tr>
-                            <th>Domaine</th>
-                            <td>{{ offers.domain }}</td>
-                        </tr>
-                        <tr>
-                            <th>Du</th>
-                            <td>{{ offers.dateStart ? offers.dateStart|date('d-m-Y') : '' }}</td>
-                        </tr>
-                        <tr>
-                            <th>Au</th>
-                            <td>{{ offers.dateEnd ? offers.dateEnd|date('d-m-Y') : '' }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-            </table>
-            {# offer description #}
-            <div class="card description" style="padding:10px;">
-                <h5 class="mb-3">Description</h5>
-                <p>{{ offers.description |raw }}</p>
-            </div>
-            
-        </div>      
-    </div>
-</div>
-</section>
 
 <section class="content">
     <div class="row">
@@ -134,7 +85,163 @@
         </div>
     </div>
 </section>
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card" id="card-1">
+                <div class="card-header">
+                    <p class="card-title" style="color:#FFC756 !important; font-weight:900;font-size:22px;">Détail de l'Offre</p>
+    
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus" style="color:#B5B7B9;"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <br><br>
+                    <div class="col-lg-8 column" style="margin:auto">
+                        <div class="job-single-sec">
+                            <div class="job-single-head">
+                                <div class="job-thumb"> 
+                                    {% if offers.company.pictures.fileName is defined %}
+                                    <img src="{{ uploaded_asset(offers.company.pictures.fileName) }}" alt="">
+                                    {% else %}
+                                    <img src="https://via.placeholder.com/150" alt="" >
+                                    {% endif %}
+                                </div>
+                                <div class="job-head-info">
+                                    <h4>{{ offers.title }}</h4>
+                                    <span>{{ offers.company.address }}, {{ offers.company.ZipCode }}, {{ offers.company.city }}</span>
+                                    <p><i class="la la-unlink"></i>{{ offers.company.website }}</p>
+                                    <p><i class="la la-phone"></i> {{ offers.company.telNumber }} </p>
+                                    <p><i class="la la-envelope-o"></i> <a href="#" class="__cf_email__" data-cfemail="a4c5c8cd8ad0d1c2c5cae4cecbc6ccd1cad08ac7cbc9">{{ offers.company.user.email }}</a></p>
+                                </div>
+                            </div><!-- Job Head -->
+                            <div class="job-details">
+                                <h3>Job Description</h3>
+                                {{ offers.description |raw }}
+                                <h3>Compétences Requises</h3>
+                                <ul>
+                                    {% for skills in offers.skills %}
+                                    <li>{{ skills.single }}</li>
+                                    {% else %}
+                                    <span style="color:darkred;">Aucune compétence spécifique n'est requise</span>
+                                    {% endfor %}
+                                </ul>
+                                <h3>Formation + Experience</h3>
+                                <ul>
+                                    {% for Experience in offers.Experience %}
+                                    <li>{{ Experience.single }}</li>
+                                    {% else %}
+                                    <span style="color:darkred;">Aucune expérience spécifique n'est requise</span>
+                                    {% endfor %}
+                                </ul>
+                            </div><br>
+                            {# apply options #}
+                            {% if is_granted('ROLE_USER') %}
 
+                            {% if app.user.student.id is defined %}
+
+                                {% if is_granted('ROLE_SUPER_STUDENT') %}
+
+                                    {% if offers.state == false %}
+                                    <form method="post" action="{{ path('apply', { id:offers.id, student_id:app.user.student.id, page:page }) }}">
+                                        <input type="hidden" name="_method" value="POST">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('apply' ~ app.user.student.id) }}">
+                                        <button class="btn btn-success" style="width:100%;">Postuler</button>
+                                    </form> 
+                                    {% else %}
+                                    <div class="col-12 col-sm-6 col-md-6">
+                                        <div class="info-box mb-3">
+                                        <span class="info-box-icon bg-warning elevation-1"><i class="fa fa-info"></i></span>
+                            
+                                        <div class="info-box-content">
+                                            <span class="info-box-number">Dossier en cours</span>
+                                            <span class="info-box-text">Controllez votre profil</span>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    
+                                {% elseif is_granted('ROLE_STUDENT') %}
+                                <div class="col-12 col-sm-6 col-md-12">
+                                    <div class="info-box mb-3">
+                                    <span class="info-box-icon bg-danger elevation-1"><i class="fa fa-exclamation-triangle"></i></span>
+
+                                    <div class="info-box-content">
+                                        <span class="info-box-number">Validation en attente</span>
+                                        <span class="info-box-text">
+                                            Vous devez valider votre email et attendre que Sweeetch valide votre compte pour pouvoir postuler
+                                        </span>
+                                    </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                            {% endif %}
+                            
+                            {% else %}
+                            <a href="{{ path('student_new') }}" class="btn btn-success">S'inscrire pour voir l'annonce</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{#
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card" id="card-1">
+        
+                <div class="card-header">
+                    <p class="card-title" style="color:#FFC756 !important; font-weight:900;font-size:22px;">Détail de l'Offre</p>
+    
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus" style="color:#B5B7B9;"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <table class="table offers-show col-lg-5 col-md-5 col-sm-12 col-xs-12">
+    
+                    <tbody>
+                        <tr>
+                            <th>Lieu</th>
+                            <td>{{ offers.location }}</td>
+                        </tr>
+                        <tr>
+                            <th>Domaine</th>
+                            <td>{{ offers.domain }}</td>
+                        </tr>
+                        <tr>
+                            <th>Du</th>
+                            <td>{{ offers.dateStart ? offers.dateStart|date('d-m-Y') : '' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Au</th>
+                            <td>{{ offers.dateEnd ? offers.dateEnd|date('d-m-Y') : '' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </table>
+
+            <div class="card description" style="padding:10px;">
+                <h5 class="mb-3">Description</h5>
+                <p>{{ offers.description |raw }}</p>
+            </div>
+            
+        </div>      
+    </div>
+</div>
+</section>
+#}
 {% endblock %}
 
 {% block javascripts %}
