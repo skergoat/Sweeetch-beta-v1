@@ -16,7 +16,17 @@
                 <nav class="main-nav d-none d-lg-block">
                     <ul>
                         <li class="active"><a href="/">Accueil</a></li>
-                        <li><a href="{{ path('offers_index') }}">Alternances</a></li>
+                        {% if page is defined %}
+                        <li><a href="{{ path('offers_index', {'page':page}) }}">Alternances</a></li>
+                        {% else %}
+                        <li><a href="{{ path('offers_index', {'page':1}) }}">Alternances</a></li>
+                        {% endif %}
+                        {% if pages is defined %}
+                        <li><a href="{{ path('studies_candidate_index', {'page':pages}) }}">Formations</a></li>
+                        {% else %}
+                        <li><a href="{{ path('studies_candidate_index', {'page':1}) }}">Formations</a></li>
+                        {% endif %}
+                        {# <li><a href="{{ path('offers_index') }}">Alternances</a></li> #}
                         <li class="drop-down"><a>S'INSCRIRE</a>
                             <ul>
                                 <li><a href="/student/new">Etudiants</a></li>
