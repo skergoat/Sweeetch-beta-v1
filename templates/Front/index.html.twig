@@ -32,10 +32,11 @@
       <nav class="main-nav float-right d-none d-lg-block">
         <ul>
           <li class="active"><a href="{{ path('homepage') }}">Accueil</a></li>
-          <li><a href="#about">Sweeetch</a></li>
-          <li><a href="#why-us">Nos fonctionnalités</a></li>
+          <!-- <li><a href="#about">Sweeetch</a></li>
+          <li><a href="#why-us">Nos fonctionnalités</a></li> -->
           <li><a href="{{ path('offers_index') }}">Alternances</a></li>
-          
+          <li><a href="{{ path('studies_candidate_index') }}">Formations</a></li>
+              
             {% if is_granted('ROLE_USER')  %}
                 {% if is_granted('ROLE_ADMIN') %}
                   <li><a href="{{ path('admin', {id:app.user.id}) }}">ADMIN</a></li>

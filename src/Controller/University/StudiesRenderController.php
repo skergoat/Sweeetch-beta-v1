@@ -109,12 +109,16 @@ class StudiesRenderController extends AbstractController
         }
     }
 
+    // /**
+    //  * @Route("/cursus/index/{from}/{id}", name="studies_candidate_index", methods={"GET"})
+    //  * @IsGranted("ROLE_SUPER_STUDENT")
+    //  */
     /**
-     * @Route("/cursus/index/{from}/{id}", name="studies_candidate_index", methods={"GET"})
-     * @IsGranted("ROLE_SUPER_STUDENT")
-     */
-    public function indexCandidate(StudiesRepository $studiesRepository, PaginatorInterface $paginator, Request $request, $from, $id): Response
-    {
+    * @Route("/cursus/index", name="studies_candidate_index", methods={"GET"})
+    */
+    public function indexCandidate(StudiesRepository $studiesRepository, PaginatorInterface $paginator, Request $request): Response
+    { 
+        // id , $from
         $queryBuilder = $studiesRepository->findAll();
 
         $pagination = $paginator->paginate(
@@ -123,23 +127,47 @@ class StudiesRenderController extends AbstractController
             6/*limit per page*/
         );
 
-        return $this->render('studies/index-student.html.twig', [
+        return $this->render('studies/index-cursus.html.twig', [
             'studies' => $pagination,
-            'from' => $from,
-            'id' => $id,
+            // 'from' => $from,
+            // 'id' => $id,
         ]);
     } 
 
+    // /**
+    // * @Route("/cursus/index/{from}", name="studies_index_anonymous", methods={"GET"})
+    // */
+    // public function indexStudies(StudiesRepository $studiesRepository, PaginatorInterface $paginator, Request $request, $from): Response
+    // { 
+    //     $queryBuilder = $studiesRepository->findAll();
+
+    //     $pagination = $paginator->paginate(
+    //         $queryBuilder, /* query NOT result */
+    //         $request->query->getInt('page', 1)/*page number*/,
+    //         6/*limit per page*/
+    //     );
+
+    //     return $this->render('studies/index-cursus.html.twig', [
+    //         'studies' => $pagination,
+    //         'from' => $from,
+    //     ]);
+    // } 
+
+    // /**
+    // * @Route("crusus/show/{from}/{id}/{from_id}", name="studies_show_recruit", methods={"GET"})
+    // * @IsGranted("ROLE_RECRUIT")
+    // */
     /**
-    * @Route("crusus/show/{from}/{id}/{from_id}", name="studies_show_recruit", methods={"GET"})
+    * @Route("crusus/show/{id}", name="studies_show_recruit", methods={"GET"})
     * @IsGranted("ROLE_RECRUIT")
     */
-    public function showRecruit(Studies $study, $from, $from_id) 
+    public function showRecruit(Studies $study) 
+    //, $from_id
     {
         return $this->render('studies/show-recruit.html.twig', [
             'study' => $study,
-            'from' => $from,
-            'from_id' => $from_id
+            // 'from' => $from,
+            // 'from_id' => $from_id
         ]);
     }
 
