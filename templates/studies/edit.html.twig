@@ -25,7 +25,9 @@
 <div class="alert alert-success">
     {{ message }}
 </div>
-{% endfor %}
+{% endfor %}}
+
+{{ include('studies/_form.html.twig', {'button_label': 'Enregistrer'}) }}
 
 <section class="content">
     <div class="row">
@@ -178,7 +180,5 @@
         </div>
     </div>
 </section>
-
-{{ include('studies/_form.html.twig', {'button_label': 'Enregistrer'}) }}
 
 {% endblock %}
