@@ -35,12 +35,12 @@ class StudiesType extends AbstractType
             ]),
         ];
 
-        // $videoConstraints = [
-        //     new Regex([
-        //         'pattern' => "/(.*?)(^|\/|v=)([a-z0-9_-]{11})(.*)?/",
-        //         'message' => "Entrez une url Youtube valide svp"
-        //     ]),
-        // ];
+        $videoConstraints = [
+            new Regex([
+                'pattern' => "/([a-zA-Z0-9_-]){11}/",
+                'message' => "Entrez une url Youtube valide svp"
+            ]),
+        ];
 
         $builder
             ->add('title', TextType::class, [
@@ -67,7 +67,7 @@ class StudiesType extends AbstractType
             ])
             
              ->add('video', TextType::class, [
-                // 'constraints' => $videoConstraints
+                'constraints' => $videoConstraints
             ])
         ;
     }
