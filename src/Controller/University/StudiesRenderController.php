@@ -128,37 +128,15 @@ class StudiesRenderController extends AbstractController
         ]);
     } 
 
-    // /**
-    // * @Route("/cursus/index/{from}", name="studies_index_anonymous", methods={"GET"})
-    // */
-    // public function indexStudies(StudiesRepository $studiesRepository, PaginatorInterface $paginator, Request $request, $from): Response
-    // { 
-    //     $queryBuilder = $studiesRepository->findAll();
-
-    //     $pagination = $paginator->paginate(
-    //         $queryBuilder, /* query NOT result */
-    //         $request->query->getInt('page', 1)/*page number*/,
-    //         6/*limit per page*/
-    //     );
-
-    //     return $this->render('studies/index-cursus.html.twig', [
-    //         'studies' => $pagination,
-    //         'from' => $from,
-    //     ]);
-    // } 
-
-    // /**
-    // * @Route("crusus/show/{from}/{id}/{from_id}", name="studies_show_recruit", methods={"GET"})
-    // * @IsGranted("ROLE_RECRUIT")
-    // */
     /**
-    * @Route("crusus/show/{id}", name="studies_show_recruit", methods={"GET"})
+    * @Route("crusus/show/{id}/{page}", name="studies_show_recruit", methods={"GET"})
     */
-    public function showRecruit(Studies $study) 
+    public function showRecruit(Studies $study, $page) 
     //, $from_id
     {
         return $this->render('studies/show-recruit.html.twig', [
             'study' => $study,
+            'pages' => $page
             // 'from' => $from,
             // 'from_id' => $from_id
         ]);
