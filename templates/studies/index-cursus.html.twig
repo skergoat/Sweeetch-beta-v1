@@ -76,13 +76,13 @@
 									{% endif %}
 								</div>
 
-								<h3><a href="href="{{ path('studies_show_recruit', {id:studies.id }) }}"">{{ studies.title }}</a></h3> 
+								<h3><a href="href="{{ path('studies_show_recruit', {id:studies.id, page:pages }) }}"">{{ studies.title }}</a></h3> 
 
 								<span>{{ studies.school.firstname}} {{ studies.school.lastname}}</span>
 								<span class="fav-job"><i class="la la-heart-o"></i></span>
 							</div>
 							<span class="job-lctn"></span>
-							<a  class="a-button" href="{{ path('studies_show_recruit', {id:studies.id }) }}">POSTULER</a> 
+							<a  class="a-button" href="{{ path('studies_show_recruit', {id:studies.id, page:pages }) }}">POSTULER</a> 
 						</div>
 					</div>
 					{% endfor %}
