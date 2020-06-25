@@ -195,7 +195,7 @@ class OffersController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="offers_delete", methods={"DELETE"}) *****
+     * @Route("/{id}", name="offers_delete", methods={"DELETE"}) *****git 
      * @IsGranted("ROLE_SUPER_COMPANY")
      */
     public function delete(Request $request, Offers $offer, ApplyRepository $repository, ApplyMailer $mailer, ApplyHelper $helper): Response
