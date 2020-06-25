@@ -71,7 +71,12 @@ class Offers
     /**
      * @ORM\OneToMany(targetEntity=Skills::class, mappedBy="offers", orphanRemoval=true, cascade={"persist"})
      */
-    private $skills; 
+    private $skills;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Experience::class, mappedBy="offers", orphanRemoval=true, cascade={"persist"})
+     */
+    private $experience; 
     
 
     public function __construct()
@@ -79,6 +84,7 @@ class Offers
         $this->student = new ArrayCollection();
         $this->applies = new ArrayCollection();
         $this->skills = new ArrayCollection();
+        $this->experience = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -265,6 +271,37 @@ class Offers
             // set the owning side to null (unless already changed)
             if ($skill->getOffers() === $this) {
                 $skill->setOffers(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Experience[]
+     */
+    public function getExperience(): Collection
+    {
+        return $this->experience;
+    }
+
+    public function addExperience(Experience $experience): self
+    {
+        if (!$this->experience->contains($experience)) {
+            $this->experience[] = $experience;
+            $experience->setOffers($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExperience(Experience $experience): self
+    {
+        if ($this->experience->contains($experience)) {
+            $this->experience->removeElement($experience);
+            // set the owning side to null (unless already changed)
+            if ($experience->getOffers() === $this) {
+                $experience->setOffers(null);
             }
         }
 

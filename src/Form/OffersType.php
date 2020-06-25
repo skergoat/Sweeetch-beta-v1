@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Offers;
+use App\Form\ExperienceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -105,6 +106,13 @@ class OffersType extends AbstractType
             ])
             ->add('skills', CollectionType::class, array(
                 'entry_type' => SkillsType::class,
+                'allow_delete' => true,
+                'allow_add' => true,
+                'by_reference' => false,
+                'label' => false
+            ))
+            ->add('experience', CollectionType::class, array(
+                'entry_type' => ExperienceType::class,
                 'allow_delete' => true,
                 'allow_add' => true,
                 'by_reference' => false,
