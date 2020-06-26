@@ -49,6 +49,31 @@ class Studies
      */
     private $video;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $title1;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $title2;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description2;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $title3;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description3;
+
     public function __construct()
     {
         $this->recruits = new ArrayCollection();
@@ -229,6 +254,66 @@ class Studies
     public function setVideo(?string $video): self
     {
         $this->video = $video;
+
+        return $this;
+    }
+
+    public function getTitle1(): ?string
+    {
+        return $this->title1;
+    }
+
+    public function setTitle1(?string $title1): self
+    {
+        $this->title1 = $title1;
+
+        return $this;
+    }
+
+    public function getTitle2(): ?string
+    {
+        return $this->title2;
+    }
+
+    public function setTitle2(?string $title2): self
+    {
+        $this->title2 = $title2;
+
+        return $this;
+    }
+
+    public function getDescription2(): ?string
+    {
+        return $this->description2;
+    }
+
+    public function setDescription2(?string $description2): self
+    {
+        $this->description2 = $description2;
+
+        return $this;
+    }
+
+    public function getTitle3(): ?string
+    {
+        return $this->title3;
+    }
+
+    public function setTitle3(?string $title3): self
+    {
+        $this->title3 = $title3;
+
+        return $this;
+    }
+
+    public function getDescription3(): ?string
+    {
+        return $this->description3;
+    }
+
+    public function setDescription3(?string $description3): self
+    {
+        $this->description3 = $description3;
 
         return $this;
     }

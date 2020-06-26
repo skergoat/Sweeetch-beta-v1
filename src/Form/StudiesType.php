@@ -61,14 +61,33 @@ class StudiesType extends AbstractType
                     return ['class' => 'attending_'.strtolower($key)];
                 },
             ])
+            ->add('video', TextType::class, [
+                'constraints' => $videoConstraints,
+                'required' => false
+            ])
+            ->add('title1', TextType::class, [
+                'label' => '',
+                'required' => false,
+            ])
             ->add('description', TextareaType::class, [
                 'label' => '',
                 'required' => false,
             ])
-            
-             ->add('video', TextType::class, [
-                'constraints' => $videoConstraints,
-                'required' => false
+            ->add('title2', TextType::class, [
+                'label' => '',
+                'required' => false,
+            ])
+            ->add('description2', TextareaType::class, [
+                'label' => '',
+                'required' => false,
+            ])
+            ->add('title3', TextType::class, [
+                'label' => '',
+                'required' => false,
+            ])
+            ->add('description3', TextareaType::class, [
+                'label' => '',
+                'required' => false,
             ])
         ;
     }
