@@ -56,127 +56,48 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-8 column">
-                            <div class="job-single-sec" style="    float: left;
-                            width: 100%;">
-                                <div class="job-single-head" style="    float: left;
-                                width: 100%;
-                                padding-bottom: 30px;
-                                border-bottom: 1px solid #e8ecec;
-                                display: table;margin-bottom:50px;">
-                                    <div class="job-thumb" style="
-                                    width: 200px;
-                                    height: 100px;
-                                    overflow: hidden;
-                                    position: relative;    display: table-cell;
-                                    vertical-align: top;
-                                    width: 107px;"> 
+                            <div class="job-single-sec">
+                                <div class="job-single-head">
+                                    <div class="job-thumb"> 
                                         {% if study.school.pictures.fileName is defined %}
-                                        <img src="{{ uploaded_asset(study.school.pictures.fileName) }}" alt="" style="                                   width: 200px;
-                                        height: 100px;max-width: 300px;max-height:120px;
-                                        object-fit: cover;">
+                                        <img src="{{ uploaded_asset(study.school.pictures.fileName) }}" alt="">
                                         {% else %}
                                         <img src="https://via.placeholder.com/150" alt="" >
                                         {% endif %}
                                     </div>
-                                    <div class="job-head-info" style="    display: table-cell;
-                                    vertical-align: middle;
-                                    padding-left: 25px;">
+                                    <div class="job-head-info">
                                         <h4 style="text-align:left;">{{ study.title }}</h4>
-                                        <span style="float: left;
-                                        margin: 0;
-                                        margin-top: 0px;
-                                        margin-right: 0px;
-                                        font-size: 13px;
-                                        margin-right: 40px;
-                                        color: #888;
-                                        margin-top: 11px;">274 Seven Sisters Road, London, N4 2HY</span>
-                                        <p style="float: left;
-                                        margin: 0;
-                                        margin-top: 0px;
-                                        margin-right: 0px;
-                                        font-size: 13px;
-                                        margin-right: 40px;
-                                        color: #888;
-                                        margin-top: 11px;"><i class="la la-unlink"></i> www.jobhunt.com</p>
-                                        <p style="float: left;
-                                        margin: 0;
-                                        margin-top: 0px;
-                                        margin-right: 0px;
-                                        font-size: 13px;
-                                        margin-right: 40px;
-                                        color: #888;
-                                        margin-top: 11px;"><i class="la la-phone"></i> +90 538 963 54 87</p>
-                                        <p style="float: left;
-                                        margin: 0;
-                                        margin-top: 0px;
-                                        margin-right: 0px;
-                                        font-size: 13px;
-                                        margin-right: 40px;
-                                        color: #888;
-                                        margin-top: 11px;"><i class="la la-envelope-o"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a4c5c8cd8ad0d1c2c5cae4cecbc6ccd1cad08ac7cbc9">[email&#160;protected]</a></p>
+                                        <span>274 Seven Sisters Road, London, N4 2HY</span>
+                                        <p><i class="la la-unlink"></i> www.jobhunt.com</p>
+                                        <p><i class="la la-phone"></i> +90 538 963 54 87</p>
+                                        <p><i class="la la-envelope-o"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a4c5c8cd8ad0d1c2c5cae4cecbc6ccd1cad08ac7cbc9">[email&#160;protected]</a></p>
                                     </div>
                                 </div><!-- Job Head -->
                                 {% if study.video is defined and study.video is not empty %}
                                 <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ study.video }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="display:block;margin:auto;"></iframe>
                                 {% endif %}
-                                <div class="job-details" style="float: left;
+                                <div class="job-details" 
+                                {% if study.video is defined and study.video is not empty %} 
+                                style="float: left;
                                 width: 100%;
-                                padding-top: 50px;">
-                                     <h3 style="float: left;
-                                     width: 100%;
-                                     font-size: 18px;
-                                     font-weight: 500;
-                                     color: #202020;
-                                     margin-bottom: 15px;
-                                     margin-top: 10px;text-align:left;">Job Description</h3>
-                                     <p style="float: left;
-                                     width: 100%;
-                                     font-size: 13px;
-                                     color: #888888;
-                                     line-height: 24px;
-                                     margin: 0;
-                                     margin-bottom: 19px;">Company is a 2016 Iowa City-born start-up that develops consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti.</p>
-                                     <p style="float: left;
-                                     width: 100%;
-                                     font-size: 13px;
-                                     color: #888888;
-                                     line-height: 24px;
-                                     margin: 0;
-                                     margin-bottom: 19px;">Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus. Praesent elementum hendrerit tortor. Sed semper lorem at felis. Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien</p>
-                                     <h3 style="float: left;
-                                     width: 100%;
-                                     font-size: 18px;
-                                     font-weight: 500;
-                                     color: #202020;
-                                     margin-bottom: 15px;
-                                     margin-top: 10px;text-align:left;">Required Knowledge, Skills, and Abilities</h3>
-                                     <ul style="float: left;
-                                     width: 100%;
-                                     font-size: 13px;
-                                     color: #888888;
-                                     line-height: 24px;
-                                     margin: 0;
-                                     margin-bottom: 19px;">
+                                padding-top: 50px;" 
+                                {% else %} 
+                                style="float: left;
+                                width: 100%;"
+                                {% endif %}>
+                                     <h3>Job Description</h3>
+                                     <p>Company is a 2016 Iowa City-born start-up that develops consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti.</p>
+                                     <p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus. Praesent elementum hendrerit tortor. Sed semper lorem at felis. Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien</p>
+                                     <h3>Required Knowledge, Skills, and Abilities</h3>
+                                     <ul>
                                          <li >Ability to write code – HTML & CSS (SCSS flavor of SASS preferred when writing CSS)</li>
                                          <li>Proficient in Photoshop, Illustrator, bonus points for familiarity with Sketch (Sketch is our preferred concepting)</li>
                                          <li>Cross-browser and platform testing as standard practice</li>
                                          <li>Experience using Invision a plus</li>
                                          <li>Experience in video production a plus or, at a minimum, a willingness to learn</li>
                                      </ul>
-                                     <h3 style="float: left;
-                                     width: 100%;
-                                     font-size: 18px;
-                                     font-weight: 500;
-                                     color: #202020;
-                                     margin-bottom: 15px;
-                                     margin-top: 10px;text-align:left;">Education + Experience</h3>
-                                     <ul style="float: left;
-                                     width: 100%;
-                                     font-size: 13px;
-                                     color: #888888;
-                                     line-height: 24px;
-                                     margin: 0;
-                                     margin-bottom: 19px;">
+                                     <h3>Education + Experience</h3>
+                                     <ul>
                                          <li>Advanced degree or equivalent experience in graphic and web design</li>
                                          <li>3 or more years of professional design experience</li>
                                          <li>Direct response email experience</li>
