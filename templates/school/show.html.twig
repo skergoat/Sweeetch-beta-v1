@@ -255,7 +255,7 @@
                     <tbody>
                         {% for studies in studies %}
                         <tr>
-                            <td>{{ studies.title }}</td>
+                            <td><a href="{{ path('studies_edit', {'id': studies.id, school_id: studies.school.id }) }}">{{ studies.title }}</a></td>
                             {# <td><a href="{{ path('school_studies_show', {'id': studies.id, school_id: studies.school.id }) }}">{{ studies.title }}</a></td> #}
                            {# studies state #}
                             <td>
