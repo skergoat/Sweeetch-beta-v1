@@ -114,7 +114,7 @@ class StudiesRenderController extends AbstractController
     */
     public function indexCandidate(StudiesRepository $studiesRepository, PaginatorInterface $paginator, Request $request, $page): Response
     { 
-        $queryBuilder = $studiesRepository->findAll();
+        $queryBuilder = $studiesRepository->findBy([], ['id' => 'DESC']);
 
         $pagination = $paginator->paginate(
             $queryBuilder, /* query NOT result */
