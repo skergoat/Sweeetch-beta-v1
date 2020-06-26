@@ -114,16 +114,35 @@
         }
     }
 
-    // .info-box .info-box-icon {
-    //     display:none;
-    // }
+    /* cursus index */
 
-    // .info-box-nopage {
-    //     padding-top:5px;
-    // }
+     .job-single-head {
+        display:flex;
+        flex-direction:column;
+        align-items:center;
 
-    // .info-box .progress-description, .info-box .info-box-text {
-    //     white-space: pre-wrap;
-    //     word-break: break-word;
-    // }
+        & .job-thumb {
+            display:block;
+            margin:auto;
+            width:200px;
+        }
+
+        & .job-head-info {
+            padding:0px;
+            margin-top:30px;
+
+            & h4 {
+                text-align:center;
+            }
+
+            & span {
+                margin-right: 0px;
+                display:block;
+                margin:auto;
+                text-align:center;
+                width:100%;
+            }
+        }
+    }
+
 }

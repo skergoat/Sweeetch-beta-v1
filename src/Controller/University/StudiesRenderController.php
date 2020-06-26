@@ -34,7 +34,7 @@ class StudiesRenderController extends AbstractController
             $studies = $studiesRepository->findBy(['school' => $school]);
 
             return $this->render('studies/index.html.twig', [
-                'studies' => $studiesRepository->findBy(['school' => $school]),
+                'studies' => $studiesRepository->findBy(['school' => $school], ['id' => 'desc']),
                 'school' => $school,
                 'hired' => $recruitRepository->findBy(['studies' => $studies, 'hired' => true],['date_recruit' => 'desc']),
                 'agree' => $recruitRepository->findBy(['studies' => $studies, 'agree' => true],['date_recruit' => 'desc']), 
