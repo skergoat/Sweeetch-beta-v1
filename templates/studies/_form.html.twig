@@ -22,34 +22,44 @@
            <br> <hr> <br>
             <div class="row">
                 <div class="form-group col-lg-12">
-                    {{ form_row(form.title1, {'attr' : { class: 'form-control', 'rows':15 }} ) }}
+                    {{ form_row(form.title1, {'label':'Titre 1','attr' : { class: 'form-control', 'rows':15 }} ) }}
                 </div>
             </div>
+            
             <div class="row">
                 <div class="form-group col-lg-12">
-                    {{ form_row(form.description, {'attr' : { class: 'form-control', 'rows':15 }} ) }}
-                </div>
-            </div>
-            <br> <hr> <br>
-            <div class="row">
-                <div class="form-group col-lg-12">
-                    {{ form_row(form.title2, {'attr' : { class: 'form-control', 'rows':15 }} ) }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-lg-12">
-                    {{ form_row(form.description2, {'attr' : { class: 'form-control', 'rows':15 }} ) }}
+                    <br>
+                    {{ form_label(form.description, 'Description') }}
+                    <small id="emailHelp" class="form-text text-muted">Ajoutez des images par glisser-deposer, puis ajustez-les manuellement</small>
+                    {{ form_row(form.description, {'label':' ', 'attr' : { class: 'form-control', 'rows':15 }} ) }}
                 </div>
             </div>
             <br> <hr> <br>
             <div class="row">
                 <div class="form-group col-lg-12">
-                    {{ form_row(form.title3, {'attr' : { class: 'form-control', 'rows':15 }} ) }}
+                    {{ form_row(form.title2, {'label':'Titre 2','attr' : { class: 'form-control', 'rows':15 }} ) }}
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-lg-12">
-                    {{ form_row(form.description3, {'attr' : { class: 'form-control', 'rows':15 }} ) }}
+                    <br>
+                    {{ form_label(form.description2, 'Description 2') }}
+                    <small id="emailHelp" class="form-text text-muted">Ajoutez des images par glisser-deposer, puis ajustez-les manuellement</small>
+                    {{ form_row(form.description2, {'label':' ', 'attr' : { class: 'form-control', 'rows':15 }} ) }}
+                </div>
+            </div>
+            <br> <hr> <br>
+            <div class="row">
+                <div class="form-group col-lg-12">
+                    {{ form_row(form.title3, {'label':'Titre 3', 'attr' : { class: 'form-control', 'rows':15 }} ) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-12">
+                    <br>
+                    {{ form_label(form.description3, 'Description 3') }}
+                    <small id="emailHelp" class="form-text text-muted">Ajoutez des images par glisser-deposer, puis ajustez-les manuellement</small>
+                    {{ form_row(form.description3, {'label': ' ', 'attr' : { class: 'form-control', 'rows':15 }} ) }}
                 </div>
             </div>
             <div class="row">
