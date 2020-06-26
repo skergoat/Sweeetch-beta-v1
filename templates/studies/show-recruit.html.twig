@@ -11,13 +11,6 @@
         {# title #}
         <header id="header">
             <div class="container" id="customer-header">
-                {# <nav class="main-nav d-none d-lg-block">
-                    <ul>
-                        <li><a href="{{ path('studies_candidate_index', {from:from}) }}">
-                            Retour
-                        </a></li>
-                    </ul>
-                </nav> #}
                 <nav class="main-nav d-none d-lg-block">
                     <ul>
                         {% if is_granted('ROLE_ADMIN') %}
@@ -51,6 +44,7 @@
             {{ message }}
         </div>
         {% endfor %}
+        
         <section>
             <div class="block" style="margin-top:80px;">
                 <div class="container">
@@ -115,13 +109,6 @@
                                 </div>
                              </div>
                          </div>
-                         {% if app.user.student.id is defined %}
-                            <form method="post" action="{{ path('recruit', { id:study.id, student_id:app.user.student.id }) }}">
-                                <input type="hidden" name="_method" value="POST">
-                                <input type="hidden" name="_token" value="{{ csrf_token('recruit' ~ app.user.student.id) }}">
-                                <button class="btn btn-success" style="width:300px">Postuler</button>
-                            </form>
-                        {% endif %}
                     </div>
                 </div>
             </div>

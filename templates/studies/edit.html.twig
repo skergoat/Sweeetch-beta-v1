@@ -5,7 +5,7 @@
 {% block body %}
 
 <div class="container-fluid">
-    <div class="row">
+    <div class="row" style="position:relative;">
         <div class="col-lg-6">
             <h1 class="m-0 text-dark">Formations</h1> <br>
             <a href="{{ path('school_studies_index', {'id' : school.id}) }}" class="btn btn-sm btn-sm-1 btn-labeled btn-default">
@@ -13,11 +13,14 @@
                 Revenir 
             </a>
         </div>
-        <form class="delete-offers-form col-lg-6 " method="post" action="{{ path('studies_delete', {'id': study.id, 'school_id' : school.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-            <input type="hidden" name="_method" value="DELETE">
-            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ study.id) }}">
-            <button class="btn btn-danger" style="display:block;">Supprimer</button>
-        </form>
+        <div class="col-lg-6" style="display:flex;justify-content:flex-end;position:absolute;bottom:0px;right:0px;">
+            <button class="btn btn-primary" style="height:40px;margin-right:20px;">{{ button_label|default('Enregistrer') }}</button>
+            <form method="post" action="{{ path('studies_delete', {'id': study.id, 'school_id' : school.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ study.id) }}">
+                <button class="btn btn-danger" style="display:block;">Supprimer</button>
+            </form>
+        </div>
     </div>
 </div> <br>
 
@@ -32,6 +35,9 @@
 <section class="content">
     <div class="row">
         <div class="col-12" style="padding-left:30px;padding-right:30px;">
+            <br>
+            <h2>Etat des Recrutements</h2>
+            <br>
             <div class="card card-responsive-table">
                 <div class="card-header">
                     <h3 class="card-title" style="font-weight:900;font-size:22px;">Candidatures</h3>
