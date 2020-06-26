@@ -226,6 +226,38 @@
     .job-offer {
         width:100%;
     }
+
+    /* cursus index */
+
+    .job-single-head {
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+
+        & .job-thumb {
+            display:block;
+            margin:auto;
+            width:200px;
+        }
+
+        & .job-head-info {
+            padding:0px;
+            margin-top:30px;
+
+            & h4 {
+                text-align:center;
+            }
+
+            & span, & p {
+                margin-right: 0px;
+                display:block;
+                margin:auto;
+                text-align:center;
+                width:100%;
+                margin-top:10px;
+            }
+        }
+    }
 }
 
 @media all and (max-width:400px) 
