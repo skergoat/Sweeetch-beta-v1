@@ -74,22 +74,21 @@
                                     <div class="job-details">
                                          <h3>Job Description</h3>
                                          {{ offers.description |raw }}
+
+                                         {% if offers.skills is not empty and offers.Experience is not empty %}
                                          <h3>Compétences Requises</h3>
                                          <ul>
                                              {% for skills in offers.skills %}
                                              <li>{{ skills.single }}</li>
-                                             {% else %}
-                                             <span style="color:darkred;">Aucune compétence spécifique n'est requise</span>
                                              {% endfor %}
                                          </ul>
                                          <h3>Formation + Experience</h3>
                                          <ul>
                                             {% for Experience in offers.Experience %}
                                             <li>{{ Experience.single }}</li>
-                                            {% else %}
-                                            <span style="color:darkred;">Aucune expérience spécifique n'est requise</span>
                                             {% endfor %}
                                          </ul>
+                                         {% endif %}
                                     </div><br>
                                      {# apply options #}
                                     {% if is_granted('ROLE_USER') %}
