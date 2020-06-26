@@ -67,7 +67,8 @@ class StudiesType extends AbstractType
             ])
             
              ->add('video', TextType::class, [
-                'constraints' => $videoConstraints
+                'constraints' => $videoConstraints,
+                'required' => false
             ])
         ;
     }
