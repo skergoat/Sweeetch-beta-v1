@@ -84,24 +84,33 @@
                                 style="float:left;width:100%;padding-top:50px;" 
                                 {% else %} 
                                 style="float:left;width:100%;"
-                                {% endif %}>
-                                {% if study.title1 is not empty %} 
-                                     <h3>{{ study.title1 | raw  }}</h3>
-                                {% endif %}
-                                {% if study.description is not empty %} 
-                                     <p>{{ study.description | raw }}</p>
-                                {% endif %}
-                                {% if study.title2 is not empty %} 
-                                     <h3>{{ study.title2 | raw  }}</h3>
-                                {% endif %}
-                                {% if study.description2 is not empty %} 
-                                     <p>{{ study.description2 | raw }}</p>
-                                {% endif %}
-                                {% if study.title3 is not empty %} 
-                                     <h3>{{ study.title3 | raw  }}</h3>
-                                {% endif %}
-                                {% if study.description3 is not empty %} 
-                                     <p>{{ study.description3 | raw }}</p>
+                                {% endif %}> 
+                                {% if study.title1 is empty and study.description is empty 
+                                    and  
+                                    study.title2 is empty and study.description2 is empty
+                                    and 
+                                    study.title3 is empty and study.description3 is empty
+                                %}
+                                    <span style="color:darkred;font-weight:900;text-align:center;width:100%;display:block;">Pas encore de contenu</span> 
+                                {% else %}
+                                    {% if study.title1 is not empty %} 
+                                        <h3>{{ study.title1 | raw  }}</h3>
+                                    {% endif %}
+                                    {% if study.description is not empty %} 
+                                        <p>{{ study.description | raw }}</p>
+                                    {% endif %}
+                                    {% if study.title2 is not empty %} 
+                                        <h3>{{ study.title2 | raw  }}</h3>
+                                    {% endif %}
+                                    {% if study.description2 is not empty %} 
+                                        <p>{{ study.description2 | raw }}</p>
+                                    {% endif %}
+                                    {% if study.title3 is not empty %} 
+                                        <h3>{{ study.title3 | raw  }}</h3>
+                                    {% endif %}
+                                    {% if study.description3 is not empty %} 
+                                        <p>{{ study.description3 | raw }}</p>
+                                    {% endif %}
                                 {% endif %}
                                 </div>
                              </div>
