@@ -25,7 +25,7 @@ import '../components/message.js';  // success or error message
 import '../components/file.js'; // file name 
 
 // ./components
-import './components/page.js'; // offers page number 
+// import './components/page.js'; // offers page number 
 import './components/contactform.js'; // template scripts 
 import './components/find.js'; // template scripts 
 // import './components/success.js';
