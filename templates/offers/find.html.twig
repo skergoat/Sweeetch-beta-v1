@@ -91,7 +91,7 @@
             <div>
                 <div class="d-flex" style="flex-wrap:wrap;">
         {% for offer in offers %}
-            {% if offer.applies[0] is not defined or offer.applies[0] is defined and offer.applies[0].hired == false and offer.applies[0].confirmed == false and offer.applies[0].finished == false %}
+            {# {% if offer.applies is not defined or offer.applies is defined and offer.applies.hired == false and offer.applies.confirmed == false and offer.applies.finished == false %} #}
 
             <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
                 <div class="job-grid border">
@@ -125,8 +125,8 @@
 
                 </td>
             </tr>
-            {% endif %}
-        {% else %}
+            {# {% endif %} #}
+        {# {% else %}
             <tr>
                 <td colspan="8">
        
@@ -139,7 +139,7 @@
                     </div>
                             
                 </td>
-            </tr>
+            </tr> #}
         {% endfor %} 
         </div>
     </div>
