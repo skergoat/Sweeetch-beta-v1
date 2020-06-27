@@ -19,7 +19,7 @@
                         {% if page is defined %}
                         <li><a href="{{ path('offers_index', {'page':page}) }}">Alternances</a></li>
                         {% else %}
-                        <li><a href="{{ path('offers_index', {'page':1}) }}">Alternances</a></li>
+                        <li><a href="{{ path('offers_index') }}">Alternances</a></li>
                         {% endif %}
                         {% if pages is defined %}
                         <li><a href="{{ path('studies_candidate_index', {'page':pages}) }}">Formations</a></li>
@@ -91,7 +91,7 @@
             <div>
                 <div class="d-flex" style="flex-wrap:wrap;">
         {% for offer in offers %}
-            {% if offer.applies[0] is not defined or offer.applies[0] is defined and offer.applies[0].hired == false and offer.applies[0].confirmed == false and offer.applies[0].finished == false %}
+            {# {% if offer.applies[0] is not defined or offer.applies[0] is defined and offer.applies[0].hired == false and offer.applies[0].confirmed == false and offer.applies[0].finished == false %} #}
 
             <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
                 <div class="job-grid border">
@@ -125,8 +125,8 @@
 
                 </td>
             </tr>
-            {% endif %}
-        {% else %}
+            {# {% endif %} #}
+        {# {% else %}
             <tr>
                 <td colspan="8">
        
@@ -139,14 +139,13 @@
                     </div>
                             
                 </td>
-            </tr>
+            </tr> #}
         {% endfor %} 
         </div>
     </div>
 </div>
         {# paginate #}
         <div class="pagination-bottom">{{ knp_pagination_render(offers) }}</div> 
-
     </div>
 </div>
 
