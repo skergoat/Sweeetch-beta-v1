@@ -54,7 +54,8 @@ class OffersController extends AbstractController
         $domain = $request->get('domain');
 
         if($domain == 'tous') {
-            $queryBuilder = $offersRepository->findAll();
+            // $queryBuilder = $offersRepository->findAll();
+            $queryBuilder = $offersRepository->findBy(['state' => false], ['id' => 'desc']);
         }
         else {
             $queryBuilder = $offersRepository->findBy(['state' => false, 'domain' => $domain], ['domain' => 'desc']);
