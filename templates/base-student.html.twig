@@ -69,10 +69,8 @@
                         <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
                     </li>
 
-                    <ul class="ul-ul">
-                        
+                    <ul class="ul-ul">      
                         {% if is_granted('ROLE_ADMIN') %}
-
                         <li class="nav-item d-sm-inline-block" >
                             <a class="nav-link" href="{{ path('admin') }}"> Admin </a>
                         </li>
@@ -250,8 +248,8 @@
                 <div class="jumbotron">
                     <div class="modal-head">
                         <h3 style="color:black!important;text-align:center;">Bienvenue chez Sweeetch !</h3><br>
-                        <p style="color:grey;text-align:justify;">Dans cette courte présentation, nous allons vous montrer comment utiliser Sweeetch. Cliquez sur le bouton ci-dessous pour commencer :</p> <br>
-                        <button class="btn btn-success" id="following-page" data-url="2" style="display:block;margin:auto;">Suivant <i class="fas fa-chevron-right"></i></button>
+                        <p style="color:grey;text-align:justify;">Sweeetch vous permet de trouver rapidement un emploi et une formation en alternance. Dans cette courte présentation, nous vous montrons comment utiliser l'application.</p> <br>
+                        <button class="btn btn-success" id="following-page" data-url="2" style="display:block;margin:auto;">Commencer <i class="fas fa-chevron-right"></i></button>
                     </div>
                 </div>
             </div>
@@ -272,7 +270,7 @@
         <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
         {% endblock %}
         
-        {% if student.profile.presentation == NULL %}
+        {% if student.profile.presentation == NULL and app.request.get('_route') == 'student_show' %}
         <script>
             // presentation open popup
             $(document).ready(function() {
