@@ -55,6 +55,27 @@ class StudentController extends AbstractController
     private $entities = ['Resume', 'IdCard', 'StudentCard'];
 
     /**
+     * @Route("/load/{data}", name="load", methods={"GET"})
+     * @IsGranted("ROLE_STUDENT")
+     */
+     public function load($data):Response
+     {
+        return $this->render('doc/doc-'.$data.'.html.twig');
+     }
+
+      /**
+     * @Route("/stop/{id}", name="stop", methods={"POST"})
+     * @IsGranted("ROLE_STUDENT")
+     */
+    public function stop(Request $request, Student $student):Response
+    {
+        $student->getProfile()->setPresentation(true);
+        $manager = $this->getDoctrine()->getManager()->flush();
+        return $this->redirectToRoute('student_show', ['id' => $student->getId()]);
+    }
+
+
+    /**
      * @Route("/", name="student_index", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      */

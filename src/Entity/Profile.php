@@ -44,6 +44,11 @@ class Profile
      */
     private $education;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $presentation;
+
     
     public function __construct()
     {
@@ -156,6 +161,18 @@ class Profile
                 $education->setProfile(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPresentation(): ?bool
+    {
+        return $this->presentation;
+    }
+
+    public function setPresentation(?bool $presentation): self
+    {
+        $this->presentation = $presentation;
 
         return $this;
     }
