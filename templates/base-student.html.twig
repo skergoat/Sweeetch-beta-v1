@@ -81,7 +81,7 @@
                         </li>
                         {% endif %}
                         <li class="nav-item d-sm-inline-block">
-                            <a href="/logout" class="nav-link">Déconnexion</a>
+                            <a href="/logout"  class="btn btn-outline-light">Déconnexion</a>
                         </li>
                     </ul>
                 </ul>
@@ -225,6 +225,8 @@
                                 {% endif %}
                             </li>
                         </ul>
+                        <br><br>
+                        <a class="btn btn-small btn-outline-success" id="tests" href="#test-1" rel="modal:open" style="display:block;margin:auto;">Présentation du Compte</a>
                     </nav>
                 </div>
             </aside>
@@ -253,37 +255,12 @@
             </label>
         </div>
 
-        <a id="tests" href="#test-1" rel="modal:open">TEST</a>
-
         {% block javascripts %}
         {{ encore_entry_script_tags('student') }}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
         {% endblock %}
-
-        <script>
-            
-            $(document).ready(function() {
-                $('#tests').click();
-            });
-
-            $('#following-page').click(function() {
-                let data = $('#following-page').attr('data-url');
-                $('#input').prop( "checked", false);
-                $('#test-1 .container').load('/student/load/' + data);
-            });
-
-            $('#input').change(function() {
-                let data = $(this).attr('data-url');
-                $.ajax({
-                    type: "POST",
-                    url: '/student/stop/' + data,
-                });
-                $('a.close-modal').click();
-            }); 
-
-        </script>
 
     </body>
 </html>
