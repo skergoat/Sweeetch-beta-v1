@@ -249,10 +249,12 @@
              <div class="container">
                 <button class="btn btn-success" id="following-page" data-url="2">Suivant</button>
              </div>
+             {% if student.profile.presentation == NULL %}
              <label for="input">
                 Ne plus afficher
                 <input type="checkbox" name="input" id="input" data-url="{{ student.id }}">
             </label>
+            {% endif %}
         </div>
 
         {% block javascripts %}
@@ -261,6 +263,14 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
         {% endblock %}
+
+        {% if student.profile.presentation == NULL %}
+        <script>
+            $(document).ready(function() {
+                $('#tests').click();
+            });
+        </script>
+        {% endif %}
 
     </body>
 </html>

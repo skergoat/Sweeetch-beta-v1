@@ -1,7 +1,3 @@
-// open popup 
-$(document).ready(function() {
-    $('#tests').click();
-});
 // load new page 
 $('#following-page').click(function() {
     let data = $('#following-page').attr('data-url');
