@@ -246,14 +246,22 @@
          {# test #}
 
          <div id="test-1" class="modal">
-             <div class="container">
-                <button class="btn btn-success" id="following-page" data-url="2">Suivant</button>
-             </div>
+            <div class="container" id="container-ajax">
+                 <div class="jumbotron">
+                    <div class="modal-head">
+                        <h3 style="color:black!important;text-align:center;">Bienvenue chez Sweeetch !</h3><br>
+                        <p style="color:grey;text-align:justify;">Dans cette courte presentation, nous allons vous montrer comment utiliser Sweeetch. Cliquez sur le bouton ci-dessous pour commencer :</p> <br>
+                        <button class="btn btn-success" id="following-page" data-url="2" style="display:block;margin:auto;">Suivant <i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
              {% if student.profile.presentation == NULL %}
-             <label for="input">
-                Ne plus afficher
-                <input type="checkbox" name="input" id="input" data-url="{{ student.id }}">
-            </label>
+             <div class="container">
+                <label for="input">
+                    <input type="checkbox" name="input" id="input" data-url="{{ student.id }}">
+                    Ne plus afficher ce message
+                </label>
+            </div>
             {% endif %}
         </div>
 
@@ -263,9 +271,10 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
         {% endblock %}
-
+        
         {% if student.profile.presentation == NULL %}
         <script>
+            // presentation open popup
             $(document).ready(function() {
                 $('#tests').click();
             });

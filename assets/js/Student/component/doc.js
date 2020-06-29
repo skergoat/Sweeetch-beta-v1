@@ -2,7 +2,7 @@
 $('#following-page').click(function() {
     let data = $('#following-page').attr('data-url');
     $('#input').prop( "checked", false);
-    $('#test-1 .container').load('/student/load/' + data);
+    $('#test-1 #container-ajax').load('/student/load/' + data);
 });
 // stop program 
 $('#input').change(function() {
