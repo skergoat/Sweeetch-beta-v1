@@ -52,6 +52,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
  */
 class StudentController extends AbstractController
 {
+    
     private $entities = ['Resume', 'IdCard', 'StudentCard'];
 
     /**
@@ -73,7 +74,6 @@ class StudentController extends AbstractController
         $manager = $this->getDoctrine()->getManager()->flush();
         return $this->redirectToRoute('student_show', ['id' => $student->getId()]);
     }
-
 
     /**
      * @Route("/", name="student_index", methods={"GET"})

@@ -23,6 +23,7 @@ import '../components/table.js'; // dataTable
 // ./components
 import './component/edit-profile.js'; // edit languages or studies 
 import './component/timeline.js'; // timeline 
+import './component/doc.js'; // timeline 
 // import './component/buttons.js'; 
 
 // dataTables
