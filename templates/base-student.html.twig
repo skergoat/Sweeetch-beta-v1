@@ -245,19 +245,19 @@
 
          {# test #}
 
-         <div id="test-1" class="modal">
+         <div id="test-1" class="modal" style="max-width:700px;">
             <div class="container" id="container-ajax">
-                 <div class="jumbotron">
+                <div class="jumbotron">
                     <div class="modal-head">
                         <h3 style="color:black!important;text-align:center;">Bienvenue chez Sweeetch !</h3><br>
-                        <p style="color:grey;text-align:justify;">Dans cette courte presentation, nous allons vous montrer comment utiliser Sweeetch. Cliquez sur le bouton ci-dessous pour commencer :</p> <br>
+                        <p style="color:grey;text-align:justify;">Dans cette courte présentation, nous allons vous montrer comment utiliser Sweeetch. Cliquez sur le bouton ci-dessous pour commencer :</p> <br>
                         <button class="btn btn-success" id="following-page" data-url="2" style="display:block;margin:auto;">Suivant <i class="fas fa-chevron-right"></i></button>
                     </div>
                 </div>
             </div>
              {% if student.profile.presentation == NULL %}
-             <div class="container">
-                <label for="input">
+             <div class="container" id="container-stop">
+                <label for="input" id="label">
                     <input type="checkbox" name="input" id="input" data-url="{{ student.id }}">
                     Ne plus afficher ce message
                 </label>
