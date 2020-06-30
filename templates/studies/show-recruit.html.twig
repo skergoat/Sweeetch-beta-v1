@@ -108,7 +108,14 @@
                                 {% endif %}
                                 </div>
                              </div>
-                         </div>
+                        </div>
+                        {% if app.user.student.id is defined %}
+                            <form method="post" action="{{ path('recruit', { id:study.id, student_id:app.user.student.id }) }}">
+                                <input type="hidden" name="_method" value="POST">
+                                <input type="hidden" name="_token" value="{{ csrf_token('recruit' ~ app.user.student.id) }}">
+                                <button class="btn btn-success">Postuler</button>
+                            </form>
+                        {% endif %}
                     </div>
                 </div>
             </div>
