@@ -64,10 +64,10 @@
                                     </div>
                                     <div class="job-head-info">
                                         <h4>{{ study.title }}</h4>
-                                        <span>274 Seven Sisters Road, London, N4 2HY</span>
-                                        <p><i class="la la-unlink"></i> www.jobhunt.com</p>
-                                        <p><i class="la la-phone"></i> +90 538 963 54 87</p>
-                                        <p><i class="la la-envelope-o"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a4c5c8cd8ad0d1c2c5cae4cecbc6ccd1cad08ac7cbc9">[email&#160;protected]</a></p>
+                                        <span>{{ study.school.address }}, {{ study.school.ZipCode }}, {{ study.school.city }}</span>
+                                        <p><i class="la la-unlink"></i>{{ study.school.website }}</p>
+                                        <p><i class="la la-phone"></i> {{ study.school.telNumber }} </p>
+                                        <p><i class="la la-envelope-o"></i> <a href="#" class="__cf_email__" data-cfemail="a4c5c8cd8ad0d1c2c5cae4cecbc6ccd1cad08ac7cbc9">{{ study.school.user.email }}</a></p>
                                     </div>
                                 </div><!-- Job Head -->
                                 {% if study.video is not empty %}
