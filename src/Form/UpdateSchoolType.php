@@ -7,6 +7,7 @@ use App\Form\UserEditFormType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -26,6 +27,14 @@ class UpdateSchoolType extends AbstractType
             ->add('city', TextType::class)
             ->add('telNumber', TextType::class)
             ->add('siret', TextType::class)
+            ->add('website', TextType::class, [
+                'constraints' => [ 
+                  new Regex([
+                     'pattern' => "/^((https?|ftp|smtp):\/\/)?(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$/",
+                     'message' => "Entrez une url valide svp"
+                  ])
+                ],
+            ])
             ->add('user', UserEditFormType::class);
             $imageConstraints = [
                 new File([
@@ -44,7 +53,7 @@ class UpdateSchoolType extends AbstractType
                     'maxSizeMessage' => 'poids max : 5M',
                 ])
             ];
-    
+                
             $builder
                 ->add('pictures', FileType::class, [
                     'required' => false,

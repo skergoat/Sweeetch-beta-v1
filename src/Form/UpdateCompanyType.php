@@ -43,7 +43,14 @@ class UpdateCompanyType extends AbstractType
             ->add('city', TextType::class)
             ->add('telNumber', TextType::class)
             ->add('siret', TextType::class)
-            ->add('website', TextType::class)
+            ->add('website', TextType::class, [
+                'constraints' => [ 
+                  new Regex([
+                     'pattern' => "/^((https?|ftp|smtp):\/\/)?(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$/",
+                     'message' => "Entrez une url valide svp"
+                  ])
+                ],
+            ])
             ->add('user', UserEditFormType::class);
 
             $imageConstraints = [
