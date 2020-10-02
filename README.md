@@ -13,10 +13,12 @@ Open the console and :
 2. cd into the repository. Then run : 
 
         $ composer install 
+        $ composer update 
         
 3. then run :
 
         $ yarn install
+        $ yarn self:update 
         $ yarn watch 
 
 4. launch app : 
