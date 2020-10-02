@@ -39,7 +39,7 @@ class UserFixture extends Fixture
         $superAdmin->setConfirmed(true);
         $superAdmin->setPassword($this->passwordEncoder->encodePassword(
             $superAdmin,
-            '9195285B65x9@'
+            'admin@'
         ));
 
         $manager->persist($superAdmin);
