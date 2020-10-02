@@ -31,7 +31,7 @@ Open the console and :
 
 # connect to database 
 
-1. this app uses MySQL. So install and start MAMP 
+1. this app uses MySQL with MAMP. So start MAMP 
 
 2. a - Be sure to have a .env file and that DATABASE_URL refers to you database url
    
