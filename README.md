@@ -1,6 +1,7 @@
 # Sweeetch
 Sweeetch's website. 
 
+This process launches the app on MAC 
 
 # launch
 
@@ -31,6 +32,11 @@ Open the console and :
 # connect to database 
 
 1. this app uses MySQL. So install and start MAMP 
+
+2. a - Be sure to have a .env file and that DATABASE_URL refers to you database url
+   b - If you use MAMP, go to config > packages > doctrine.yaml and paste this under "charset: utf8mb4" : 
+   
+        unix_socket: /Applications/MAMP/tmp/mysql/mysql.sock
 
 2. from the terminal create new database : 
 
