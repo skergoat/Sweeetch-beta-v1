@@ -39,16 +39,16 @@ Open the console and :
    
         unix_socket: /Applications/MAMP/tmp/mysql/mysql.sock
 
-2. from the terminal create new database : 
+3. from the terminal create new database : 
 
         $ bin/console doctrine:database:create
         
-3. then load entites : 
+4. then load entites : 
 
         $ bin/console make:migration
         $ bin/console doctrine:migrations:migrate
         
- 4 load fixtures : 
+5. load fixtures : 
 
          $ bin/console doctrine:fixtures:load 
         
