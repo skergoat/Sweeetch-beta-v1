@@ -1,6 +1,8 @@
 # Sweeetch
 
-This is the beta version of an app created to help work-study students, scholls and compagnies to get in touch.  
+This is the beta version of an app created to help work-study students, scholls and compagnies to get in touch. 
+
+If you want to discover how this app works locally, then : 
 
 # Launch
 
