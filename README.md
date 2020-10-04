@@ -2,7 +2,7 @@
 
 Launch the app locally
 
-# launch
+# Launch
 
 Open the console and : 
 
@@ -28,7 +28,7 @@ Open the console and :
 5. go to localhost:8000 and naviguate on the app 
 
 
-# connect to database 
+# Connect to Database 
 
 1. this app uses MySQL with MAMP. So start MAMP 
 
