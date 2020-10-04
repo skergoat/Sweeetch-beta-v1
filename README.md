@@ -1,5 +1,4 @@
 # Sweeetch
-Sweeetch's website. 
 
 Launch the app locally
 
