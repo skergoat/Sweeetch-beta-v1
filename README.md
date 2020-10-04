@@ -1,6 +1,6 @@
 # Sweeetch
 
-Launch the app locally
+This is the beta version of an app created to help work-study students, scholls and compagnies to get in touch.  
 
 # Launch
 
