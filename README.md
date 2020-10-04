@@ -1,7 +1,7 @@
 # Sweeetch
 Sweeetch's website. 
 
-This process launches the app on MAC 
+Launch the app locally
 
 # launch
 
