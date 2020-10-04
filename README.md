@@ -34,7 +34,7 @@ Open the console and :
 
 1. this app uses MySQL with MAMP. So start MAMP 
 
-2. a - Be sure to have a .env file and that DATABASE_URL refers to you database url
+2. a - Be sure to have a .env file and that DATABASE_URL refers to your database url
    
    b - If you use MAMP, go to config > packages > doctrine.yaml and paste this under "charset: utf8mb4" : 
    
