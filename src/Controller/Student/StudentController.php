@@ -61,7 +61,10 @@ class StudentController extends AbstractController
      */
      public function load($data):Response
      {
-        return $this->render('doc/doc-'.$data.'.html.twig');
+        if($data > 9) {
+            return $this->render('doc/doc-0.html.twig'); 
+        } 
+        return $this->render('doc/doc-'.$data.'.html.twig');  
      }
 
       /**

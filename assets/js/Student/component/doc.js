@@ -8,7 +8,7 @@ function furtherBack() {
 
     $('#following-page').click(function() {
         let data = $('#following-page').attr('data-url');
-        $('#input').prop( "checked", false);
+        $('#input').prop("checked", false);
         $('#test-1 #container-ajax').load('/student/load/' + data, furtherBack);
     });
 }
