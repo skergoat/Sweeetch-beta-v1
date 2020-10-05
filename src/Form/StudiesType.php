@@ -20,9 +20,9 @@ class StudiesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $titleConstraints = [
-            // new NotBlank([
-            //     'message' => 'Veuillez entrer un titre, svp',
-            // ]),
+            new NotBlank([
+                'message' => 'Veuillez entrer un titre, svp',
+            ]),
             new Length([
                 'min' => '2',
                 'max' => '50',
@@ -44,7 +44,7 @@ class StudiesType extends AbstractType
 
         $builder
             ->add('title', TextType::class, [
-                'required' => false,
+                'required' => true,
                 'constraints' => $titleConstraints
             ])
             ->add('domain', ChoiceType::class, [

@@ -13,13 +13,14 @@
                     Revenir 
                 </a>
             </div>
-            <div class="col-lg-6" style="display:flex;justify-content:flex-end;position:absolute;bottom:0px;right:0px;"> 
-                <button class="btn btn-primary" style="margin-right:20px;">{{ button_label|default('Enregistrer') }}</button>
+            <div class="col-lg-6" style="display:flex;justify-content:flex-start;flex-direction:row-reverse;position:absolute;bottom:0px;right:0px;"> 
                 <form method="post" action="{{ path('offers_delete', {'id': offers.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
                     <input type="hidden" name="_method" value="DELETE">
                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ offers.id) }}">
                     <button class="btn btn-danger" style="display:block;">Supprimer</button>
                 </form>
+                {{ form_start(form) }}
+                <button class="btn btn-primary" style="margin-right:20px;">{{ button_label|default('Enregistrer') }}</button>
             </div>
         </div>
     </div> <br>
@@ -35,7 +36,7 @@
         {{ message }}
     </div>
     {% endfor %}
-
+    
 
     <section class="content" style="padding-left:15px;padding-right:15px;">
         <div class="row">
