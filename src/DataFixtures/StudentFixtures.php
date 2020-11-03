@@ -38,12 +38,12 @@ class StudentFixtures extends Fixture
             $student->setCity('Paris');
 
             $user = new User; 
-            $user->setEmail('crypte' . $i . '@gmail.com');
+            $user->setEmail('student' . $i . '@gmail.com');
             $user->setRoles(['ROLE_STUDENT']);
             $user->setConfirmed(false);
             $user->setPassword($this->passwordEncoder->encodePassword(
                 $user,
-                'crypte'
+                'student'
             ));
 
             $profile = new Profile;

@@ -41,7 +41,7 @@ class SchoolFixtures extends Fixture
             $user->setConfirmed(false);
             $user->setPassword($this->passwordEncoder->encodePassword(
                 $user,
-                'ste'
+                'school'
             ));
 
                 $offer1 = new Studies;

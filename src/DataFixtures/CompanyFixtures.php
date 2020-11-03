@@ -37,7 +37,7 @@ class CompanyFixtures extends Fixture
             $user->setConfirmed(false);
             $user->setPassword($this->passwordEncoder->encodePassword(
                 $user,
-                'test'
+                'company'
             ));
 
                 $offer1 = new Offers;
