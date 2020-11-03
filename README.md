@@ -55,3 +55,26 @@ Open the console and :
         
 
 you can now use the app ! 
+
+# Demo Profiles Logins 
+
+1. admin 
+
+        login : super_Admin@gmail.com
+        password : super_admin
+        
+
+2. étudiant 
+
+        login : student1@gmail.com
+        password : student
+        
+3. entreprise 
+
+        login : company1@gmail.com
+        password : company
+        
+4. école 
+
+        login : school1@gmail.com
+        password : school
